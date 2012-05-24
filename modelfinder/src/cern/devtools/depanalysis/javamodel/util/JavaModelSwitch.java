@@ -6,6 +6,12 @@
  */
 package cern.devtools.depanalysis.javamodel.util;
 
+import cern.devtools.depanalysis.javamodel.ApiClass;
+import cern.devtools.depanalysis.javamodel.Field;
+import cern.devtools.depanalysis.javamodel.JavaModelPackage;
+import cern.devtools.depanalysis.javamodel.Method;
+import cern.devtools.depanalysis.javamodel.Project;
+import cern.devtools.depanalysis.javamodel.Workspace;
 import cern.devtools.depanalysis.javamodel.*;
 
 import java.util.List;
@@ -117,6 +123,12 @@ public class JavaModelSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case JavaModelPackage.PACKAGE: {
+				cern.devtools.depanalysis.javamodel.Package package_ = (cern.devtools.depanalysis.javamodel.Package)theEObject;
+				T result = casePackage(package_);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -193,6 +205,21 @@ public class JavaModelSwitch<T> {
 	 * @generated
 	 */
 	public T caseWorkspace(Workspace object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Package</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Package</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T casePackage(cern.devtools.depanalysis.javamodel.Package object) {
 		return null;
 	}
 

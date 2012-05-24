@@ -6,6 +6,12 @@
  */
 package cern.devtools.depanalysis.javamodel.util;
 
+import cern.devtools.depanalysis.javamodel.ApiClass;
+import cern.devtools.depanalysis.javamodel.Field;
+import cern.devtools.depanalysis.javamodel.JavaModelPackage;
+import cern.devtools.depanalysis.javamodel.Method;
+import cern.devtools.depanalysis.javamodel.Project;
+import cern.devtools.depanalysis.javamodel.Workspace;
 import cern.devtools.depanalysis.javamodel.*;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -90,6 +96,10 @@ public class JavaModelAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseWorkspace(Workspace object) {
 				return createWorkspaceAdapter();
+			}
+			@Override
+			public Adapter casePackage(cern.devtools.depanalysis.javamodel.Package object) {
+				return createPackageAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -178,6 +188,20 @@ public class JavaModelAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createWorkspaceAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link cern.devtools.depanalysis.javamodel.Package <em>Package</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see cern.devtools.depanalysis.javamodel.Package
+	 * @generated
+	 */
+	public Adapter createPackageAdapter() {
 		return null;
 	}
 

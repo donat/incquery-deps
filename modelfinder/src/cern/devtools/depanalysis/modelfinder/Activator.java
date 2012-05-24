@@ -20,21 +20,8 @@ public class Activator extends AbstractUIPlugin {
 	private static Activator plugin;
 	
 	// java source code changing listener
-	IElementChangedListener elementChangedListener = new IElementChangedListener() {
-		
-		@Override
-		public void elementChanged(ElementChangedEvent event) {
-			try {
-				JavaModelManager.INSTANCE.update(event);
-			} catch (CoreException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	};
+	IElementChangedListener incChangeList = new IncrementalChangeListener();
 	
-	// 
-	ModelPrinterListener printer = new ModelPrinterListener();
 	
 	/**
 	 * The constructor
@@ -50,8 +37,7 @@ public class Activator extends AbstractUIPlugin {
 		super.start(context);
 		plugin = this;
 		
-		JavaCore.addElementChangedListener(elementChangedListener);
-		JavaModelManager.INSTANCE.addModelChangeListener(printer);
+		JavaCore.addElementChangedListener(incChangeList);
 	}
 
 	/*
@@ -62,8 +48,7 @@ public class Activator extends AbstractUIPlugin {
 		plugin = null;
 		super.stop(context);
 		
-		JavaModelManager.INSTANCE.removeModelChangeListener(printer);
-		JavaCore.removeElementChangedListener(elementChangedListener);
+		JavaCore.removeElementChangedListener(incChangeList);
 	}
 
 	/**

@@ -71,6 +71,15 @@ public interface JavaModelFactory extends EFactory {
 	Workspace createWorkspace();
 
 	/**
+	 * Returns a new object of class '<em>Package</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Package</em>'.
+	 * @generated
+	 */
+	Package createPackage();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link cern.devtools.depanalysis.javamodel.ApiClass#getMethods <em>Methods</em>}</li>
  *   <li>{@link cern.devtools.depanalysis.javamodel.ApiClass#getFields <em>Fields</em>}</li>
- *   <li>{@link cern.devtools.depanalysis.javamodel.ApiClass#getProject <em>Project</em>}</li>
+ *   <li>{@link cern.devtools.depanalysis.javamodel.ApiClass#getPackage <em>Package</em>}</li>
  *   <li>{@link cern.devtools.depanalysis.javamodel.ApiClass#getName <em>Name</em>}</li>
  * </ul>
  * </p>
@@ -67,32 +67,32 @@ public interface ApiClass extends EObject {
 	EList<Field> getFields();
 
 	/**
-	 * Returns the value of the '<em><b>Project</b></em>' container reference.
-	 * It is bidirectional and its opposite is '{@link cern.devtools.depanalysis.javamodel.Project#getClasses <em>Classes</em>}'.
+	 * Returns the value of the '<em><b>Package</b></em>' container reference.
+	 * It is bidirectional and its opposite is '{@link cern.devtools.depanalysis.javamodel.Package#getClasses <em>Classes</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Project</em>' container reference isn't clear,
+	 * If the meaning of the '<em>Package</em>' container reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Project</em>' container reference.
-	 * @see #setProject(Project)
-	 * @see cern.devtools.depanalysis.javamodel.JavaModelPackage#getApiClass_Project()
-	 * @see cern.devtools.depanalysis.javamodel.Project#getClasses
+	 * @return the value of the '<em>Package</em>' container reference.
+	 * @see #setPackage(cern.devtools.depanalysis.javamodel.Package)
+	 * @see cern.devtools.depanalysis.javamodel.JavaModelPackage#getApiClass_Package()
+	 * @see cern.devtools.depanalysis.javamodel.Package#getClasses
 	 * @model opposite="classes" required="true" transient="false"
 	 * @generated
 	 */
-	Project getProject();
+	cern.devtools.depanalysis.javamodel.Package getPackage();
 
 	/**
-	 * Sets the value of the '{@link cern.devtools.depanalysis.javamodel.ApiClass#getProject <em>Project</em>}' container reference.
+	 * Sets the value of the '{@link cern.devtools.depanalysis.javamodel.ApiClass#getPackage <em>Package</em>}' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Project</em>' container reference.
-	 * @see #getProject()
+	 * @param value the new value of the '<em>Package</em>' container reference.
+	 * @see #getPackage()
 	 * @generated
 	 */
-	void setProject(Project value);
+	void setPackage(cern.devtools.depanalysis.javamodel.Package value);
 
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.

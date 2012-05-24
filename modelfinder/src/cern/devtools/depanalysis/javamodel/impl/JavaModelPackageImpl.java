@@ -64,6 +64,13 @@ public class JavaModelPackageImpl extends EPackageImpl implements JavaModelPacka
 	private EClass workspaceEClass = null;
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass packageEClass = null;
+
+	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
 	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
 	 * package URI value.
@@ -138,8 +145,8 @@ public class JavaModelPackageImpl extends EPackageImpl implements JavaModelPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getProject_Classes() {
-		return (EReference)projectEClass.getEStructuralFeatures().get(0);
+	public EAttribute getProject_Name() {
+		return (EAttribute)projectEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -147,8 +154,8 @@ public class JavaModelPackageImpl extends EPackageImpl implements JavaModelPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getProject_Name() {
-		return (EAttribute)projectEClass.getEStructuralFeatures().get(1);
+	public EReference getProject_Packages() {
+		return (EReference)projectEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -183,7 +190,7 @@ public class JavaModelPackageImpl extends EPackageImpl implements JavaModelPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getApiClass_Project() {
+	public EReference getApiClass_Package() {
 		return (EReference)apiClassEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -273,6 +280,42 @@ public class JavaModelPackageImpl extends EPackageImpl implements JavaModelPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getPackage() {
+		return packageEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getPackage_Classes() {
+		return (EReference)packageEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getPackage_Project() {
+		return (EReference)packageEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getPackage_Name() {
+		return (EAttribute)packageEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public JavaModelFactory getJavaModelFactory() {
 		return (JavaModelFactory)getEFactoryInstance();
 	}
@@ -297,13 +340,13 @@ public class JavaModelPackageImpl extends EPackageImpl implements JavaModelPacka
 
 		// Create classes and their features
 		projectEClass = createEClass(PROJECT);
-		createEReference(projectEClass, PROJECT__CLASSES);
 		createEAttribute(projectEClass, PROJECT__NAME);
+		createEReference(projectEClass, PROJECT__PACKAGES);
 
 		apiClassEClass = createEClass(API_CLASS);
 		createEReference(apiClassEClass, API_CLASS__METHODS);
 		createEReference(apiClassEClass, API_CLASS__FIELDS);
-		createEReference(apiClassEClass, API_CLASS__PROJECT);
+		createEReference(apiClassEClass, API_CLASS__PACKAGE);
 		createEAttribute(apiClassEClass, API_CLASS__NAME);
 
 		methodEClass = createEClass(METHOD);
@@ -316,6 +359,11 @@ public class JavaModelPackageImpl extends EPackageImpl implements JavaModelPacka
 
 		workspaceEClass = createEClass(WORKSPACE);
 		createEReference(workspaceEClass, WORKSPACE__PROJECTS);
+
+		packageEClass = createEClass(PACKAGE);
+		createEReference(packageEClass, PACKAGE__CLASSES);
+		createEReference(packageEClass, PACKAGE__PROJECT);
+		createEAttribute(packageEClass, PACKAGE__NAME);
 	}
 
 	/**
@@ -349,13 +397,13 @@ public class JavaModelPackageImpl extends EPackageImpl implements JavaModelPacka
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(projectEClass, Project.class, "Project", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getProject_Classes(), this.getApiClass(), this.getApiClass_Project(), "classes", null, 0, -1, Project.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getProject_Name(), ecorePackage.getEString(), "name", null, 0, 1, Project.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getProject_Packages(), this.getPackage(), this.getPackage_Project(), "packages", null, 0, -1, Project.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(apiClassEClass, ApiClass.class, "ApiClass", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getApiClass_Methods(), this.getMethod(), this.getMethod_Class(), "methods", null, 0, -1, ApiClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getApiClass_Fields(), this.getField(), this.getField_Class(), "fields", null, 0, -1, ApiClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getApiClass_Project(), this.getProject(), this.getProject_Classes(), "project", null, 1, 1, ApiClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getApiClass_Package(), this.getPackage(), this.getPackage_Classes(), "package", null, 1, 1, ApiClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getApiClass_Name(), ecorePackage.getEString(), "name", null, 0, 1, ApiClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(methodEClass, Method.class, "Method", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -368,6 +416,11 @@ public class JavaModelPackageImpl extends EPackageImpl implements JavaModelPacka
 
 		initEClass(workspaceEClass, Workspace.class, "Workspace", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getWorkspace_Projects(), this.getProject(), null, "projects", null, 0, -1, Workspace.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(packageEClass, cern.devtools.depanalysis.javamodel.Package.class, "Package", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getPackage_Classes(), this.getApiClass(), this.getApiClass_Package(), "classes", null, 0, -1, cern.devtools.depanalysis.javamodel.Package.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPackage_Project(), this.getProject(), this.getProject_Packages(), "project", null, 1, 1, cern.devtools.depanalysis.javamodel.Package.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPackage_Name(), ecorePackage.getEString(), "name", null, 0, 1, cern.devtools.depanalysis.javamodel.Package.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

@@ -6,25 +6,20 @@
  */
 package cern.devtools.depanalysis.javamodel.impl;
 
-import cern.devtools.depanalysis.javamodel.ApiClass;
-import cern.devtools.depanalysis.javamodel.JavaModelPackage;
-import cern.devtools.depanalysis.javamodel.Project;
-
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+
+import cern.devtools.depanalysis.javamodel.JavaModelPackage;
+import cern.devtools.depanalysis.javamodel.Project;
 
 /**
  * <!-- begin-user-doc -->
@@ -33,24 +28,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link cern.devtools.depanalysis.javamodel.impl.ProjectImpl#getClasses <em>Classes</em>}</li>
  *   <li>{@link cern.devtools.depanalysis.javamodel.impl.ProjectImpl#getName <em>Name</em>}</li>
+ *   <li>{@link cern.devtools.depanalysis.javamodel.impl.ProjectImpl#getPackages <em>Packages</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
 public class ProjectImpl extends EObjectImpl implements Project {
-	/**
-	 * The cached value of the '{@link #getClasses() <em>Classes</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getClasses()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<ApiClass> classes;
-
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -71,6 +56,16 @@ public class ProjectImpl extends EObjectImpl implements Project {
 	protected String name = NAME_EDEFAULT;
 
 	/**
+	 * The cached value of the '{@link #getPackages() <em>Packages</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPackages()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<cern.devtools.depanalysis.javamodel.Package> packages;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -87,18 +82,6 @@ public class ProjectImpl extends EObjectImpl implements Project {
 	@Override
 	protected EClass eStaticClass() {
 		return JavaModelPackage.Literals.PROJECT;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<ApiClass> getClasses() {
-		if (classes == null) {
-			classes = new EObjectContainmentWithInverseEList<ApiClass>(ApiClass.class, this, JavaModelPackage.PROJECT__CLASSES, JavaModelPackage.API_CLASS__PROJECT);
-		}
-		return classes;
 	}
 
 	/**
@@ -127,12 +110,24 @@ public class ProjectImpl extends EObjectImpl implements Project {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<cern.devtools.depanalysis.javamodel.Package> getPackages() {
+		if (packages == null) {
+			packages = new EObjectContainmentWithInverseEList<cern.devtools.depanalysis.javamodel.Package>(cern.devtools.depanalysis.javamodel.Package.class, this, JavaModelPackage.PROJECT__PACKAGES, JavaModelPackage.PACKAGE__PROJECT);
+		}
+		return packages;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case JavaModelPackage.PROJECT__CLASSES:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getClasses()).basicAdd(otherEnd, msgs);
+			case JavaModelPackage.PROJECT__PACKAGES:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getPackages()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -145,8 +140,8 @@ public class ProjectImpl extends EObjectImpl implements Project {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case JavaModelPackage.PROJECT__CLASSES:
-				return ((InternalEList<?>)getClasses()).basicRemove(otherEnd, msgs);
+			case JavaModelPackage.PROJECT__PACKAGES:
+				return ((InternalEList<?>)getPackages()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -159,10 +154,10 @@ public class ProjectImpl extends EObjectImpl implements Project {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case JavaModelPackage.PROJECT__CLASSES:
-				return getClasses();
 			case JavaModelPackage.PROJECT__NAME:
 				return getName();
+			case JavaModelPackage.PROJECT__PACKAGES:
+				return getPackages();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -176,12 +171,12 @@ public class ProjectImpl extends EObjectImpl implements Project {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case JavaModelPackage.PROJECT__CLASSES:
-				getClasses().clear();
-				getClasses().addAll((Collection<? extends ApiClass>)newValue);
-				return;
 			case JavaModelPackage.PROJECT__NAME:
 				setName((String)newValue);
+				return;
+			case JavaModelPackage.PROJECT__PACKAGES:
+				getPackages().clear();
+				getPackages().addAll((Collection<? extends cern.devtools.depanalysis.javamodel.Package>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -195,11 +190,11 @@ public class ProjectImpl extends EObjectImpl implements Project {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case JavaModelPackage.PROJECT__CLASSES:
-				getClasses().clear();
-				return;
 			case JavaModelPackage.PROJECT__NAME:
 				setName(NAME_EDEFAULT);
+				return;
+			case JavaModelPackage.PROJECT__PACKAGES:
+				getPackages().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -213,10 +208,10 @@ public class ProjectImpl extends EObjectImpl implements Project {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case JavaModelPackage.PROJECT__CLASSES:
-				return classes != null && !classes.isEmpty();
 			case JavaModelPackage.PROJECT__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case JavaModelPackage.PROJECT__PACKAGES:
+				return packages != null && !packages.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

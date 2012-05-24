@@ -18,8 +18,8 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link cern.devtools.depanalysis.javamodel.Project#getClasses <em>Classes</em>}</li>
  *   <li>{@link cern.devtools.depanalysis.javamodel.Project#getName <em>Name</em>}</li>
+ *   <li>{@link cern.devtools.depanalysis.javamodel.Project#getPackages <em>Packages</em>}</li>
  * </ul>
  * </p>
  *
@@ -28,24 +28,6 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface Project extends EObject {
-	/**
-	 * Returns the value of the '<em><b>Classes</b></em>' containment reference list.
-	 * The list contents are of type {@link cern.devtools.depanalysis.javamodel.ApiClass}.
-	 * It is bidirectional and its opposite is '{@link cern.devtools.depanalysis.javamodel.ApiClass#getProject <em>Project</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Classes</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Classes</em>' containment reference list.
-	 * @see cern.devtools.depanalysis.javamodel.JavaModelPackage#getProject_Classes()
-	 * @see cern.devtools.depanalysis.javamodel.ApiClass#getProject
-	 * @model opposite="project" containment="true"
-	 * @generated
-	 */
-	EList<ApiClass> getClasses();
-
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -71,5 +53,23 @@ public interface Project extends EObject {
 	 * @generated
 	 */
 	void setName(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Packages</b></em>' containment reference list.
+	 * The list contents are of type {@link cern.devtools.depanalysis.javamodel.Package}.
+	 * It is bidirectional and its opposite is '{@link cern.devtools.depanalysis.javamodel.Package#getProject <em>Project</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Packages</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Packages</em>' containment reference list.
+	 * @see cern.devtools.depanalysis.javamodel.JavaModelPackage#getProject_Packages()
+	 * @see cern.devtools.depanalysis.javamodel.Package#getProject
+	 * @model opposite="project" containment="true"
+	 * @generated
+	 */
+	EList<cern.devtools.depanalysis.javamodel.Package> getPackages();
 
 } // Project

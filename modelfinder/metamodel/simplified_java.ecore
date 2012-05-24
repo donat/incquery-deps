@@ -4,17 +4,17 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="javamodel"
     nsURI="http://simplified_java/1.0" nsPrefix="jm">
   <eClassifiers xsi:type="ecore:EClass" name="Project">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="classes" upperBound="-1"
-        eType="#//ApiClass" containment="true" eOpposite="#//ApiClass/project"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="packages" upperBound="-1"
+        eType="#//Package" containment="true" eOpposite="#//Package/project"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ApiClass">
     <eStructuralFeatures xsi:type="ecore:EReference" name="methods" upperBound="-1"
         eType="#//Method" containment="true" eOpposite="#//Method/class"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="fields" upperBound="-1"
         eType="#//Field" containment="true" eOpposite="#//Field/class"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="project" lowerBound="1"
-        eType="#//Project" eOpposite="#//Project/classes"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="package" lowerBound="1"
+        eType="#//Package" eOpposite="#//Package/classes"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Method">
@@ -30,5 +30,12 @@
   <eClassifiers xsi:type="ecore:EClass" name="Workspace">
     <eStructuralFeatures xsi:type="ecore:EReference" name="projects" upperBound="-1"
         eType="#//Project" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Package">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="classes" upperBound="-1"
+        eType="#//ApiClass" containment="true" eOpposite="#//ApiClass/package"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="project" lowerBound="1"
+        eType="#//Project" eOpposite="#//Project/packages"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

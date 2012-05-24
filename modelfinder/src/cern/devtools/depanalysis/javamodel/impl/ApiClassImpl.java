@@ -6,28 +6,23 @@
  */
 package cern.devtools.depanalysis.javamodel.impl;
 
-import cern.devtools.depanalysis.javamodel.ApiClass;
-import cern.devtools.depanalysis.javamodel.Field;
-import cern.devtools.depanalysis.javamodel.JavaModelPackage;
-import cern.devtools.depanalysis.javamodel.Method;
-import cern.devtools.depanalysis.javamodel.Project;
-
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
+
+import cern.devtools.depanalysis.javamodel.ApiClass;
+import cern.devtools.depanalysis.javamodel.Field;
+import cern.devtools.depanalysis.javamodel.JavaModelPackage;
+import cern.devtools.depanalysis.javamodel.Method;
 
 /**
  * <!-- begin-user-doc -->
@@ -38,7 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link cern.devtools.depanalysis.javamodel.impl.ApiClassImpl#getMethods <em>Methods</em>}</li>
  *   <li>{@link cern.devtools.depanalysis.javamodel.impl.ApiClassImpl#getFields <em>Fields</em>}</li>
- *   <li>{@link cern.devtools.depanalysis.javamodel.impl.ApiClassImpl#getProject <em>Project</em>}</li>
+ *   <li>{@link cern.devtools.depanalysis.javamodel.impl.ApiClassImpl#getPackage <em>Package</em>}</li>
  *   <li>{@link cern.devtools.depanalysis.javamodel.impl.ApiClassImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
@@ -134,9 +129,9 @@ public class ApiClassImpl extends EObjectImpl implements ApiClass {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Project getProject() {
-		if (eContainerFeatureID() != JavaModelPackage.API_CLASS__PROJECT) return null;
-		return (Project)eContainer();
+	public cern.devtools.depanalysis.javamodel.Package getPackage() {
+		if (eContainerFeatureID() != JavaModelPackage.API_CLASS__PACKAGE) return null;
+		return (cern.devtools.depanalysis.javamodel.Package)eContainer();
 	}
 
 	/**
@@ -144,8 +139,8 @@ public class ApiClassImpl extends EObjectImpl implements ApiClass {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetProject(Project newProject, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newProject, JavaModelPackage.API_CLASS__PROJECT, msgs);
+	public NotificationChain basicSetPackage(cern.devtools.depanalysis.javamodel.Package newPackage, NotificationChain msgs) {
+		msgs = eBasicSetContainer((InternalEObject)newPackage, JavaModelPackage.API_CLASS__PACKAGE, msgs);
 		return msgs;
 	}
 
@@ -154,20 +149,20 @@ public class ApiClassImpl extends EObjectImpl implements ApiClass {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setProject(Project newProject) {
-		if (newProject != eInternalContainer() || (eContainerFeatureID() != JavaModelPackage.API_CLASS__PROJECT && newProject != null)) {
-			if (EcoreUtil.isAncestor(this, newProject))
+	public void setPackage(cern.devtools.depanalysis.javamodel.Package newPackage) {
+		if (newPackage != eInternalContainer() || (eContainerFeatureID() != JavaModelPackage.API_CLASS__PACKAGE && newPackage != null)) {
+			if (EcoreUtil.isAncestor(this, newPackage))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
-			if (newProject != null)
-				msgs = ((InternalEObject)newProject).eInverseAdd(this, JavaModelPackage.PROJECT__CLASSES, Project.class, msgs);
-			msgs = basicSetProject(newProject, msgs);
+			if (newPackage != null)
+				msgs = ((InternalEObject)newPackage).eInverseAdd(this, JavaModelPackage.PACKAGE__CLASSES, cern.devtools.depanalysis.javamodel.Package.class, msgs);
+			msgs = basicSetPackage(newPackage, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, JavaModelPackage.API_CLASS__PROJECT, newProject, newProject));
+			eNotify(new ENotificationImpl(this, Notification.SET, JavaModelPackage.API_CLASS__PACKAGE, newPackage, newPackage));
 	}
 
 	/**
@@ -204,10 +199,10 @@ public class ApiClassImpl extends EObjectImpl implements ApiClass {
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getMethods()).basicAdd(otherEnd, msgs);
 			case JavaModelPackage.API_CLASS__FIELDS:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getFields()).basicAdd(otherEnd, msgs);
-			case JavaModelPackage.API_CLASS__PROJECT:
+			case JavaModelPackage.API_CLASS__PACKAGE:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetProject((Project)otherEnd, msgs);
+				return basicSetPackage((cern.devtools.depanalysis.javamodel.Package)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -224,8 +219,8 @@ public class ApiClassImpl extends EObjectImpl implements ApiClass {
 				return ((InternalEList<?>)getMethods()).basicRemove(otherEnd, msgs);
 			case JavaModelPackage.API_CLASS__FIELDS:
 				return ((InternalEList<?>)getFields()).basicRemove(otherEnd, msgs);
-			case JavaModelPackage.API_CLASS__PROJECT:
-				return basicSetProject(null, msgs);
+			case JavaModelPackage.API_CLASS__PACKAGE:
+				return basicSetPackage(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -238,8 +233,8 @@ public class ApiClassImpl extends EObjectImpl implements ApiClass {
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case JavaModelPackage.API_CLASS__PROJECT:
-				return eInternalContainer().eInverseRemove(this, JavaModelPackage.PROJECT__CLASSES, Project.class, msgs);
+			case JavaModelPackage.API_CLASS__PACKAGE:
+				return eInternalContainer().eInverseRemove(this, JavaModelPackage.PACKAGE__CLASSES, cern.devtools.depanalysis.javamodel.Package.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -256,8 +251,8 @@ public class ApiClassImpl extends EObjectImpl implements ApiClass {
 				return getMethods();
 			case JavaModelPackage.API_CLASS__FIELDS:
 				return getFields();
-			case JavaModelPackage.API_CLASS__PROJECT:
-				return getProject();
+			case JavaModelPackage.API_CLASS__PACKAGE:
+				return getPackage();
 			case JavaModelPackage.API_CLASS__NAME:
 				return getName();
 		}
@@ -281,8 +276,8 @@ public class ApiClassImpl extends EObjectImpl implements ApiClass {
 				getFields().clear();
 				getFields().addAll((Collection<? extends Field>)newValue);
 				return;
-			case JavaModelPackage.API_CLASS__PROJECT:
-				setProject((Project)newValue);
+			case JavaModelPackage.API_CLASS__PACKAGE:
+				setPackage((cern.devtools.depanalysis.javamodel.Package)newValue);
 				return;
 			case JavaModelPackage.API_CLASS__NAME:
 				setName((String)newValue);
@@ -305,8 +300,8 @@ public class ApiClassImpl extends EObjectImpl implements ApiClass {
 			case JavaModelPackage.API_CLASS__FIELDS:
 				getFields().clear();
 				return;
-			case JavaModelPackage.API_CLASS__PROJECT:
-				setProject((Project)null);
+			case JavaModelPackage.API_CLASS__PACKAGE:
+				setPackage((cern.devtools.depanalysis.javamodel.Package)null);
 				return;
 			case JavaModelPackage.API_CLASS__NAME:
 				setName(NAME_EDEFAULT);
@@ -327,8 +322,8 @@ public class ApiClassImpl extends EObjectImpl implements ApiClass {
 				return methods != null && !methods.isEmpty();
 			case JavaModelPackage.API_CLASS__FIELDS:
 				return fields != null && !fields.isEmpty();
-			case JavaModelPackage.API_CLASS__PROJECT:
-				return getProject() != null;
+			case JavaModelPackage.API_CLASS__PACKAGE:
+				return getPackage() != null;
 			case JavaModelPackage.API_CLASS__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}

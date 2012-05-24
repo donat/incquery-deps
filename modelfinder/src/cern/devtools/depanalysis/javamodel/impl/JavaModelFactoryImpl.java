@@ -6,15 +6,19 @@
  */
 package cern.devtools.depanalysis.javamodel.impl;
 
-import cern.devtools.depanalysis.javamodel.*;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+
+import cern.devtools.depanalysis.javamodel.ApiClass;
+import cern.devtools.depanalysis.javamodel.Field;
+import cern.devtools.depanalysis.javamodel.JavaModelFactory;
+import cern.devtools.depanalysis.javamodel.JavaModelPackage;
+import cern.devtools.depanalysis.javamodel.Method;
+import cern.devtools.depanalysis.javamodel.Project;
+import cern.devtools.depanalysis.javamodel.Workspace;
 
 /**
  * <!-- begin-user-doc -->
@@ -65,6 +69,7 @@ public class JavaModelFactoryImpl extends EFactoryImpl implements JavaModelFacto
 			case JavaModelPackage.METHOD: return createMethod();
 			case JavaModelPackage.FIELD: return createField();
 			case JavaModelPackage.WORKSPACE: return createWorkspace();
+			case JavaModelPackage.PACKAGE: return createPackage();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -118,6 +123,16 @@ public class JavaModelFactoryImpl extends EFactoryImpl implements JavaModelFacto
 	public Workspace createWorkspace() {
 		WorkspaceImpl workspace = new WorkspaceImpl();
 		return workspace;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public cern.devtools.depanalysis.javamodel.Package createPackage() {
+		PackageImpl package_ = new PackageImpl();
+		return package_;
 	}
 
 	/**
