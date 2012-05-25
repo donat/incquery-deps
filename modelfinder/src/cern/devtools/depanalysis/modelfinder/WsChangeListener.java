@@ -62,6 +62,8 @@ public class WsChangeListener implements IElementChangedListener {
 			printModel(this.workspace);
 		} catch (CoreException e) {
 			LOG.warning("Error on model change. Desc: " + e.getMessage());
+			LOG.info("Rebuilding entire model...");
+			reset();
 		}
 	}
 
