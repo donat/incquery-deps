@@ -6,26 +6,21 @@
  */
 package cern.devtools.depanalysis.javamodel.impl;
 
-import cern.devtools.depanalysis.javamodel.ApiClass;
-import cern.devtools.depanalysis.javamodel.JavaModelPackage;
-import cern.devtools.depanalysis.javamodel.Project;
-
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
+
+import cern.devtools.depanalysis.javamodel.ApiClass;
+import cern.devtools.depanalysis.javamodel.JavaModelPackage;
+import cern.devtools.depanalysis.javamodel.Project;
 
 /**
  * <!-- begin-user-doc -->
@@ -36,13 +31,12 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link cern.devtools.depanalysis.javamodel.impl.PackageImpl#getClasses <em>Classes</em>}</li>
  *   <li>{@link cern.devtools.depanalysis.javamodel.impl.PackageImpl#getProject <em>Project</em>}</li>
- *   <li>{@link cern.devtools.depanalysis.javamodel.impl.PackageImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class PackageImpl extends EObjectImpl implements cern.devtools.depanalysis.javamodel.Package {
+public class PackageImpl extends NamedElementImpl implements cern.devtools.depanalysis.javamodel.Package {
 	/**
 	 * The cached value of the '{@link #getClasses() <em>Classes</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -52,26 +46,6 @@ public class PackageImpl extends EObjectImpl implements cern.devtools.depanalysi
 	 * @ordered
 	 */
 	protected EList<ApiClass> classes;
-
-	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String NAME_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String name = NAME_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -150,27 +124,6 @@ public class PackageImpl extends EObjectImpl implements cern.devtools.depanalysi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, JavaModelPackage.PACKAGE__NAME, oldName, name));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -227,8 +180,6 @@ public class PackageImpl extends EObjectImpl implements cern.devtools.depanalysi
 				return getClasses();
 			case JavaModelPackage.PACKAGE__PROJECT:
 				return getProject();
-			case JavaModelPackage.PACKAGE__NAME:
-				return getName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -249,9 +200,6 @@ public class PackageImpl extends EObjectImpl implements cern.devtools.depanalysi
 			case JavaModelPackage.PACKAGE__PROJECT:
 				setProject((Project)newValue);
 				return;
-			case JavaModelPackage.PACKAGE__NAME:
-				setName((String)newValue);
-				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -270,9 +218,6 @@ public class PackageImpl extends EObjectImpl implements cern.devtools.depanalysi
 			case JavaModelPackage.PACKAGE__PROJECT:
 				setProject((Project)null);
 				return;
-			case JavaModelPackage.PACKAGE__NAME:
-				setName(NAME_EDEFAULT);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -289,8 +234,6 @@ public class PackageImpl extends EObjectImpl implements cern.devtools.depanalysi
 				return classes != null && !classes.isEmpty();
 			case JavaModelPackage.PACKAGE__PROJECT:
 				return getProject() != null;
-			case JavaModelPackage.PACKAGE__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return super.eIsSet(featureID);
 	}

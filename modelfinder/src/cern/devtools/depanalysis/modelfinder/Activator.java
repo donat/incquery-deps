@@ -1,7 +1,5 @@
 package cern.devtools.depanalysis.modelfinder;
 
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.jdt.core.ElementChangedEvent;
 import org.eclipse.jdt.core.IElementChangedListener;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -20,7 +18,7 @@ public class Activator extends AbstractUIPlugin {
 	private static Activator plugin;
 	
 	// java source code changing listener
-	IElementChangedListener incChangeList = new IncrementalChangeListener();
+	IElementChangedListener incChangeList = new WsChangeListener();
 	
 	
 	/**

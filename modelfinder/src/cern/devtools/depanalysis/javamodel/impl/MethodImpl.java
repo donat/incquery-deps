@@ -6,20 +6,16 @@
  */
 package cern.devtools.depanalysis.javamodel.impl;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+
 import cern.devtools.depanalysis.javamodel.ApiClass;
 import cern.devtools.depanalysis.javamodel.JavaModelPackage;
 import cern.devtools.depanalysis.javamodel.Method;
-
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
-import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -29,32 +25,12 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * The following features are implemented:
  * <ul>
  *   <li>{@link cern.devtools.depanalysis.javamodel.impl.MethodImpl#getClass_ <em>Class</em>}</li>
- *   <li>{@link cern.devtools.depanalysis.javamodel.impl.MethodImpl#getSignature <em>Signature</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class MethodImpl extends EObjectImpl implements Method {
-	/**
-	 * The default value of the '{@link #getSignature() <em>Signature</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getSignature()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String SIGNATURE_EDEFAULT = null;
-	/**
-	 * The cached value of the '{@link #getSignature() <em>Signature</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getSignature()
-	 * @generated
-	 * @ordered
-	 */
-	protected String signature = SIGNATURE_EDEFAULT;
-
+public class MethodImpl extends NamedElementImpl implements Method {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -120,27 +96,6 @@ public class MethodImpl extends EObjectImpl implements Method {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getSignature() {
-		return signature;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setSignature(String newSignature) {
-		String oldSignature = signature;
-		signature = newSignature;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, JavaModelPackage.METHOD__SIGNATURE, oldSignature, signature));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -190,8 +145,6 @@ public class MethodImpl extends EObjectImpl implements Method {
 		switch (featureID) {
 			case JavaModelPackage.METHOD__CLASS:
 				return getClass_();
-			case JavaModelPackage.METHOD__SIGNATURE:
-				return getSignature();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -206,9 +159,6 @@ public class MethodImpl extends EObjectImpl implements Method {
 		switch (featureID) {
 			case JavaModelPackage.METHOD__CLASS:
 				setClass((ApiClass)newValue);
-				return;
-			case JavaModelPackage.METHOD__SIGNATURE:
-				setSignature((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -225,9 +175,6 @@ public class MethodImpl extends EObjectImpl implements Method {
 			case JavaModelPackage.METHOD__CLASS:
 				setClass((ApiClass)null);
 				return;
-			case JavaModelPackage.METHOD__SIGNATURE:
-				setSignature(SIGNATURE_EDEFAULT);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -242,8 +189,6 @@ public class MethodImpl extends EObjectImpl implements Method {
 		switch (featureID) {
 			case JavaModelPackage.METHOD__CLASS:
 				return getClass_() != null;
-			case JavaModelPackage.METHOD__SIGNATURE:
-				return SIGNATURE_EDEFAULT == null ? signature != null : !SIGNATURE_EDEFAULT.equals(signature);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -257,7 +202,7 @@ public class MethodImpl extends EObjectImpl implements Method {
 	public String toString() {
 		StringBuffer result = new StringBuffer("Method");
 		result.append(" (signature: ");
-		result.append(signature);
+		result.append(name);
 		result.append(')');
 		return result.toString();
 	}

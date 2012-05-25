@@ -6,20 +6,16 @@
  */
 package cern.devtools.depanalysis.javamodel.impl;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+
 import cern.devtools.depanalysis.javamodel.ApiClass;
 import cern.devtools.depanalysis.javamodel.Field;
 import cern.devtools.depanalysis.javamodel.JavaModelPackage;
-
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
-
-import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -29,32 +25,12 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * The following features are implemented:
  * <ul>
  *   <li>{@link cern.devtools.depanalysis.javamodel.impl.FieldImpl#getClass_ <em>Class</em>}</li>
- *   <li>{@link cern.devtools.depanalysis.javamodel.impl.FieldImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class FieldImpl extends EObjectImpl implements Field {
-	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String NAME_EDEFAULT = null;
-	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String name = NAME_EDEFAULT;
-
+public class FieldImpl extends NamedElementImpl implements Field {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -120,27 +96,6 @@ public class FieldImpl extends EObjectImpl implements Field {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, JavaModelPackage.FIELD__NAME, oldName, name));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -190,8 +145,6 @@ public class FieldImpl extends EObjectImpl implements Field {
 		switch (featureID) {
 			case JavaModelPackage.FIELD__CLASS:
 				return getClass_();
-			case JavaModelPackage.FIELD__NAME:
-				return getName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -206,9 +159,6 @@ public class FieldImpl extends EObjectImpl implements Field {
 		switch (featureID) {
 			case JavaModelPackage.FIELD__CLASS:
 				setClass((ApiClass)newValue);
-				return;
-			case JavaModelPackage.FIELD__NAME:
-				setName((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -225,9 +175,6 @@ public class FieldImpl extends EObjectImpl implements Field {
 			case JavaModelPackage.FIELD__CLASS:
 				setClass((ApiClass)null);
 				return;
-			case JavaModelPackage.FIELD__NAME:
-				setName(NAME_EDEFAULT);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -242,8 +189,6 @@ public class FieldImpl extends EObjectImpl implements Field {
 		switch (featureID) {
 			case JavaModelPackage.FIELD__CLASS:
 				return getClass_() != null;
-			case JavaModelPackage.FIELD__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return super.eIsSet(featureID);
 	}

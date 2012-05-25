@@ -14,7 +14,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -34,13 +33,12 @@ import cern.devtools.depanalysis.javamodel.Method;
  *   <li>{@link cern.devtools.depanalysis.javamodel.impl.ApiClassImpl#getMethods <em>Methods</em>}</li>
  *   <li>{@link cern.devtools.depanalysis.javamodel.impl.ApiClassImpl#getFields <em>Fields</em>}</li>
  *   <li>{@link cern.devtools.depanalysis.javamodel.impl.ApiClassImpl#getPackage <em>Package</em>}</li>
- *   <li>{@link cern.devtools.depanalysis.javamodel.impl.ApiClassImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ApiClassImpl extends EObjectImpl implements ApiClass {
+public class ApiClassImpl extends NamedElementImpl implements ApiClass {
 	/**
 	 * The cached value of the '{@link #getMethods() <em>Methods</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -60,26 +58,6 @@ public class ApiClassImpl extends EObjectImpl implements ApiClass {
 	 * @ordered
 	 */
 	protected EList<Field> fields;
-
-	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String NAME_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String name = NAME_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -170,27 +148,6 @@ public class ApiClassImpl extends EObjectImpl implements ApiClass {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, JavaModelPackage.API_CLASS__NAME, oldName, name));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -253,8 +210,6 @@ public class ApiClassImpl extends EObjectImpl implements ApiClass {
 				return getFields();
 			case JavaModelPackage.API_CLASS__PACKAGE:
 				return getPackage();
-			case JavaModelPackage.API_CLASS__NAME:
-				return getName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -279,9 +234,6 @@ public class ApiClassImpl extends EObjectImpl implements ApiClass {
 			case JavaModelPackage.API_CLASS__PACKAGE:
 				setPackage((cern.devtools.depanalysis.javamodel.Package)newValue);
 				return;
-			case JavaModelPackage.API_CLASS__NAME:
-				setName((String)newValue);
-				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -303,9 +255,6 @@ public class ApiClassImpl extends EObjectImpl implements ApiClass {
 			case JavaModelPackage.API_CLASS__PACKAGE:
 				setPackage((cern.devtools.depanalysis.javamodel.Package)null);
 				return;
-			case JavaModelPackage.API_CLASS__NAME:
-				setName(NAME_EDEFAULT);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -324,8 +273,6 @@ public class ApiClassImpl extends EObjectImpl implements ApiClass {
 				return fields != null && !fields.isEmpty();
 			case JavaModelPackage.API_CLASS__PACKAGE:
 				return getPackage() != null;
-			case JavaModelPackage.API_CLASS__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return super.eIsSet(featureID);
 	}

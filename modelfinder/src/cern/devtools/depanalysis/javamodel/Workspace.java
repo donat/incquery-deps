@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link cern.devtools.depanalysis.javamodel.Workspace#getProjects <em>Projects</em>}</li>
+ *   <li>{@link cern.devtools.depanalysis.javamodel.Workspace#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
  *
@@ -42,5 +43,21 @@ public interface Workspace extends EObject {
 	 * @generated
 	 */
 	EList<Project> getProjects();
+
+	/**
+	 * Returns the value of the '<em><b>Elements</b></em>' reference list.
+	 * The list contents are of type {@link cern.devtools.depanalysis.javamodel.NamedElement}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Elements</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Elements</em>' reference list.
+	 * @see cern.devtools.depanalysis.javamodel.JavaModelPackage#getWorkspace_Elements()
+	 * @model
+	 * @generated
+	 */
+	EList<NamedElement> getElements();
 
 } // Workspace

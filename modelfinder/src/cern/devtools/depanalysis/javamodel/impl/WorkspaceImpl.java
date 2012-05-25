@@ -7,6 +7,7 @@
 package cern.devtools.depanalysis.javamodel.impl;
 
 import cern.devtools.depanalysis.javamodel.JavaModelPackage;
+import cern.devtools.depanalysis.javamodel.NamedElement;
 import cern.devtools.depanalysis.javamodel.Project;
 import cern.devtools.depanalysis.javamodel.Workspace;
 
@@ -22,6 +23,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -32,6 +34,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link cern.devtools.depanalysis.javamodel.impl.WorkspaceImpl#getProjects <em>Projects</em>}</li>
+ *   <li>{@link cern.devtools.depanalysis.javamodel.impl.WorkspaceImpl#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
  *
@@ -47,6 +50,16 @@ public class WorkspaceImpl extends EObjectImpl implements Workspace {
 	 * @ordered
 	 */
 	protected EList<Project> projects;
+
+	/**
+	 * The cached value of the '{@link #getElements() <em>Elements</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getElements()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<NamedElement> elements;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -84,6 +97,18 @@ public class WorkspaceImpl extends EObjectImpl implements Workspace {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<NamedElement> getElements() {
+		if (elements == null) {
+			elements = new EObjectResolvingEList<NamedElement>(NamedElement.class, this, JavaModelPackage.WORKSPACE__ELEMENTS);
+		}
+		return elements;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -103,6 +128,8 @@ public class WorkspaceImpl extends EObjectImpl implements Workspace {
 		switch (featureID) {
 			case JavaModelPackage.WORKSPACE__PROJECTS:
 				return getProjects();
+			case JavaModelPackage.WORKSPACE__ELEMENTS:
+				return getElements();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -120,6 +147,10 @@ public class WorkspaceImpl extends EObjectImpl implements Workspace {
 				getProjects().clear();
 				getProjects().addAll((Collection<? extends Project>)newValue);
 				return;
+			case JavaModelPackage.WORKSPACE__ELEMENTS:
+				getElements().clear();
+				getElements().addAll((Collection<? extends NamedElement>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -135,6 +166,9 @@ public class WorkspaceImpl extends EObjectImpl implements Workspace {
 			case JavaModelPackage.WORKSPACE__PROJECTS:
 				getProjects().clear();
 				return;
+			case JavaModelPackage.WORKSPACE__ELEMENTS:
+				getElements().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -149,6 +183,8 @@ public class WorkspaceImpl extends EObjectImpl implements Workspace {
 		switch (featureID) {
 			case JavaModelPackage.WORKSPACE__PROJECTS:
 				return projects != null && !projects.isEmpty();
+			case JavaModelPackage.WORKSPACE__ELEMENTS:
+				return elements != null && !elements.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

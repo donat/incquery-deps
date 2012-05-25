@@ -6,18 +6,18 @@
  */
 package cern.devtools.depanalysis.javamodel.util;
 
-import cern.devtools.depanalysis.javamodel.ApiClass;
-import cern.devtools.depanalysis.javamodel.Field;
-import cern.devtools.depanalysis.javamodel.JavaModelPackage;
-import cern.devtools.depanalysis.javamodel.Method;
-import cern.devtools.depanalysis.javamodel.Project;
-import cern.devtools.depanalysis.javamodel.Workspace;
-import cern.devtools.depanalysis.javamodel.*;
-
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+
+import cern.devtools.depanalysis.javamodel.ApiClass;
+import cern.devtools.depanalysis.javamodel.Field;
+import cern.devtools.depanalysis.javamodel.JavaModelPackage;
+import cern.devtools.depanalysis.javamodel.Method;
+import cern.devtools.depanalysis.javamodel.NamedElement;
+import cern.devtools.depanalysis.javamodel.Project;
+import cern.devtools.depanalysis.javamodel.Workspace;
 
 /**
  * <!-- begin-user-doc -->
@@ -96,24 +96,28 @@ public class JavaModelSwitch<T> {
 			case JavaModelPackage.PROJECT: {
 				Project project = (Project)theEObject;
 				T result = caseProject(project);
+				if (result == null) result = caseNamedElement(project);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case JavaModelPackage.API_CLASS: {
 				ApiClass apiClass = (ApiClass)theEObject;
 				T result = caseApiClass(apiClass);
+				if (result == null) result = caseNamedElement(apiClass);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case JavaModelPackage.METHOD: {
 				Method method = (Method)theEObject;
 				T result = caseMethod(method);
+				if (result == null) result = caseNamedElement(method);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case JavaModelPackage.FIELD: {
 				Field field = (Field)theEObject;
 				T result = caseField(field);
+				if (result == null) result = caseNamedElement(field);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -126,6 +130,13 @@ public class JavaModelSwitch<T> {
 			case JavaModelPackage.PACKAGE: {
 				cern.devtools.depanalysis.javamodel.Package package_ = (cern.devtools.depanalysis.javamodel.Package)theEObject;
 				T result = casePackage(package_);
+				if (result == null) result = caseNamedElement(package_);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case JavaModelPackage.NAMED_ELEMENT: {
+				NamedElement namedElement = (NamedElement)theEObject;
+				T result = caseNamedElement(namedElement);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -220,6 +231,21 @@ public class JavaModelSwitch<T> {
 	 * @generated
 	 */
 	public T casePackage(cern.devtools.depanalysis.javamodel.Package object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Named Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Named Element</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNamedElement(NamedElement object) {
 		return null;
 	}
 

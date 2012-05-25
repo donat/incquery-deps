@@ -60,6 +60,43 @@ public interface JavaModelPackage extends EPackage {
 	JavaModelPackage eINSTANCE = cern.devtools.depanalysis.javamodel.impl.JavaModelPackageImpl.init();
 
 	/**
+	 * The meta object id for the '{@link cern.devtools.depanalysis.javamodel.impl.NamedElementImpl <em>Named Element</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see cern.devtools.depanalysis.javamodel.impl.NamedElementImpl
+	 * @see cern.devtools.depanalysis.javamodel.impl.JavaModelPackageImpl#getNamedElement()
+	 * @generated
+	 */
+	int NAMED_ELEMENT = 6;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAMED_ELEMENT__NAME = 0;
+
+	/**
+	 * The feature id for the '<em><b>Handler</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAMED_ELEMENT__HANDLER = 1;
+
+	/**
+	 * The number of structural features of the '<em>Named Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAMED_ELEMENT_FEATURE_COUNT = 2;
+
+	/**
 	 * The meta object id for the '{@link cern.devtools.depanalysis.javamodel.impl.ProjectImpl <em>Project</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -76,7 +113,16 @@ public interface JavaModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROJECT__NAME = 0;
+	int PROJECT__NAME = NAMED_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Handler</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROJECT__HANDLER = NAMED_ELEMENT__HANDLER;
 
 	/**
 	 * The feature id for the '<em><b>Packages</b></em>' containment reference list.
@@ -85,7 +131,7 @@ public interface JavaModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROJECT__PACKAGES = 1;
+	int PROJECT__PACKAGES = NAMED_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Project</em>' class.
@@ -94,7 +140,7 @@ public interface JavaModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROJECT_FEATURE_COUNT = 2;
+	int PROJECT_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link cern.devtools.depanalysis.javamodel.impl.ApiClassImpl <em>Api Class</em>}' class.
@@ -107,13 +153,31 @@ public interface JavaModelPackage extends EPackage {
 	int API_CLASS = 1;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int API_CLASS__NAME = NAMED_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Handler</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int API_CLASS__HANDLER = NAMED_ELEMENT__HANDLER;
+
+	/**
 	 * The feature id for the '<em><b>Methods</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int API_CLASS__METHODS = 0;
+	int API_CLASS__METHODS = NAMED_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Fields</b></em>' containment reference list.
@@ -122,7 +186,7 @@ public interface JavaModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int API_CLASS__FIELDS = 1;
+	int API_CLASS__FIELDS = NAMED_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Package</b></em>' container reference.
@@ -131,16 +195,7 @@ public interface JavaModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int API_CLASS__PACKAGE = 2;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int API_CLASS__NAME = 3;
+	int API_CLASS__PACKAGE = NAMED_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Api Class</em>' class.
@@ -149,7 +204,7 @@ public interface JavaModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int API_CLASS_FEATURE_COUNT = 4;
+	int API_CLASS_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link cern.devtools.depanalysis.javamodel.impl.MethodImpl <em>Method</em>}' class.
@@ -162,22 +217,31 @@ public interface JavaModelPackage extends EPackage {
 	int METHOD = 2;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int METHOD__NAME = NAMED_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Handler</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int METHOD__HANDLER = NAMED_ELEMENT__HANDLER;
+
+	/**
 	 * The feature id for the '<em><b>Class</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int METHOD__CLASS = 0;
-
-	/**
-	 * The feature id for the '<em><b>Signature</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int METHOD__SIGNATURE = 1;
+	int METHOD__CLASS = NAMED_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Method</em>' class.
@@ -186,7 +250,7 @@ public interface JavaModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int METHOD_FEATURE_COUNT = 2;
+	int METHOD_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link cern.devtools.depanalysis.javamodel.impl.FieldImpl <em>Field</em>}' class.
@@ -199,22 +263,31 @@ public interface JavaModelPackage extends EPackage {
 	int FIELD = 3;
 
 	/**
-	 * The feature id for the '<em><b>Class</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FIELD__CLASS = 0;
-
-	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FIELD__NAME = 1;
+	int FIELD__NAME = NAMED_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Handler</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD__HANDLER = NAMED_ELEMENT__HANDLER;
+
+	/**
+	 * The feature id for the '<em><b>Class</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD__CLASS = NAMED_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Field</em>' class.
@@ -223,7 +296,7 @@ public interface JavaModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FIELD_FEATURE_COUNT = 2;
+	int FIELD_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 1;
 
 
 	/**
@@ -246,13 +319,22 @@ public interface JavaModelPackage extends EPackage {
 	int WORKSPACE__PROJECTS = 0;
 
 	/**
+	 * The feature id for the '<em><b>Elements</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKSPACE__ELEMENTS = 1;
+
+	/**
 	 * The number of structural features of the '<em>Workspace</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WORKSPACE_FEATURE_COUNT = 1;
+	int WORKSPACE_FEATURE_COUNT = 2;
 
 
 	/**
@@ -266,13 +348,31 @@ public interface JavaModelPackage extends EPackage {
 	int PACKAGE = 5;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PACKAGE__NAME = NAMED_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Handler</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PACKAGE__HANDLER = NAMED_ELEMENT__HANDLER;
+
+	/**
 	 * The feature id for the '<em><b>Classes</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PACKAGE__CLASSES = 0;
+	int PACKAGE__CLASSES = NAMED_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Project</b></em>' container reference.
@@ -281,16 +381,7 @@ public interface JavaModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PACKAGE__PROJECT = 1;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PACKAGE__NAME = 2;
+	int PACKAGE__PROJECT = NAMED_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Package</em>' class.
@@ -299,7 +390,7 @@ public interface JavaModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PACKAGE_FEATURE_COUNT = 3;
+	int PACKAGE_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 2;
 
 
 	/**
@@ -311,17 +402,6 @@ public interface JavaModelPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getProject();
-
-	/**
-	 * Returns the meta object for the attribute '{@link cern.devtools.depanalysis.javamodel.Project#getName <em>Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see cern.devtools.depanalysis.javamodel.Project#getName()
-	 * @see #getProject()
-	 * @generated
-	 */
-	EAttribute getProject_Name();
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link cern.devtools.depanalysis.javamodel.Project#getPackages <em>Packages</em>}'.
@@ -378,17 +458,6 @@ public interface JavaModelPackage extends EPackage {
 	EReference getApiClass_Package();
 
 	/**
-	 * Returns the meta object for the attribute '{@link cern.devtools.depanalysis.javamodel.ApiClass#getName <em>Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see cern.devtools.depanalysis.javamodel.ApiClass#getName()
-	 * @see #getApiClass()
-	 * @generated
-	 */
-	EAttribute getApiClass_Name();
-
-	/**
 	 * Returns the meta object for class '{@link cern.devtools.depanalysis.javamodel.Method <em>Method</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -408,17 +477,6 @@ public interface JavaModelPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getMethod_Class();
-
-	/**
-	 * Returns the meta object for the attribute '{@link cern.devtools.depanalysis.javamodel.Method#getSignature <em>Signature</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Signature</em>'.
-	 * @see cern.devtools.depanalysis.javamodel.Method#getSignature()
-	 * @see #getMethod()
-	 * @generated
-	 */
-	EAttribute getMethod_Signature();
 
 	/**
 	 * Returns the meta object for class '{@link cern.devtools.depanalysis.javamodel.Field <em>Field</em>}'.
@@ -442,17 +500,6 @@ public interface JavaModelPackage extends EPackage {
 	EReference getField_Class();
 
 	/**
-	 * Returns the meta object for the attribute '{@link cern.devtools.depanalysis.javamodel.Field#getName <em>Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see cern.devtools.depanalysis.javamodel.Field#getName()
-	 * @see #getField()
-	 * @generated
-	 */
-	EAttribute getField_Name();
-
-	/**
 	 * Returns the meta object for class '{@link cern.devtools.depanalysis.javamodel.Workspace <em>Workspace</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -472,6 +519,17 @@ public interface JavaModelPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getWorkspace_Projects();
+
+	/**
+	 * Returns the meta object for the reference list '{@link cern.devtools.depanalysis.javamodel.Workspace#getElements <em>Elements</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Elements</em>'.
+	 * @see cern.devtools.depanalysis.javamodel.Workspace#getElements()
+	 * @see #getWorkspace()
+	 * @generated
+	 */
+	EReference getWorkspace_Elements();
 
 	/**
 	 * Returns the meta object for class '{@link cern.devtools.depanalysis.javamodel.Package <em>Package</em>}'.
@@ -506,15 +564,36 @@ public interface JavaModelPackage extends EPackage {
 	EReference getPackage_Project();
 
 	/**
-	 * Returns the meta object for the attribute '{@link cern.devtools.depanalysis.javamodel.Package#getName <em>Name</em>}'.
+	 * Returns the meta object for class '{@link cern.devtools.depanalysis.javamodel.NamedElement <em>Named Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Named Element</em>'.
+	 * @see cern.devtools.depanalysis.javamodel.NamedElement
+	 * @generated
+	 */
+	EClass getNamedElement();
+
+	/**
+	 * Returns the meta object for the attribute '{@link cern.devtools.depanalysis.javamodel.NamedElement#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see cern.devtools.depanalysis.javamodel.Package#getName()
-	 * @see #getPackage()
+	 * @see cern.devtools.depanalysis.javamodel.NamedElement#getName()
+	 * @see #getNamedElement()
 	 * @generated
 	 */
-	EAttribute getPackage_Name();
+	EAttribute getNamedElement_Name();
+
+	/**
+	 * Returns the meta object for the attribute '{@link cern.devtools.depanalysis.javamodel.NamedElement#getHandler <em>Handler</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Handler</em>'.
+	 * @see cern.devtools.depanalysis.javamodel.NamedElement#getHandler()
+	 * @see #getNamedElement()
+	 * @generated
+	 */
+	EAttribute getNamedElement_Handler();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -547,14 +626,6 @@ public interface JavaModelPackage extends EPackage {
 		 * @generated
 		 */
 		EClass PROJECT = eINSTANCE.getProject();
-
-		/**
-		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute PROJECT__NAME = eINSTANCE.getProject_Name();
 
 		/**
 		 * The meta object literal for the '<em><b>Packages</b></em>' containment reference list feature.
@@ -599,14 +670,6 @@ public interface JavaModelPackage extends EPackage {
 		EReference API_CLASS__PACKAGE = eINSTANCE.getApiClass_Package();
 
 		/**
-		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute API_CLASS__NAME = eINSTANCE.getApiClass_Name();
-
-		/**
 		 * The meta object literal for the '{@link cern.devtools.depanalysis.javamodel.impl.MethodImpl <em>Method</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -623,14 +686,6 @@ public interface JavaModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference METHOD__CLASS = eINSTANCE.getMethod_Class();
-
-		/**
-		 * The meta object literal for the '<em><b>Signature</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute METHOD__SIGNATURE = eINSTANCE.getMethod_Signature();
 
 		/**
 		 * The meta object literal for the '{@link cern.devtools.depanalysis.javamodel.impl.FieldImpl <em>Field</em>}' class.
@@ -651,14 +706,6 @@ public interface JavaModelPackage extends EPackage {
 		EReference FIELD__CLASS = eINSTANCE.getField_Class();
 
 		/**
-		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute FIELD__NAME = eINSTANCE.getField_Name();
-
-		/**
 		 * The meta object literal for the '{@link cern.devtools.depanalysis.javamodel.impl.WorkspaceImpl <em>Workspace</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -675,6 +722,14 @@ public interface JavaModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference WORKSPACE__PROJECTS = eINSTANCE.getWorkspace_Projects();
+
+		/**
+		 * The meta object literal for the '<em><b>Elements</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference WORKSPACE__ELEMENTS = eINSTANCE.getWorkspace_Elements();
 
 		/**
 		 * The meta object literal for the '{@link cern.devtools.depanalysis.javamodel.impl.PackageImpl <em>Package</em>}' class.
@@ -703,12 +758,30 @@ public interface JavaModelPackage extends EPackage {
 		EReference PACKAGE__PROJECT = eINSTANCE.getPackage_Project();
 
 		/**
+		 * The meta object literal for the '{@link cern.devtools.depanalysis.javamodel.impl.NamedElementImpl <em>Named Element</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see cern.devtools.depanalysis.javamodel.impl.NamedElementImpl
+		 * @see cern.devtools.depanalysis.javamodel.impl.JavaModelPackageImpl#getNamedElement()
+		 * @generated
+		 */
+		EClass NAMED_ELEMENT = eINSTANCE.getNamedElement();
+
+		/**
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PACKAGE__NAME = eINSTANCE.getPackage_Name();
+		EAttribute NAMED_ELEMENT__NAME = eINSTANCE.getNamedElement_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Handler</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NAMED_ELEMENT__HANDLER = eINSTANCE.getNamedElement_Handler();
 
 	}
 
