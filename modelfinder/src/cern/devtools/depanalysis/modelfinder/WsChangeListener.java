@@ -252,23 +252,7 @@ public class WsChangeListener implements IElementChangedListener {
 	}
 
 	public static void printModel(Workspace workspace) {
-		System.out.println("-- workspace structure --");
-		for (Project p : workspace.getProjects()) {
-			System.out.println(p);
-			for (Package pkg : p.getPackages()) {
-				System.out.println("\t" + pkg);
-
-				for (ApiClass ac : pkg.getClasses()) {
-					System.out.println("\t\t" + ac);
-					for (Method m : ac.getMethods()) {
-						System.out.println("\t\t\t" + m);
-					}
-					for (Field f : ac.getFields()) {
-						System.out.println("\t\t\t" + f);
-					}
-				}
-			}
-		}
+		System.out.println(workspace.toString());
 	}
 
 }

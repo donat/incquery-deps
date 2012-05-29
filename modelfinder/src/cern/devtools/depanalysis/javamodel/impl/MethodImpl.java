@@ -200,10 +200,9 @@ public class MethodImpl extends NamedElementImpl implements Method {
 	 */
 	@Override
 	public String toString() {
-		StringBuffer result = new StringBuffer("Method");
-		result.append(" (signature: ");
+		StringBuffer result = new StringBuffer("");
 		result.append(name);
-		result.append(')');
+		result.append(" (method)");
 		return result.toString();
 	}
 

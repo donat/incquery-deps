@@ -284,10 +284,9 @@ public class ApiClassImpl extends NamedElementImpl implements ApiClass {
 	 */
 	@Override
 	public String toString() {
-		StringBuffer result = new StringBuffer("Class");
-		result.append(" (name: ");
+		StringBuffer result = new StringBuffer("");
 		result.append(name);
-		result.append(')');
+		result.append(" (class)");
 		return result.toString();
 	}
 

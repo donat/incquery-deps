@@ -200,11 +200,9 @@ public class FieldImpl extends NamedElementImpl implements Field {
 	 */
 	@Override
 	public String toString() {
-
-		StringBuffer result = new StringBuffer("Field");
-		result.append(" (name: ");
+		StringBuffer result = new StringBuffer("");
 		result.append(name);
-		result.append(')');
+		result.append(" (field)");
 		return result.toString();
 	}
 

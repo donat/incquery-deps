@@ -169,10 +169,9 @@ public class ProjectImpl extends NamedElementImpl implements Project {
 	 */
 	@Override
 	public String toString() {
-		StringBuffer result = new StringBuffer("Project");
-		result.append(" (name: ");
+		StringBuffer result = new StringBuffer("");
 		result.append(name);
-		result.append(')');
+		result.append(" (project)");
 		return result.toString();
 	}
 

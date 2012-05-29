@@ -246,10 +246,14 @@ public class PackageImpl extends NamedElementImpl implements cern.devtools.depan
 	@Override
 	public String toString() {
 		
-		StringBuffer result = new StringBuffer("Package");
-		result.append(" (name: ");
-		result.append(name);
-		result.append(')');
+		StringBuffer result = new StringBuffer("");
+		if (!"".equals(name)) {
+			result.append(name);
+		}
+		else {
+			result.append("<default>");
+		}
+		result.append(" (package)");
 		return result.toString();
 	}
 
