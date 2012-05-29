@@ -156,11 +156,12 @@ public class WsChangeListener implements IElementChangedListener {
 								jdtPackage.getHandleIdentifier(), jdtPackage.getElementName());
 
 						for (ICompilationUnit cu : jdtPackage.getCompilationUnits()) {
-							for (IType jdtType : cu.getTypes()) {
+							for (IType jdtType : cu.getAllTypes()) {
 								// add classes to the package
 								ApiClass emfClass = (ApiClass) createNamedElement(JavaModelPackage.API_CLASS,
-										emfPackage, jdtType.getHandleIdentifier(), jdtType.getElementName());
+										emfPackage, jdtType.getHandleIdentifier(), jdtType.getTypeQualifiedName());
 
+								
 								for (IMethod jdtMethod : jdtType.getMethods()) {
 									// add methods to the class
 									createNamedElement(JavaModelPackage.METHOD, emfClass,
