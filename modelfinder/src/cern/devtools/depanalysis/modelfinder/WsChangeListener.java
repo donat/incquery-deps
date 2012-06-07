@@ -25,6 +25,7 @@ import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.core.Signature;
 
 import cern.devtools.depanalysis.javamodel.ApiClass;
 import cern.devtools.depanalysis.javamodel.Field;
@@ -165,7 +166,7 @@ public class WsChangeListener implements IElementChangedListener {
 								for (IMethod jdtMethod : jdtType.getMethods()) {
 									// add methods to the class
 									createNamedElement(JavaModelPackage.METHOD, emfClass,
-											jdtMethod.getHandleIdentifier(), jdtMethod.getElementName());
+											jdtMethod.getHandleIdentifier(), decodeSourceSignature(jdtMethod));
 								}
 								for (IField jdtField : jdtType.getFields()) {
 									// add fields to the class
@@ -215,7 +216,7 @@ public class WsChangeListener implements IElementChangedListener {
 			IMethod jdtMethod = (IMethod) jdtElem;
 			ApiClass emfContainer = (ApiClass) find(jdtMethod.getDeclaringType().getHandleIdentifier());
 			createNamedElement(JavaModelPackage.METHOD, emfContainer, jdtMethod.getHandleIdentifier(),
-					jdtMethod.getElementName() + jdtMethod.getSignature());
+					decodeSourceSignature(jdtMethod));
 		} else if (jdtElem instanceof IField) {
 			IField jdtField = (IField) jdtElem;
 			System.out.println(jdtField.getDeclaringType());
@@ -254,5 +255,53 @@ public class WsChangeListener implements IElementChangedListener {
 	public static void printModel(Workspace workspace) {
 		System.out.println(workspace.toString());
 	}
+	
+	private static String decodeSourceSignature(IMethod method) {
+		try {
+			// Variable holding the source signature of the method. Initially put the name of the method in it.
+			StringBuffer sSig = new StringBuffer(method.getElementName());
+			
+			// Start the parameter list.
+			sSig.append("(");
+			
+			// Put all the parameter types (fully qualified)
+			String comma = "";
+			for (String pt : method.getParameterTypes()) {
+				sSig.append(comma);
+				String pType = decodeJdtSource(pt, method.getDeclaringType());
+				sSig.append(pType);
+				comma = ",";
+			}
+			
+			// Close the parameter list.
+			sSig.append("):");
+			
 
+			// Add the fully qualified version of the return type
+			String rType = decodeJdtSource(method.getReturnType(), method.getDeclaringType());
+			sSig.append(rType);
+			return sSig.toString();
+		} catch (JavaModelException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+
+	private static String decodeJdtSource(String pt, IType container) throws JavaModelException	 {
+		String readable = Signature.toString(pt);
+		String readableWithoutArray = readable.replace("[", "").replace("]", "");
+		String[][] resolved = container.resolveType(readableWithoutArray);
+		
+		if (resolved == null) {
+			return readable;
+		} else {
+			String result = ("".equals(resolved[0][0])) ? resolved[0][1] : resolved[0][0] + "." + resolved[0][1];
+			int bracketNum = (readable.length() - readableWithoutArray.length()) / 2;
+			for(int i = 0; i < bracketNum; ++i) {
+				result += "[]";
+			}
+			return result;
+		}
+		
+	}
 }
