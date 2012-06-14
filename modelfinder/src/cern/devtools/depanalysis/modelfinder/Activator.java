@@ -1,6 +1,5 @@
 package cern.devtools.depanalysis.modelfinder;
 
-import org.eclipse.jdt.core.IElementChangedListener;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -18,7 +17,7 @@ public class Activator extends AbstractUIPlugin {
 	private static Activator plugin;
 	
 	// java source code changing listener
-	IElementChangedListener incChangeList = new WsChangeListener();
+	WsChangeService workspaceModelService = new WsChangeService();
 	
 	
 	/**
@@ -35,7 +34,7 @@ public class Activator extends AbstractUIPlugin {
 		super.start(context);
 		plugin = this;
 		
-		JavaCore.addElementChangedListener(incChangeList);
+		JavaCore.addElementChangedListener(workspaceModelService);
 	}
 
 	/*
@@ -46,7 +45,7 @@ public class Activator extends AbstractUIPlugin {
 		plugin = null;
 		super.stop(context);
 		
-		JavaCore.removeElementChangedListener(incChangeList);
+		JavaCore.removeElementChangedListener(workspaceModelService);
 	}
 
 	/**
@@ -56,6 +55,10 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public static Activator getDefault() {
 		return plugin;
+	}
+	
+	public WsChangeService getWsService() {
+		return workspaceModelService;
 	}
 
 }

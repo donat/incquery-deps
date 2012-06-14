@@ -4,6 +4,8 @@
  */
 package cern.devtools.depanalysis.modelfinder;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.eclipse.core.resources.IProject;
@@ -37,19 +39,77 @@ import cern.devtools.depanalysis.javamodel.Package;
 import cern.devtools.depanalysis.javamodel.Project;
 import cern.devtools.depanalysis.javamodel.Workspace;
 
-public class WsChangeListener implements IElementChangedListener {
+public class WsChangeService implements IElementChangedListener {
+
+	public interface WsChangeEventListener {
+		public void init(Workspace workspace);
+		public void recover(Workspace workspace);
+	}
 
 	/**
 	 * Logger.
 	 */
-	private static Logger LOG = Logger.getLogger(WsChangeListener.class.getCanonicalName());
+	private static Logger LOG = Logger.getLogger(WsChangeService.class.getCanonicalName());
+	public static void printModel(Workspace workspace) {
+		// System.out.println(workspace.toString());
+	}
+
+	private static String decodeJdtSource(String pt, IType container) throws JavaModelException {
+		String readable = Signature.toString(pt);
+		String readableWithoutArray = readable.replace("[", "").replace("]", "");
+		String[][] resolved = container.resolveType(readableWithoutArray);
+
+		if (resolved == null) {
+			return readable;
+		} else {
+			String result = ("".equals(resolved[0][0])) ? resolved[0][1] : resolved[0][0] + "." + resolved[0][1];
+			int bracketNum = (readable.length() - readableWithoutArray.length()) / 2;
+			for (int i = 0; i < bracketNum; ++i) {
+				result += "[]";
+			}
+			return result;
+		}
+
+	}
+
+	private static String decodeSourceSignature(IMethod method) {
+		try {
+			// Variable holding the source signature of the method. Initially put the name of the method in it.
+			StringBuffer sSig = new StringBuffer(method.getElementName());
+
+			// Start the parameter list.
+			sSig.append("(");
+
+			// Put all the parameter types (fully qualified)
+			String comma = "";
+			for (String pt : method.getParameterTypes()) {
+				sSig.append(comma);
+				String pType = decodeJdtSource(pt, method.getDeclaringType());
+				sSig.append(pType);
+				comma = ",";
+			}
+
+			// Close the parameter list.
+			sSig.append("):");
+
+			// Add the fully qualified version of the return type
+			String rType = decodeJdtSource(method.getReturnType(), method.getDeclaringType());
+			sSig.append(rType);
+			return sSig.toString();
+		} catch (JavaModelException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+
+	private List<WsChangeEventListener> listeners = new LinkedList<WsChangeService.WsChangeEventListener>();
 
 	/**
 	 * EMF model to expose.
 	 */
 	private Workspace workspace;
 
-	public WsChangeListener() {
+	public WsChangeService() {
 		reset();
 	}
 
@@ -77,9 +137,38 @@ public class WsChangeListener implements IElementChangedListener {
 			// load existing project information from the workspace
 			loadInitialState();
 			// print the initial state
-			printModel(workspace);
+			notifyRevovery();
 		} catch (Throwable e) {
 			LOG.warning("Error on reset. Desc: " + e.getMessage());
+		}
+	}
+
+	private void addJavaElement(IJavaElement jdtElem) throws CoreException {
+		if (jdtElem instanceof IJavaProject) {
+			createNamedElement(JavaModelPackage.PROJECT, workspace, jdtElem.getHandleIdentifier(),
+					jdtElem.getElementName());
+		} else if (jdtElem instanceof IPackageFragment) {
+			IPackageFragment jdtPackage = (IPackageFragment) jdtElem;
+			Project emfContainer = (Project) find(jdtPackage.getJavaProject().getHandleIdentifier());
+			createNamedElement(JavaModelPackage.PACKAGE, emfContainer, jdtElem.getHandleIdentifier(),
+					jdtPackage.getElementName());
+		} else if (jdtElem instanceof IType) {
+			IType jdtType = (IType) jdtElem;
+			Package emfContainer = (Package) find(jdtType.getPackageFragment().getHandleIdentifier());
+			createNamedElement(JavaModelPackage.API_CLASS, emfContainer, jdtType.getHandleIdentifier(),
+					jdtType.getTypeQualifiedName());
+		} else if (jdtElem instanceof IMethod) {
+			IMethod jdtMethod = (IMethod) jdtElem;
+			ApiClass emfContainer = (ApiClass) find(jdtMethod.getDeclaringType().getHandleIdentifier());
+			createNamedElement(JavaModelPackage.METHOD, emfContainer, jdtMethod.getHandleIdentifier(),
+					decodeSourceSignature(jdtMethod));
+		} else if (jdtElem instanceof IField) {
+			IField jdtField = (IField) jdtElem;
+			System.out.println(jdtField.getDeclaringType());
+
+			ApiClass emfContainer = (ApiClass) find(jdtField.getDeclaringType().getHandleIdentifier());
+			createNamedElement(JavaModelPackage.FIELD, emfContainer, jdtField.getHandleIdentifier(),
+					jdtField.getElementName());
 		}
 	}
 
@@ -162,7 +251,6 @@ public class WsChangeListener implements IElementChangedListener {
 								ApiClass emfClass = (ApiClass) createNamedElement(JavaModelPackage.API_CLASS,
 										emfPackage, jdtType.getHandleIdentifier(), jdtType.getTypeQualifiedName());
 
-								
 								for (IMethod jdtMethod : jdtType.getMethods()) {
 									// add methods to the class
 									createNamedElement(JavaModelPackage.METHOD, emfClass,
@@ -178,52 +266,6 @@ public class WsChangeListener implements IElementChangedListener {
 					}
 				}
 			}
-		}
-	}
-
-	private void traverseJavaModelRecursive(IJavaElementDelta elem) throws CoreException {
-		switch (elem.getKind()) {
-		case IJavaElementDelta.ADDED:
-			addJavaElement(elem.getElement());
-			break;
-		case IJavaElementDelta.REMOVED:
-			removeJavaElement(elem.getElement());
-			break;
-		default:
-
-		}
-
-		for (IJavaElementDelta child : elem.getAffectedChildren()) {
-			traverseJavaModelRecursive(child);
-		}
-	}
-
-	private void addJavaElement(IJavaElement jdtElem) throws CoreException {
-		if (jdtElem instanceof IJavaProject) {
-			createNamedElement(JavaModelPackage.PROJECT, workspace, jdtElem.getHandleIdentifier(),
-					jdtElem.getElementName());
-		} else if (jdtElem instanceof IPackageFragment) {
-			IPackageFragment jdtPackage = (IPackageFragment) jdtElem;
-			Project emfContainer = (Project) find(jdtPackage.getJavaProject().getHandleIdentifier());
-			createNamedElement(JavaModelPackage.PACKAGE, emfContainer, jdtElem.getHandleIdentifier(),
-					jdtPackage.getElementName());
-		} else if (jdtElem instanceof IType) {
-			IType jdtType = (IType) jdtElem;
-			Package emfContainer = (Package) find(jdtType.getPackageFragment().getHandleIdentifier());
-			createNamedElement(JavaModelPackage.API_CLASS, emfContainer, jdtType.getHandleIdentifier(),
-					jdtType.getTypeQualifiedName());
-		} else if (jdtElem instanceof IMethod) {
-			IMethod jdtMethod = (IMethod) jdtElem;
-			ApiClass emfContainer = (ApiClass) find(jdtMethod.getDeclaringType().getHandleIdentifier());
-			createNamedElement(JavaModelPackage.METHOD, emfContainer, jdtMethod.getHandleIdentifier(),
-					decodeSourceSignature(jdtMethod));
-		} else if (jdtElem instanceof IField) {
-			IField jdtField = (IField) jdtElem;
-			System.out.println(jdtField.getDeclaringType());
-			
-			ApiClass emfContainer = (ApiClass) find(jdtField.getDeclaringType().getHandleIdentifier());
-			createNamedElement(JavaModelPackage.FIELD, emfContainer, jdtField.getHandleIdentifier(),
-					jdtField.getElementName());
 		}
 	}
 
@@ -252,56 +294,34 @@ public class WsChangeListener implements IElementChangedListener {
 		workspace.getElements().remove(emfElem);
 	}
 
-	public static void printModel(Workspace workspace) {
-		System.out.println(workspace.toString());
+	private void traverseJavaModelRecursive(IJavaElementDelta elem) throws CoreException {
+		switch (elem.getKind()) {
+		case IJavaElementDelta.ADDED:
+			addJavaElement(elem.getElement());
+			break;
+		case IJavaElementDelta.REMOVED:
+			removeJavaElement(elem.getElement());
+			break;
+		default:
+
+		}
+
+		for (IJavaElementDelta child : elem.getAffectedChildren()) {
+			traverseJavaModelRecursive(child);
+		}
 	}
 	
-	private static String decodeSourceSignature(IMethod method) {
-		try {
-			// Variable holding the source signature of the method. Initially put the name of the method in it.
-			StringBuffer sSig = new StringBuffer(method.getElementName());
-			
-			// Start the parameter list.
-			sSig.append("(");
-			
-			// Put all the parameter types (fully qualified)
-			String comma = "";
-			for (String pt : method.getParameterTypes()) {
-				sSig.append(comma);
-				String pType = decodeJdtSource(pt, method.getDeclaringType());
-				sSig.append(pType);
-				comma = ",";
-			}
-			
-			// Close the parameter list.
-			sSig.append("):");
-			
-
-			// Add the fully qualified version of the return type
-			String rType = decodeJdtSource(method.getReturnType(), method.getDeclaringType());
-			sSig.append(rType);
-			return sSig.toString();
-		} catch (JavaModelException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
+	public void addWsChangeEventListener(WsChangeEventListener l) {
+		listeners.add(l);
+		l.init(workspace);
 	}
-
-	private static String decodeJdtSource(String pt, IType container) throws JavaModelException	 {
-		String readable = Signature.toString(pt);
-		String readableWithoutArray = readable.replace("[", "").replace("]", "");
-		String[][] resolved = container.resolveType(readableWithoutArray);
-		
-		if (resolved == null) {
-			return readable;
-		} else {
-			String result = ("".equals(resolved[0][0])) ? resolved[0][1] : resolved[0][0] + "." + resolved[0][1];
-			int bracketNum = (readable.length() - readableWithoutArray.length()) / 2;
-			for(int i = 0; i < bracketNum; ++i) {
-				result += "[]";
-			}
-			return result;
+	public void removeWsChangeEventListener(WsChangeEventListener l) {
+		listeners.remove(l);
+	}
+	
+	private void notifyRevovery() {
+		for (WsChangeEventListener l : listeners) {
+			l.recover(workspace);
 		}
-		
 	}
 }
