@@ -28,6 +28,8 @@
         eType="#//Project" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
         eType="#//NamedElement"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dependencties" upperBound="-1"
+        eType="#//Dependency" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Package" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="classes" upperBound="-1"
@@ -38,5 +40,25 @@
   <eClassifiers xsi:type="ecore:EClass" name="NamedElement" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="handler" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="incomingDependencies" upperBound="-1"
+        eType="#//Dependency" eOpposite="#//Dependency/to"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outgoingDependencies" upperBound="-1"
+        eType="#//Dependency" eOpposite="#//Dependency/from"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="data" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"
+        transient="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="DependencyType">
+    <eLiterals name="CLASS_USAGE"/>
+    <eLiterals name="METHOD_CALL" value="1"/>
+    <eLiterals name="METHOD_OVERRIDE" value="2"/>
+    <eLiterals name="INHERITANCE" value="3"/>
+    <eLiterals name="FIELD_ACCESS" value="4"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Dependency">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="from" lowerBound="1" eType="#//NamedElement"
+        eOpposite="#//NamedElement/outgoingDependencies"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="to" lowerBound="1" eType="#//NamedElement"
+        eOpposite="#//NamedElement/incomingDependencies"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//DependencyType"/>
   </eClassifiers>
 </ecore:EPackage>

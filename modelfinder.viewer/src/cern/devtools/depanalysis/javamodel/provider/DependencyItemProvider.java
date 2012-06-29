@@ -7,20 +7,12 @@
 package cern.devtools.depanalysis.javamodel.provider;
 
 
-import cern.devtools.depanalysis.javamodel.JavaModelFactory;
-import cern.devtools.depanalysis.javamodel.JavaModelPackage;
-import cern.devtools.depanalysis.javamodel.Workspace;
-
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
-import org.eclipse.emf.ecore.EStructuralFeature;
-
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -28,16 +20,20 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
+import cern.devtools.depanalysis.javamodel.Dependency;
+import cern.devtools.depanalysis.javamodel.JavaModelPackage;
+
 /**
- * This is the item provider adapter for a {@link cern.devtools.depanalysis.javamodel.Workspace} object.
+ * This is the item provider adapter for a {@link cern.devtools.depanalysis.javamodel.Dependency} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class WorkspaceItemProvider
+public class DependencyItemProvider
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -51,7 +47,7 @@ public class WorkspaceItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public WorkspaceItemProvider(AdapterFactory adapterFactory) {
+	public DependencyItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -66,25 +62,27 @@ public class WorkspaceItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addElementsPropertyDescriptor(object);
+			addFromPropertyDescriptor(object);
+			addToPropertyDescriptor(object);
+			addTypePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Elements feature.
+	 * This adds a property descriptor for the From feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addElementsPropertyDescriptor(Object object) {
+	protected void addFromPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Workspace_elements_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Workspace_elements_feature", "_UI_Workspace_type"),
-				 JavaModelPackage.Literals.WORKSPACE__ELEMENTS,
+				 getString("_UI_Dependency_from_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Dependency_from_feature", "_UI_Dependency_type"),
+				 JavaModelPackage.Literals.DEPENDENCY__FROM,
 				 true,
 				 false,
 				 true,
@@ -94,56 +92,81 @@ public class WorkspaceItemProvider
 	}
 
 	/**
-	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
-	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
-	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
+	 * This adds a property descriptor for the To feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
-		if (childrenFeatures == null) {
-			super.getChildrenFeatures(object);
-			childrenFeatures.add(JavaModelPackage.Literals.WORKSPACE__PROJECTS);
-			childrenFeatures.add(JavaModelPackage.Literals.WORKSPACE__DEPENDENCTIES);
-		}
-		return childrenFeatures;
+	protected void addToPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Dependency_to_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Dependency_to_feature", "_UI_Dependency_type"),
+				 JavaModelPackage.Literals.DEPENDENCY__TO,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
 	}
 
 	/**
+	 * This adds a property descriptor for the Type feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child) {
-		// Check the type of the specified child object and return the proper feature to use for
-		// adding (see {@link AddCommand}) it as a child.
-
-		return super.getChildFeature(object, child);
+	protected void addTypePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Dependency_type_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Dependency_type_feature", "_UI_Dependency_type"),
+				 JavaModelPackage.Literals.DEPENDENCY__TYPE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
-	 * This returns Workspace.gif.
+	 * This returns Dependency.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Workspace"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Dependency"));
 	}
 
 	/**
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_Workspace_type");
+		Dependency d = ((Dependency)object);
+		String result = d.getType().getLiteral();
+		result += " (from: " + d.getFrom().getName();
+		result += ", to: " + d.getTo().getName();
+		result += ")";
+		return result;
+		
+//		String label = labelValue == null ? null : labelValue.toString();
+//		return label == null || label.length() == 0 ?
+//			getString("_UI_Dependency_type") :
+//			getString("_UI_Dependency_type") + " " + label;
+		
+		
 	}
 
 	/**
@@ -157,10 +180,9 @@ public class WorkspaceItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(Workspace.class)) {
-			case JavaModelPackage.WORKSPACE__PROJECTS:
-			case JavaModelPackage.WORKSPACE__DEPENDENCTIES:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+		switch (notification.getFeatureID(Dependency.class)) {
+			case JavaModelPackage.DEPENDENCY__TYPE:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}
 		super.notifyChanged(notification);
@@ -176,16 +198,6 @@ public class WorkspaceItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
-
-		newChildDescriptors.add
-			(createChildParameter
-				(JavaModelPackage.Literals.WORKSPACE__PROJECTS,
-				 JavaModelFactory.eINSTANCE.createProject()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(JavaModelPackage.Literals.WORKSPACE__DEPENDENCTIES,
-				 JavaModelFactory.eINSTANCE.createDependency()));
 	}
 
 	/**

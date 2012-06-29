@@ -115,10 +115,10 @@ public class PackageItemProvider
 	@Override
 	public String getText(Object object) {
 		String label = ((cern.devtools.depanalysis.javamodel.Package)object).getName();
-		if (label.length() == 0) { 
-			return getString("_UI_Package_default");
+		if (label.equals("") ) {
+			label = "(default)";
 		}
-		return label == null ?
+		return label == null || label.length() == 0 ?
 			getString("_UI_Package_type") :
 			getString("_UI_Package_type") + " " + label;
 	}

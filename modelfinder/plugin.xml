@@ -8,4 +8,58 @@
       </startup>
    </extension>
 
+<extension
+         id="testmarker"
+         name="jdt-test-problem"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="org.eclipse.core.resources.problemmarker">
+      </super>
+   </extension>
+   <extension
+         point="org.eclipse.ui.ide.markerResolution">
+      <markerResolutionGenerator
+            markerType="org.eclipse.jdt.core.problem"
+            class="org.eclipse.jdt.ui.examples.MarkerResolutionGenerator">
+      </markerResolutionGenerator>
+   </extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            objectClass="org.eclipse.jdt.core.ICompilationUnit"
+            id="org.eclipse.jdt.ui.examples.AddTestMarkersAction">
+         <action
+               label="_ADD MARKERS_"
+               tooltip="tooltip"
+               class="org.eclipse.jdt.ui.examples.AddTestMarkersAction"
+               menubarPath="AddTestMarkers"
+               enablesFor="1"
+               id="addTestmarkers">
+         </action>
+      </objectContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="cern.devtools.depanalysis.modelfinder.actionSet"
+            label="Sample Action Set"
+            visible="true">
+         <menu
+               id="sampleMenu"
+               label="Sample &amp;Menu">
+            <separator
+                  name="sampleGroup">
+            </separator>
+         </menu>
+         <action
+               class="org.eclipse.jdt.ui.examples.SampleAction"
+               icon="icons/sample.gif"
+               id="org.eclipse.jdt.ui.examples.SampleAction"
+               label="&amp;Sample Action"
+               menubarPath="sampleMenu/sampleGroup"
+               toolbarPath="sampleGroup"
+               tooltip="Hello, Eclipse world">
+         </action>
+      </actionSet>
+   </extension>
 </plugin>

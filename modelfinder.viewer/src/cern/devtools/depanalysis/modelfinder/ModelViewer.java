@@ -19,7 +19,7 @@ import org.eclipse.ui.part.ViewPart;
 
 import cern.devtools.depanalysis.javamodel.Workspace;
 import cern.devtools.depanalysis.javamodel.provider.JavaModelItemProviderAdapterFactory;
-import cern.devtools.depanalysis.modelfinder.WsChangeService.WsChangeEventListener;
+import cern.devtools.depanalysis.modelfinder.IncremenatalWsToEMFModelTransformer.WsChangeEventListener;
 
 public class ModelViewer extends ViewPart {
 

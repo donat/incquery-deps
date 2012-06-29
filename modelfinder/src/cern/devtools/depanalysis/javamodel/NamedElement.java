@@ -6,6 +6,7 @@
  */
 package cern.devtools.depanalysis.javamodel;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -18,6 +19,9 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link cern.devtools.depanalysis.javamodel.NamedElement#getName <em>Name</em>}</li>
  *   <li>{@link cern.devtools.depanalysis.javamodel.NamedElement#getHandler <em>Handler</em>}</li>
+ *   <li>{@link cern.devtools.depanalysis.javamodel.NamedElement#getIncomingDependencies <em>Incoming Dependencies</em>}</li>
+ *   <li>{@link cern.devtools.depanalysis.javamodel.NamedElement#getOutgoingDependencies <em>Outgoing Dependencies</em>}</li>
+ *   <li>{@link cern.devtools.depanalysis.javamodel.NamedElement#getData <em>Data</em>}</li>
  * </ul>
  * </p>
  *
@@ -77,5 +81,67 @@ public interface NamedElement extends EObject {
 	 * @generated
 	 */
 	void setHandler(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Incoming Dependencies</b></em>' reference list.
+	 * The list contents are of type {@link cern.devtools.depanalysis.javamodel.Dependency}.
+	 * It is bidirectional and its opposite is '{@link cern.devtools.depanalysis.javamodel.Dependency#getTo <em>To</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Incoming Dependencies</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Incoming Dependencies</em>' reference list.
+	 * @see cern.devtools.depanalysis.javamodel.JavaModelPackage#getNamedElement_IncomingDependencies()
+	 * @see cern.devtools.depanalysis.javamodel.Dependency#getTo
+	 * @model opposite="to"
+	 * @generated
+	 */
+	EList<Dependency> getIncomingDependencies();
+
+	/**
+	 * Returns the value of the '<em><b>Outgoing Dependencies</b></em>' reference list.
+	 * The list contents are of type {@link cern.devtools.depanalysis.javamodel.Dependency}.
+	 * It is bidirectional and its opposite is '{@link cern.devtools.depanalysis.javamodel.Dependency#getFrom <em>From</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Outgoing Dependencies</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Outgoing Dependencies</em>' reference list.
+	 * @see cern.devtools.depanalysis.javamodel.JavaModelPackage#getNamedElement_OutgoingDependencies()
+	 * @see cern.devtools.depanalysis.javamodel.Dependency#getFrom
+	 * @model opposite="from"
+	 * @generated
+	 */
+	EList<Dependency> getOutgoingDependencies();
+
+	/**
+	 * Returns the value of the '<em><b>Data</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Data</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Data</em>' attribute.
+	 * @see #setData(Object)
+	 * @see cern.devtools.depanalysis.javamodel.JavaModelPackage#getNamedElement_Data()
+	 * @model transient="true"
+	 * @generated
+	 */
+	Object getData();
+
+	/**
+	 * Sets the value of the '{@link cern.devtools.depanalysis.javamodel.NamedElement#getData <em>Data</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Data</em>' attribute.
+	 * @see #getData()
+	 * @generated
+	 */
+	void setData(Object value);
 
 } // NamedElement

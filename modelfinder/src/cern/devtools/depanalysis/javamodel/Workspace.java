@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link cern.devtools.depanalysis.javamodel.Workspace#getProjects <em>Projects</em>}</li>
  *   <li>{@link cern.devtools.depanalysis.javamodel.Workspace#getElements <em>Elements</em>}</li>
+ *   <li>{@link cern.devtools.depanalysis.javamodel.Workspace#getDependencties <em>Dependencties</em>}</li>
  * </ul>
  * </p>
  *
@@ -59,5 +60,27 @@ public interface Workspace extends EObject {
 	 * @generated
 	 */
 	EList<NamedElement> getElements();
+
+	/**
+	 * Returns the value of the '<em><b>Dependencties</b></em>' containment reference list.
+	 * The list contents are of type {@link cern.devtools.depanalysis.javamodel.Dependency}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Dependencties</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Dependencties</em>' containment reference list.
+	 * @see cern.devtools.depanalysis.javamodel.JavaModelPackage#getWorkspace_Dependencties()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<Dependency> getDependencties();
+	
+	/**
+	 * @generated NOT
+	 * @return
+	 */
+	public <T extends NamedElement> T findElementByHandle(String handle);
 
 } // Workspace

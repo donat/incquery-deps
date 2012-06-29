@@ -6,12 +6,15 @@
  */
 package cern.devtools.depanalysis.javamodel.provider;
 
+import cern.devtools.depanalysis.javamodel.util.JavaModelAdapterFactory;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
+
 import org.eclipse.emf.edit.provider.ChangeNotifier;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -23,8 +26,6 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.INotifyChangedListener;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-
-import cern.devtools.depanalysis.javamodel.util.JavaModelAdapterFactory;
 
 /**
  * This is the factory that is used to provide the interfaces needed to support Viewers.
@@ -213,6 +214,29 @@ public class JavaModelItemProviderAdapterFactory extends JavaModelAdapterFactory
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link cern.devtools.depanalysis.javamodel.Dependency} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected DependencyItemProvider dependencyItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link cern.devtools.depanalysis.javamodel.Dependency}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createDependencyAdapter() {
+		if (dependencyItemProvider == null) {
+			dependencyItemProvider = new DependencyItemProvider(this);
+		}
+
+		return dependencyItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -317,6 +341,7 @@ public class JavaModelItemProviderAdapterFactory extends JavaModelAdapterFactory
 		if (fieldItemProvider != null) fieldItemProvider.dispose();
 		if (workspaceItemProvider != null) workspaceItemProvider.dispose();
 		if (packageItemProvider != null) packageItemProvider.dispose();
+		if (dependencyItemProvider != null) dependencyItemProvider.dispose();
 	}
 
 }

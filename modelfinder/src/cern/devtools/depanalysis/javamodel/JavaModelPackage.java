@@ -8,6 +8,7 @@ package cern.devtools.depanalysis.javamodel;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -88,13 +89,40 @@ public interface JavaModelPackage extends EPackage {
 	int NAMED_ELEMENT__HANDLER = 1;
 
 	/**
+	 * The feature id for the '<em><b>Incoming Dependencies</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAMED_ELEMENT__INCOMING_DEPENDENCIES = 2;
+
+	/**
+	 * The feature id for the '<em><b>Outgoing Dependencies</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAMED_ELEMENT__OUTGOING_DEPENDENCIES = 3;
+
+	/**
+	 * The feature id for the '<em><b>Data</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAMED_ELEMENT__DATA = 4;
+
+	/**
 	 * The number of structural features of the '<em>Named Element</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NAMED_ELEMENT_FEATURE_COUNT = 2;
+	int NAMED_ELEMENT_FEATURE_COUNT = 5;
 
 	/**
 	 * The meta object id for the '{@link cern.devtools.depanalysis.javamodel.impl.ProjectImpl <em>Project</em>}' class.
@@ -123,6 +151,33 @@ public interface JavaModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROJECT__HANDLER = NAMED_ELEMENT__HANDLER;
+
+	/**
+	 * The feature id for the '<em><b>Incoming Dependencies</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROJECT__INCOMING_DEPENDENCIES = NAMED_ELEMENT__INCOMING_DEPENDENCIES;
+
+	/**
+	 * The feature id for the '<em><b>Outgoing Dependencies</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROJECT__OUTGOING_DEPENDENCIES = NAMED_ELEMENT__OUTGOING_DEPENDENCIES;
+
+	/**
+	 * The feature id for the '<em><b>Data</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROJECT__DATA = NAMED_ELEMENT__DATA;
 
 	/**
 	 * The feature id for the '<em><b>Packages</b></em>' containment reference list.
@@ -169,6 +224,33 @@ public interface JavaModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int API_CLASS__HANDLER = NAMED_ELEMENT__HANDLER;
+
+	/**
+	 * The feature id for the '<em><b>Incoming Dependencies</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int API_CLASS__INCOMING_DEPENDENCIES = NAMED_ELEMENT__INCOMING_DEPENDENCIES;
+
+	/**
+	 * The feature id for the '<em><b>Outgoing Dependencies</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int API_CLASS__OUTGOING_DEPENDENCIES = NAMED_ELEMENT__OUTGOING_DEPENDENCIES;
+
+	/**
+	 * The feature id for the '<em><b>Data</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int API_CLASS__DATA = NAMED_ELEMENT__DATA;
 
 	/**
 	 * The feature id for the '<em><b>Methods</b></em>' containment reference list.
@@ -235,6 +317,33 @@ public interface JavaModelPackage extends EPackage {
 	int METHOD__HANDLER = NAMED_ELEMENT__HANDLER;
 
 	/**
+	 * The feature id for the '<em><b>Incoming Dependencies</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int METHOD__INCOMING_DEPENDENCIES = NAMED_ELEMENT__INCOMING_DEPENDENCIES;
+
+	/**
+	 * The feature id for the '<em><b>Outgoing Dependencies</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int METHOD__OUTGOING_DEPENDENCIES = NAMED_ELEMENT__OUTGOING_DEPENDENCIES;
+
+	/**
+	 * The feature id for the '<em><b>Data</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int METHOD__DATA = NAMED_ELEMENT__DATA;
+
+	/**
 	 * The feature id for the '<em><b>Class</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -279,6 +388,33 @@ public interface JavaModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int FIELD__HANDLER = NAMED_ELEMENT__HANDLER;
+
+	/**
+	 * The feature id for the '<em><b>Incoming Dependencies</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD__INCOMING_DEPENDENCIES = NAMED_ELEMENT__INCOMING_DEPENDENCIES;
+
+	/**
+	 * The feature id for the '<em><b>Outgoing Dependencies</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD__OUTGOING_DEPENDENCIES = NAMED_ELEMENT__OUTGOING_DEPENDENCIES;
+
+	/**
+	 * The feature id for the '<em><b>Data</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD__DATA = NAMED_ELEMENT__DATA;
 
 	/**
 	 * The feature id for the '<em><b>Class</b></em>' container reference.
@@ -328,13 +464,22 @@ public interface JavaModelPackage extends EPackage {
 	int WORKSPACE__ELEMENTS = 1;
 
 	/**
+	 * The feature id for the '<em><b>Dependencties</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORKSPACE__DEPENDENCTIES = 2;
+
+	/**
 	 * The number of structural features of the '<em>Workspace</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WORKSPACE_FEATURE_COUNT = 2;
+	int WORKSPACE_FEATURE_COUNT = 3;
 
 
 	/**
@@ -366,6 +511,33 @@ public interface JavaModelPackage extends EPackage {
 	int PACKAGE__HANDLER = NAMED_ELEMENT__HANDLER;
 
 	/**
+	 * The feature id for the '<em><b>Incoming Dependencies</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PACKAGE__INCOMING_DEPENDENCIES = NAMED_ELEMENT__INCOMING_DEPENDENCIES;
+
+	/**
+	 * The feature id for the '<em><b>Outgoing Dependencies</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PACKAGE__OUTGOING_DEPENDENCIES = NAMED_ELEMENT__OUTGOING_DEPENDENCIES;
+
+	/**
+	 * The feature id for the '<em><b>Data</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PACKAGE__DATA = NAMED_ELEMENT__DATA;
+
+	/**
 	 * The feature id for the '<em><b>Classes</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -391,6 +563,63 @@ public interface JavaModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int PACKAGE_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 2;
+
+
+	/**
+	 * The meta object id for the '{@link cern.devtools.depanalysis.javamodel.impl.DependencyImpl <em>Dependency</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see cern.devtools.depanalysis.javamodel.impl.DependencyImpl
+	 * @see cern.devtools.depanalysis.javamodel.impl.JavaModelPackageImpl#getDependency()
+	 * @generated
+	 */
+	int DEPENDENCY = 7;
+
+	/**
+	 * The feature id for the '<em><b>From</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEPENDENCY__FROM = 0;
+
+	/**
+	 * The feature id for the '<em><b>To</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEPENDENCY__TO = 1;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEPENDENCY__TYPE = 2;
+
+	/**
+	 * The number of structural features of the '<em>Dependency</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEPENDENCY_FEATURE_COUNT = 3;
+
+	/**
+	 * The meta object id for the '{@link cern.devtools.depanalysis.javamodel.DependencyType <em>Dependency Type</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see cern.devtools.depanalysis.javamodel.DependencyType
+	 * @see cern.devtools.depanalysis.javamodel.impl.JavaModelPackageImpl#getDependencyType()
+	 * @generated
+	 */
+	int DEPENDENCY_TYPE = 8;
 
 
 	/**
@@ -532,6 +761,17 @@ public interface JavaModelPackage extends EPackage {
 	EReference getWorkspace_Elements();
 
 	/**
+	 * Returns the meta object for the containment reference list '{@link cern.devtools.depanalysis.javamodel.Workspace#getDependencties <em>Dependencties</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Dependencties</em>'.
+	 * @see cern.devtools.depanalysis.javamodel.Workspace#getDependencties()
+	 * @see #getWorkspace()
+	 * @generated
+	 */
+	EReference getWorkspace_Dependencties();
+
+	/**
 	 * Returns the meta object for class '{@link cern.devtools.depanalysis.javamodel.Package <em>Package</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -594,6 +834,92 @@ public interface JavaModelPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getNamedElement_Handler();
+
+	/**
+	 * Returns the meta object for the reference list '{@link cern.devtools.depanalysis.javamodel.NamedElement#getIncomingDependencies <em>Incoming Dependencies</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Incoming Dependencies</em>'.
+	 * @see cern.devtools.depanalysis.javamodel.NamedElement#getIncomingDependencies()
+	 * @see #getNamedElement()
+	 * @generated
+	 */
+	EReference getNamedElement_IncomingDependencies();
+
+	/**
+	 * Returns the meta object for the reference list '{@link cern.devtools.depanalysis.javamodel.NamedElement#getOutgoingDependencies <em>Outgoing Dependencies</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Outgoing Dependencies</em>'.
+	 * @see cern.devtools.depanalysis.javamodel.NamedElement#getOutgoingDependencies()
+	 * @see #getNamedElement()
+	 * @generated
+	 */
+	EReference getNamedElement_OutgoingDependencies();
+
+	/**
+	 * Returns the meta object for the attribute '{@link cern.devtools.depanalysis.javamodel.NamedElement#getData <em>Data</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Data</em>'.
+	 * @see cern.devtools.depanalysis.javamodel.NamedElement#getData()
+	 * @see #getNamedElement()
+	 * @generated
+	 */
+	EAttribute getNamedElement_Data();
+
+	/**
+	 * Returns the meta object for class '{@link cern.devtools.depanalysis.javamodel.Dependency <em>Dependency</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Dependency</em>'.
+	 * @see cern.devtools.depanalysis.javamodel.Dependency
+	 * @generated
+	 */
+	EClass getDependency();
+
+	/**
+	 * Returns the meta object for the reference '{@link cern.devtools.depanalysis.javamodel.Dependency#getFrom <em>From</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>From</em>'.
+	 * @see cern.devtools.depanalysis.javamodel.Dependency#getFrom()
+	 * @see #getDependency()
+	 * @generated
+	 */
+	EReference getDependency_From();
+
+	/**
+	 * Returns the meta object for the reference '{@link cern.devtools.depanalysis.javamodel.Dependency#getTo <em>To</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>To</em>'.
+	 * @see cern.devtools.depanalysis.javamodel.Dependency#getTo()
+	 * @see #getDependency()
+	 * @generated
+	 */
+	EReference getDependency_To();
+
+	/**
+	 * Returns the meta object for the attribute '{@link cern.devtools.depanalysis.javamodel.Dependency#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type</em>'.
+	 * @see cern.devtools.depanalysis.javamodel.Dependency#getType()
+	 * @see #getDependency()
+	 * @generated
+	 */
+	EAttribute getDependency_Type();
+
+	/**
+	 * Returns the meta object for enum '{@link cern.devtools.depanalysis.javamodel.DependencyType <em>Dependency Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Dependency Type</em>'.
+	 * @see cern.devtools.depanalysis.javamodel.DependencyType
+	 * @generated
+	 */
+	EEnum getDependencyType();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -732,6 +1058,14 @@ public interface JavaModelPackage extends EPackage {
 		EReference WORKSPACE__ELEMENTS = eINSTANCE.getWorkspace_Elements();
 
 		/**
+		 * The meta object literal for the '<em><b>Dependencties</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference WORKSPACE__DEPENDENCTIES = eINSTANCE.getWorkspace_Dependencties();
+
+		/**
 		 * The meta object literal for the '{@link cern.devtools.depanalysis.javamodel.impl.PackageImpl <em>Package</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -782,6 +1116,74 @@ public interface JavaModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute NAMED_ELEMENT__HANDLER = eINSTANCE.getNamedElement_Handler();
+
+		/**
+		 * The meta object literal for the '<em><b>Incoming Dependencies</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NAMED_ELEMENT__INCOMING_DEPENDENCIES = eINSTANCE.getNamedElement_IncomingDependencies();
+
+		/**
+		 * The meta object literal for the '<em><b>Outgoing Dependencies</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NAMED_ELEMENT__OUTGOING_DEPENDENCIES = eINSTANCE.getNamedElement_OutgoingDependencies();
+
+		/**
+		 * The meta object literal for the '<em><b>Data</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NAMED_ELEMENT__DATA = eINSTANCE.getNamedElement_Data();
+
+		/**
+		 * The meta object literal for the '{@link cern.devtools.depanalysis.javamodel.impl.DependencyImpl <em>Dependency</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see cern.devtools.depanalysis.javamodel.impl.DependencyImpl
+		 * @see cern.devtools.depanalysis.javamodel.impl.JavaModelPackageImpl#getDependency()
+		 * @generated
+		 */
+		EClass DEPENDENCY = eINSTANCE.getDependency();
+
+		/**
+		 * The meta object literal for the '<em><b>From</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DEPENDENCY__FROM = eINSTANCE.getDependency_From();
+
+		/**
+		 * The meta object literal for the '<em><b>To</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DEPENDENCY__TO = eINSTANCE.getDependency_To();
+
+		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DEPENDENCY__TYPE = eINSTANCE.getDependency_Type();
+
+		/**
+		 * The meta object literal for the '{@link cern.devtools.depanalysis.javamodel.DependencyType <em>Dependency Type</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see cern.devtools.depanalysis.javamodel.DependencyType
+		 * @see cern.devtools.depanalysis.javamodel.impl.JavaModelPackageImpl#getDependencyType()
+		 * @generated
+		 */
+		EEnum DEPENDENCY_TYPE = eINSTANCE.getDependencyType();
 
 	}
 

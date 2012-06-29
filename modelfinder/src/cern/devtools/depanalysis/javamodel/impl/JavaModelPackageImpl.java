@@ -7,6 +7,8 @@
 package cern.devtools.depanalysis.javamodel.impl;
 
 import cern.devtools.depanalysis.javamodel.ApiClass;
+import cern.devtools.depanalysis.javamodel.Dependency;
+import cern.devtools.depanalysis.javamodel.DependencyType;
 import cern.devtools.depanalysis.javamodel.Field;
 import cern.devtools.depanalysis.javamodel.JavaModelFactory;
 import cern.devtools.depanalysis.javamodel.JavaModelPackage;
@@ -17,6 +19,7 @@ import cern.devtools.depanalysis.javamodel.Project;
 import cern.devtools.depanalysis.javamodel.Workspace;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -77,6 +80,20 @@ public class JavaModelPackageImpl extends EPackageImpl implements JavaModelPacka
 	 * @generated
 	 */
 	private EClass namedElementEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass dependencyEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum dependencyTypeEEnum = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -261,6 +278,15 @@ public class JavaModelPackageImpl extends EPackageImpl implements JavaModelPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getWorkspace_Dependencties() {
+		return (EReference)workspaceEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getPackage() {
 		return packageEClass;
 	}
@@ -315,6 +341,78 @@ public class JavaModelPackageImpl extends EPackageImpl implements JavaModelPacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getNamedElement_IncomingDependencies() {
+		return (EReference)namedElementEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNamedElement_OutgoingDependencies() {
+		return (EReference)namedElementEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNamedElement_Data() {
+		return (EAttribute)namedElementEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getDependency() {
+		return dependencyEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDependency_From() {
+		return (EReference)dependencyEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDependency_To() {
+		return (EReference)dependencyEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDependency_Type() {
+		return (EAttribute)dependencyEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EEnum getDependencyType() {
+		return dependencyTypeEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public JavaModelFactory getJavaModelFactory() {
 		return (JavaModelFactory)getEFactoryInstance();
 	}
@@ -355,6 +453,7 @@ public class JavaModelPackageImpl extends EPackageImpl implements JavaModelPacka
 		workspaceEClass = createEClass(WORKSPACE);
 		createEReference(workspaceEClass, WORKSPACE__PROJECTS);
 		createEReference(workspaceEClass, WORKSPACE__ELEMENTS);
+		createEReference(workspaceEClass, WORKSPACE__DEPENDENCTIES);
 
 		packageEClass = createEClass(PACKAGE);
 		createEReference(packageEClass, PACKAGE__CLASSES);
@@ -363,6 +462,17 @@ public class JavaModelPackageImpl extends EPackageImpl implements JavaModelPacka
 		namedElementEClass = createEClass(NAMED_ELEMENT);
 		createEAttribute(namedElementEClass, NAMED_ELEMENT__NAME);
 		createEAttribute(namedElementEClass, NAMED_ELEMENT__HANDLER);
+		createEReference(namedElementEClass, NAMED_ELEMENT__INCOMING_DEPENDENCIES);
+		createEReference(namedElementEClass, NAMED_ELEMENT__OUTGOING_DEPENDENCIES);
+		createEAttribute(namedElementEClass, NAMED_ELEMENT__DATA);
+
+		dependencyEClass = createEClass(DEPENDENCY);
+		createEReference(dependencyEClass, DEPENDENCY__FROM);
+		createEReference(dependencyEClass, DEPENDENCY__TO);
+		createEAttribute(dependencyEClass, DEPENDENCY__TYPE);
+
+		// Create enums
+		dependencyTypeEEnum = createEEnum(DEPENDENCY_TYPE);
 	}
 
 	/**
@@ -417,6 +527,7 @@ public class JavaModelPackageImpl extends EPackageImpl implements JavaModelPacka
 		initEClass(workspaceEClass, Workspace.class, "Workspace", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getWorkspace_Projects(), this.getProject(), null, "projects", null, 0, -1, Workspace.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getWorkspace_Elements(), this.getNamedElement(), null, "elements", null, 0, -1, Workspace.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getWorkspace_Dependencties(), this.getDependency(), null, "dependencties", null, 0, -1, Workspace.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(packageEClass, cern.devtools.depanalysis.javamodel.Package.class, "Package", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getPackage_Classes(), this.getApiClass(), this.getApiClass_Package(), "classes", null, 0, -1, cern.devtools.depanalysis.javamodel.Package.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -425,6 +536,22 @@ public class JavaModelPackageImpl extends EPackageImpl implements JavaModelPacka
 		initEClass(namedElementEClass, NamedElement.class, "NamedElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getNamedElement_Name(), ecorePackage.getEString(), "name", null, 0, 1, NamedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getNamedElement_Handler(), ecorePackage.getEString(), "handler", null, 0, 1, NamedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getNamedElement_IncomingDependencies(), this.getDependency(), this.getDependency_To(), "incomingDependencies", null, 0, -1, NamedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getNamedElement_OutgoingDependencies(), this.getDependency(), this.getDependency_From(), "outgoingDependencies", null, 0, -1, NamedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNamedElement_Data(), ecorePackage.getEJavaObject(), "data", null, 0, 1, NamedElement.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(dependencyEClass, Dependency.class, "Dependency", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getDependency_From(), this.getNamedElement(), this.getNamedElement_OutgoingDependencies(), "from", null, 1, 1, Dependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDependency_To(), this.getNamedElement(), this.getNamedElement_IncomingDependencies(), "to", null, 1, 1, Dependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDependency_Type(), this.getDependencyType(), "type", null, 0, 1, Dependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		// Initialize enums and add enum literals
+		initEEnum(dependencyTypeEEnum, DependencyType.class, "DependencyType");
+		addEEnumLiteral(dependencyTypeEEnum, DependencyType.CLASS_USAGE);
+		addEEnumLiteral(dependencyTypeEEnum, DependencyType.METHOD_CALL);
+		addEEnumLiteral(dependencyTypeEEnum, DependencyType.METHOD_OVERRIDE);
+		addEEnumLiteral(dependencyTypeEEnum, DependencyType.INHERITANCE);
+		addEEnumLiteral(dependencyTypeEEnum, DependencyType.FIELD_ACCESS);
 
 		// Create resource
 		createResource(eNS_URI);
