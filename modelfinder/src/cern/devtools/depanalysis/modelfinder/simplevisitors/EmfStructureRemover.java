@@ -22,16 +22,16 @@ import cern.devtools.depanalysis.modelfinder.structurals.JavaProjectWrapper;
 import cern.devtools.depanalysis.modelfinder.structurals.MethodWrapper;
 import cern.devtools.depanalysis.modelfinder.structurals.PackageWrapper;
 
-public class EmfItemRemover extends Identity {
+public class EmfStructureRemover extends Identity {
+
+	public static EmfStructureRemover newInstance(Workspace workspace) {
+		return new EmfStructureRemover(workspace);
+	}
 
 	private final Workspace workspace;
 
-	public EmfItemRemover(Workspace workspace) {
+	public EmfStructureRemover(Workspace workspace) {
 		this.workspace = workspace;
-	}
-
-	public static EmfItemRemover newInstance(Workspace workspace) {
-		return new EmfItemRemover(workspace);
 	}
 
 	// We don't delete the workspace root at all.
@@ -41,17 +41,9 @@ public class EmfItemRemover extends Identity {
 	// }
 
 	@Override
-	public void visitProject(JavaProjectWrapper jdtProjectWrapper) {
-		Project emfProject = workspace.findElementByHandle(jdtProjectWrapper.wrappedItem().getHandleIdentifier());
-		workspace.getProjects().remove(emfProject);
-		workspace.getElements().remove(emfProject);
-	}
-
-	@Override
-	public void visitPackage(PackageWrapper jdtPackageWrapper) {
-		Package emfPackage = workspace.findElementByHandle(jdtPackageWrapper.wrappedItem().getHandleIdentifier());
-		emfPackage.getProject().getPackages().remove(emfPackage);
-		workspace.getElements().remove(emfPackage);
+	public void visitClass(ClassWrapper jdtTypeWrapper) {
+		ApiClass emfClass = workspace.findElementByHandle(jdtTypeWrapper.wrappedItem().getHandleIdentifier());
+		deleteClassStructure(emfClass);
 	}
 
 	@Override
@@ -59,6 +51,11 @@ public class EmfItemRemover extends Identity {
 		String projectHandler = jdtCompilationUnitWrapper.wrappedItem().getJavaProject().getHandleIdentifier();
 		String cuHandler = jdtCompilationUnitWrapper.wrappedItem().getHandleIdentifier();
 		Project emfProject = workspace.findElementByHandle(projectHandler);
+		
+		//
+		if (emfProject == null) {
+			return;
+		}
 		
 		// Select the classes to delete.
 		List<ApiClass> acToDelete = new LinkedList<ApiClass>();
@@ -74,44 +71,59 @@ public class EmfItemRemover extends Identity {
 		
 		// Do the deletion.
 		for (ApiClass ac : acToDelete) {
-			removeApiClass(ac);
+			deleteClassStructure(ac);
 		}
-	}
-	
-	
-	private void removeApiClass(ApiClass emfClass) {
-		removeInheritanceDependencies(emfClass);
-		removeClassStructure(emfClass);
-	}
-	private void removeInheritanceDependencies(ApiClass emfClass) {
-		workspace.getDependencties().removeAll(emfClass.getIncomingDependencies());
-		workspace.getDependencties().removeAll(emfClass.getOutgoingDependencies());
-	}
-
-	private void removeClassStructure(ApiClass emfClass) {
-		emfClass.getPackage().getClasses().remove(emfClass);
-		workspace.getElements().remove(emfClass);
-	}
-
-	@Override
-	public void visitClass(ClassWrapper jdtTypeWrapper) {
-		ApiClass emfClass = workspace.findElementByHandle(jdtTypeWrapper.wrappedItem().getHandleIdentifier());
-		removeApiClass(emfClass);
-	}
-
-
-	@Override
-	public void visitMethod(MethodWrapper jdtMethodWrapper) {
-		Method emfMethod = workspace.findElementByHandle(jdtMethodWrapper.wrappedItem().getHandleIdentifier());
-		emfMethod.getClass_().getMethods().remove(emfMethod);
-		workspace.getElements().remove(emfMethod);
 	}
 
 	@Override
 	public void visitField(FieldWrapper jdtFieldWrapper) {
 		Field emfField = workspace.findElementByHandle(jdtFieldWrapper.wrappedItem().getHandleIdentifier());
+		deleteFieldStructure(emfField);
+	}
+
+	@Override
+	public void visitMethod(MethodWrapper jdtMethodWrapper) {
+		Method emfMethod = workspace.findElementByHandle(jdtMethodWrapper.wrappedItem().getHandleIdentifier());
+		deleteMethodStructure(emfMethod);
+	}
+
+	@Override
+	public void visitPackage(PackageWrapper jdtPackageWrapper) {
+		Package emfPackage = workspace.findElementByHandle(jdtPackageWrapper.wrappedItem().getHandleIdentifier());
+		depetePackageStructure(emfPackage);
+	}
+	
+	
+	@Override
+	public void visitProject(JavaProjectWrapper jdtProjectWrapper) {
+		Project emfProject = workspace.findElementByHandle(jdtProjectWrapper.wrappedItem().getHandleIdentifier());
+		deleteProjectStructure(emfProject);
+	}
+
+	private void deleteClassStructure(ApiClass emfClass) {
+		emfClass.getPackage().getClasses().remove(emfClass);
+		workspace.getElements().remove(emfClass);
+	}
+
+
+	private void deleteFieldStructure(Field emfField) {
 		emfField.getClass_().getFields().remove(emfField);
 		workspace.getElements().remove(emfField);
+	}
+
+	private void deleteMethodStructure(Method emfMethod) {
+		emfMethod.getClass_().getMethods().remove(emfMethod);
+		workspace.getElements().remove(emfMethod);
+	}
+
+	private void deleteProjectStructure(Project emfProject) {
+		workspace.getProjects().remove(emfProject);
+		workspace.getElements().remove(emfProject);
+	}
+
+	private void depetePackageStructure(Package emfPackage) {
+		emfPackage.getProject().getPackages().remove(emfPackage);
+		workspace.getElements().remove(emfPackage);
 	}
 
 }

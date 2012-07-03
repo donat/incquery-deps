@@ -66,6 +66,9 @@ public class NamedElementItemProvider
 
 			addNamePropertyDescriptor(object);
 			addHandlerPropertyDescriptor(object);
+			addIncomingDependenciesPropertyDescriptor(object);
+			addOutgoingDependenciesPropertyDescriptor(object);
+			addDataPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -115,6 +118,72 @@ public class NamedElementItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Incoming Dependencies feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addIncomingDependenciesPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_NamedElement_incomingDependencies_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_NamedElement_incomingDependencies_feature", "_UI_NamedElement_type"),
+				 JavaModelPackage.Literals.NAMED_ELEMENT__INCOMING_DEPENDENCIES,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Outgoing Dependencies feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addOutgoingDependenciesPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_NamedElement_outgoingDependencies_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_NamedElement_outgoingDependencies_feature", "_UI_NamedElement_type"),
+				 JavaModelPackage.Literals.NAMED_ELEMENT__OUTGOING_DEPENDENCIES,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Data feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addDataPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_NamedElement_data_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_NamedElement_data_feature", "_UI_NamedElement_type"),
+				 JavaModelPackage.Literals.NAMED_ELEMENT__DATA,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -142,6 +211,7 @@ public class NamedElementItemProvider
 		switch (notification.getFeatureID(NamedElement.class)) {
 			case JavaModelPackage.NAMED_ELEMENT__NAME:
 			case JavaModelPackage.NAMED_ELEMENT__HANDLER:
+			case JavaModelPackage.NAMED_ELEMENT__DATA:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

@@ -9,7 +9,11 @@ package cern.devtools.depanalysis.modelfinder.structurals;
 public class VisitorFailure extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	public VisitorFailure(String s) {
+		super(s);
+	}
+	
 	public VisitorFailure(Exception e) {
 		super(e);
 	}

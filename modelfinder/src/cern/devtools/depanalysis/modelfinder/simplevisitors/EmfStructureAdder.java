@@ -32,20 +32,20 @@ import cern.devtools.depanalysis.modelfinder.structurals.PackageWrapper;
 import cern.devtools.depanalysis.modelfinder.structurals.VisitorFailure;
 import cern.devtools.depanalysis.modelfinder.structurals.WsItemWrapper;
 
-public class EmfStructureBuilder extends Identity {
+public class EmfStructureAdder extends Identity {
 
 	private final Workspace workspace;
 
-	private EmfStructureBuilder(Workspace workspace) {
+	private EmfStructureAdder(Workspace workspace) {
 		this.workspace = workspace;
 	}
 
-	public static EmfStructureBuilder newInstance() {
-		return new EmfStructureBuilder(JavaModelFactory.eINSTANCE.createWorkspace());
+	public static EmfStructureAdder newInstance() {
+		return new EmfStructureAdder(JavaModelFactory.eINSTANCE.createWorkspace());
 	}
 
-	public static EmfStructureBuilder newInstance(Workspace workspace) {
-		return new EmfStructureBuilder(workspace);
+	public static EmfStructureAdder newInstance(Workspace workspace) {
+		return new EmfStructureAdder(workspace);
 	}
 
 	public Workspace getEmfModel() {

@@ -12,17 +12,19 @@ import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jdt.core.ElementChangedEvent;
+import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IElementChangedListener;
 import org.eclipse.jdt.core.IJavaElementDelta;
+import org.eclipse.ui.progress.UIJob;
 
 import cern.devtools.depanalysis.javamodel.JavaModelFactory;
 import cern.devtools.depanalysis.javamodel.Workspace;
-import cern.devtools.depanalysis.modelfinder.simplevisitors.EmfItemRemover;
-import cern.devtools.depanalysis.modelfinder.simplevisitors.EmfStructureBuilder;
-import cern.devtools.depanalysis.modelfinder.structurals.VisitorBuilder;
-import cern.devtools.depanalysis.modelfinder.structurals.WorkspaceItemAdapter;
-import cern.devtools.depanalysis.modelfinder.structurals.WsItemWrapper;
+import cern.devtools.depanalysis.modelfinder.combinators.Traversals;
 
 public class IncremenatalWsToEMFModelTransformer implements IElementChangedListener {
 
@@ -37,10 +39,11 @@ public class IncremenatalWsToEMFModelTransformer implements IElementChangedListe
 	 */
 	private static Logger LOG = Logger.getLogger(IncremenatalWsToEMFModelTransformer.class.getCanonicalName());
 
-	public static void printModel(Workspace workspace) {
-		// System.out.println(workspace.toString());
-	}
+	private Job gatherInitialStateJob;
 
+	/**
+	 * Listeners List
+	 */
 	private List<WsChangeEventListener> listeners = new LinkedList<IncremenatalWsToEMFModelTransformer.WsChangeEventListener>();
 
 	/**
@@ -54,23 +57,38 @@ public class IncremenatalWsToEMFModelTransformer implements IElementChangedListe
 
 	public void addWsChangeEventListener(WsChangeEventListener l) {
 		listeners.add(l);
-		l.init(workspace);
 	}
 
 	@Override
-	public void elementChanged(ElementChangedEvent event) {
-		try {
-			IJavaElementDelta delta = event.getDelta();
-			traverseJavaModelRecursive(delta);
-			printModel(this.workspace);
-		} catch (CoreException e) {
-			LOG.warning("Error on model change. Desc: " + e.getMessage());
-			LOG.info("Rebuilding entire model...");
-			reset();
-		}
+	public void elementChanged(final ElementChangedEvent event) {
+		Job job = new UIJob("Update EMF model") {
+
+			@Override
+			public IStatus runInUIThread(IProgressMonitor monitor) {
+				while (gatherInitialStateJob.getState() == Job.RUNNING) {
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+					}
+				}
+
+				try {
+					IJavaElementDelta delta = event.getDelta();
+					traverseJavaModelRecursive(delta);
+				} catch (CoreException e) {
+					LOG.warning("Error on model change. Desc: " + e.getMessage());
+					LOG.info("Rebuilding entire model...");
+					reset();
+				}
+
+				return new Status(IStatus.OK, Activator.PLUGIN_ID, "Gathering Workspace Emf model was successful");
+			}
+		};
+
+		job.schedule();
 	}
 
-	public Workspace getWorkspaceModel() {
+	public Workspace getWorkspaceEMFModel() {
 		return workspace;
 	}
 
@@ -78,9 +96,65 @@ public class IncremenatalWsToEMFModelTransformer implements IElementChangedListe
 		listeners.remove(l);
 	}
 
-	public void reset() {
+	/**
+	 * 
+	 * @param delta
+	 * @return <code>true</code>, if the recursive handling should be executed to the affected children.
+	 */
+	private void handleDelta(IJavaElementDelta delta) {
+		// System.err.println(delta);
+		// String[] kinds = { null, "Added", "Removed", null, "Changed" };
+		// System.out.println(kinds[delta.getKind()] + " " + delta.getElement().getElementName());
+
+		switch (delta.getKind()) {
+		case IJavaElementDelta.ADDED:
+			Traversals.addJdtElemToEmfModel(workspace, delta.getElement());
+			break;
+		case IJavaElementDelta.CHANGED:
+			if (delta.getElement() instanceof ICompilationUnit
+					&& (delta.getFlags() & IJavaElementDelta.F_AST_AFFECTED) != 0) {
+				Traversals.updateDependencies(workspace, delta.getElement());
+			}
+
+			break;
+		case IJavaElementDelta.REMOVED:
+			Traversals.removeJdtElemFromEmfModel(workspace, delta.getElement());
+			break;
+		default:
+		}
+	}
+
+	private void loadInitialState() {
+		IWorkspace jdtWorkspace = ResourcesPlugin.getWorkspace();
+		final IWorkspaceRoot jdtWsRoot = jdtWorkspace.getRoot();
+		gatherInitialStateJob = new UIJob("Gather EMF model") {
+
+			@Override
+			public IStatus runInUIThread(IProgressMonitor monitor) {
+				workspace = Traversals.extractFullEmfModel(jdtWsRoot);
+				notifyInit();
+				return new Status(IStatus.OK, Activator.PLUGIN_ID, "Gathering Workspace Emf model was successful");
+			}
+		};
+
+		gatherInitialStateJob.schedule();
+	}
+
+	private void notifyInit() {
+		for (WsChangeEventListener l : listeners) {
+			l.init(workspace);
+		}
+	}
+
+	private void notifyRecovery() {
+		for (WsChangeEventListener l : listeners) {
+			l.recover(workspace);
+		}
+	}
+
+	private void reset() {
 		try {
-			// Initialise the model object
+			// Initialize the model object
 			workspace = JavaModelFactory.eINSTANCE.createWorkspace();
 			// load existing project information from the workspace
 			loadInitialState();
@@ -92,49 +166,11 @@ public class IncremenatalWsToEMFModelTransformer implements IElementChangedListe
 		}
 	}
 
-	private void loadInitialState() throws CoreException {
-		IWorkspace jdtWorkspace = ResourcesPlugin.getWorkspace();
-		IWorkspaceRoot jdtWsRoot = jdtWorkspace.getRoot();
-		this.workspace = VisitorBuilder.traverseAllWorkspaceItems(jdtWsRoot);
-	}
-
-	private void notifyRecovery() {
-		for (WsChangeEventListener l : listeners) {
-			l.recover(workspace);
-		}
-	}
-
-	private void traverseJavaModelRecursive(IJavaElementDelta elem) throws CoreException {
-
-		// Call recursive for the children
-		for (IJavaElementDelta child : elem.getAffectedChildren()) {
+	private void traverseJavaModelRecursive(IJavaElementDelta delta) throws CoreException {
+		for (IJavaElementDelta child : delta.getAffectedChildren()) {
 			traverseJavaModelRecursive(child);
 		}
 
-		switch (elem.getKind()) {
-		case IJavaElementDelta.ADDED:
-			WsItemWrapper[] items = WorkspaceItemAdapter.adapt(elem.getElement());
-			if (items == null) {
-				break;
-			}
-
-			for (WsItemWrapper vwi : items) {
-				vwi.accept(EmfStructureBuilder.newInstance(workspace));
-			}
-			// addJavaElement(elem.getElement());
-			break;
-		case IJavaElementDelta.REMOVED:
-			items = WorkspaceItemAdapter.adapt(elem.getElement());
-			if (items == null) {
-				break;
-			}
-
-			for (WsItemWrapper vwi : items) {
-				vwi.accept(EmfItemRemover.newInstance(workspace));
-			}
-			break;
-		default:
-		}
-
+		handleDelta(delta);
 	}
 }

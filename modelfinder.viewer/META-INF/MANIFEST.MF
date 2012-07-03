@@ -14,7 +14,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore.xmi;visibility:=reexport,
  org.eclipse.emf.edit.ui;visibility:=reexport,
  org.eclipse.ui.ide;visibility:=reexport,
- cern.devtools.depanalysis.modelfinder
+ cern.devtools.depanalysis.modelfinder,
+ cern.devtools.depanalysis.modelfinder.edit;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Import-Package: cern.devtools.depanalysis.javamodel,
  cern.devtools.depanalysis.javamodel.util

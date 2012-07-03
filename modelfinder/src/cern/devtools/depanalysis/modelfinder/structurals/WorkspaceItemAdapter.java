@@ -14,24 +14,23 @@ import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IType;
 
-
 public class WorkspaceItemAdapter {
-	public static WsItemWrapper[] adapt(IJavaElement jdtElem) {
+	public static WsItemWrapper adapt(IJavaElement jdtElem) {
 		// try {
 		if (jdtElem instanceof IJavaProject) {
-			return new WsItemWrapper[] { JavaProjectWrapper.newInstance((IJavaProject) jdtElem) };
+			return JavaProjectWrapper.newInstance((IJavaProject) jdtElem);
 		} else if (jdtElem instanceof IPackageFragment) {
-			return new WsItemWrapper[] { PackageWrapper.newInstance((IPackageFragment) jdtElem) };
+			return PackageWrapper.newInstance((IPackageFragment) jdtElem);
 		} else if (jdtElem instanceof IType) {
-			return new WsItemWrapper[] { ClassWrapper.newInstance((IType) jdtElem) };
+			return ClassWrapper.newInstance((IType) jdtElem);
 		} else if (jdtElem instanceof ICompilationUnit) {
-			return new WsItemWrapper[] { CompilationUnitWrapper.newInstance((ICompilationUnit) jdtElem) };
+			return CompilationUnitWrapper.newInstance((ICompilationUnit) jdtElem);
 		} else if (jdtElem instanceof IType) {
-			return new WsItemWrapper[] { ClassWrapper.newInstance((IType) jdtElem) };
+			return ClassWrapper.newInstance((IType) jdtElem);
 		} else if (jdtElem instanceof IMethod) {
-			return new WsItemWrapper[] { MethodWrapper.newInstance((IMethod) jdtElem) };
+			return MethodWrapper.newInstance((IMethod) jdtElem);
 		} else if (jdtElem instanceof IField) {
-			return new WsItemWrapper[] { FieldWrapper.newInstance((IField) jdtElem) };
+			return FieldWrapper.newInstance((IField) jdtElem);
 		} else {
 			// System.err.println("Unable to adapt " + jdtElem.getClass() + " to VisitableWorkspaceItem.");
 			return null;

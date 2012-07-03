@@ -64,11 +64,12 @@ public class ModelViewer extends ViewPart {
 
 			//Tree tree = viewer.getTree();
 		}
-
+		
 		createActions();
 		initializeToolBar();
 		initializeMenu();
 		initializeViewerInput();
+		
 	}
 
 
@@ -107,6 +108,8 @@ public class ModelViewer extends ViewPart {
 	public void setInput(Workspace input) {
 		viewer.setInput(input);
 	}
+	
+	
 	
 	@Override
 	public void dispose() {
