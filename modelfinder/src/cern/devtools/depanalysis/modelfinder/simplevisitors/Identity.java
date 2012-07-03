@@ -18,38 +18,44 @@ import cern.devtools.depanalysis.modelfinder.structurals.WsItemWrapperVisitor;
 public class Identity implements WsItemWrapperVisitor {
 
 	@Override
-	public void visitWorkspaceRoot(WorkspaceRootWrapper jdtWsRootWrapper) {
+	public void visitWorkspaceRoot(WorkspaceRootWrapper jdt) {
+		System.err.println("Identity " + jdt.getJdtWorkspace());
 		//Do nothing.
 	}
 
 	@Override
-	public void visitProject(JavaProjectWrapper jdtProjectWrapper) {
+	public void visitProject(JavaProjectWrapper jdt) {
+		System.err.println("Identity " + jdt.wrappedItem());
 		//Do nothing.
 	}
 
 	@Override
-	public void visitPackage(PackageWrapper jdtPackageWrapper) {
+	public void visitPackage(PackageWrapper jdt) {
+		System.err.println("Identity " + jdt.wrappedItem());
 		//Do nothing.
 	}
 
 	@Override
-	public void visitClass(ClassWrapper jdtTypeWrapper) {
+	public void visitClass(ClassWrapper jdt) {
+		System.err.println("Identity " + jdt.wrappedItem());
 		//Do nothing.
 	}
 
 	@Override
-	public void visitMethod(MethodWrapper jdtMethodWrapper) {
+	public void visitMethod(MethodWrapper jdt) {
+		System.err.println("Identity " + jdt.wrappedItem());
 		//Do nothing.
 	}
 
 	@Override
-	public void visitField(FieldWrapper jdtFieldWrapper) {
+	public void visitField(FieldWrapper jdt) {
+		System.err.println("Identity " + jdt.wrappedItem());
 		//Do nothing.
 	}
 
 	@Override
-	public void visitCompilationUnit(CompilationUnitWrapper jdtCompilationUnitWrapper) {
+	public void visitCompilationUnit(CompilationUnitWrapper jdt) {
+		System.err.println("Identity " + jdt.wrappedItem());
 		// Do nothing.
 	}
-
 }

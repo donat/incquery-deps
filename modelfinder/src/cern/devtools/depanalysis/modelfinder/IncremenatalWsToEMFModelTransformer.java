@@ -102,10 +102,6 @@ public class IncremenatalWsToEMFModelTransformer implements IElementChangedListe
 	 * @return <code>true</code>, if the recursive handling should be executed to the affected children.
 	 */
 	private void handleDelta(IJavaElementDelta delta) {
-		// System.err.println(delta);
-		// String[] kinds = { null, "Added", "Removed", null, "Changed" };
-		// System.out.println(kinds[delta.getKind()] + " " + delta.getElement().getElementName());
-
 		switch (delta.getKind()) {
 		case IJavaElementDelta.ADDED:
 			Traversals.addJdtElemToEmfModel(workspace, delta.getElement());
@@ -127,12 +123,20 @@ public class IncremenatalWsToEMFModelTransformer implements IElementChangedListe
 	private void loadInitialState() {
 		IWorkspace jdtWorkspace = ResourcesPlugin.getWorkspace();
 		final IWorkspaceRoot jdtWsRoot = jdtWorkspace.getRoot();
-		gatherInitialStateJob = new UIJob("Gather EMF model") {
+		gatherInitialStateJob = new Job("Gather EMF model") {
 
 			@Override
-			public IStatus runInUIThread(IProgressMonitor monitor) {
+			protected IStatus run(IProgressMonitor monitor) {
 				workspace = Traversals.extractFullEmfModel(jdtWsRoot);
-				notifyInit();
+				UIJob notifyJob = new UIJob("") {
+					@Override
+					public IStatus runInUIThread(IProgressMonitor monitor) {
+						notifyInit();
+						return new Status(IStatus.OK, Activator.PLUGIN_ID, "notifyInit()");
+					}
+				};
+				notifyJob.schedule();
+
 				return new Status(IStatus.OK, Activator.PLUGIN_ID, "Gathering Workspace Emf model was successful");
 			}
 		};

@@ -6,9 +6,13 @@
  */
 package cern.devtools.depanalysis.modelfinder.simplevisitors;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.eclipse.jdt.core.IJavaElement;
 
 import cern.devtools.depanalysis.javamodel.ApiClass;
+import cern.devtools.depanalysis.javamodel.Dependency;
 import cern.devtools.depanalysis.javamodel.NamedElement;
 import cern.devtools.depanalysis.javamodel.Package;
 import cern.devtools.depanalysis.javamodel.Project;
@@ -36,17 +40,20 @@ public class EmfDependencyRemover extends Identity {
 			return;
 		}
 		
+		List<Dependency> depToDelete = new LinkedList<Dependency>();
+		
 		// Select the classes to delete.
 		for (Package emfPackage : emfProject.getPackages()) {
 			for (ApiClass emfClass : emfPackage.getClasses()) {
 				
 				// Remove the class dependencies, if it is contained by this compilation unit
 				if (cuHandler.equals(emfClass.getData())) {
-					workspace.getDependencties().removeAll(emfClass.getIncomingDependencies());
-					workspace.getDependencties().removeAll(emfClass.getOutgoingDependencies());
+					depToDelete.addAll(emfClass.getIncomingDependencies());
+					depToDelete.addAll(emfClass.getOutgoingDependencies());
 				}
 			}
 		}
+		removeDependenciesFromModel(depToDelete);
 		
 	}
 	
@@ -69,13 +76,18 @@ public class EmfDependencyRemover extends Identity {
 		deleteDependencies(jdtFieldWrapper.wrappedItem());
 	}
 	
-
-	
-	
 	private void deleteDependencies(IJavaElement jdtElem) {
 		NamedElement emfElem = workspace.findElementByHandle(jdtElem.getHandleIdentifier());
-		workspace.getDependencties().removeAll(emfElem.getIncomingDependencies());
-		workspace.getDependencties().removeAll(emfElem.getOutgoingDependencies());
+		removeDependenciesFromModel(emfElem.getOutgoingDependencies());
+		removeDependenciesFromModel(emfElem.getIncomingDependencies());
+	}
+	
+	private void removeDependenciesFromModel(List<Dependency> depsToDelete) {
+		for (Dependency d : depsToDelete) {
+			d.getFrom().getOutgoingDependencies().remove(d);
+			d.getTo().getIncomingDependencies().remove(d);
+		}
+		workspace.getDependencties().removeAll(depsToDelete);
 	}
 
 }

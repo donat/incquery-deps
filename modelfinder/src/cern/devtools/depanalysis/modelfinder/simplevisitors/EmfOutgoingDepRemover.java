@@ -6,9 +6,14 @@
  */
 package cern.devtools.depanalysis.modelfinder.simplevisitors;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.eclipse.jdt.core.IJavaElement;
 
 import cern.devtools.depanalysis.javamodel.ApiClass;
+import cern.devtools.depanalysis.javamodel.Dependency;
+import cern.devtools.depanalysis.javamodel.NamedElement;
 import cern.devtools.depanalysis.javamodel.Package;
 import cern.devtools.depanalysis.javamodel.Project;
 import cern.devtools.depanalysis.javamodel.Workspace;
@@ -35,17 +40,21 @@ public class EmfOutgoingDepRemover extends Identity {
 			return;
 		}
 
+		List<Dependency> depToDelete = new LinkedList<Dependency>();
+		
 		// Select the classes to delete.
 		for (Package emfPackage : emfProject.getPackages()) {
 			for (ApiClass emfClass : emfPackage.getClasses()) {
 
 				// Remove the class dependencies, if it is contained by this compilation unit
 				if (cuHandler.equals(emfClass.getData())) {
-					// TODO UNCOMMENT
-					// workspace.getDependencties().removeAll(emfClass.getOutgoingDependencies());
+					depToDelete.addAll(emfClass.getOutgoingDependencies());
+					//workspace.getDependencties().removeAll(emfClass.getOutgoingDependencies());
 				}
 			}
 		}
+		
+		removeDependenciesFromModel(depToDelete);
 
 	}
 
@@ -69,9 +78,16 @@ public class EmfOutgoingDepRemover extends Identity {
 	}
 
 	private void deleteDependencies(IJavaElement jdtElem) {
-		// TODO UNCOMMENT
-		// NamedElement emfElem = workspace.findElementByHandle(jdtElem.getHandleIdentifier());
-		// workspace.getDependencties().removeAll(emfElem.getOutgoingDependencies());
+		NamedElement emfElem = workspace.findElementByHandle(jdtElem.getHandleIdentifier());
+		removeDependenciesFromModel(emfElem.getOutgoingDependencies());
+	}
+	
+	private void removeDependenciesFromModel(List<Dependency> depsToDelete) {
+		for (Dependency d : depsToDelete) {
+			d.getFrom().getOutgoingDependencies().remove(d);
+			d.getTo().getIncomingDependencies().remove(d);
+		}
+		workspace.getDependencties().removeAll(depsToDelete);
 	}
 
 }

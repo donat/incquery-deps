@@ -110,14 +110,11 @@ public class PackageItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
 	@Override
 	public String getText(Object object) {
 		String label = ((cern.devtools.depanalysis.javamodel.Package)object).getName();
-		if (label.equals("") ) {
-			label = "(default)";
-		}
 		return label == null || label.length() == 0 ?
 			getString("_UI_Package_type") :
 			getString("_UI_Package_type") + " " + label;
