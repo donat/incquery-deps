@@ -19,7 +19,6 @@ import org.eclipse.ui.part.ViewPart;
 
 import cern.devtools.depanalysis.javamodel.Workspace;
 import cern.devtools.depanalysis.javamodel.provider.JavaModelItemProviderAdapterFactory;
-import cern.devtools.depanalysis.modelfinder.IncremenatalWsToEMFModelTransformer.WsChangeEventListener;
 
 public class ModelViewer extends ViewPart {
 
@@ -76,7 +75,7 @@ public class ModelViewer extends ViewPart {
 	private void initializeViewerInput() {
 		viewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
 		viewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
-		Activator.getDefault().getWsService().addWsChangeEventListener(wsChangeListener);
+		Activator.getDefault().getWsService().registerWorkspaceListener(wsChangeListener);
 	}
 
 	/**
@@ -113,7 +112,7 @@ public class ModelViewer extends ViewPart {
 	
 	@Override
 	public void dispose() {
-		Activator.getDefault().getWsService().removeWsChangeEventListener(wsChangeListener);
+		Activator.getDefault().getWsService().deregisterWorkspaceListener(wsChangeListener);
 		adapterFactory.dispose();
 	}
 

@@ -111,14 +111,14 @@ public class ProjectItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Project)object).getName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_Project_type") :
-			getString("_UI_Project_type") + " " + label;
+		/*String label = */ return ((Project)object).getName();
+//		return label == null || label.length() == 0 ?
+//			getString("_UI_Project_type") :
+//			getString("_UI_Project_type") + " " + label;
 	}
 
 	/**

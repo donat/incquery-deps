@@ -6,9 +6,11 @@
  */
 package cern.devtools.depanalysis.modelfinder.simplevisitors;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.jdt.core.IJavaElement;
 
 import cern.devtools.depanalysis.javamodel.ApiClass;
@@ -17,6 +19,7 @@ import cern.devtools.depanalysis.javamodel.NamedElement;
 import cern.devtools.depanalysis.javamodel.Package;
 import cern.devtools.depanalysis.javamodel.Project;
 import cern.devtools.depanalysis.javamodel.Workspace;
+import cern.devtools.depanalysis.modelfinder.Pair;
 import cern.devtools.depanalysis.modelfinder.structurals.ClassWrapper;
 import cern.devtools.depanalysis.modelfinder.structurals.CompilationUnitWrapper;
 import cern.devtools.depanalysis.modelfinder.structurals.FieldWrapper;
@@ -83,10 +86,19 @@ public class EmfOutgoingDepRemover extends Identity {
 	}
 	
 	private void removeDependenciesFromModel(List<Dependency> depsToDelete) {
-		for (Dependency d : depsToDelete) {
-			d.getFrom().getOutgoingDependencies().remove(d);
-			d.getTo().getIncomingDependencies().remove(d);
+		LinkedList<Pair<Dependency, EList<Dependency>>> depList = new LinkedList<Pair<Dependency,EList<Dependency>>>();
+		
+		Iterator<Dependency> iter = depsToDelete.iterator();
+		while(iter.hasNext()) {
+			Dependency d = iter.next();
+			depList.add(Pair.newInstance(d, d.getFrom().getOutgoingDependencies()));
+			depList.add(Pair.newInstance(d, d.getTo().getIncomingDependencies()));
 		}
+		
+		for (Pair<Dependency, EList<Dependency>> p : depList) {
+			p.getSecond().remove(p.getFirst());
+		}
+		
 		workspace.getDependencties().removeAll(depsToDelete);
 	}
 

@@ -76,14 +76,14 @@ public class MethodItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated not
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Method)object).getName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_Method_type") :
-			getString("_UI_Method_type") + " " + label;
+		/*String label = */ return ((Method)object).getName();
+//		return label == null || label.length() == 0 ?
+//			getString("_UI_Method_type") :
+//			getString("_UI_Method_type") + " " + label;
 	}
 
 	/**

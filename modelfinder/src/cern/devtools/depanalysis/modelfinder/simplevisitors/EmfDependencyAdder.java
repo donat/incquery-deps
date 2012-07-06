@@ -229,6 +229,7 @@ public class EmfDependencyAdder extends Identity {
 		};
 		engine.search(pattern, new SearchParticipant[] { SearchEngine.getDefaultSearchParticipant() }, scope,
 				requestor, null);
+		
 	}
 
 	private void findInheritanceDependencies(IType jdtType) throws JavaModelException {

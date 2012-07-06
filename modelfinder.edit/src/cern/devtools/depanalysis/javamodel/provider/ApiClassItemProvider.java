@@ -112,14 +112,14 @@ public class ApiClassItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((ApiClass)object).getName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_ApiClass_type") :
-			getString("_UI_ApiClass_type") + " " + label;
+		/*String label =*/ return ((ApiClass)object).getName();
+//		return label == null || label.length() == 0 ?
+//			getString("_UI_ApiClass_type") :
+//			getString("_UI_ApiClass_type") + " " + label;
 	}
 
 	/**

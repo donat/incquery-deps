@@ -17,7 +17,7 @@ public class Activator extends AbstractUIPlugin {
 	private static Activator plugin;
 	
 	// java source code changing listener
-	IncremenatalWsToEMFModelTransformer workspaceModelService = new IncremenatalWsToEMFModelTransformer();
+	WorkspaceEventDispatcher workspaceModelService = new WorkspaceEventDispatcher();
 	
 	
 	/**
@@ -57,7 +57,7 @@ public class Activator extends AbstractUIPlugin {
 		return plugin;
 	}
 	
-	public IncremenatalWsToEMFModelTransformer getWsService() {
+	public WorkspaceEventDispatcher getWsService() {
 		return workspaceModelService;
 	}
 
