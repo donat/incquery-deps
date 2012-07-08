@@ -20,6 +20,11 @@
             name="Workspace EMF model"
             restorable="true">
       </view>
+      <view
+            class="asdf"
+            id="asdf"
+            name="New ViewPart">
+      </view>
    </extension>
 
 </plugin>
