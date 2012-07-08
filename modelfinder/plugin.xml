@@ -62,4 +62,12 @@
          </action>
       </actionSet>
    </extension>
+   <extension
+         point="org.eclipse.emf.ecore.generated_package">
+      <package
+            class="cern.devtools.depanalysis.javamodel.JavaModelPackage"
+            genModel="metamodel/simplified_java.genmodel"
+            uri="http://simplified_java/1.0">
+      </package>
+   </extension>
 </plugin>
