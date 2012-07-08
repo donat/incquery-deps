@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ASCII"?>
+<jm:Workspace xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:jm="http://simplified_java/1.0" elements="//@projects.0 //@projects.0/@packages.0 //@projects.0/@packages.1 //@projects.0/@packages.1/@classes.0 //@projects.0/@packages.1/@classes.0/@fields.0 //@projects.0/@packages.2 //@projects.0/@packages.2/@classes.0">
+  <projects name="javatestone" handler="=javatestone">
+    <packages name="" handler="=javatestone/src&lt;"/>
+    <packages name="test" handler="=javatestone/src&lt;test">
+      <classes name="A" handler="=javatestone/src&lt;test{A.java[A">
+        <fields name="myClazz" handler="=javatestone/src&lt;test{A.java[A^myClazz"/>
+      </classes>
+    </packages>
+    <packages name="test2" handler="=javatestone/src&lt;test2">
+      <classes name="MyClass" handler="=javatestone/src&lt;test2{MyClass.java[MyClass"/>
+    </packages>
+  </projects>
+</jm:Workspace>
