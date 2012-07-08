@@ -1,0 +1,12 @@
+package modelfinder
+
+import "http://simplified_java/1.0"
+
+
+pattern firstDemoPattern(NE) = {
+	NamedElement(NE);
+}
+
+pattern ApiClass(AC) = {
+	ApiClass(AC);
+}
