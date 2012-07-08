@@ -2,11 +2,11 @@ package modelfinder
 
 import "http://simplified_java/1.0"
 
-
+@DisplayInExplorer(mode="on")
 pattern firstDemoPattern(NE) = {
 	NamedElement(NE);
 }
-
+@DisplayInExplorer(mode="on")
 pattern ApiClass(AC) = {
 	ApiClass(AC);
 }
