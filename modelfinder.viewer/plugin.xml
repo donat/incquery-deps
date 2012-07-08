@@ -26,5 +26,17 @@
             name="New ViewPart">
       </view>
    </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="cern.devtools.depanalysis.javamodel.presentation.JavaModelEditor"
+            contributorClass="cern.devtools.depanalysis.javamodel.presentation.JavaModelActionBarContributor"
+            default="false"
+            extensions="javamodel"
+            icon="icons/full/obj16/JavaModelModelFile.gif"
+            id="cern.devtools.depanalysis.modelfinder.viewer.editor"
+            name="JavaModel Editor">
+      </editor>
+   </extension>
 
 </plugin>
