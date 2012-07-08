@@ -6,10 +6,12 @@
  */
 package cern.devtools.depanalysis.modelfinder;
 
+import java.awt.event.WindowAdapter;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -26,12 +28,14 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.part.ViewPart;
 
 import cern.devtools.depanalysis.javamodel.Workspace;
@@ -104,32 +108,43 @@ public class ModelViewer extends ViewPart {
 				@Override
 				public void run() {
 					// Choose file
-					FileDialog fd = new FileDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
-					fd.setText("Save");
-					fd.setFilterPath("C:/");
-					String[] filterExt = { "*.xmi" };
-					fd.setFilterExtensions(filterExt);
-					String path = fd.open();
-					System.err.println(path);
-
-					// Append xmi ending if not specified.
-					if (!path.endsWith(".xmi")) {
-						path += ".xmi";
-					}
-
-					// Store information to file.
-					ResourceSet resourceSet = new ResourceSetImpl();
-					resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
-							.put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
-					URI fileURI = URI.createFileURI(new File(path).getAbsolutePath());
-					Resource resource = resourceSet.createResource(fileURI);
-					resource.getContents().add((EObject) viewer.getInput());
-					try {
-						resource.save(Collections.EMPTY_MAP);
-						MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Information", "Emf model saved successfully!");
-					} catch (IOException e) {
-						e.printStackTrace();
-						MessageDialog.openWarning(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Warning", "Error on save: " + e.getMessage() + ".");
+					// FileDialog fd = new FileDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
+					SaveAsDialog sd = new SaveAsDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
+					sd.setTitle("Save workspace model");
+					//sd.setMessage("Specify file to save to");
+					//sd.setFilterPath("C:/");
+					//String[] filterExt = { "*.xmi" };
+					//sd.setsetFilterExtensions(filterExt);
+					sd.setOriginalName("default.javamodel");
+					//String path = fd.open();
+					
+					sd.setBlockOnOpen(true);
+					int r = sd.open();
+					if (Window.OK == r) {
+						IPath path = sd.getResult();
+						
+						System.err.println( path );
+	
+						// Append javamodel ending if not specified.
+//						if (!path.lastSegment().endsWith(".javamodel")) {
+//							path += ".javamodel";
+//						}
+	
+						// Store information to file.
+						ResourceSet resourceSet = new ResourceSetImpl();
+						resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
+								.put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
+						//URI fileURI = URI.createFileURI(new File(path).getAbsolutePath());
+						URI fileURI = URI.createPlatformResourceURI( path.toOSString(), true );
+						Resource resource = resourceSet.createResource(fileURI);
+						resource.getContents().add((EObject) viewer.getInput());
+						try {
+							resource.save(Collections.EMPTY_MAP);
+							MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Information", "Emf model saved successfully!");
+						} catch (IOException e) {
+							e.printStackTrace();
+							MessageDialog.openWarning(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Warning", "Error on save: " + e.getMessage() + ".");
+						}
 					}
 				}
 			};
