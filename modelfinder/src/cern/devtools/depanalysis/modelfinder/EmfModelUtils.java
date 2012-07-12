@@ -85,7 +85,12 @@ public class EmfModelUtils {
 		} else if (elem instanceof Method) {
 			Method m = (Method) elem;
 			m.getClass_().getMethods().remove(m);
-		} else {
+		} 
+		else if (elem instanceof Field) {
+			Field f = (Field) elem;
+			f.getClass_().getFields().remove(f);
+		}
+		else {
 			throw new RuntimeException("Cannot delete this item: " + elem);
 		}
 	}
