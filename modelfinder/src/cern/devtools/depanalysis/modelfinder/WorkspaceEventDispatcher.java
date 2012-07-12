@@ -116,7 +116,7 @@ public class WorkspaceEventDispatcher implements IElementChangedListener {
 
 	private void handleDelta(IJavaElementDelta delta) {
 		IJavaElement elem = delta.getElement();
-
+		
 		if (!isTracedProject(elem.getJavaProject())) {
 			return;
 		}
@@ -158,6 +158,6 @@ public class WorkspaceEventDispatcher implements IElementChangedListener {
 	}
 
 	private void logNonHandledEvent(IJavaElementDelta delta) {
-		System.err.println("WARNING: Event not handled:" + delta.getElement().getClass() + " | " + delta);
+		//System.err.println("WARNING: Event not handled:" + delta.getElement().getClass() + " | " + delta);
 	}
 }
