@@ -25,6 +25,7 @@ public class JobUtils {
 	 * @param job
 	 */
 	synchronized public void schedule(final Job job) {
+		job.setPriority(Job.DECORATE);
 		job.schedule();
 	}
 }

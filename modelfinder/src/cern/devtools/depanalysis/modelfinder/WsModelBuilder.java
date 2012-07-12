@@ -9,8 +9,8 @@ package cern.devtools.depanalysis.modelfinder;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Logger;
 
-import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
@@ -40,6 +40,8 @@ import cern.devtools.depanalysis.javamodel.Workspace;
 
 public class WsModelBuilder {
 
+	private static final Logger log = Logger.getLogger(WsModelBuilder.class.getSimpleName());
+
 	private final Workspace workspace;
 
 	private final SearchEngine engine = new SearchEngine();
@@ -48,13 +50,15 @@ public class WsModelBuilder {
 		this.workspace = workspace;
 	}
 
-	public static WsModelBuilder fromScratch(IWorkspaceRoot jdtRoot) {
+	public static WsModelBuilder fromScratch(List<IJavaProject> projects) {
 		Workspace workspace = JavaModelFactory.eINSTANCE.createWorkspace();
 		WsModelBuilder builder = new WsModelBuilder(workspace);
-		builder.buildAllStructure(jdtRoot);
-		builder.buildAllDependencies(jdtRoot);
+		builder.buildAllStructure(projects);
+		builder.buildAllDependencies(projects);
 		return builder;
 	}
+
+	
 
 	public static WsModelBuilder forModel(Workspace workspace) {
 		return new WsModelBuilder(workspace);
@@ -106,42 +110,38 @@ public class WsModelBuilder {
 			deleteMethod((IMethod) elem);
 		} else if (elem instanceof IField) {
 			deleteField((IField) elem);
+		} else if (elem instanceof IType) {
+			deleteType((IType) elem);
 		} else {
 			System.err.println("WHAT TO REMOVE:" + elem);
 		}
 	}
-	
+
 	public void updateItem(IJavaElement elem) {
-		if (elem instanceof IType || elem instanceof IMethod) {
-			NamedElement  emfElem = findJdtElementInEmfModel(elem);
+		if (elem instanceof IType || elem instanceof IMethod || elem instanceof IField) {
+			NamedElement emfElem = findJdtElementInEmfModel(elem);
 			if (emfElem == null) {
 				throw new RuntimeException("Item cannot be updated because it is not found in the model.");
 			}
 			EmfModelUtils.deleteOutgoingDependencies(workspace, emfElem);
 			insertOutgoingDependencies(elem);
-		}
-		else {
+		} else {
 			System.err.println("WHAT TO UPDATE:" + elem);
 		}
-
-		
 	}
 
-	private void buildAllStructure(final IWorkspaceRoot jdtWorkspace) {
+	private void buildAllStructure(final List<IJavaProject> jdtProjects) {
 		try {
-			buildStructureFromSratch(jdtWorkspace);
+			buildStructureFromSratch(jdtProjects);
 		} catch (Exception e) {
 			// The init should happen flawlessly.
 			throw new RuntimeException(e);
 		}
 	}
 
-	private void buildStructureFromSratch(IWorkspaceRoot jdtWorkspace) throws Exception {
-		// Get all projects from workspace.
-		List<IJavaProject> projects = JavaModelWalker.childrenOf(jdtWorkspace);
-
+	private void buildStructureFromSratch(final List<IJavaProject> jdtProjects) throws Exception {
 		// Iterate through the workspace and create the correspondent EMF.
-		for (IJavaProject project : projects) {
+		for (IJavaProject project : jdtProjects) {
 
 			// Add the project get the children and iterate through them.
 			if (isJdtElemInModel(project))
@@ -211,14 +211,11 @@ public class WsModelBuilder {
 		NamedElement emfFrom = findJdtElementInEmfModel(from);
 		NamedElement emfTo = findJdtElementInEmfModel(to);
 		if (emfFrom == null) {
-			System.err
-					.println("Add dependency failed, because the following (from) item does not exists in the EMF model:  "
-							+ from);
+			log.fine("Add dependency failed, because the following (from) item does not exists in the EMF model:  "
+					+ from);
 			return null;
 		} else if (emfTo == null) {
-			System.err
-					.println("Add dependency failed, because the following (to) item does not exists in the EMF model:  "
-							+ to);
+			log.fine("Add dependency failed, because the following (to) item does not exists in the EMF model:  " + to);
 			return null;
 		} else {
 			return EmfModelUtils.createDependency(workspace, emfFrom, emfTo, type);
@@ -274,6 +271,16 @@ public class WsModelBuilder {
 		}
 	}
 
+	private void deleteType(IType type) {
+		ApiClass emfClass = (ApiClass) findJdtElementInEmfModel(type);
+		if (emfClass == null) {
+			throw new RuntimeException("Tried to delete type, but not stored in the emf model.");
+		}
+
+		EmfModelUtils.deleteAllDependencies(workspace, emfClass);
+		EmfModelUtils.deleteNamedElement(workspace, emfClass);
+	}
+
 	private void deleteMethod(IMethod elem) {
 		Method emfMethod = (Method) findJdtElementInEmfModel(elem);
 		if (emfMethod == null) {
@@ -284,7 +291,7 @@ public class WsModelBuilder {
 		EmfModelUtils.deleteNamedElement(workspace, emfMethod);
 
 	}
-	
+
 	private void deleteField(IField elem) {
 		Field emfField = (Field) findJdtElementInEmfModel(elem);
 		if (emfField == null) {
@@ -303,7 +310,7 @@ public class WsModelBuilder {
 		return workspace.findElementByHandle(jdtElem.getHandleIdentifier());
 	}
 
-	private void buildAllDependencies(final IWorkspaceRoot root) {
+	private void buildAllDependencies(final List<IJavaProject> root) {
 		try {
 			for (IJavaElement elem : JavaModelWalker.allElements(root)) {
 				insertOutgoingDependencies(elem);
@@ -330,13 +337,13 @@ public class WsModelBuilder {
 				for (IType usedClass : findClassUsages((IMethod) elem)) {
 					addDependecy(DependencyType.CLASS_USAGE, elem, usedClass);
 				}
-				
+
 				// Handle FIELD ACCESS dependencies.
 				for (IField referencedField : findReferencedField((IMethod) elem)) {
 					addDependecy(DependencyType.FIELD_ACCESS, elem, referencedField);
 				}
 			}
-			
+
 			else if (elem instanceof IType) {
 				// Handle Inheritance dependencies.
 				for (IType superType : findSupertypes((IType) elem)) {
@@ -347,7 +354,7 @@ public class WsModelBuilder {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	private List<IField> findReferencedField(final IMethod elem) throws CoreException {
 		final List<IField> result = new LinkedList<IField>();
 		final boolean[] finished = { false };
@@ -378,7 +385,6 @@ public class WsModelBuilder {
 		engine.searchDeclarationsOfAccessedFields(elem, requestor, new NullProgressMonitor());
 		return result;
 	}
-
 
 	private List<IType> findSupertypes(IType elem) throws CoreException {
 		ITypeHierarchy hierarchy = elem.newTypeHierarchy(new NullProgressMonitor());
@@ -495,6 +501,4 @@ public class WsModelBuilder {
 		return same;
 	}
 
-
-	
 }

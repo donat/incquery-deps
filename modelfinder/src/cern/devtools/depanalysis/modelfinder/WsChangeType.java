@@ -16,67 +16,49 @@ import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IType;
 
 public enum WsChangeType {
-	ADD_PROJECT,
-	ADD_PACKAGE,
-	ADD_CLASS,
-	ADD_METHOD,
-	ADD_FIELD,
-	REMOVE_PROJECT,
-	REMOVE_PACKAGE,
-	REMOVE_CLASS,
-	REMOVE_METHOD,
-	REMOVE_FIELD,
-	UPDATE_COMPILATION_UNIT;
-	
+	ADD_PROJECT, ADD_PACKAGE, ADD_CLASS, ADD_METHOD, ADD_FIELD, REMOVE_PROJECT, REMOVE_PACKAGE, REMOVE_CLASS, REMOVE_METHOD, REMOVE_FIELD, UPDATE_COMPILATION_UNIT;
+
 	public static WsChangeType forAddingJdtItem(IJavaElement elem) {
-		if (elem instanceof IJavaProject) {
-			return ADD_PROJECT;
-		}
-		else if (elem instanceof IPackageFragment) {
+		/*
+		 * if (elem instanceof IJavaProject) { return ADD_PROJECT; } else
+		 */if (elem instanceof IPackageFragment) {
 			return ADD_PACKAGE;
-		}
-		else if (elem instanceof IType) {
+		} else if (elem instanceof IType) {
 			return ADD_CLASS;
-		}
-		else if (elem instanceof IMethod) {
+		} else if (elem instanceof IMethod) {
 			return ADD_METHOD;
-		}
-		else if (elem instanceof IField) {
+		} else if (elem instanceof IField) {
 			return ADD_FIELD;
 		}
-		
+
 		// Default option
 		return null;
 	}
-	
+
 	public static WsChangeType forRemovingJdtItem(IJavaElement elem) {
 		if (elem instanceof IJavaProject) {
 			return REMOVE_PROJECT;
-		}
-		else if (elem instanceof IPackageFragment) {
+		} else if (elem instanceof IPackageFragment) {
 			return REMOVE_PACKAGE;
 		}
-		
+
 		else if (elem instanceof IType || elem instanceof ICompilationUnit) {
 			return REMOVE_CLASS;
-		}
-		else if (elem instanceof IMethod) {
+		} else if (elem instanceof IMethod) {
 			return REMOVE_METHOD;
-		}
-		else if (elem instanceof IField) {
+		} else if (elem instanceof IField) {
 			return REMOVE_FIELD;
 		}
-		
+
 		// Default option
 		return null;
 	}
-	
-	public static WsChangeType forChangingJdtItem(IJavaElement elem, IJavaElementDelta delta) {  
+
+	public static WsChangeType forChangingJdtItem(IJavaElement elem, IJavaElementDelta delta) {
 		if (elem instanceof ICompilationUnit && (delta.getFlags() & IJavaElementDelta.F_AST_AFFECTED) != 0) {
 			return UPDATE_COMPILATION_UNIT;
 		}
 		return null;
 	}
-	
-	
+
 }

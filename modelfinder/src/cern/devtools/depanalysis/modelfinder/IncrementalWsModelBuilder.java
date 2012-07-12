@@ -8,15 +8,13 @@ package cern.devtools.depanalysis.modelfinder;
 
 import java.util.List;
 
-import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.IJavaProject;
 
 import cern.devtools.depanalysis.javamodel.Workspace;
 
@@ -28,8 +26,11 @@ public class IncrementalWsModelBuilder {
 
 	private final WsChangeListenerRepo listenerRepo;
 
-	public IncrementalWsModelBuilder(WsChangeListenerRepo listenerRepo) {
+	private final WorkspaceEventDispatcher dispatcher;
+
+	public IncrementalWsModelBuilder(WsChangeListenerRepo listenerRepo, WorkspaceEventDispatcher dispatcher) {
 		this.listenerRepo = listenerRepo;
+		this.dispatcher = dispatcher;
 		this.jobHelper = new JobUtils();
 		buildWorkspaceModel();
 	}
@@ -40,7 +41,7 @@ public class IncrementalWsModelBuilder {
 		Job buildWsJob = new Job("Build workspace EMF model") {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-				workspace = doBuildWorkspaceModel();
+				workspace = doBuildWorkspaceModel(dispatcher.getTracedProjects());
 				listenerRepo.notifyInit(workspace);
 				return JobUtils.okStatus("Gathering Workspace Emf model was successful");
 			}
@@ -49,11 +50,11 @@ public class IncrementalWsModelBuilder {
 		jobHelper.schedule(buildWsJob);
 	}
 	
-	public void rebuildWorkspaceModel() {
+	public void rebuildWorkspaceModel(final List<IJavaProject> projects) {
 		Job rebuildWsJob = new Job("ReBuild workspace EMF model") {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-				workspace = doBuildWorkspaceModel();
+				workspace = doBuildWorkspaceModel(projects);
 				listenerRepo.notifyRevovery(workspace);
 				return JobUtils.okStatus("Recreating Workspace Emf model was successful");
 			}
@@ -71,7 +72,7 @@ public class IncrementalWsModelBuilder {
 					return JobUtils.okStatus("Gathering Workspace Emf model was successful");
 				}
 				catch (Exception e) {
-					workspace = doBuildWorkspaceModel();
+					workspace = doBuildWorkspaceModel(dispatcher.getTracedProjects());
 					listenerRepo.notifyRevovery(workspace);
 					return JobUtils.errorStatus("Updating EMF model failed. Model reloaded.", e);
 				}
@@ -108,11 +109,8 @@ public class IncrementalWsModelBuilder {
 		}
 	}
 	
-	
-	private Workspace doBuildWorkspaceModel() {
-		IWorkspace jdtWorkspace = ResourcesPlugin.getWorkspace();
-		IWorkspaceRoot jdtWsRoot = jdtWorkspace.getRoot();
-		return WsModelBuilder.fromScratch(jdtWsRoot).getWorkspace();
+	private Workspace doBuildWorkspaceModel(List<IJavaProject> projects) {
+		return WsModelBuilder.fromScratch(dispatcher.getTracedProjects()).getWorkspace();
 	}
 }
 

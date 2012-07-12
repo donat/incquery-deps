@@ -156,8 +156,13 @@ public class DependencyItemProvider
 	public String getText(Object object) {
 		Dependency d = ((Dependency)object);
 		String label = d.getType().toString();
-		label += "(from: " + d.getFrom().getName() + ", ";
-		label += "to: " + d.getTo().getName() + ")";
+		if (d.getFrom() != null) {
+			label += "(from: " + d.getFrom().getName() + " ";
+		}
+		if (d.getTo() != null) {
+			label += "to: " + d.getTo().getName() + ")";
+		}
+		
 		return label;
 //		DependencyType labelValue = ((Dependency)object).getType();
 //		String label = labelValue == null ? null : labelValue.toString();

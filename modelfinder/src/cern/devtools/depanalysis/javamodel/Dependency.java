@@ -71,7 +71,7 @@ public interface Dependency extends EObject {
 	 * @model opposite="incomingDependencies" required="true"
 	 * @generated
 	 */
-	NamedElement getTo();
+	NamedElement getTo(); 
 
 	/**
 	 * Sets the value of the '{@link cern.devtools.depanalysis.javamodel.Dependency#getTo <em>To</em>}' reference.
@@ -99,7 +99,7 @@ public interface Dependency extends EObject {
 	 * @model
 	 * @generated
 	 */
-	DependencyType getType();
+	DependencyType getType(); 
 
 	/**
 	 * Sets the value of the '{@link cern.devtools.depanalysis.javamodel.Dependency#getType <em>Type</em>}' attribute.

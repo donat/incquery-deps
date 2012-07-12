@@ -103,6 +103,24 @@ public class JavaModelWalker {
 		}
 		return result;
 	}
+	
+	public static List<IJavaElement> allElements(List<IJavaProject> projects) throws CoreException {
+		List<IJavaElement> result = new LinkedList<IJavaElement>();
+		result.addAll(projects);
+		for (IJavaProject project : projects) {
+			List<IPackageFragment> packages = childrenOf(project);
+			result.addAll(packages);
+			for (IPackageFragment pkg : packages) {
+				List<IType> types = childrenOf(pkg);
+				result.addAll(types);
+				for (IType type : types) {
+					List<IJavaElement> methodOrField = childrenOf(type);
+					result.addAll(methodOrField);
+				}
+			}
+		}
+		return result;
+	}
 
 	/**
 	 * Returns all contained items which maybe have dependencies.
@@ -114,8 +132,8 @@ public class JavaModelWalker {
 		List<IType> types = childrenOf(cu);
 		result.addAll(types);
 		for (IType type : types) {
-			List<IJavaElement> methods = methodsOf(type);
-			result.addAll( methods);
+			List<IJavaElement> methodsOrFields = childrenOf(type);
+			result.addAll( methodsOrFields);
 		}
 		return result;
 	}
