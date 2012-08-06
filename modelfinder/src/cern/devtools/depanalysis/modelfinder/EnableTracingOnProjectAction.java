@@ -12,6 +12,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
 public class EnableTracingOnProjectAction implements IObjectActionDelegate {
@@ -31,6 +32,12 @@ public class EnableTracingOnProjectAction implements IObjectActionDelegate {
 				IJavaProject project = (IJavaProject) firstElement;
 				if (!prefs.tracedProjectNames().contains(project.getElementName())) {
 					Activator.getDefault().getWsService().addTracedProject(project);
+					try {
+						PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView("cern.devtools.depanalysis.modelfinder.ModelViewer");
+					} catch (PartInitException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				else {
 					Activator.getDefault().getWsService().removeTracedProject(project);

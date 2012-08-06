@@ -12,31 +12,28 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.jdt.core.ICompilationUnit;
-import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.IJavaElementDelta;
 import org.eclipse.jdt.core.IJavaProject;
 
 import cern.devtools.depanalysis.javamodel.Workspace;
 
-public class IncrementalWsModelBuilder {
+public class BuildScheduler {
 
 	private Workspace workspace;
-	
+
 	private final JobUtils jobHelper;
 
 	private final WsChangeListenerRepo listenerRepo;
 
 	private final WorkspaceEventDispatcher dispatcher;
 
-	public IncrementalWsModelBuilder(WsChangeListenerRepo listenerRepo, WorkspaceEventDispatcher dispatcher) {
+	public BuildScheduler(WsChangeListenerRepo listenerRepo, WorkspaceEventDispatcher dispatcher) {
 		this.listenerRepo = listenerRepo;
 		this.dispatcher = dispatcher;
 		this.jobHelper = new JobUtils();
 		buildWorkspaceModel();
 	}
-	
-	
-	
+
 	private void buildWorkspaceModel() {
 		Job buildWsJob = new Job("Build workspace EMF model") {
 			@Override
@@ -46,10 +43,10 @@ public class IncrementalWsModelBuilder {
 				return JobUtils.okStatus("Gathering Workspace Emf model was successful");
 			}
 		};
-		
+
 		jobHelper.schedule(buildWsJob);
 	}
-	
+
 	public void rebuildWorkspaceModel(final List<IJavaProject> projects) {
 		Job rebuildWsJob = new Job("ReBuild workspace EMF model") {
 			@Override
@@ -59,58 +56,69 @@ public class IncrementalWsModelBuilder {
 				return JobUtils.okStatus("Recreating Workspace Emf model was successful");
 			}
 		};
-		
+
 		jobHelper.schedule(rebuildWsJob);
 	}
-	
-	public void updateWorkspaceModel(final WsChangeType type, final Object... params) {
+
+	public void updateWorkspaceModel(final IJavaElementDelta delta) {
 		Job updateWsJob = new Job("Update workspace EMF model") {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				try {
-					doUpdate(type, params);
+					doUpdate(delta);
 					return JobUtils.okStatus("Gathering Workspace Emf model was successful");
-				}
-				catch (Exception e) {
+				} catch (Exception e) {
 					workspace = doBuildWorkspaceModel(dispatcher.getTracedProjects());
 					listenerRepo.notifyRevovery(workspace);
 					return JobUtils.errorStatus("Updating EMF model failed. Model reloaded.", e);
 				}
 			}
 		};
-		
+
 		jobHelper.schedule(updateWsJob);
 	}
-	
-	private void doUpdate(WsChangeType type, Object... params) throws CoreException {
-		switch (type) {
-		case ADD_PROJECT:
-		case ADD_PACKAGE:
-		case ADD_CLASS:
-		case ADD_METHOD:
-		case ADD_FIELD:
-			WsModelBuilder.forModel(workspace).insertItem((IJavaElement) params[0]);
-			break;
-		case REMOVE_PROJECT:
-		case REMOVE_PACKAGE:
-		case REMOVE_CLASS:
-		case REMOVE_METHOD:
-		case REMOVE_FIELD:
-			WsModelBuilder.forModel(workspace).removeItem((IJavaElement) params[0]);
-			break;
-		case UPDATE_COMPILATION_UNIT:
-			List<IJavaElement> elemsToUpdate = JavaModelWalker.allUpdatableIn((ICompilationUnit)params[0]);
-			for (IJavaElement toUpdate : elemsToUpdate) {
-				WsModelBuilder.forModel(workspace).updateItem(toUpdate);
-			}
-			break;
-		default:
-			break;
-		}
+
+	private void doUpdate(IJavaElementDelta delta) throws CoreException {
+		WsModelBuilder.forModel(workspace).modifyModel(delta);
 	}
-	
+
 	private Workspace doBuildWorkspaceModel(List<IJavaProject> projects) {
 		return WsModelBuilder.fromScratch(dispatcher.getTracedProjects()).getWorkspace();
 	}
-}
 
+	public void addProject(final IJavaProject project) {
+		Job newProjectJob = new Job("Add project to the traced ones") {
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				try {
+					WsModelBuilder.forModel(workspace).addNewProject(project);
+					return JobUtils.okStatus("New project added successfully");
+				} catch (Exception e) {
+					workspace = doBuildWorkspaceModel(dispatcher.getTracedProjects());
+					listenerRepo.notifyRevovery(workspace);
+					return JobUtils.errorStatus("Add project failed", e);
+				}
+			}
+		};
+
+		jobHelper.schedule(newProjectJob);
+	}
+
+	public void removeProject(final IJavaProject project) {
+		Job removeProjectJob = new Job("Remove project to the traced ones") {
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				try {
+					WsModelBuilder.forModel(workspace).removeEntireProject(project);
+					return JobUtils.okStatus("Project removed successfully");
+				} catch (Exception e) {
+					workspace = doBuildWorkspaceModel(dispatcher.getTracedProjects());
+					listenerRepo.notifyRevovery(workspace);
+					return JobUtils.errorStatus("Remove project failed", e);
+				}
+			}
+		};
+
+		jobHelper.schedule(removeProjectJob);
+	}
+}

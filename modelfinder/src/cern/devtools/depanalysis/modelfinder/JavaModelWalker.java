@@ -76,13 +76,22 @@ public class JavaModelWalker {
 		return result;
 	}
 	
-	public static List<IJavaElement> methodsOf(IType type) throws CoreException {
-		List<IJavaElement> result = new LinkedList<IJavaElement>();
+	public static List<IMethod> methodsOf(IType type) throws CoreException {
+		List<IMethod> result = new LinkedList<IMethod>();
 		for (IMethod method : type.getMethods()) {
 			result.add(method);
 		}
 		return result;
 	}
+	
+	public static List<IField> fieldsOf(IType type) throws CoreException {
+		List<IField> result = new LinkedList<IField>();
+		for (IField field : type.getFields()) {
+			result.add(field);
+		}
+		return result;
+	}
+	
 
 	public static List<IJavaElement> allElements(IWorkspaceRoot root) throws CoreException {
 		List<IJavaElement> result = new LinkedList<IJavaElement>();

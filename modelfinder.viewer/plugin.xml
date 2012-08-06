@@ -20,11 +20,6 @@
             name="Workspace EMF model"
             restorable="true">
       </view>
-      <view
-            class="asdf"
-            id="asdf"
-            name="New ViewPart">
-      </view>
    </extension>
    <extension
          point="org.eclipse.ui.editors">

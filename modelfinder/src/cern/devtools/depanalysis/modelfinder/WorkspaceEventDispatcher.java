@@ -13,7 +13,6 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.ElementChangedEvent;
 import org.eclipse.jdt.core.IElementChangedListener;
-import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaElementDelta;
 import org.eclipse.jdt.core.IJavaProject;
 
@@ -21,7 +20,7 @@ public class WorkspaceEventDispatcher implements IElementChangedListener {
 
 	private final WsChangeListenerRepo listenerRepo;
 
-	private final IncrementalWsModelBuilder builder;
+	private final BuildScheduler builder;
 
 	private final PreferenceStore prefs = new PreferenceStore();
 
@@ -29,7 +28,7 @@ public class WorkspaceEventDispatcher implements IElementChangedListener {
 
 	public WorkspaceEventDispatcher() {
 		listenerRepo = new WsChangeListenerRepo();
-		builder = new IncrementalWsModelBuilder(listenerRepo, this);
+		builder = new BuildScheduler(listenerRepo, this);
 	}
 
 	public void registerWorkspaceListener(WsChangeEventListener l) {
@@ -53,7 +52,7 @@ public class WorkspaceEventDispatcher implements IElementChangedListener {
 		}
 		prefs.addTracedProject(project.getElementName());
 		tracedProjects.add(project);
-		builder.updateWorkspaceModel(WsChangeType.ADD_PROJECT, project);
+		builder.addProject(project);
 
 	}
 
@@ -63,7 +62,7 @@ public class WorkspaceEventDispatcher implements IElementChangedListener {
 		}
 		prefs.removeTracedProject(project.getElementName());
 		tracedProjects.remove(project);
-		builder.updateWorkspaceModel(WsChangeType.REMOVE_PROJECT, project);
+		builder.removeProject(project);
 	}
 
 	private boolean isTracedProject(IJavaProject project) {
@@ -98,7 +97,7 @@ public class WorkspaceEventDispatcher implements IElementChangedListener {
 			traverseJavaModelRecursive(delta);
 		} catch (Exception e) {
 			// Print the reconcile process.
-			System.err.println("<<Model got out of sync>>");
+			System.err.println("<<Model out of sync>>");
 			e.printStackTrace();
 			System.err.println("<<Reinitializing model>>");
 			builder.rebuildWorkspaceModel(tracedProjects);
@@ -107,57 +106,37 @@ public class WorkspaceEventDispatcher implements IElementChangedListener {
 	}
 
 	private void traverseJavaModelRecursive(IJavaElementDelta delta) {
-		for (IJavaElementDelta child : delta.getAffectedChildren()) {
-			traverseJavaModelRecursive(child);
+		if (delta.getKind() == IJavaElementDelta.REMOVED) {
+			traverseJavaModelRecursiveInverse(delta);
+		} else {
+			traverseJavaModelRecursiveNormal(delta);
 		}
+	}
 
+	private void traverseJavaModelRecursiveNormal(IJavaElementDelta delta) {
+		for (IJavaElementDelta child : delta.getAffectedChildren()) {
+			traverseJavaModelRecursiveNormal(child);
+		}
+		// Handling after the traverse part.
 		handleDelta(delta);
 	}
 
-	private void handleDelta(IJavaElementDelta delta) {
-		IJavaElement elem = delta.getElement();
-		
-		if (!isTracedProject(elem.getJavaProject())) {
-			return;
-		}
-
-		switch (delta.getKind()) {
-		case IJavaElementDelta.ADDED:
-			WsChangeType type = WsChangeType.forAddingJdtItem(elem);
-			if (type == null) {
-				logNonHandledEvent(delta);
-			} else {
-				builder.updateWorkspaceModel(type, elem);
-			}
-			break;
-		case IJavaElementDelta.CHANGED:
-			type = WsChangeType.forChangingJdtItem(elem, delta);
-			if (type == null) {
-				logNonHandledEvent(delta);
-			} else {
-				builder.updateWorkspaceModel(type, elem);
-			}
-
-			break;
-		case IJavaElementDelta.REMOVED:
-			type = WsChangeType.forRemovingJdtItem(elem);
-			if (type == null) {
-				logNonHandledEvent(delta);
-			} else if (type == WsChangeType.REMOVE_PROJECT) {
-				removeTracedProject((IJavaProject) elem);
-			} else {
-				// When remove delete the preference too.
-
-				builder.updateWorkspaceModel(type, elem);
-			}
-
-			// Traversals.removeJdtElemFromEmfModel(workspace, delta.getElement());
-			break;
-		default:
+	private void traverseJavaModelRecursiveInverse(IJavaElementDelta delta) {
+		// Handling before the traverse part.
+		handleDelta(delta);
+		for (IJavaElementDelta child : delta.getAffectedChildren()) {
+			traverseJavaModelRecursiveInverse(child);
 		}
 	}
 
-	private void logNonHandledEvent(IJavaElementDelta delta) {
-		//System.err.println("WARNING: Event not handled:" + delta.getElement().getClass() + " | " + delta);
+	private void handleDelta(IJavaElementDelta delta) {
+		// Debug
+		System.out.println(delta);
+		System.out.println("----------------------------------------------------------------------");
+		
+		// Check if it is on a project which the user enabled the discovery.
+		if (isTracedProject(delta.getElement().getJavaProject())) {
+			builder.updateWorkspaceModel(delta);
+		}
 	}
 }

@@ -12,6 +12,28 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.Signature;
 
 public final class JdtUtils {
+
+	private static final String[] elementTypes = new String[17];
+
+	static {
+		elementTypes[1] = "javamodel";
+		elementTypes[2] = "javaproject";
+		elementTypes[3] = "packagefragmentroot";
+		elementTypes[4] = "packagefrafment";
+		elementTypes[5] = "compilationunit";
+		elementTypes[6] = "classfile";
+		elementTypes[7] = "type";
+		elementTypes[8] = "field";
+		elementTypes[9] = "method";
+		elementTypes[10] = "initializer";
+		elementTypes[11] = "pkgdeclaration";
+		elementTypes[12] = "importcontainer";
+		elementTypes[13] = "importdeclaration";
+		elementTypes[14] = "localvariable";
+		elementTypes[15] = "typeparameter";
+		elementTypes[16] = "annotaion";
+	}
+
 	public static String decodeSourceSignature(IMethod method) {
 		try {
 			// Variable holding the source signature of the method. Initially put the name of the method in it.
@@ -41,7 +63,7 @@ public final class JdtUtils {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	public static String decodeJdtSource(String pt, IType container) throws JavaModelException {
 		String readable = Signature.toString(pt);
 		String readableWithoutArray = readable.replace("[", "").replace("]", "");
@@ -57,7 +79,9 @@ public final class JdtUtils {
 			}
 			return result;
 		}
-
 	}
 
+	public static String getJavaElemType(int type) {
+		return elementTypes[type] == null ? "null" : elementTypes[type];
+	}
 }

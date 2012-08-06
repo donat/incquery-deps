@@ -75,12 +75,24 @@ public class EmfModelUtils {
 	public static void deleteNamedElement(Workspace workspace, NamedElement elem) {
 		if (elem instanceof Project) {
 			Project project = (Project) elem;
-			workspace.getProjects().remove(project);
+//			for (Package pkg : ((Project) elem).getPackages()) {
+//				deleteNamedElement(workspace, pkg);
+//			}
+			workspace.getProjects().remove(project);			
 		} else if (elem instanceof Package) {
 			Package pkg = (Package) elem;
+//			for (ApiClass ac : pkg.getClasses()) {
+//				deleteNamedElement(workspace, ac);
+//			}
 			pkg.getProject().getPackages().remove(pkg);
 		} else if (elem instanceof ApiClass) {
 			ApiClass ac = (ApiClass) elem;
+//			for (Method m : ac.getMethods()) {
+//				deleteNamedElement(workspace, m);
+//			}
+//			for (Field f : ac.getFields()) {
+//				deleteNamedElement(workspace, f);
+//			}
 			ac.getPackage().getClasses().remove(ac);
 		} else if (elem instanceof Method) {
 			Method m = (Method) elem;
@@ -93,6 +105,7 @@ public class EmfModelUtils {
 		else {
 			throw new RuntimeException("Cannot delete this item: " + elem);
 		}
+		workspace.getElements().remove(elem);
 	}
 
 	public static Dependency createDependency(Workspace workspace, NamedElement from, NamedElement to,
