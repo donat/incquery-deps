@@ -22,6 +22,7 @@ import org.eclipse.jdt.core.IPackageDeclaration;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.ITypeHierarchy;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.search.SearchEngine;
 import org.eclipse.jdt.core.search.SearchMatch;
 import org.eclipse.jdt.core.search.SearchRequestor;
@@ -103,40 +104,56 @@ public class WsModelBuilder {
 	}
 
 	private void add(IJavaElementDelta delta) {
-		if (delta.getMovedFromElement() == null) {
+		try {
 			addStandalone(delta.getElement());
-		} else {
-
+		} catch (JavaModelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
-	private void addStandalone(IJavaElement elem) {
+	private void addStandalone(IJavaElement elem) throws JavaModelException {
 
 		if (elem instanceof IJavaProject) {
 			buildPrimitives.addProject((IJavaProject) elem);
 		} else if (elem instanceof IPackageFragment) {
 			IPackageFragment jdtPkg = (IPackageFragment) elem;
-			Project project = (Project) buildPrimitives.findJdtElementInEmfModel(jdtPkg.getJavaProject());
+			Project project = (Project) buildPrimitives
+					.findJdtElementInEmfModel(jdtPkg.getJavaProject());
 			if (project != null) {
 				buildPrimitives.addPackage(project, jdtPkg);
 			}
 		} else if (elem instanceof IType) {
 			IType jdttType = (IType) elem;
-			Package pkg = (Package) buildPrimitives.findJdtElementInEmfModel(jdttType.getPackageFragment());
+			Package pkg = (Package) buildPrimitives
+					.findJdtElementInEmfModel(jdttType.getPackageFragment());
 			buildPrimitives.addClass(pkg, jdttType);
 			insertOutgoingDependencies(jdttType);
 
 		} else if (elem instanceof IMethod) {
 			IMethod method = (IMethod) elem;
-			ApiClass container = (ApiClass) buildPrimitives.findJdtElementInEmfModel(method.getDeclaringType());
+			ApiClass container = (ApiClass) buildPrimitives
+					.findJdtElementInEmfModel(method.getDeclaringType());
 			buildPrimitives.addMethod(container, method);
 			insertOutgoingDependencies(method);
 
 		} else if (elem instanceof IField) {
 			IField field = (IField) elem;
-			ApiClass container = (ApiClass) buildPrimitives.findJdtElementInEmfModel(field.getDeclaringType());
+			ApiClass container = (ApiClass) buildPrimitives
+					.findJdtElementInEmfModel(field.getDeclaringType());
 			buildPrimitives.addField(container, field);
 			insertOutgoingDependencies(field);
+		} else if (elem instanceof ICompilationUnit) {
+			ICompilationUnit cu = (ICompilationUnit) elem;
+			for (IJavaElement it : cu.getChildren()) {
+				if (!(it instanceof IType)) {
+					System.err
+							.println("CompilationUnit's children should be IType, but it is: "
+									+ it.getClass());
+				} else {
+					addStandalone(it);
+				}
+			}
 		} else {
 			System.err.println("WHAT TO ADD:" + elem);
 		}
@@ -161,7 +178,8 @@ public class WsModelBuilder {
 		}
 	}
 
-	private void buildStructureFromSratch(final List<IJavaProject> jdtProjects) throws Exception {
+	private void buildStructureFromSratch(final List<IJavaProject> jdtProjects)
+			throws Exception {
 		// Iterate through the workspace and create the correspondent EMF.
 		for (IJavaProject project : jdtProjects) {
 
@@ -169,30 +187,38 @@ public class WsModelBuilder {
 			if (buildPrimitives.isJdtElemInModel(project))
 				continue;
 			Project emfProject = buildPrimitives.addProject(project);
-			List<IPackageFragment> packages = JavaModelWalker.childrenOf(project);
+			List<IPackageFragment> packages = JavaModelWalker
+					.childrenOf(project);
 			for (IPackageFragment pkg : packages) {
 
-				// Add the package to the model, get the children of it and iterate again.
+				// Add the package to the model, get the children of it and
+				// iterate again.
 				if (buildPrimitives.isJdtElemInModel(pkg))
 					continue;
-				Package emfPackage = buildPrimitives.addPackage(emfProject, pkg);
+				Package emfPackage = buildPrimitives
+						.addPackage(emfProject, pkg);
 				List<IType> types = JavaModelWalker.childrenOf(pkg);
 				for (IType type : types) {
 
-					// Add the class to the model, get the children of it and iterate again.
+					// Add the class to the model, get the children of it and
+					// iterate again.
 					if (buildPrimitives.isJdtElemInModel(type))
 						continue;
-					ApiClass emfClass = buildPrimitives.addClass(emfPackage, type);
+					ApiClass emfClass = buildPrimitives.addClass(emfPackage,
+							type);
 					insertOutgoingDependencies(type);
-					List<IJavaElement> methodsOrFields = JavaModelWalker.childrenOf(type);
+					List<IJavaElement> methodsOrFields = JavaModelWalker
+							.childrenOf(type);
 					for (IJavaElement methodOrField : methodsOrFields) {
 						if (buildPrimitives.isJdtElemInModel(methodOrField))
 							continue;
 						if (methodOrField instanceof IMethod) {
-							buildPrimitives.addMethod(emfClass, (IMethod) methodOrField);
+							buildPrimitives.addMethod(emfClass,
+									(IMethod) methodOrField);
 							insertOutgoingDependencies(methodOrField);
 						} else if (methodOrField instanceof IField) {
-							buildPrimitives.addField(emfClass, (IField) methodOrField);
+							buildPrimitives.addField(emfClass,
+									(IField) methodOrField);
 						} else {
 							throw new RuntimeException(
 									"Class can only contain IMethod or IField instance. Found item: "
@@ -210,17 +236,41 @@ public class WsModelBuilder {
 			IJavaElement elem = delta.getElement();
 			updateOutgoingDeps(elem);
 			compareWithModel(elem);
+			updateChildren(elem);
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	
+
+	private void updateChildren(IJavaElement elem) throws JavaModelException {
+		if (elem instanceof ICompilationUnit) {
+			for (IJavaElement child : ((ICompilationUnit) elem).getChildren()) {
+				if (child instanceof IType) {
+					IType type = (IType) child;
+					for (IMethod m : type.getMethods()) {
+						if (buildPrimitives.findJdtElementInEmfModel(m) == null) {
+							addStandalone(m);
+						}
+					}
+					for (IField f : type.getFields()) {
+						if (buildPrimitives.findJdtElementInEmfModel(f) == null) {
+							addStandalone(f);
+						}
+					}
+				}
+			}
+		}
+		
+	}
+
 	private void compareWithModel(IJavaElement elem) throws CoreException {
 		// TODO do it with the other classes too.
 		if (elem instanceof IType) {
-
-			ApiClass ac = (ApiClass) buildPrimitives.findJdtElementInEmfModel(elem);
+			ApiClass ac = (ApiClass) buildPrimitives
+					.findJdtElementInEmfModel(elem);
 			for (IMethod m : JavaModelWalker.methodsOf((IType) elem)) {
 				if (buildPrimitives.findJdtElementInEmfModel(m) == null) {
 					buildPrimitives.addMethod(ac, m);
@@ -238,7 +288,8 @@ public class WsModelBuilder {
 				if (!(type instanceof IType)) {
 					System.err.println("Unexpected type: " + type.getClass());
 				} else {
-					ApiClass ac = (ApiClass) buildPrimitives.findJdtElementInEmfModel(type);
+					ApiClass ac = (ApiClass) buildPrimitives
+							.findJdtElementInEmfModel(type);
 					for (IMethod m : JavaModelWalker.methodsOf((IType) type)) {
 						if (buildPrimitives.findJdtElementInEmfModel(m) == null) {
 							buildPrimitives.addMethod(ac, m);
@@ -255,35 +306,46 @@ public class WsModelBuilder {
 	}
 
 	private void updateOutgoingDeps(IJavaElement elem) {
-		if (elem instanceof IType || elem instanceof IMethod || elem instanceof IField) {
-			NamedElement emfElem = buildPrimitives.findJdtElementInEmfModel(elem);
+		if (elem instanceof IType || elem instanceof IMethod
+				|| elem instanceof IField) {
+			NamedElement emfElem = buildPrimitives
+					.findJdtElementInEmfModel(elem);
 			if (emfElem == null) {
-				throw new RuntimeException("Item cannot be updated because it is not found in the model.");
+				throw new RuntimeException(
+						"Item cannot be updated because it is not found in the model.");
 			}
 			EmfModelUtils.deleteOutgoingDependencies(workspace, emfElem);
 			insertOutgoingDependencies(elem);
 		} else {
-			System.err.println("WHAT TO UPDATE:" + elem.getElementName() + ", type: " + elem.getElementType());
+			// System.err.println("WHAT TO UPDATE:" + elem.getElementName()
+			// + ", type: " + elem.getElementType());
 		}
 	}
 
-	private List<IMethod> findCalledMethods(final IMethod method) throws CoreException {
+	private List<IMethod> findCalledMethods(final IMethod method)
+			throws CoreException {
 		final List<IMethod> result = new LinkedList<IMethod>();
 		final boolean[] finished = { false };
 		SearchRequestor requestor = new SearchRequestor() {
 
 			@Override
-			public void acceptSearchMatch(SearchMatch match) throws CoreException {
+			public void acceptSearchMatch(SearchMatch match)
+					throws CoreException {
 				Object mo = match.getElement();
 				if (mo == null) {
 					return;
 				} else if (mo instanceof IMethod) {
-					// Remove unnecessary results (the items from the java.* package).
+					// Remove unnecessary results (the items from the java.*
+					// package).
 					IMethod method = (IMethod) mo;
 					ICompilationUnit cu = method.getCompilationUnit();
 					if (cu != null) {
-						IPackageDeclaration[] packages = cu.getPackageDeclarations();
-						if (packages != null && packages.length > 0 && packages[0].getElementName().startsWith("java.")) {
+						IPackageDeclaration[] packages = cu
+								.getPackageDeclarations();
+						if (packages != null
+								&& packages.length > 0
+								&& packages[0].getElementName().startsWith(
+										"java.")) {
 							return;
 						}
 					}
@@ -303,7 +365,8 @@ public class WsModelBuilder {
 			}
 		};
 
-		engine.searchDeclarationsOfSentMessages(method, requestor, new NullProgressMonitor());
+		engine.searchDeclarationsOfSentMessages(method, requestor,
+				new NullProgressMonitor());
 
 		while (finished[0] == false) {
 			try {
@@ -316,18 +379,21 @@ public class WsModelBuilder {
 		return result;
 	}
 
-	private List<IType> findClassUsages(final IMethod method) throws CoreException {
+	private List<IType> findClassUsages(final IMethod method)
+			throws CoreException {
 		final List<IType> result = new LinkedList<IType>();
 		final boolean[] finished = { false };
 		SearchRequestor requestor = new SearchRequestor() {
 
 			@Override
-			public void acceptSearchMatch(SearchMatch match) throws CoreException {
+			public void acceptSearchMatch(SearchMatch match)
+					throws CoreException {
 				Object mo = match.getElement();
 				if (mo == null) {
 					return;
 				} else if (mo instanceof IType) {
-					// Remove unnecessary results (the items from the java.* package).
+					// Remove unnecessary results (the items from the java.*
+					// package).
 					result.add((IType) mo);
 
 				} else {
@@ -343,17 +409,21 @@ public class WsModelBuilder {
 			}
 		};
 
-		engine.searchDeclarationsOfReferencedTypes(method, requestor, new NullProgressMonitor());
+		engine.searchDeclarationsOfReferencedTypes(method, requestor,
+				new NullProgressMonitor());
 		return result;
 	}
 
-	private List<IMethod> findOverridenMethods(final IMethod method) throws CoreException {
+	private List<IMethod> findOverridenMethods(final IMethod method)
+			throws CoreException {
 		List<IMethod> result = new LinkedList<IMethod>();
 
 		// Find supertypes
-		ITypeHierarchy hierarchy = method.getDeclaringType().newTypeHierarchy(new NullProgressMonitor());
+		ITypeHierarchy hierarchy = method.getDeclaringType().newTypeHierarchy(
+				new NullProgressMonitor());
 
-		List<IType> superTypes = Arrays.asList(hierarchy.getSupertypes(method.getDeclaringType()));
+		List<IType> superTypes = Arrays.asList(hierarchy.getSupertypes(method
+				.getDeclaringType()));
 		for (IType superType : superTypes) {
 			for (IMethod superMethod : superType.getMethods()) {
 				if (methodsHasSameSignature(superMethod, method)) {
@@ -364,18 +434,21 @@ public class WsModelBuilder {
 		return result;
 	}
 
-	private List<IField> findReferencedField(final IMethod elem) throws CoreException {
+	private List<IField> findReferencedField(final IMethod elem)
+			throws CoreException {
 		final List<IField> result = new LinkedList<IField>();
 		final boolean[] finished = { false };
 		SearchRequestor requestor = new SearchRequestor() {
 
 			@Override
-			public void acceptSearchMatch(SearchMatch match) throws CoreException {
+			public void acceptSearchMatch(SearchMatch match)
+					throws CoreException {
 				Object mo = match.getElement();
 				if (mo == null) {
 					return;
 				} else if (mo instanceof IField) {
-					// Remove unnecessary results (the items from the java.* package).
+					// Remove unnecessary results (the items from the java.*
+					// package).
 					result.add((IField) mo);
 
 				} else {
@@ -391,12 +464,14 @@ public class WsModelBuilder {
 			}
 		};
 
-		engine.searchDeclarationsOfAccessedFields(elem, requestor, new NullProgressMonitor());
+		engine.searchDeclarationsOfAccessedFields(elem, requestor,
+				new NullProgressMonitor());
 		return result;
 	}
 
 	private List<IType> findSupertypes(IType elem) throws CoreException {
-		ITypeHierarchy hierarchy = elem.newTypeHierarchy(new NullProgressMonitor());
+		ITypeHierarchy hierarchy = elem
+				.newTypeHierarchy(new NullProgressMonitor());
 		return Arrays.asList(hierarchy.getSupertypes(elem));
 	}
 
@@ -405,30 +480,41 @@ public class WsModelBuilder {
 			if (elem instanceof IMethod) {
 				// Handle METHOD REFERENCE dependencies.
 				for (IMethod referencedMethod : findCalledMethods((IMethod) elem)) {
-					if (!elem.getJavaProject().equals(referencedMethod.getJavaProject())) {
-						buildPrimitives.addDependecy(DependencyType.METHOD_CALL, elem, referencedMethod);
+					if (!elem.getJavaProject().equals(
+							referencedMethod.getJavaProject())) {
+						buildPrimitives.addDependecy(
+								DependencyType.METHOD_CALL, elem,
+								referencedMethod);
 					}
 
 				}
 
 				// Handle OVERRIDED METHOD dependencies.
 				for (IMethod overridedMethod : findOverridenMethods((IMethod) elem)) {
-					if (!elem.getJavaProject().equals(overridedMethod.getJavaProject())) {
-						buildPrimitives.addDependecy(DependencyType.METHOD_OVERRIDE, elem, overridedMethod);
+					if (!elem.getJavaProject().equals(
+							overridedMethod.getJavaProject())) {
+						buildPrimitives.addDependecy(
+								DependencyType.METHOD_OVERRIDE, elem,
+								overridedMethod);
 					}
 				}
 
 				// Handle CLASS USAGE dependencies.
 				for (IType usedClass : findClassUsages((IMethod) elem)) {
-					if (!elem.getJavaProject().equals(usedClass.getJavaProject())) {
-						buildPrimitives.addDependecy(DependencyType.CLASS_USAGE, elem, usedClass);
+					if (!elem.getJavaProject().equals(
+							usedClass.getJavaProject())) {
+						buildPrimitives.addDependecy(
+								DependencyType.CLASS_USAGE, elem, usedClass);
 					}
 				}
 
 				// Handle FIELD ACCESS dependencies.
 				for (IField referencedField : findReferencedField((IMethod) elem)) {
-					if (!elem.getJavaProject().equals(referencedField.getJavaProject())) {
-						buildPrimitives.addDependecy(DependencyType.FIELD_ACCESS, elem, referencedField);
+					if (!elem.getJavaProject().equals(
+							referencedField.getJavaProject())) {
+						buildPrimitives.addDependecy(
+								DependencyType.FIELD_ACCESS, elem,
+								referencedField);
 					}
 				}
 			}
@@ -436,8 +522,10 @@ public class WsModelBuilder {
 			else if (elem instanceof IType) {
 				// Handle Inheritance dependencies.
 				for (IType superType : findSupertypes((IType) elem)) {
-					if (!elem.getJavaProject().equals(superType.getJavaProject())) {
-						buildPrimitives.addDependecy(DependencyType.INHERITANCE, elem, superType);
+					if (!elem.getJavaProject().equals(
+							superType.getJavaProject())) {
+						buildPrimitives.addDependecy(
+								DependencyType.INHERITANCE, elem, superType);
 					}
 				}
 			}
@@ -447,12 +535,16 @@ public class WsModelBuilder {
 	}
 
 	private void remove(IJavaElementDelta delta) {
-		// If a method deleted, it is deleted. We don't handle the situation when it is moved to a new place.
+		// If a method deleted, it is deleted. We don't handle the situation
+		// when it is moved to a new place.
 		// This is added when it is added.
 
 		IJavaElement elem = delta.getElement();
 		try {
 			removeStandalone(elem);
+			// if (delta.getMovedToElement() != null) {
+			// addStandalone(delta.getMovedToElement());
+			// }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -106,34 +106,18 @@ public class WorkspaceEventDispatcher implements IElementChangedListener {
 	}
 
 	private void traverseJavaModelRecursive(IJavaElementDelta delta) {
-		if (delta.getKind() == IJavaElementDelta.REMOVED) {
-			traverseJavaModelRecursiveInverse(delta);
-		} else {
-			traverseJavaModelRecursiveNormal(delta);
-		}
-	}
-
-	private void traverseJavaModelRecursiveNormal(IJavaElementDelta delta) {
 		for (IJavaElementDelta child : delta.getAffectedChildren()) {
-			traverseJavaModelRecursiveNormal(child);
+			traverseJavaModelRecursive(child);
 		}
-		// Handling after the traverse part.
+		// Postorder traversal: handling is after the recursive call.
 		handleDelta(delta);
-	}
-
-	private void traverseJavaModelRecursiveInverse(IJavaElementDelta delta) {
-		// Handling before the traverse part.
-		handleDelta(delta);
-		for (IJavaElementDelta child : delta.getAffectedChildren()) {
-			traverseJavaModelRecursiveInverse(child);
-		}
 	}
 
 	private void handleDelta(IJavaElementDelta delta) {
 		// Debug
-		System.out.println(delta);
-		System.out.println("----------------------------------------------------------------------");
-		
+		// System.out.println(delta);
+		// System.out.println("--------------------------------------------------------------");
+
 		// Check if it is on a project which the user enabled the discovery.
 		if (isTracedProject(delta.getElement().getJavaProject())) {
 			builder.updateWorkspaceModel(delta);
