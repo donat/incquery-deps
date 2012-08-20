@@ -1,21 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin>
 
-   <extension
-         id="modelfinder.firstDemoPattern"
-         point="org.eclipse.viatra2.emf.incquery.matcherfactory">
-      <matcher
-            factory="modelfinder.firstdemopattern.FirstDemoPatternMatcherFactory"
-            id="modelfinder.firstDemoPattern">
-      </matcher>
-   </extension>
-   <extension
-         id="modelfinder.ApiClass"
-         point="org.eclipse.viatra2.emf.incquery.matcherfactory">
-      <matcher
-            factory="modelfinder.apiclass.ApiClassMatcherFactory"
-            id="modelfinder.ApiClass">
-      </matcher>
-   </extension>
-
 </plugin>

@@ -15,28 +15,13 @@
       <genEnumLiterals ecoreEnumLiteral="simplified_java.ecore#//DependencyType/INHERITANCE"/>
       <genEnumLiterals ecoreEnumLiteral="simplified_java.ecore#//DependencyType/FIELD_ACCESS"/>
     </genEnums>
-    <genClasses ecoreClass="simplified_java.ecore#//Project">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference simplified_java.ecore#//Project/packages"/>
+    <genClasses ecoreClass="simplified_java.ecore#//JavaProject">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference simplified_java.ecore#//JavaProject/packageFragmentRoots"/>
     </genClasses>
-    <genClasses ecoreClass="simplified_java.ecore#//ApiClass">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference simplified_java.ecore#//ApiClass/methods"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference simplified_java.ecore#//ApiClass/fields"/>
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference simplified_java.ecore#//ApiClass/package"/>
-    </genClasses>
-    <genClasses ecoreClass="simplified_java.ecore#//Method">
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference simplified_java.ecore#//Method/class"/>
-    </genClasses>
-    <genClasses ecoreClass="simplified_java.ecore#//Field">
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference simplified_java.ecore#//Field/class"/>
-    </genClasses>
-    <genClasses ecoreClass="simplified_java.ecore#//Workspace">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference simplified_java.ecore#//Workspace/projects"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference simplified_java.ecore#//Workspace/elements"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference simplified_java.ecore#//Workspace/dependencties"/>
-    </genClasses>
-    <genClasses ecoreClass="simplified_java.ecore#//Package">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference simplified_java.ecore#//Package/classes"/>
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference simplified_java.ecore#//Package/project"/>
+    <genClasses ecoreClass="simplified_java.ecore#//EclipseWorkspace">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference simplified_java.ecore#//EclipseWorkspace/projects"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference simplified_java.ecore#//EclipseWorkspace/elements"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference simplified_java.ecore#//EclipseWorkspace/dependencties"/>
     </genClasses>
     <genClasses image="false" ecoreClass="simplified_java.ecore#//NamedElement">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute simplified_java.ecore#//NamedElement/name"/>
@@ -49,6 +34,17 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference simplified_java.ecore#//Dependency/from"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference simplified_java.ecore#//Dependency/to"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute simplified_java.ecore#//Dependency/type"/>
+    </genClasses>
+    <genClasses ecoreClass="simplified_java.ecore#//PackageFragmentRoot">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference simplified_java.ecore#//PackageFragmentRoot/javaProject"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference simplified_java.ecore#//PackageFragmentRoot/packageFragments"/>
+    </genClasses>
+    <genClasses ecoreClass="simplified_java.ecore#//PackageFragment">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference simplified_java.ecore#//PackageFragment/packageFragmentRoot"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference simplified_java.ecore#//PackageFragment/compilationUnits"/>
+    </genClasses>
+    <genClasses ecoreClass="simplified_java.ecore#//CompilationUnit">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference simplified_java.ecore#//CompilationUnit/packageFragment"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

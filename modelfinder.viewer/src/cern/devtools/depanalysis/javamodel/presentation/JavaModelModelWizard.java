@@ -73,10 +73,6 @@ import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.ISetSelectionTarget;
 
-import cern.devtools.depanalysis.javamodel.JavaModelFactory;
-import cern.devtools.depanalysis.javamodel.JavaModelPackage;
-import cern.devtools.depanalysis.javamodel.provider.javamodelEditPlugin;
-
 
 import org.eclipse.core.runtime.Path;
 
@@ -87,6 +83,10 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
+
+import cern.devtools.depanalysis.wsmodel.JavaModelFactory;
+import cern.devtools.depanalysis.wsmodel.JavaModelPackage;
+import cern.devtools.depanalysis.wsmodel.provider.javamodelEditPlugin;
 
 
 /**

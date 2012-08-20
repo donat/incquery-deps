@@ -124,7 +124,7 @@ public class JavaModelWalker {
 				result.addAll(types);
 				for (IType type : types) {
 					List<IJavaElement> methodOrField = childrenOf(type);
-					result.addAll(methodOrField);
+					result.addAll(methodOrField);					
 				}
 			}
 		}

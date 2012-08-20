@@ -1,51 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ecore:EPackage xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="javamodel"
-    nsURI="http://simplified_java/1.0" nsPrefix="jm">
-  <eClassifiers xsi:type="ecore:EClass" name="Project" eSuperTypes="#//NamedElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="packages" upperBound="-1"
-        eType="#//Package" containment="true" eOpposite="#//Package/project"/>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="wsmodel" nsURI="http://github.com/donat/incquery-deps/eclipse-workspace-model"
+    nsPrefix="wsm">
+  <eClassifiers xsi:type="ecore:EClass" name="JavaProject" eSuperTypes="#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="packageFragmentRoots" upperBound="-1"
+        eType="#//PackageFragmentRoot" containment="true" eOpposite="#//PackageFragmentRoot/javaProject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eclipseWorkspace" eType="#//EclipseWorkspace"
+        eOpposite="#//EclipseWorkspace/projects"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ApiClass" eSuperTypes="#//NamedElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="methods" upperBound="-1"
-        eType="#//Method" containment="true" eOpposite="#//Method/class"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="fields" upperBound="-1"
-        eType="#//Field" containment="true" eOpposite="#//Field/class"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="package" lowerBound="1"
-        eType="#//Package" eOpposite="#//Package/classes"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Method" eSuperTypes="#//NamedElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="class" lowerBound="1" eType="#//ApiClass"
-        eOpposite="#//ApiClass/methods"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Field" eSuperTypes="#//NamedElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="class" lowerBound="1" eType="#//ApiClass"
-        eOpposite="#//ApiClass/fields"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Workspace">
+  <eClassifiers xsi:type="ecore:EClass" name="EclipseWorkspace">
     <eStructuralFeatures xsi:type="ecore:EReference" name="projects" upperBound="-1"
-        eType="#//Project" containment="true"/>
+        eType="#//JavaProject" containment="true" eOpposite="#//JavaProject/eclipseWorkspace"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
         eType="#//NamedElement"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="dependencties" upperBound="-1"
         eType="#//Dependency" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Package" eSuperTypes="#//NamedElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="classes" upperBound="-1"
-        eType="#//ApiClass" containment="true" eOpposite="#//ApiClass/package"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="project" lowerBound="1"
-        eType="#//Project" eOpposite="#//Project/packages"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NamedElement" abstract="true">
+    <eOperations name="getParent" eType="#//NamedElement"/>
+    <eOperations name="getChildren" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EEList"/>
+    <eOperations name="setParent">
+      <eParameters name="parent" lowerBound="1" eType="#//NamedElement"/>
+    </eOperations>
+    <eOperations name="addChild">
+      <eParameters name="child" lowerBound="1" eType="#//NamedElement"/>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="handler" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="incomingDependencies" upperBound="-1"
         eType="#//Dependency" eOpposite="#//Dependency/to"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="outgoingDependencies" upperBound="-1"
         eType="#//Dependency" eOpposite="#//Dependency/from"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="data" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"
-        transient="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="DependencyType">
     <eLiterals name="CLASS_USAGE"/>
@@ -60,5 +45,37 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="to" lowerBound="1" eType="#//NamedElement"
         eOpposite="#//NamedElement/incomingDependencies"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//DependencyType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PackageFragmentRoot" eSuperTypes="#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="javaProject" lowerBound="1"
+        eType="#//JavaProject" eOpposite="#//JavaProject/packageFragmentRoots"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="packageFragments" upperBound="-1"
+        eType="#//PackageFragment" containment="true" eOpposite="#//PackageFragment/packageFragmentRoot"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PackageFragment" eSuperTypes="#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="packageFragmentRoot" eType="#//PackageFragmentRoot"
+        eOpposite="#//PackageFragmentRoot/packageFragments"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="compilationUnits" upperBound="-1"
+        eType="#//CompilationUnit" containment="true" eOpposite="#//CompilationUnit/packageFragment"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CompilationUnit" eSuperTypes="#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="packageFragment" eType="#//PackageFragment"
+        eOpposite="#//PackageFragment/compilationUnits"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="types" upperBound="-1"
+        eType="#//Type" containment="true" eOpposite="#//Type/compilationUnit"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Type" eSuperTypes="#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="compilationUnit" eType="#//CompilationUnit"
+        eOpposite="#//CompilationUnit/types"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="methods" upperBound="-1"
+        eType="#//Method" containment="true" eOpposite="#//Method/type"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fields" upperBound="-1"
+        eType="#//Field" containment="true" eOpposite="#//Field/type"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Method" eSuperTypes="#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//Type" eOpposite="#//Type/methods"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Field" eSuperTypes="#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//Type" eOpposite="#//Type/fields"/>
   </eClassifiers>
 </ecore:EPackage>

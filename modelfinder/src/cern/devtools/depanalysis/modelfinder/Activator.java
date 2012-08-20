@@ -32,7 +32,6 @@ public class Activator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
-
 		JavaCore.addElementChangedListener(workspaceModelService);
 	}
 
@@ -64,4 +63,5 @@ public class Activator extends AbstractUIPlugin {
 	public static void logDebug(String caller, String msg) {
 		System.err.println("[" + caller + "] " + msg);
 	}
+	
 }

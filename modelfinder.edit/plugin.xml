@@ -2,18 +2,14 @@
 <?eclipse version="3.0"?>
 
 <!--
- <copyright>
- </copyright>
-
- $Id$
 -->
 
 <plugin>
 
    <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
       <factory
-            uri="http://simplified_java/1.0"
-            class="cern.devtools.depanalysis.javamodel.provider.JavaModelItemProviderAdapterFactory"
+            uri="http://github.com/donat/incquery-deps/eclipse-workspace-model"
+            class="cern.devtools.depanalysis.wsmodel.provider.JavaModelItemProviderAdapterFactory"
             supportedTypes=
               "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
                org.eclipse.emf.edit.provider.IStructuredItemContentProvider

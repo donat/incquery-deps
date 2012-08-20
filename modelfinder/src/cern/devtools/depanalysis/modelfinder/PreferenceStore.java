@@ -21,6 +21,7 @@ public class PreferenceStore {
 
 	private final String TRACED_PROJECTS = PLUGIN_ID + ".prefs.TRACED_PROJECTS";
 
+	
 	public List<String> tracedProjectNames() {
 		Preferences preferences = ConfigurationScope.INSTANCE.getNode(PLUGIN_ID);
 		String mergedProjectNames = preferences.get(TRACED_PROJECTS, "");

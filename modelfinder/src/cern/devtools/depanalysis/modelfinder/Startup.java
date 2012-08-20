@@ -7,11 +7,8 @@ package cern.devtools.depanalysis.modelfinder;
 
 import org.eclipse.ui.IStartup;
 
-import cern.devtools.depanalysis.javamodel.Workspace;
-
 public class Startup implements IStartup {
 
-	Workspace workspace;
 
 	@Override
 	public void earlyStartup() {

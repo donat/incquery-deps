@@ -6,11 +6,10 @@
  */
 package cern.devtools.depanalysis.modelfinder;
 
-import java.awt.event.WindowAdapter;
-import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 
+import org.eclipse.core.internal.resources.Workspace;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -32,14 +31,13 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.part.ViewPart;
 
-import cern.devtools.depanalysis.javamodel.Workspace;
-import cern.devtools.depanalysis.javamodel.provider.JavaModelItemProviderAdapterFactory;
+import cern.devtools.depanalysis.wsmodel.EclipseWorkspace;
+import cern.devtools.depanalysis.wsmodel.provider.JavaModelItemProviderAdapterFactory;
 
 public class ModelViewer extends ViewPart {
 
@@ -51,12 +49,12 @@ public class ModelViewer extends ViewPart {
 	private WsChangeEventListener wsChangeListener = new WsChangeEventListener() {
 
 		@Override
-		public void recover(Workspace workspace) {
+		public void recover(EclipseWorkspace workspace) {
 			viewer.setInput(workspace);
 		}
 
 		@Override
-		public void init(Workspace workspace) {
+		public void init(EclipseWorkspace workspace) {
 			viewer.setInput(workspace);
 		}
 	};

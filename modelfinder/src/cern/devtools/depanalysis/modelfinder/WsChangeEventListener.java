@@ -6,13 +6,13 @@
  */
 package cern.devtools.depanalysis.modelfinder;
 
-import cern.devtools.depanalysis.javamodel.Workspace;
+import cern.devtools.depanalysis.wsmodel.EclipseWorkspace;
 
 public abstract class WsChangeEventListener {
 
-	public abstract void init(Workspace workspace);
+	public abstract void init(EclipseWorkspace workspace);
 
-	public abstract void recover(Workspace workspace);
+	public abstract void recover(EclipseWorkspace workspace);
 	
 
 }

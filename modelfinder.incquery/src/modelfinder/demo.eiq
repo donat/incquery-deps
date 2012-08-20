@@ -10,3 +10,7 @@ pattern firstDemoPattern(NE) = {
 pattern ApiClass(AC) = {
 	ApiClass(AC);
 }
+
+pattern mypattern(m) = {
+	Method(m);
+}

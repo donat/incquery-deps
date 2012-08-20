@@ -17,7 +17,6 @@ import org.eclipse.ui.PlatformUI;
 
 public class EnableTracingOnProjectAction implements IObjectActionDelegate {
 	
-	private final PreferenceStore prefs = new PreferenceStore();
 	
 	public EnableTracingOnProjectAction() {
 	}
@@ -30,8 +29,8 @@ public class EnableTracingOnProjectAction implements IObjectActionDelegate {
 			Object firstElement = ts.getFirstElement();
 			if (firstElement instanceof IJavaProject) {
 				IJavaProject project = (IJavaProject) firstElement;
-				if (!prefs.tracedProjectNames().contains(project.getElementName())) {
-					Activator.getDefault().getWsService().addTracedProject(project);
+				if (!Activator.getDefault().getWsService().isTracedProject(project)) {
+					Activator.getDefault().getWsService().addTracedProjectAndDiscoverIt(project);
 					try {
 						PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView("cern.devtools.depanalysis.modelfinder.ModelViewer");
 					} catch (PartInitException e) {
@@ -40,7 +39,7 @@ public class EnableTracingOnProjectAction implements IObjectActionDelegate {
 					}
 				}
 				else {
-					Activator.getDefault().getWsService().removeTracedProject(project);
+					Activator.getDefault().getWsService().removeTracedProjectWithStructure(project);
 				}
 			}
 			
@@ -54,7 +53,7 @@ public class EnableTracingOnProjectAction implements IObjectActionDelegate {
 			Object firstElement = ts.getFirstElement();
 			if (firstElement instanceof IJavaProject) {
 				IJavaProject project = (IJavaProject) firstElement;
-				if (prefs.tracedProjectNames().contains(project.getElementName())) {
+				if (Activator.getDefault().getWsService().isTracedProject(project)) {
 					action.setText("Disable Dependency Analysis");
 				}
 				else {

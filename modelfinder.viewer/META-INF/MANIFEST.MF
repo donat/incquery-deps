@@ -17,5 +17,3 @@ Require-Bundle: org.eclipse.core.runtime,
  cern.devtools.depanalysis.modelfinder,
  cern.devtools.depanalysis.modelfinder.edit;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
-Import-Package: cern.devtools.depanalysis.javamodel,
- cern.devtools.depanalysis.javamodel.util

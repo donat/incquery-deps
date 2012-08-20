@@ -14,12 +14,13 @@ import org.eclipse.jdt.core.Signature;
 public final class JdtUtils {
 
 	private static final String[] elementTypes = new String[17];
-
+	private static final String[] deltaTypes = new String[5]; 
+	
 	static {
 		elementTypes[1] = "javamodel";
 		elementTypes[2] = "javaproject";
 		elementTypes[3] = "packagefragmentroot";
-		elementTypes[4] = "packagefrafment";
+		elementTypes[4] = "packagefragment";
 		elementTypes[5] = "compilationunit";
 		elementTypes[6] = "classfile";
 		elementTypes[7] = "type";
@@ -32,6 +33,11 @@ public final class JdtUtils {
 		elementTypes[14] = "localvariable";
 		elementTypes[15] = "typeparameter";
 		elementTypes[16] = "annotaion";
+		
+		deltaTypes[1] = "ADDED";
+		deltaTypes[2] = "REMOVED";
+		deltaTypes[4] = "CHANGED";
+		
 	}
 
 	public static String decodeSourceSignature(IMethod method) {
@@ -83,5 +89,9 @@ public final class JdtUtils {
 
 	public static String getJavaElemType(int type) {
 		return elementTypes[type] == null ? "null" : elementTypes[type];
+	}
+	
+	public static String getDeltaKind(int type) {
+		return deltaTypes[type] == null ? "null" : deltaTypes[type];
 	}
 }

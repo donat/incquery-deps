@@ -11,14 +11,14 @@ import java.util.List;
 
 import org.eclipse.swt.widgets.Display;
 
-import cern.devtools.depanalysis.javamodel.Workspace;
+import cern.devtools.depanalysis.wsmodel.EclipseWorkspace;
 
 public class WsChangeListenerRepo {
 	private WsModelState state = WsModelState.UNINITIALIZED;
 
 	private List<WsChangeEventListener> listeners = new LinkedList<WsChangeEventListener>();
 	
-	private Workspace workspace;
+	private EclipseWorkspace workspace;
 
 	public void addWsChangeEventListener(WsChangeEventListener l) {
 		listeners.add(l);
@@ -32,7 +32,7 @@ public class WsChangeListenerRepo {
 	}
 
 	
-	public void notifyInit(final Workspace workspace) {
+	public void notifyInit(final EclipseWorkspace workspace) {
 		this.workspace = workspace;
 		state = WsModelState.AVAILABLE;
 		
@@ -47,7 +47,7 @@ public class WsChangeListenerRepo {
 		
 	}
 	
-	public void notifyRevovery(final Workspace workspace) {
+	public void notifyRecovery(final EclipseWorkspace workspace) {
 		this.workspace = workspace;
 		
 		Display.getDefault().syncExec(new Runnable() {

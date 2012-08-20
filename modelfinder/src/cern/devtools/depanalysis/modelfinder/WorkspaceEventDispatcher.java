@@ -13,7 +13,9 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.ElementChangedEvent;
 import org.eclipse.jdt.core.IElementChangedListener;
+import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaElementDelta;
+import org.eclipse.jdt.core.IJavaModel;
 import org.eclipse.jdt.core.IJavaProject;
 
 public class WorkspaceEventDispatcher implements IElementChangedListener {
@@ -22,9 +24,9 @@ public class WorkspaceEventDispatcher implements IElementChangedListener {
 
 	private final BuildScheduler builder;
 
-	private final PreferenceStore prefs = new PreferenceStore();
-
 	private List<IJavaProject> tracedProjects;
+	
+	private PreferenceStore prefs = new PreferenceStore();
 
 	public WorkspaceEventDispatcher() {
 		listenerRepo = new WsChangeListenerRepo();
@@ -52,11 +54,26 @@ public class WorkspaceEventDispatcher implements IElementChangedListener {
 		}
 		prefs.addTracedProject(project.getElementName());
 		tracedProjects.add(project);
-		builder.addProject(project);
-
 	}
-
+	
+	public void addTracedProjectAndDiscoverIt(IJavaProject project) {
+		if (tracedProjects == null) {
+			initTracedProjectList();
+		}
+		prefs.addTracedProject(project.getElementName());
+		tracedProjects.add(project);
+		builder.addProject(project);
+	}
+	
 	public void removeTracedProject(IJavaProject project) {
+		if (tracedProjects == null) {
+			initTracedProjectList();
+		}
+		prefs.removeTracedProject(project.getElementName());
+		tracedProjects.remove(project);
+	}
+	
+	public void removeTracedProjectWithStructure(IJavaProject project) {
 		if (tracedProjects == null) {
 			initTracedProjectList();
 		}
@@ -65,7 +82,7 @@ public class WorkspaceEventDispatcher implements IElementChangedListener {
 		builder.removeProject(project);
 	}
 
-	private boolean isTracedProject(IJavaProject project) {
+	public boolean isTracedProject(IJavaProject project) {
 		if (tracedProjects == null) {
 			initTracedProjectList();
 		}
@@ -92,35 +109,23 @@ public class WorkspaceEventDispatcher implements IElementChangedListener {
 	@Override
 	public void elementChanged(final ElementChangedEvent event) {
 		IJavaElementDelta delta = event.getDelta();
+		
+		if (delta.getElement().getElementType() != IJavaElement.JAVA_MODEL) {
+			return;
+		}
+		if ((delta.getElement() instanceof IJavaModel)) {
+			try {
+				// Handle delta.
+				builder.updateWorkspaceModel(delta);
+			} catch (Exception e) {
+				// Print the reconcile process.
+				System.err.println("<<Model out of sync>>");
+				e.printStackTrace();
+				System.err.println("<<Reinitializing model>>");
+				builder.rebuildWorkspaceModel(tracedProjects);
 
-		try {
-			traverseJavaModelRecursive(delta);
-		} catch (Exception e) {
-			// Print the reconcile process.
-			System.err.println("<<Model out of sync>>");
-			e.printStackTrace();
-			System.err.println("<<Reinitializing model>>");
-			builder.rebuildWorkspaceModel(tracedProjects);
-
+			}
 		}
 	}
 
-	private void traverseJavaModelRecursive(IJavaElementDelta delta) {
-		for (IJavaElementDelta child : delta.getAffectedChildren()) {
-			traverseJavaModelRecursive(child);
-		}
-		// Postorder traversal: handling is after the recursive call.
-		handleDelta(delta);
-	}
-
-	private void handleDelta(IJavaElementDelta delta) {
-		// Debug
-		// System.out.println(delta);
-		// System.out.println("--------------------------------------------------------------");
-
-		// Check if it is on a project which the user enabled the discovery.
-		if (isTracedProject(delta.getElement().getJavaProject())) {
-			builder.updateWorkspaceModel(delta);
-		}
-	}
 }
