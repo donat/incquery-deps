@@ -6,6 +6,8 @@
  */
 package cern.devtools.depanalysis.modelfinder;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,7 +21,6 @@ import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.IType;
-import org.eclipse.jdt.core.JavaModelException;
 
 import cern.devtools.depanalysis.wsmodel.Dependency;
 import cern.devtools.depanalysis.wsmodel.DependencyType;
@@ -27,8 +28,6 @@ import cern.devtools.depanalysis.wsmodel.EclipseWorkspace;
 import cern.devtools.depanalysis.wsmodel.JavaModelFactory;
 import cern.devtools.depanalysis.wsmodel.JavaProject;
 import cern.devtools.depanalysis.wsmodel.NamedElement;
-import cern.devtools.depanalysis.wsmodel.PackageFragment;
-import cern.devtools.depanalysis.wsmodel.PackageFragmentRoot;
 
 public class WsBuildPrimitives {
 
@@ -89,15 +88,15 @@ public class WsBuildPrimitives {
 
 		return elem;
 	}
+
 	public Dependency createDependency(DependencyType type, IJavaElement from, IJavaElement to) {
 		NamedElement emfFrom = findJdtElementInEmfModel(from);
 		NamedElement emfTo = findJdtElementInEmfModel(to);
-		if (emfFrom != null && emfTo  != null) {
+		if (emfFrom != null && emfTo != null) {
 			return createDependency(emfFrom, emfTo, type);
-		}
-		else return null;
+		} else
+			return null;
 	}
-	
 
 	public Dependency createDependency(NamedElement from, NamedElement to, DependencyType type) {
 		if (dependencyExists(from, to, type)) {
@@ -125,6 +124,10 @@ public class WsBuildPrimitives {
 		oldWorkspace.getElements().remove(itemToMove);
 		itemToMove.setParent(newContainer);
 		workspace.getElements().add(itemToMove);
+		for (Object childObject : itemToMove.getChildren()) {
+			NamedElement child = (NamedElement) childObject;
+			moveItemToNewParent(oldWorkspace, itemToMove, child);
+		}
 	}
 
 	public void removeNamedElement(IJavaElement elemToDelete) {
@@ -184,94 +187,38 @@ public class WsBuildPrimitives {
 		}
 	}
 
-	// ----------------------------------------------------------------------------------------------------------------
-
-	public PackageFragmentRoot addPackageFragmentRoot(JavaProject container, IPackageFragmentRoot pfr) {
-		// Create instance and set the properties.
-		PackageFragmentRoot emfPfr = JavaModelFactory.eINSTANCE.createPackageFragmentRoot();
-		emfPfr.setName(pfr.getElementName());
-		emfPfr.setHandler(pfr.getHandleIdentifier());
-
-		// Setup container.
-		container.getPackageFragmentRoots().add(emfPfr);
-		workspace.getElements().add(emfPfr);
-
-		return emfPfr;
-	}
-
-	public PackageFragment addPackageFragment(PackageFragmentRoot container, IPackageFragment pkg) {
-		// Create instance and set the properties.
-		PackageFragment emfPackage = JavaModelFactory.eINSTANCE.createPackageFragment();
-		emfPackage.setName(pkg.getElementName());
-		emfPackage.setHandler(pkg.getHandleIdentifier());
-
-		// Setup container.
-		container.getPackageFragments().add(emfPackage);
-		workspace.getElements().add(emfPackage);
-
-		return emfPackage;
-	}
-
-	public void removeProject(IJavaProject jdtProject) {
-		Object emfProjectObject = findJdtElementInEmfModel(jdtProject);
-		if (emfProjectObject != null) {
-			JavaProject emfProject = (JavaProject) emfProjectObject;
-			EmfModelUtils.deleteNamedElement(workspace, emfProject);
-		} else {
-			throw new RuntimeException("Tried to delete a project which does not exist");
-		}
-	}
-
-	public void removePackageFragmentRoot(IPackageFragmentRoot jdtPfr) {
-		Object emfPfrObject = findJdtElementInEmfModel(jdtPfr);
-		if (emfPfrObject != null) {
-			PackageFragmentRoot emfPfr = (PackageFragmentRoot) emfPfrObject;
-			EmfModelUtils.deleteNamedElement(workspace, emfPfr);
-		} else {
-			throw new RuntimeException("Tried to delete a project which does not exist");
-		}
-	}
-
 	public void removeEntireProject(IJavaProject jdtProject) {
 		Object emfProjectObject = findJdtElementInEmfModel(jdtProject);
 		if (emfProjectObject != null) {
 			JavaProject project = (JavaProject) emfProjectObject;
-			List<PackageFragmentRoot> rootsToDelete = new LinkedList<PackageFragmentRoot>();
-			for (PackageFragmentRoot pfr : project.getPackageFragmentRoots()) {
-				rootsToDelete.add(pfr);
-			}
-			for (PackageFragmentRoot pfr : rootsToDelete) {
-				EmfModelUtils.deleteNamedElement(workspace, pfr);
-			}
-
-			EmfModelUtils.deleteNamedElement(workspace, project);
+			removeNamedElementsRecursive(Arrays.asList(project));
 		}
 	}
 
-	public void moveProjectChildren(IJavaProject oldJdtProject, IJavaProject newJdtProject) {
-		try {
-
-			JavaProject oldEmfProject = (JavaProject) findJdtElementInEmfModel(oldJdtProject);
-			JavaProject newEmfProject = (JavaProject) findJdtElementInEmfModel(newJdtProject);
-
-			List<PackageFragmentRoot> oldEmfPfrs = new LinkedList<PackageFragmentRoot>();
-			for (PackageFragmentRoot oldEmfPfr : oldEmfProject.getPackageFragmentRoots()) {
-				oldEmfPfrs.add(oldEmfPfr);
-			}
-
-			for (PackageFragmentRoot oldEmfPfr : oldEmfPfrs) {
-				for (IPackageFragmentRoot newJdtPfr : newJdtProject.getPackageFragmentRoots()) {
-					if (newJdtPfr.getElementName().equals(oldEmfPfr.getName())) {
-						oldEmfProject.getPackageFragmentRoots().remove(oldEmfPfr);
-						oldEmfPfr.setHandler(newJdtPfr.getHandleIdentifier());
-						newEmfProject.getPackageFragmentRoots().add(oldEmfPfr);
-					}
-				}
-			}
-
-		} catch (JavaModelException e) {
-			throw new RuntimeException(e);
+	@SuppressWarnings("unchecked")
+	public void removeNamedElementsRecursive(Collection<? extends NamedElement> elements) {
+		List<NamedElement> elems = new LinkedList<NamedElement>();
+		for (NamedElement elem : elements) {
+			elems.add(elem);
 		}
+		
+		for (NamedElement elem : elems) {
+			removeNamedElementsRecursive(elem.getChildren());
+			removeNamedElement(workspace, elem);
+		}
+	}
+
+	private void removeNamedElement(EclipseWorkspace workspace, NamedElement elem) {
+		if (elem instanceof JavaProject) {
+			JavaProject project = (JavaProject) elem;
+			workspace.getProjects().remove(project);
+		} else {
+			NamedElement container = elem.getParent();
+			container.getChildren().remove(elem);
+		}
+		
+		removeAllDependencies(elem);
+		workspace.getElements().remove(elem);
 	}
 
 	public NamedElement findJdtElementInEmfModel(IJavaElement jdtElem) {

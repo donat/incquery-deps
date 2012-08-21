@@ -9,44 +9,27 @@ package cern.devtools.depanalysis.modelfinder;
 import java.util.Collection;
 
 import cern.devtools.depanalysis.wsmodel.EclipseWorkspace;
-import cern.devtools.depanalysis.wsmodel.JavaProject;
 import cern.devtools.depanalysis.wsmodel.NamedElement;
-import cern.devtools.depanalysis.wsmodel.PackageFragmentRoot;
 
 public class EmfModelUtils {
 
-	public static void printModel(EclipseWorkspace ws) {
-		System.out.println("*******************");
-		System.out.println("* Workspace model *");
-		System.out.println("*******************");
-		printModel(ws.getProjects(), "");
-		
+	public static String printModel(EclipseWorkspace ws) {
+		StringBuffer buffer = new StringBuffer();
+		return printModel(ws.getProjects(), "", buffer);
 	}
 	
 	@SuppressWarnings("unchecked")
-	private static void printModel(Collection<? extends NamedElement> cne, String indent) {
+	private static String printModel(Collection<? extends NamedElement> cne, String indent, StringBuffer buffer) {
 		for (NamedElement ne : cne) {
-			System.out.println(indent + ne);
-			printModel(ne.getChildren(), indent + "  ");
-		}
-	}
- 
-	public static void deleteNamedElement(EclipseWorkspace workspace, NamedElement elem) {
-		if (elem instanceof JavaProject) {
-			JavaProject project = (JavaProject) elem;
-			workspace.getProjects().remove(project);
+			buffer.append(indent);
+			buffer.append(ne);
+			buffer.append("\n");
+			printModel(ne.getChildren(), indent + "  ", buffer);
 		}
 		
-		if (elem instanceof PackageFragmentRoot) {
-			PackageFragmentRoot pfr = (PackageFragmentRoot) elem;
-			JavaProject container = pfr.getJavaProject();
-			container.getPackageFragmentRoots().remove(elem);
-		}
-
-		workspace.getElements().remove(elem);
+		return buffer.toString();
 	}
-	
-	
+ 
 
 	// @SuppressWarnings("unchecked")
 	// public static <T extends NamedElement> T createNamedElement(int type, Workspace workspace, EObject container,

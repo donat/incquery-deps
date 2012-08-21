@@ -79,14 +79,11 @@ public class BuildScheduler {
 	}
 
 	private void doUpdate(IJavaElementDelta delta) throws CoreException {
-		//WsModelBuilder.forModel(workspace).modifyModel(delta);
 		WorkspaceModelBuilder.forModel(workspace).modifyModel(delta);
 	}
 
-	private EclipseWorkspace doBuildWorkspaceModel(List<IJavaProject> projects) { 
-		//EclipseWorkspace result = WsModelBuilder.fromScratch(dispatcher.getTracedProjects()).getWorkspace();
+	private EclipseWorkspace doBuildWorkspaceModel(List<IJavaProject> projects) {
 		EclipseWorkspace result = WorkspaceModelBuilder.fromScratch(dispatcher.getTracedProjects()).getWorkspace();
-		//EmfModelUtils.printModel(result);
 		return result;
 	}
 
@@ -95,7 +92,6 @@ public class BuildScheduler {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				try {
-//					WsModelBuilder.forModel(workspace).addNewProject(project);
 					WorkspaceModelBuilder.forModel(workspace).addNewProject(project);
 					return JobUtils.okStatus("New project added successfully");
 				} catch (Exception e) {
@@ -114,7 +110,6 @@ public class BuildScheduler {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				try {
-					//WsModelBuilder.forModel(workspace).removeEntireProject(project);
 					WorkspaceModelBuilder.forModel(workspace).removeEntireProject(project);
 					return JobUtils.okStatus("Project removed successfully");
 				} catch (Exception e) {

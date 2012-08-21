@@ -1,9 +1,10 @@
 package cern.devtools.depanalysis.modelfinder;
 
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IField;
 import org.eclipse.jdt.core.IJavaElement;
@@ -18,6 +19,7 @@ import org.eclipse.jdt.core.JavaModelException;
 
 import cern.devtools.depanalysis.wsmodel.EclipseWorkspace;
 import cern.devtools.depanalysis.wsmodel.JavaModelFactory;
+import cern.devtools.depanalysis.wsmodel.Method;
 import cern.devtools.depanalysis.wsmodel.NamedElement;
 import cern.devtools.depanalysis.wsmodel.Type;
 
@@ -94,7 +96,7 @@ public class ModelComparer {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void updateChildrenDependenciesRecurive(EList<NamedElement> children) {
+	private void updateChildrenDependenciesRecurive(List<NamedElement> children) {
 		for (NamedElement elem : children) {
 			// Insert deps
 			if (elem instanceof Type) {
@@ -102,7 +104,7 @@ public class ModelComparer {
 				WsDeps.searchAndInsertOutgoingDependencies(type, buildOld);
 				
 			}
-			else if (elem instanceof IMethod) {
+			else if (elem instanceof Method) {
 				IMethod method = (IMethod) JavaCore.create(elem.getHandler());
 				WsDeps.searchAndInsertOutgoingDependencies(method, buildOld);
 			}
@@ -112,23 +114,14 @@ public class ModelComparer {
 	}
 
 	private void refreshCompilationUnit(ICompilationUnit cu) {
-		try {
-			IType[] types = cu.getAllTypes();
-			for (IType t : types) {
-				NamedElement jdtType = buildOld.findJdtElementInEmfModel(t);
-				buildOld.removeOutgoingDependencies(jdtType);
-				WsDeps.searchAndInsertOutgoingDependencies(t, buildOld);
-				
-				for (IMethod m : t.getMethods()) {
-					NamedElement jdtMethod = buildOld.findJdtElementInEmfModel(m);
-					buildOld.removeOutgoingDependencies(jdtMethod);
-					WsDeps.searchAndInsertOutgoingDependencies(m, buildOld);
-				}
-			}
-		} catch (JavaModelException e) {
-			throw new RuntimeException(e);
-		}
+		NamedElement oldEmfCu = buildOld.findJdtElementInEmfModel(cu);
+		NamedElement oldEmfParent = oldEmfCu.getParent();
+		NamedElement newEmfCu = buildNew.findJdtElementInEmfModel(cu);
 		
+		
+		buildOld.removeNamedElementsRecursive(Arrays.asList(oldEmfCu));
+		buildOld.moveItemToNewParent(wsAfterChanges, oldEmfParent, newEmfCu);
+		updateChildrenDependenciesRecurive(Arrays.asList(newEmfCu));	
 	}
 
 	private EclipseWorkspace createNewModel() {

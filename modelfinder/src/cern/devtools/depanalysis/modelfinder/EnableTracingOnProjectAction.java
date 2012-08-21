@@ -34,8 +34,8 @@ public class EnableTracingOnProjectAction implements IObjectActionDelegate {
 					try {
 						PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView("cern.devtools.depanalysis.modelfinder.ModelViewer");
 					} catch (PartInitException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						// Should not happen.
+						throw new RuntimeException(e);
 					}
 				}
 				else {
@@ -65,5 +65,6 @@ public class EnableTracingOnProjectAction implements IObjectActionDelegate {
 
 	@Override
 	public void setActivePart(IAction action, IWorkbenchPart targetPart) {
+		//Do nothing
 	}
 }

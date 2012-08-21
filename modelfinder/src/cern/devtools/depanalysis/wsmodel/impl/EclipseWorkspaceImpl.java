@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import cern.devtools.depanalysis.modelfinder.EmfModelUtils;
 import cern.devtools.depanalysis.wsmodel.Dependency;
 import cern.devtools.depanalysis.wsmodel.EclipseWorkspace;
 import cern.devtools.depanalysis.wsmodel.JavaModelPackage;
@@ -246,6 +247,11 @@ public class EclipseWorkspaceImpl extends EObjectImpl implements EclipseWorkspac
 			}
 		}
 		return null;
+	}
+	
+	@Override
+	public String toString() {
+		return EmfModelUtils.printModel(this);
 	}
 
 } //EclipseWorkspaceImpl
