@@ -2,25 +2,21 @@
  */
 package cern.devtools.depanalysis.wsmodel.impl;
 
-import cern.devtools.depanalysis.wsmodel.Dependency;
-import cern.devtools.depanalysis.wsmodel.JavaModelPackage;
-import cern.devtools.depanalysis.wsmodel.NamedElement;
-
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+
+import cern.devtools.depanalysis.wsmodel.Dependency;
+import cern.devtools.depanalysis.wsmodel.JavaModelPackage;
+import cern.devtools.depanalysis.wsmodel.NamedElement;
 
 /**
  * <!-- begin-user-doc -->
@@ -200,6 +196,7 @@ public abstract class NamedElementImpl extends EObjectImpl implements NamedEleme
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("rawtypes")
 	public EList getChildren() {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT

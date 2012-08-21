@@ -3,7 +3,6 @@
 package cern.devtools.depanalysis.wsmodel;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -128,6 +127,7 @@ public interface NamedElement extends EObject {
 	 * @model kind="operation" many="false"
 	 * @generated
 	 */
+	@SuppressWarnings("rawtypes")
 	EList getChildren();
 
 	/**

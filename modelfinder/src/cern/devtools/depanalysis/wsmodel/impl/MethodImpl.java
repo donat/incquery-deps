@@ -2,25 +2,19 @@
  */
 package cern.devtools.depanalysis.wsmodel.impl;
 
-import cern.devtools.depanalysis.wsmodel.CompilationUnit;
-import cern.devtools.depanalysis.wsmodel.Field;
-import cern.devtools.depanalysis.wsmodel.JavaModelPackage;
-import cern.devtools.depanalysis.wsmodel.Method;
-import cern.devtools.depanalysis.wsmodel.NamedElement;
-import cern.devtools.depanalysis.wsmodel.Type;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.jdt.core.IType;
+
+import cern.devtools.depanalysis.wsmodel.JavaModelPackage;
+import cern.devtools.depanalysis.wsmodel.Method;
+import cern.devtools.depanalysis.wsmodel.NamedElement;
+import cern.devtools.depanalysis.wsmodel.Type;
 
 /**
  * <!-- begin-user-doc -->

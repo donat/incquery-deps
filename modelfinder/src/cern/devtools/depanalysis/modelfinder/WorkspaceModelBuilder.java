@@ -37,6 +37,7 @@ public class WorkspaceModelBuilder {
 	}
 
 	public void modifyModel(IJavaElementDelta delta) {	
+		@SuppressWarnings("unused")
 		List<IJavaElementDelta> flattenedDelta = gatherDeltas(new LinkedList<IJavaElementDelta>(), delta);
 		// Here is where the magic happens.
 		ModelComparer.compareAndUpdateModel(workspace, delta);
@@ -52,15 +53,15 @@ public class WorkspaceModelBuilder {
 	
 
 	public void addNewProject(IJavaProject project) {
-		ModelBuilderFactory.addFullProjects(workspace, Arrays.asList(project)).build();
+		WsStructure.buildEntireProject(workspace, Arrays.asList(project));
 	}
 	
 	private void addNewProjects(List<IJavaProject> projects) {
-		ModelBuilderFactory.addFullProjects(workspace, projects).build();
+		WsStructure.buildEntireProject(workspace, projects);
 	}
 
 	public void removeEntireProject(IJavaProject project) {
-		ModelBuilderFactory.removeFullProjects(workspace, Arrays.asList(project)).build();
+		WsStructure.removeEntireProject(workspace, Arrays.asList(project));
 	}
 	
 	

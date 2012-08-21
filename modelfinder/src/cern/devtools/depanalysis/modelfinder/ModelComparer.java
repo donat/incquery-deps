@@ -23,6 +23,7 @@ import cern.devtools.depanalysis.wsmodel.Type;
 
 public class ModelComparer {
 
+	@SuppressWarnings("unused")
 	private EclipseWorkspace wsBeforeChanges;
 	private IJavaElementDelta delta;
 	private EclipseWorkspace wsAfterChanges;
