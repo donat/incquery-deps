@@ -19,6 +19,7 @@ public class AddEntireProjectStructure implements ModelBuilder {
 
 	private List<IJavaProject> projects;
 	private WsBuildPrimitives buildPrimitives;
+	@SuppressWarnings("unused")
 	private EclipseWorkspace workspace;
 
 	public AddEntireProjectStructure(EclipseWorkspace workspace, List<IJavaProject> projects) {
