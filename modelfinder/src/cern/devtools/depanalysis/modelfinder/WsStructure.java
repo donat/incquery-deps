@@ -50,7 +50,7 @@ public class WsStructure {
 		WsBuildPrimitives prim = new WsBuildPrimitives(workspace);
 		try {
 			for (IJavaElement elem : JavaModelWalker.allElements(projects)) {
-				if (elem instanceof IType) {
+				if (elem instanceof IType || elem instanceof IMethod) {
 					WsDeps.searchAndInsertOutgoingDependencies(elem, prim);
 				}
 			}
