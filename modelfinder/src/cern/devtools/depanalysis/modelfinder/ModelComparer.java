@@ -99,16 +99,18 @@ public class ModelComparer {
 	private void updateChildrenDependenciesRecurive(List<NamedElement> children) {
 		for (NamedElement elem : children) {
 			// Insert deps
+			WsDeps deps = new WsDeps(buildOld);
 			if (elem instanceof Type) {
 				IType type = (IType) JavaCore.create(elem.getHandler());
-				WsDeps.searchAndInsertOutgoingDependencies(type, buildOld);
+				deps.addTypeToSearch(type);
 				
 			}
 			else if (elem instanceof Method) {
 				IMethod method = (IMethod) JavaCore.create(elem.getHandler());
-				WsDeps.searchAndInsertOutgoingDependencies(method, buildOld);
+				deps.addMethodToSearch(method);
 			}
-
+			
+			deps.execute();
 			updateChildrenDependenciesRecurive(elem.getChildren());
 		}
 	}

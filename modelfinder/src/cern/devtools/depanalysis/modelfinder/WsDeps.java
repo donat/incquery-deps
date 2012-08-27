@@ -1,8 +1,11 @@
 package cern.devtools.depanalysis.modelfinder;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -13,75 +16,162 @@ import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IPackageDeclaration;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.ITypeHierarchy;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.search.SearchEngine;
 import org.eclipse.jdt.core.search.SearchMatch;
 import org.eclipse.jdt.core.search.SearchRequestor;
 
 import cern.devtools.depanalysis.wsmodel.DependencyType;
-import cern.devtools.depanalysis.wsmodel.NamedElement;
 
 public class WsDeps {
 
-	private static final SearchEngine engine = new SearchEngine();
+	private final SearchEngine engine = new SearchEngine();
 
-	public static void searchAndInsertOutgoingDependencies(IJavaElement elem, WsBuildPrimitives buildPrimitives) {
-		try {
-			if (elem instanceof IMethod) {
-				// Handle METHOD REFERENCE dependencies.
-				for (IMethod referencedMethod : findCalledMethods((IMethod) elem)) {
-					if (!elem.getJavaProject().equals(referencedMethod.getJavaProject())) {
-						buildPrimitives.createDependency(DependencyType.METHOD_CALL, elem, referencedMethod);
-					}
+	private final List<IMethod> methods = new LinkedList<IMethod>();
+	private final List<IType> types = new LinkedList<IType>();
 
-				}
+	private AtomicLong finishedSearchRequestors = new AtomicLong(0);
 
-				// Handle OVERRIDED METHOD dependencies.
-				for (IMethod overridedMethod : findOverridenMethods((IMethod) elem)) {
-					if (!elem.getJavaProject().equals(overridedMethod.getJavaProject())) {
-						buildPrimitives.createDependency(DependencyType.METHOD_OVERRIDE, elem, overridedMethod);
-					}
-				}
+	private final WsBuildPrimitives buildPrimitives;
 
-				// Handle CLASS USAGE dependencies.
-				for (IType usedClass : findClassUsages((IMethod) elem)) {
-					if (!elem.getJavaProject().equals(usedClass.getJavaProject())) {
-						buildPrimitives.createDependency(DependencyType.CLASS_USAGE, elem, usedClass);
-					}
-				}
+	public WsDeps(WsBuildPrimitives buildPrimitives) {
+		this.buildPrimitives = buildPrimitives;
+	}
 
-				// Handle FIELD ACCESS dependencies.
-				for (IField referencedField : findReferencedField((IMethod) elem)) {
-					if (!elem.getJavaProject().equals(referencedField.getJavaProject())) {
-						buildPrimitives.createDependency(DependencyType.FIELD_ACCESS, elem, referencedField);
-					}
-				}
-			}
+	public void addMethodToSearch(IMethod method) {
+		methods.add(method);
+	}
 
-			/* else */if (elem instanceof IType) {
-				// Handle Inheritance dependencies.
-				for (IType superType : findSupertypes((IType) elem)) {
-					if (!elem.getJavaProject().equals(superType.getJavaProject())) {
+	public void addTypeToSearch(IType type) {
+		types.add(type);
+	}
 
-						NamedElement emfElem = buildPrimitives.findJdtElementInEmfModel(elem);
-						NamedElement emfSuperType = buildPrimitives.findJdtElementInEmfModel(superType);
-						if (emfElem != null && emfSuperType != null)
-							buildPrimitives.createDependency(emfElem, emfSuperType, DependencyType.INHERITANCE);
-					}
-				}
-			}
-		} catch (CoreException e) {
-			throw new RuntimeException(e);
+	public void addElementToSearch(IJavaElement elem) {
+		if (elem instanceof IType) {
+			types.add((IType) elem);
+		} else if (elem instanceof IMethod) {
+			methods.add((IMethod) elem);
+		} else {
+			throw new RuntimeException("unsupported type: " + elem.getClass());
 		}
 	}
 
-	private static List<IType> findSupertypes(IType elem) throws CoreException {
-		ITypeHierarchy hierarchy = elem.newTypeHierarchy(new NullProgressMonitor());
-		return Arrays.asList(hierarchy.getSupertypes(elem));
+	public void execute() {
+		executeEasySearches();
+		executeSearchEngineBasedSearches();
 	}
 
-	private static List<IMethod> findCalledMethods(final IMethod method) throws CoreException {
-		final List<IMethod> result = new LinkedList<IMethod>();
-		final boolean[] finished = { false };
+	/**
+	 * Handles method override.
+	 */
+	private void executeEasySearches() {
+
+		// 1. Find overriden methods.
+		for (IMethod method : methods) {
+			try {
+				findOverridenMethods(method);
+			} catch (CoreException e) {
+				e.printStackTrace();
+			}
+		}
+
+		// 2. Find supertypes
+		for (IType type : types) {
+			try {
+				findSupertypes(type);
+			} catch (CoreException e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	private void findOverridenMethods(final IMethod method) throws CoreException {
+		ITypeHierarchy hierarchy = method.getDeclaringType().newTypeHierarchy(new NullProgressMonitor());
+
+		List<IType> superTypes = Arrays.asList(hierarchy.getSupertypes(method.getDeclaringType()));
+		for (IType superType : superTypes) {
+			for (IMethod superMethod : superType.getMethods()) {
+				if (methodsHasSameSignature(superMethod, method)) {
+					buildPrimitives.createDependency(DependencyType.METHOD_OVERRIDE, method, superMethod);
+				}
+			}
+		}
+	}
+
+	private void findSupertypes(IType elem) throws CoreException {
+		ITypeHierarchy hierarchy = elem.newTypeHierarchy(new NullProgressMonitor());
+		for (IType superType : hierarchy.getSupertypes(elem)) {
+			buildPrimitives.createDependency(DependencyType.INHERITANCE, elem, superType);
+		}
+	}
+
+	/**
+	 * Handles: method call, class usage
+	 */
+	private void executeSearchEngineBasedSearches() {
+
+		// 1. Method call
+		// SearchEngine engine = new SearchEngine();
+		Map<IMethod, SearchRequestor> methodRequestors = createMethodCallFinders();
+		for (IMethod m : methodRequestors.keySet()) {
+			try {
+				engine.searchDeclarationsOfSentMessages(m, methodRequestors.get(m), new NullProgressMonitor());
+			} catch (JavaModelException e) {
+				e.printStackTrace();
+			}
+		}
+
+		// 2. Class usage
+		methodRequestors = createClassUsageFinders();
+		for (IMethod m : methodRequestors.keySet()) {
+			try {
+				engine.searchDeclarationsOfReferencedTypes(m, methodRequestors.get(m), new NullProgressMonitor());
+			} catch (JavaModelException e) {
+				e.printStackTrace();
+			}
+		}
+
+		// 3. Field reference
+		methodRequestors = createFieldRefsFinders();
+		for (IMethod m : methodRequestors.keySet()) {
+			try {
+				engine.searchDeclarationsOfAccessedFields(m, methodRequestors.get(m), new NullProgressMonitor());
+			} catch (JavaModelException e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	private final Map<IMethod, SearchRequestor> createMethodCallFinders() {
+		Map<IMethod, SearchRequestor> result = new HashMap<IMethod, SearchRequestor>();
+		for (IMethod method : methods) {
+			result.put(method, methodCallFinders(method));
+		}
+
+		return result;
+	}
+
+	private final Map<IMethod, SearchRequestor> createClassUsageFinders() {
+		Map<IMethod, SearchRequestor> result = new HashMap<IMethod, SearchRequestor>();
+		for (IMethod method : methods) {
+			result.put(method, classUsageFinders(method));
+		}
+
+		return result;
+	}
+
+	private final Map<IMethod, SearchRequestor> createFieldRefsFinders() {
+		Map<IMethod, SearchRequestor> result = new HashMap<IMethod, SearchRequestor>();
+		for (IMethod method : methods) {
+			result.put(method, fieldReferenceFinders(method));
+		}
+
+		return result;
+	}
+
+	private SearchRequestor methodCallFinders(final IMethod searchedMethod) {
 		SearchRequestor requestor = new SearchRequestor() {
 
 			@Override
@@ -101,49 +191,68 @@ public class WsDeps {
 						}
 					}
 
-					result.add((IMethod) mo);
+					buildPrimitives.createDependency(DependencyType.METHOD_CALL, searchedMethod, (IMethod) mo);
 
 				} else {
 					System.err.println("Wrong type item added.");
-					System.err.println("From: " + method);
+					System.err.println("From: " + searchedMethod);
 					System.err.println("To:   " + mo);
 				}
 			}
 
 			@Override
 			public void endReporting() {
-				finished[0] = true;
+				finishedSearchRequestors.incrementAndGet();
 			}
 		};
 
-		engine.searchDeclarationsOfSentMessages(method, requestor, new NullProgressMonitor());
-
-		while (finished[0] == false) {
-			try {
-				Thread.sleep(200);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-
-		return result;
+		return requestor;
 	}
 
-	private static List<IMethod> findOverridenMethods(final IMethod method) throws CoreException {
-		List<IMethod> result = new LinkedList<IMethod>();
+	private SearchRequestor classUsageFinders(final IMethod searchedMethod) {
+		SearchRequestor requestor = new SearchRequestor() {
 
-		// Find supertypes
-		ITypeHierarchy hierarchy = method.getDeclaringType().newTypeHierarchy(new NullProgressMonitor());
+			@Override
+			public void acceptSearchMatch(SearchMatch match) throws CoreException {
+				Object mo = match.getElement();
+				if (mo == null) {
+					return;
+				} else if (mo instanceof IType) {
+					// Remove unnecessary results (the items from the java.*
+					// package).
+					buildPrimitives.createDependency(DependencyType.CLASS_USAGE, searchedMethod, (IType) mo);
 
-		List<IType> superTypes = Arrays.asList(hierarchy.getSupertypes(method.getDeclaringType()));
-		for (IType superType : superTypes) {
-			for (IMethod superMethod : superType.getMethods()) {
-				if (methodsHasSameSignature(superMethod, method)) {
-					result.add(superMethod);
+				} else {
+					System.err.println("Wrong type item added..");
+					System.err.println("From: " + searchedMethod);
+					System.err.println("To:   " + mo);
 				}
 			}
-		}
-		return result;
+		};
+		return requestor;
+	}
+
+	private SearchRequestor fieldReferenceFinders(final IMethod searchedMethod) {
+		SearchRequestor requestor = new SearchRequestor() {
+
+			@Override
+			public void acceptSearchMatch(SearchMatch match) throws CoreException {
+				Object mo = match.getElement();
+				if (mo == null) {
+					return;
+				} else if (mo instanceof IField) {
+					// Remove unnecessary results (the items from the java.*
+					// package).
+					buildPrimitives.createDependency(DependencyType.FIELD_ACCESS, searchedMethod, (IField) mo);
+				} else {
+					System.err.println("Wrong type item added..");
+					System.err.println("From: " + searchedMethod);
+					System.err.println("To:   " + mo);
+				}
+			}
+		};
+
+		return requestor;
 	}
 
 	private static boolean methodsHasSameSignature(IMethod m1, IMethod m2) {
@@ -157,69 +266,5 @@ public class WsDeps {
 		}
 
 		return same;
-	}
-
-	private static List<IType> findClassUsages(final IMethod method) throws CoreException {
-		final List<IType> result = new LinkedList<IType>();
-		final boolean[] finished = { false };
-		SearchRequestor requestor = new SearchRequestor() {
-
-			@Override
-			public void acceptSearchMatch(SearchMatch match) throws CoreException {
-				Object mo = match.getElement();
-				if (mo == null) {
-					return;
-				} else if (mo instanceof IType) {
-					// Remove unnecessary results (the items from the java.*
-					// package).
-					result.add((IType) mo);
-
-				} else {
-					System.err.println("Wrong type item added..");
-					System.err.println("From: " + method);
-					System.err.println("To:   " + mo);
-				}
-			}
-
-			@Override
-			public void endReporting() {
-				finished[0] = true;
-			}
-		};
-
-		engine.searchDeclarationsOfReferencedTypes(method, requestor, new NullProgressMonitor());
-		return result;
-	}
-
-	private static List<IField> findReferencedField(final IMethod elem) throws CoreException {
-		final List<IField> result = new LinkedList<IField>();
-		final boolean[] finished = { false };
-		SearchRequestor requestor = new SearchRequestor() {
-
-			@Override
-			public void acceptSearchMatch(SearchMatch match) throws CoreException {
-				Object mo = match.getElement();
-				if (mo == null) {
-					return;
-				} else if (mo instanceof IField) {
-					// Remove unnecessary results (the items from the java.*
-					// package).
-					result.add((IField) mo);
-
-				} else {
-					System.err.println("Wrong type item added..");
-					System.err.println("From: " + elem);
-					System.err.println("To:   " + mo);
-				}
-			}
-
-			@Override
-			public void endReporting() {
-				finished[0] = true;
-			}
-		};
-
-		engine.searchDeclarationsOfAccessedFields(elem, requestor, new NullProgressMonitor());
-		return result;
 	}
 }

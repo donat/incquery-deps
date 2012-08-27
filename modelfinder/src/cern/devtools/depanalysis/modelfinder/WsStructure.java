@@ -35,8 +35,15 @@ public class WsStructure {
 							NamedElement emfpf = buildPrimitives.addNamedElement(emfPfr, pkg);
 							for (ICompilationUnit cu : pkg.getCompilationUnits()) {
 								NamedElement emfCu = buildPrimitives.addNamedElement(emfpf, cu);
-								for (IType t : cu.getTypes()) {
-									addType(buildPrimitives, emfCu, t);
+								for (IType t : cu.getAllTypes()) {
+									NamedElement emfType = buildPrimitives.addNamedElement(emfCu, t);
+									for (IMethod m : t.getMethods()) {
+										buildPrimitives.addNamedElement(emfType, m);
+									}
+
+									for (IField f : t.getFields()) {
+										buildPrimitives.addNamedElement(emfType, f);
+									}
 								}
 							}
 						}
@@ -49,36 +56,24 @@ public class WsStructure {
 
 		WsBuildPrimitives prim = new WsBuildPrimitives(workspace);
 		try {
+			WsDeps deps = new WsDeps(prim);
 			for (IJavaElement elem : JavaModelWalker.allElements(projects)) {
 				if (elem instanceof IType || elem instanceof IMethod) {
-					WsDeps.searchAndInsertOutgoingDependencies(elem, prim);
+					deps.addElementToSearch(elem);
 				}
 			}
+			
+			deps.execute();
 
 		} catch (CoreException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void removeEntireProject(EclipseWorkspace workspace, List<IJavaProject> projects) {
 		WsBuildPrimitives buildPrimitives = new WsBuildPrimitives(workspace);
 		for (IJavaProject project : projects) {
 			buildPrimitives.removeEntireProject(project);
-		}
-	}
-	
-	private static void addType(WsBuildPrimitives buildPrimitives, NamedElement emfCu, IType t) throws JavaModelException {
-		NamedElement emfType = buildPrimitives.addNamedElement(emfCu, t);
-		for (IType innerType : t.getTypes()) {
-			addType(buildPrimitives, emfCu, innerType);
-		}
-		
-		for(IMethod m : t.getMethods()) {
-			buildPrimitives.addNamedElement(emfType, m);
-		}
-		
-		for(IField f : t.getFields()) {
-			buildPrimitives.addNamedElement(emfType, f);
 		}
 	}
 }
