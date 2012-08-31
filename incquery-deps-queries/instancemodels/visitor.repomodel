@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="ASCII"?>
+<rm:RRepository xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:rm="http://inf.mit.bme.hu/donat/incquery-deps/repomodel">
+  <rDependencies uuid="_bZsTl_NtEeGc88qIktXXZA" rFrom="_bZgtYPNtEeGc88qIktXXZA" rTo="_bZgtYPNtEeGc88qIktXXZA" depType="4"/>
+  <rDependencies uuid="_bZthsvNtEeGc88qIktXXZA" rFrom="_bZgGVfNtEeGc88qIktXXZA" rTo="_bZgGVfNtEeGc88qIktXXZA" depType="1"/>
+  <rDependencies uuid="_bZths_NtEeGc88qIktXXZA" rFrom="_bZgGVfNtEeGc88qIktXXZA" rTo="_bZgGVfNtEeGc88qIktXXZA" depType="1"/>
+  <rDependencies uuid="_bZthtfNtEeGc88qIktXXZA" rFrom="_bZgGVfNtEeGc88qIktXXZA" rTo="_bZgGVfNtEeGc88qIktXXZA" depType="3"/>
+  <rDependencies uuid="_bZthuPNtEeGc88qIktXXZA" rFrom="_bZgtZvNtEeGc88qIktXXZA" rTo="_bZgtZvNtEeGc88qIktXXZA" depType="5"/>
+  <rDependencies uuid="_bZthufNtEeGc88qIktXXZA" rFrom="_bZgtZvNtEeGc88qIktXXZA" rTo="_bZgtZvNtEeGc88qIktXXZA" depType="5"/>
+  <rDependencies uuid="_bZthvfNtEeGc88qIktXXZA" rFrom="_bZgtZvNtEeGc88qIktXXZA" rTo="_bZgtZvNtEeGc88qIktXXZA" depType="4"/>
+  <rDependencies uuid="_bZthvvNtEeGc88qIktXXZA" rFrom="_bZgtZvNtEeGc88qIktXXZA" rTo="_bZgtZvNtEeGc88qIktXXZA" depType="4"/>
+  <rDependencies uuid="_bZthv_NtEeGc88qIktXXZA" rFrom="_bZgtZvNtEeGc88qIktXXZA" rTo="_bZgtZvNtEeGc88qIktXXZA" depType="4"/>
+  <rDependencies uuid="_bZthwfNtEeGc88qIktXXZA" rFrom="_bZgtYfNtEeGc88qIktXXZA" rTo="_bZgtYfNtEeGc88qIktXXZA" depType="1"/>
+  <rDependencies uuid="_bZthw_NtEeGc88qIktXXZA" rFrom="_bZgtYvNtEeGc88qIktXXZA" rTo="_bZgtYvNtEeGc88qIktXXZA" depType="1"/>
+  <rDependencies uuid="_bZthxfNtEeGc88qIktXXZA" rFrom="_bZgtY_NtEeGc88qIktXXZA" rTo="_bZgtY_NtEeGc88qIktXXZA" depType="1"/>
+  <rDependencies uuid="_bZthxvNtEeGc88qIktXXZA" rFrom="_bZgtYvNtEeGc88qIktXXZA" rTo="_bZgtYvNtEeGc88qIktXXZA" depType="2"/>
+  <rDependencies uuid="_bZthx_NtEeGc88qIktXXZA" rFrom="_bZgtY_NtEeGc88qIktXXZA" rTo="_bZgtY_NtEeGc88qIktXXZA" depType="2"/>
+  <rProjects uuid="_bYJbcPNtEeGc88qIktXXZA" name="devtools-deps-example-service" containingFolders="ignore" productPath="/C:/opt/workspace/eclipse/devtools-deps-example-service/dist/devtools-deps-example-service.jar">
+    <versions>1.0.0</versions>
+    <rClasses uuid="_bZPnoPNtEeGc88qIktXXZA" simpleName="ComplexNumber" packageName="cern.devtools.depanalysis.example.service" extends="" implements="cern.devtools.depanalysis.example.service.VisitableNumber" private="false" fqName="cern.devtools.depanalysis.example.service.ComplexNumber">
+      <versions>1.0.0</versions>
+      <rMethods uuid="_bZL9QPNtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.service.ComplexNumber#ComplexNumber(float,float):void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_bZL9QfNtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.service.ComplexNumber#getIm():float" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_bZL9QvNtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.service.ComplexNumber#setIm(float):void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_bZL9Q_NtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.service.ComplexNumber#getRe():float" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_bZL9RPNtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.service.ComplexNumber#setRe(float):void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_bZL9RfNtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.service.ComplexNumber#accept(cern.devtools.depanalysis.example.service.NumberVisitor):void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rFields uuid="_bZNycPNtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.service.ComplexNumber.im">
+        <versions>1.0.0</versions>
+      </rFields>
+      <rFields uuid="_bZOZgPNtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.service.ComplexNumber.re">
+        <versions>1.0.0</versions>
+      </rFields>
+    </rClasses>
+    <rClasses uuid="_bZVuRvNtEeGc88qIktXXZA" simpleName="NumberCrunchingService" packageName="cern.devtools.depanalysis.example.service" extends="" implements="" private="false" fqName="cern.devtools.depanalysis.example.service.NumberCrunchingService">
+      <versions>1.0.0</versions>
+      <rMethods uuid="_bZVuQPNtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.service.NumberCrunchingService#&lt;clinit>():void" private="true" static="true">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_bZVuQfNtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.service.NumberCrunchingService#NumberCrunchingService():void" private="true">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_bZVuQvNtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.service.NumberCrunchingService#registerVisitor(cern.devtools.depanalysis.example.service.NumberVisitor):void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_bZVuQ_NtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.service.NumberCrunchingService#startService():void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rFields uuid="_bZVuRPNtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.service.NumberCrunchingService.INSTANCE">
+        <versions>1.0.0</versions>
+      </rFields>
+      <rFields uuid="_bZVuRfNtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.service.NumberCrunchingService.visitors" private="true">
+        <versions>1.0.0</versions>
+      </rFields>
+    </rClasses>
+    <rClasses uuid="_bZVuSPNtEeGc88qIktXXZA" simpleName="VisitableNumber" packageName="cern.devtools.depanalysis.example.service" extends="" implements="" private="false" fqName="cern.devtools.depanalysis.example.service.VisitableNumber">
+      <versions>1.0.0</versions>
+      <rMethods uuid="_bZVuR_NtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.service.VisitableNumber#accept(cern.devtools.depanalysis.example.service.NumberVisitor):void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+    </rClasses>
+    <rClasses uuid="_bZVuTvNtEeGc88qIktXXZA" simpleName="RealNumber" packageName="cern.devtools.depanalysis.example.service" extends="" implements="cern.devtools.depanalysis.example.service.VisitableNumber" private="false" fqName="cern.devtools.depanalysis.example.service.RealNumber">
+      <versions>1.0.0</versions>
+      <rMethods uuid="_bZVuSfNtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.service.RealNumber#RealNumber(float):void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_bZVuSvNtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.service.RealNumber#getValue():float" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_bZVuS_NtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.service.RealNumber#setValue(float):void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_bZVuTPNtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.service.RealNumber#accept(cern.devtools.depanalysis.example.service.NumberVisitor):void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rFields uuid="_bZVuTfNtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.service.RealNumber.value">
+        <versions>1.0.0</versions>
+      </rFields>
+    </rClasses>
+    <rClasses uuid="_bZVuUfNtEeGc88qIktXXZA" simpleName="NumberVisitor" packageName="cern.devtools.depanalysis.example.service" extends="" implements="" private="false" fqName="cern.devtools.depanalysis.example.service.NumberVisitor">
+      <versions>1.0.0</versions>
+      <rMethods uuid="_bZVuT_NtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.service.NumberVisitor#visit(cern.devtools.depanalysis.example.service.RealNumber):void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_bZVuUPNtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.service.NumberVisitor#visit(cern.devtools.depanalysis.example.service.ComplexNumber):void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+    </rClasses>
+    <rClasses uuid="_bZVuVfNtEeGc88qIktXXZA" simpleName="AbstractVisitor" packageName="cern.devtools.depanalysis.example.service" extends="" implements="cern.devtools.depanalysis.example.service.NumberVisitor" private="false" fqName="cern.devtools.depanalysis.example.service.AbstractVisitor">
+      <versions>1.0.0</versions>
+      <rMethods uuid="_bZVuUvNtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.service.AbstractVisitor#AbstractVisitor():void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_bZVuU_NtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.service.AbstractVisitor#visit(cern.devtools.depanalysis.example.service.RealNumber):void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_bZVuVPNtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.service.AbstractVisitor#visit(cern.devtools.depanalysis.example.service.ComplexNumber):void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+    </rClasses>
+  </rProjects>
+  <rProjects uuid="_bZdqEPNtEeGc88qIktXXZA" name="devtools-deps-example-impl" containingFolders="ignore" productPath="/C:/opt/workspace/eclipse/devtools-deps-example-impl/dist/devtools-deps-example-impl.jar">
+    <versions>1.0.0</versions>
+    <rClasses uuid="_bZgGU_NtEeGc88qIktXXZA" simpleName="SubSubVisitor" packageName="cern.devtools.depanalysis.example.dependant" extends="cern.devtools.depanalysis.example.dependant.SumRealNumbersVisitor" implements="" private="false" fqName="cern.devtools.depanalysis.example.dependant.SubSubVisitor">
+      <versions>1.0.0</versions>
+      <rMethods uuid="_bZgGUPNtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.dependant.SubSubVisitor#SubSubVisitor():void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_bZgGUfNtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.dependant.SubSubVisitor#visit(cern.devtools.depanalysis.example.service.ComplexNumber):void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_bZgGUvNtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.dependant.SubSubVisitor#visit(cern.devtools.depanalysis.example.service.RealNumber):void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+    </rClasses>
+    <rClasses uuid="_bZgtYPNtEeGc88qIktXXZA" rIncoming="_bZsTl_NtEeGc88qIktXXZA" rOutgoing="_bZsTl_NtEeGc88qIktXXZA" simpleName="ServiceInitiator" packageName="cern.devtools.depanalysis.example.dependant" extends="" implements="" private="false" fqName="cern.devtools.depanalysis.example.dependant.ServiceInitiator">
+      <versions>1.0.0</versions>
+      <rMethods uuid="_bZgGVPNtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.dependant.ServiceInitiator#ServiceInitiator():void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_bZgGVfNtEeGc88qIktXXZA" rIncoming="_bZthsvNtEeGc88qIktXXZA _bZths_NtEeGc88qIktXXZA _bZthtfNtEeGc88qIktXXZA" rOutgoing="_bZthsvNtEeGc88qIktXXZA _bZths_NtEeGc88qIktXXZA _bZthtfNtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.dependant.ServiceInitiator#main(java.lang.String[]):void" private="false" static="true">
+        <versions>1.0.0</versions>
+      </rMethods>
+    </rClasses>
+    <rClasses uuid="_bZgtZvNtEeGc88qIktXXZA" rIncoming="_bZthuPNtEeGc88qIktXXZA _bZthufNtEeGc88qIktXXZA _bZthvfNtEeGc88qIktXXZA _bZthvvNtEeGc88qIktXXZA _bZthv_NtEeGc88qIktXXZA" rOutgoing="_bZthuPNtEeGc88qIktXXZA _bZthufNtEeGc88qIktXXZA _bZthvfNtEeGc88qIktXXZA _bZthvvNtEeGc88qIktXXZA _bZthv_NtEeGc88qIktXXZA" simpleName="SumRealNumbersVisitor" packageName="cern.devtools.depanalysis.example.dependant" extends="cern.devtools.depanalysis.example.service.AbstractVisitor" implements="cern.devtools.depanalysis.example.service.NumberVisitor" private="false" fqName="cern.devtools.depanalysis.example.dependant.SumRealNumbersVisitor">
+      <versions>1.0.0</versions>
+      <rMethods uuid="_bZgtYfNtEeGc88qIktXXZA" rIncoming="_bZthwfNtEeGc88qIktXXZA" rOutgoing="_bZthwfNtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.dependant.SumRealNumbersVisitor#SumRealNumbersVisitor():void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_bZgtYvNtEeGc88qIktXXZA" rIncoming="_bZthw_NtEeGc88qIktXXZA _bZthxvNtEeGc88qIktXXZA" rOutgoing="_bZthw_NtEeGc88qIktXXZA _bZthxvNtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.dependant.SumRealNumbersVisitor#visit(cern.devtools.depanalysis.example.service.RealNumber):void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_bZgtY_NtEeGc88qIktXXZA" rIncoming="_bZthxfNtEeGc88qIktXXZA _bZthx_NtEeGc88qIktXXZA" rOutgoing="_bZthxfNtEeGc88qIktXXZA _bZthx_NtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.dependant.SumRealNumbersVisitor#visit(cern.devtools.depanalysis.example.service.ComplexNumber):void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_bZgtZPNtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.dependant.SumRealNumbersVisitor#getResult():float" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rFields uuid="_bZgtZfNtEeGc88qIktXXZA" signature="cern.devtools.depanalysis.example.dependant.SumRealNumbersVisitor.sum">
+        <versions>1.0.0</versions>
+      </rFields>
+    </rClasses>
+  </rProjects>
+</rm:RRepository>

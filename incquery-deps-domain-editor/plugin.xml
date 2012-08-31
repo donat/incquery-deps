@@ -31,14 +31,4 @@
             contributorClass="hu.bme.incquery.deps.wsmodel.presentation.WsmodelActionBarContributor">
       </editor>
    </extension>
-   <extension
-         point="org.eclipse.ui.views">
-      <view
-            class="hu.bme.incquery.deps.viewer.ModelViewer"
-            id="hu.bme.incquery.deps.viewer.modelviewer"
-            name="Workspace model"
-            restorable="true">
-      </view>
-   </extension>
-
 </plugin>

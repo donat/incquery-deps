@@ -8,6 +8,7 @@ package hu.bme.incquery.deps.core;
 
 import hu.bme.incquery.deps.wsmodel.WDependency;
 import hu.bme.incquery.deps.wsmodel.WDependencyType;
+import hu.bme.incquery.deps.wsmodel.WMethod;
 import hu.bme.incquery.deps.wsmodel.WNamedElement;
 import hu.bme.incquery.deps.wsmodel.WProject;
 import hu.bme.incquery.deps.wsmodel.WWorkspace;
@@ -28,6 +29,7 @@ import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.IType;
+import org.eclipse.jdt.core.JavaModelException;
 
 public class WsBuildPrimitives {
 
@@ -67,6 +69,11 @@ public class WsBuildPrimitives {
 			elem = WsmodelFactory.eINSTANCE.createWType();
 		} else if (jdtItem instanceof IMethod) {
 			elem = WsmodelFactory.eINSTANCE.createWMethod();
+			try {
+				((WMethod)elem).setSignature(JdtUtils.fullyQualify(((IMethod)jdtItem)));
+			} catch (JavaModelException e) {
+				e.printStackTrace();
+			}
 		} else if (jdtItem instanceof IField) {
 			elem = WsmodelFactory.eINSTANCE.createWField();
 		} else {
@@ -76,6 +83,7 @@ public class WsBuildPrimitives {
 		elem.setName(jdtItem.getElementName());
 		elem.setHandler(jdtItem.getHandleIdentifier());
 		elem.setParent(container);
+
 
 		workspace.getElements().add(elem);
 		if (container != null) {

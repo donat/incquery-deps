@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+
+   <extension
+         id="cern.devtools.deps.query.joinProject"
+         point="org.eclipse.viatra2.emf.incquery.matcherfactory">
+      <matcher
+            factoryProvider="cern.devtools.deps.query.joinproject.JoinProjectMatcherFactory$Provider"
+            id="cern.devtools.deps.query.joinProject">
+      </matcher>
+   </extension>
+   <extension
+         id="cern.devtools.deps.query.joinClass"
+         point="org.eclipse.viatra2.emf.incquery.matcherfactory">
+      <matcher
+            factoryProvider="cern.devtools.deps.query.joinclass.JoinClassMatcherFactory$Provider"
+            id="cern.devtools.deps.query.joinClass">
+      </matcher>
+   </extension>
+   <extension
+         id="cern.devtools.deps.query.joinMethod"
+         point="org.eclipse.viatra2.emf.incquery.matcherfactory">
+      <matcher
+            factoryProvider="cern.devtools.deps.query.joinmethod.JoinMethodMatcherFactory$Provider"
+            id="cern.devtools.deps.query.joinMethod">
+      </matcher>
+   </extension>
+
+</plugin>

@@ -633,13 +633,22 @@ public interface WsmodelPackage extends EPackage {
 	int WMETHOD__TYPE = WNAMED_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Signature</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WMETHOD__SIGNATURE = WNAMED_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>WMethod</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WMETHOD_FEATURE_COUNT = WNAMED_ELEMENT_FEATURE_COUNT + 1;
+	int WMETHOD_FEATURE_COUNT = WNAMED_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link hu.bme.incquery.deps.wsmodel.impl.WFieldImpl <em>WField</em>}' class.
@@ -1049,6 +1058,17 @@ public interface WsmodelPackage extends EPackage {
 	EReference getWMethod_Type();
 
 	/**
+	 * Returns the meta object for the attribute '{@link hu.bme.incquery.deps.wsmodel.WMethod#getSignature <em>Signature</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Signature</em>'.
+	 * @see hu.bme.incquery.deps.wsmodel.WMethod#getSignature()
+	 * @see #getWMethod()
+	 * @generated
+	 */
+	EAttribute getWMethod_Signature();
+
+	/**
 	 * Returns the meta object for class '{@link hu.bme.incquery.deps.wsmodel.WField <em>WField</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1366,6 +1386,14 @@ public interface WsmodelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference WMETHOD__TYPE = eINSTANCE.getWMethod_Type();
+
+		/**
+		 * The meta object literal for the '<em><b>Signature</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute WMETHOD__SIGNATURE = eINSTANCE.getWMethod_Signature();
 
 		/**
 		 * The meta object literal for the '{@link hu.bme.incquery.deps.wsmodel.impl.WFieldImpl <em>WField</em>}' class.

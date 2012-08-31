@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="hu.bme.incquery.deps.ui.ModelViewer"
+            id="hu.bme.incquery.deps.viewer.modelviewer"
+            name="Workspace model"
+            restorable="true">
+      </view>
+   </extension>
+   
+     <extension
+         point="org.eclipse.ui.popupMenus">
+          <objectContribution
+            adaptable="false"
+            id="cern.devtools.depanalysis.modelfinder.objectContribution2"
+            objectClass="org.eclipse.jdt.core.IJavaProject">
+         <action
+               class="hu.bme.incquery.deps.ui.EnableTracingOnProjectAction"
+               id="hu.bme.incquery.deps.ui.actions.enabletracing"
+               label="Toggle Dependency Analysis"
+               menubarPath="additions">
+         </action>
+      </objectContribution>
+         </extension>
+</plugin>

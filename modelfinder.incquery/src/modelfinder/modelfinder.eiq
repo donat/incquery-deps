@@ -1,6 +1,0 @@
-package modelfinder
-
-
-import "http://github.com/donat/incquery-deps/eclipse-workspace-model";
-
-  

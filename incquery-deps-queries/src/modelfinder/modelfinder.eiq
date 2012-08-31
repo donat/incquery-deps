@@ -1,0 +1,42 @@
+package cern.devtools.deps.query
+
+import "http://inf.mit.bme.hu/donat/incquery-deps/wsmodel"
+import "http://inf.mit.bme.hu/donat/incquery-deps/repomodel"
+
+pattern joinProject(rp : RProject, wp : WProject) = {
+	RProject.name(rp, commonName);
+	WProject.name(wp, commonName);
+}
+
+pattern joinClass(rc : RClass, wc : WType) = {
+	// Join project.
+	RProject.rClasses(rp, rc);
+	WProject.packageFragmentRoots.packageFragments.compilationUnits.types(wp, wc);
+	find joinProject(rp, wp);
+
+	// Join class name.
+	RClass.simpleName(rc, simplename);
+	WType.name(wc, simplename);
+
+	// Join class' package name.
+	RClass.packageName(rc, packagename);
+	WPackageFragment.compilationUnits.types(wpfg, wc);
+	WPackageFragment.name(wpfg, packagename);
+}
+
+pattern joinMethod(rm : RMethod, wm : WMethod) = {
+	// Join project.
+	RProject.rClasses.rMethods(rp, rm);	
+	WProject.packageFragmentRoots.packageFragments.compilationUnits.types.methods(wp, wm);
+	find joinProject(rp, wp);
+
+	// Join classes.
+	// There is no need for it: signature contains the fully qualified names.
+	// RClass.rMethods(rc, rm);
+	// WType.methods(wc, wm);
+	// find joinClass(rc, wc);
+	
+	// join methods by signature
+	RMethod.signature(rm, signature);
+	WMethod.signature(wm, signature);
+}

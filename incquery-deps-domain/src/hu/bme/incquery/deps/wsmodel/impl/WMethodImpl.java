@@ -24,12 +24,31 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * The following features are implemented:
  * <ul>
  *   <li>{@link hu.bme.incquery.deps.wsmodel.impl.WMethodImpl#getType <em>Type</em>}</li>
+ *   <li>{@link hu.bme.incquery.deps.wsmodel.impl.WMethodImpl#getSignature <em>Signature</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
 public class WMethodImpl extends WNamedElementImpl implements WMethod {
+	/**
+	 * The default value of the '{@link #getSignature() <em>Signature</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSignature()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String SIGNATURE_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getSignature() <em>Signature</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSignature()
+	 * @generated
+	 * @ordered
+	 */
+	protected String signature = SIGNATURE_EDEFAULT;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -95,6 +114,27 @@ public class WMethodImpl extends WNamedElementImpl implements WMethod {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getSignature() {
+		return signature;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setSignature(String newSignature) {
+		String oldSignature = signature;
+		signature = newSignature;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, WsmodelPackage.WMETHOD__SIGNATURE, oldSignature, signature));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -144,6 +184,8 @@ public class WMethodImpl extends WNamedElementImpl implements WMethod {
 		switch (featureID) {
 			case WsmodelPackage.WMETHOD__TYPE:
 				return getType();
+			case WsmodelPackage.WMETHOD__SIGNATURE:
+				return getSignature();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -158,6 +200,9 @@ public class WMethodImpl extends WNamedElementImpl implements WMethod {
 		switch (featureID) {
 			case WsmodelPackage.WMETHOD__TYPE:
 				setType((WType)newValue);
+				return;
+			case WsmodelPackage.WMETHOD__SIGNATURE:
+				setSignature((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -174,6 +219,9 @@ public class WMethodImpl extends WNamedElementImpl implements WMethod {
 			case WsmodelPackage.WMETHOD__TYPE:
 				setType((WType)null);
 				return;
+			case WsmodelPackage.WMETHOD__SIGNATURE:
+				setSignature(SIGNATURE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -188,6 +236,8 @@ public class WMethodImpl extends WNamedElementImpl implements WMethod {
 		switch (featureID) {
 			case WsmodelPackage.WMETHOD__TYPE:
 				return getType() != null;
+			case WsmodelPackage.WMETHOD__SIGNATURE:
+				return SIGNATURE_EDEFAULT == null ? signature != null : !SIGNATURE_EDEFAULT.equals(signature);
 		}
 		return super.eIsSet(featureID);
 	}

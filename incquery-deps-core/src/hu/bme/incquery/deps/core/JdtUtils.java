@@ -14,8 +14,8 @@ import org.eclipse.jdt.core.Signature;
 public final class JdtUtils {
 
 	private static final String[] elementTypes = new String[17];
-	private static final String[] deltaTypes = new String[5]; 
-	
+	private static final String[] deltaTypes = new String[5];
+
 	static {
 		elementTypes[1] = "javamodel";
 		elementTypes[2] = "javaproject";
@@ -33,11 +33,40 @@ public final class JdtUtils {
 		elementTypes[14] = "localvariable";
 		elementTypes[15] = "typeparameter";
 		elementTypes[16] = "annotaion";
-		
+
 		deltaTypes[1] = "ADDED";
 		deltaTypes[2] = "REMOVED";
 		deltaTypes[4] = "CHANGED";
-		
+
+	}
+
+	public static String fullyQualify(IType el) {
+		return el.getFullyQualifiedName().replace('$', '.');
+	}
+
+	public static String fullyQualify(IMethod method) throws JavaModelException {
+		// appends the fully qualified class name
+		IType type = (IType) method.getParent();
+		String result = fullyQualify(type) + "#";
+		result += method.getElementName();
+
+		// process parameter list
+		result += "(";
+		String[] params = method.getParameterTypes();
+		for (int i = 0; i < params.length; ++i) {
+			result += decodeJdtSource(params[i], type);
+
+			if (i != (params.length - 1)) {
+				result += ',';
+			}
+		}
+
+		// end parameter list and add return type
+		result += "):";
+		result += decodeJdtSource(method.getReturnType(), type);
+
+		//System.out.println(result);
+		return result;
 	}
 
 	public static String decodeSourceSignature(IMethod method) {
@@ -90,7 +119,7 @@ public final class JdtUtils {
 	public static String getJavaElemType(int type) {
 		return elementTypes[type] == null ? "null" : elementTypes[type];
 	}
-	
+
 	public static String getDeltaKind(int type) {
 		return deltaTypes[type] == null ? "null" : deltaTypes[type];
 	}

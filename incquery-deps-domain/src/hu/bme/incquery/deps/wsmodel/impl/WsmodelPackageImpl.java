@@ -455,6 +455,15 @@ public class WsmodelPackageImpl extends EPackageImpl implements WsmodelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getWMethod_Signature() {
+		return (EAttribute)wMethodEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getWField() {
 		return wFieldEClass;
 	}
@@ -544,6 +553,7 @@ public class WsmodelPackageImpl extends EPackageImpl implements WsmodelPackage {
 
 		wMethodEClass = createEClass(WMETHOD);
 		createEReference(wMethodEClass, WMETHOD__TYPE);
+		createEAttribute(wMethodEClass, WMETHOD__SIGNATURE);
 
 		wFieldEClass = createEClass(WFIELD);
 		createEReference(wFieldEClass, WFIELD__TYPE);
@@ -642,6 +652,7 @@ public class WsmodelPackageImpl extends EPackageImpl implements WsmodelPackage {
 
 		initEClass(wMethodEClass, WMethod.class, "WMethod", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getWMethod_Type(), this.getWType(), this.getWType_Methods(), "type", null, 0, 1, WMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getWMethod_Signature(), ecorePackage.getEString(), "signature", null, 0, 1, WMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(wFieldEClass, WField.class, "WField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getWField_Type(), this.getWType(), this.getWType_Fields(), "type", null, 0, 1, WField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
