@@ -3,6 +3,7 @@
 package cern.devtools.depanalysis.wsmodel.provider;
 
 
+import cern.devtools.depanalysis.wsmodel.Field;
 import java.util.Collection;
 import java.util.List;
 
@@ -73,7 +74,10 @@ public class FieldItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return object.toString();
+		String label = ((Field)object).getName();
+		return label == null || label.length() == 0 ?
+			getString("_UI_Field_type") :
+			getString("_UI_Field_type") + " " + label;
 	}
 
 	/**

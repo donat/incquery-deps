@@ -52,9 +52,9 @@
    <extension
          point="org.eclipse.emf.ecore.generated_package">
       <package
-            class="cern.devtools.depanalysis.javamodel.JavaModelPackage"
+            class="cern.devtools.depanalysis.wsmodel.JavaModelPackage"
             genModel="metamodel/simplified_java.genmodel"
-            uri="http://simplified_java/1.0">
+            uri="http://github.com/donat/incquery-deps/eclipse-workspace-model">
       </package>
    </extension>
 </plugin>

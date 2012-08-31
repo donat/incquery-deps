@@ -3,6 +3,7 @@
 package cern.devtools.depanalysis.wsmodel.provider;
 
 
+import cern.devtools.depanalysis.wsmodel.Method;
 import java.util.Collection;
 import java.util.List;
 
@@ -73,7 +74,10 @@ public class MethodItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return object.toString();
+		String label = ((Method)object).getName();
+		return label == null || label.length() == 0 ?
+			getString("_UI_Method_type") :
+			getString("_UI_Method_type") + " " + label;
 	}
 
 	/**

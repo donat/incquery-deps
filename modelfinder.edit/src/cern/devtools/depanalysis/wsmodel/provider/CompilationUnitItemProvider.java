@@ -110,7 +110,10 @@ public class CompilationUnitItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return object.toString();
+		String label = ((CompilationUnit)object).getName();
+		return label == null || label.length() == 0 ?
+			getString("_UI_CompilationUnit_type") :
+			getString("_UI_CompilationUnit_type") + " " + label;
 	}
 
 	/**

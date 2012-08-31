@@ -355,7 +355,13 @@ public class DependencyImpl extends EObjectImpl implements Dependency {
 	 */
 	@Override
 	public String toString() {
-		return String.format("dep type(%s), from(%s), to(%s)", type.toString(), from.toString(), to.toString());
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (type: ");
+		result.append(type);
+		result.append(')');
+		return result.toString();
 	}
 
 } //DependencyImpl

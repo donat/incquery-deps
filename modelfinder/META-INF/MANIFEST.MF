@@ -22,6 +22,7 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: cern.devtools.depanalysis.modelfinder,
  cern.devtools.depanalysis.wsmodel,
+ cern.devtools.depanalysis.wsmodel.impl,
  cern.devtools.depanalysis.wsmodel.util
 Bundle-ClassPath: .,
  icons/

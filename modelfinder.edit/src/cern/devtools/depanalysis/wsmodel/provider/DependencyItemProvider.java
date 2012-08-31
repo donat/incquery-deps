@@ -21,6 +21,7 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import cern.devtools.depanalysis.wsmodel.Dependency;
+import cern.devtools.depanalysis.wsmodel.DependencyType;
 import cern.devtools.depanalysis.wsmodel.JavaModelPackage;
 
 /**
@@ -150,7 +151,11 @@ public class DependencyItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return object.toString();
+		DependencyType labelValue = ((Dependency)object).getType();
+		String label = labelValue == null ? null : labelValue.toString();
+		return label == null || label.length() == 0 ?
+			getString("_UI_Dependency_type") :
+			getString("_UI_Dependency_type") + " " + label;
 	}
 
 	/**
