@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Modelfinder
+Bundle-SymbolicName: hu.bme.incquery.deps.core;singleton:=true
+Bundle-Version: 1.0.0.dev
+Bundle-Activator: hu.bme.incquery.deps.core.Activator
+Bundle-Vendor: Donat Csikos
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.emf;bundle-version="2.6.0",
+ org.eclipse.emf.ecore;bundle-version="2.6.1",
+ org.eclipse.jdt.core;bundle-version="3.6.2",
+ org.eclipse.core.resources;bundle-version="3.6.1",
+ org.eclipse.emf.edit;bundle-version="2.7.2";visibility:=reexport,
+ org.eclipse.ui.navigator;bundle-version="3.5.101",
+ org.eclipse.emf.edit.ui;bundle-version="2.7.0",
+ org.eclipse.ui.ide;bundle-version="3.7.0",
+ org.eclipse.emf.ecore.xmi;bundle-version="2.7.0",
+ org.eclipse.jdt.ui;bundle-version="3.7.2",
+ org.eclipse.ui.editors;bundle-version="3.7.0",
+ hu.bme.incquery.deps.domain;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Export-Package: hu.bme.incquery.deps.core
+Bundle-ClassPath: .,
+ icons/

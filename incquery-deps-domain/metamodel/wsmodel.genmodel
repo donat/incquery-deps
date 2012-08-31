@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/incquery-deps-domain/src" editDirectory="/incquery-deps-domain-edit/src"
+    editorDirectory="/incquery-deps-domain-editor/src" modelPluginID="hu.bme.incquery.deps.domain"
+    modelName="Wsmodel" editPluginClass="hu.bme.incquery.deps.internal.WsmodelEditPlugin"
+    editorPluginClass="hu.bme.incquery.deps.internal.WsmodelEditorPlugin" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="6.0" copyrightFields="false" editPluginID="hu.bme.incquery.deps.domain.edit"
+    editorPluginID="hu.bme.incquery.deps.domain.editor">
+  <foreignModel>wsmodel.ecore</foreignModel>
+  <genPackages prefix="Wsmodel" basePackage="hu.bme.incquery.deps" disposableProviderFactory="true"
+      contentTypeIdentifier="" ecorePackage="wsmodel.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="wsmodel.ecore#//WDependencyType">
+      <genEnumLiterals ecoreEnumLiteral="wsmodel.ecore#//WDependencyType/CLASS_USAGE"/>
+      <genEnumLiterals ecoreEnumLiteral="wsmodel.ecore#//WDependencyType/METHOD_CALL"/>
+      <genEnumLiterals ecoreEnumLiteral="wsmodel.ecore#//WDependencyType/METHOD_OVERRIDE"/>
+      <genEnumLiterals ecoreEnumLiteral="wsmodel.ecore#//WDependencyType/INHERITANCE"/>
+      <genEnumLiterals ecoreEnumLiteral="wsmodel.ecore#//WDependencyType/FIELD_ACCESS"/>
+    </genEnums>
+    <genClasses ecoreClass="wsmodel.ecore#//WProject">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference wsmodel.ecore#//WProject/packageFragmentRoots"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference wsmodel.ecore#//WProject/workspace"/>
+    </genClasses>
+    <genClasses ecoreClass="wsmodel.ecore#//WWorkspace">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference wsmodel.ecore#//WWorkspace/projects"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference wsmodel.ecore#//WWorkspace/elements"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference wsmodel.ecore#//WWorkspace/dependencties"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="wsmodel.ecore#//WNamedElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute wsmodel.ecore#//WNamedElement/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute wsmodel.ecore#//WNamedElement/handler"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference wsmodel.ecore#//WNamedElement/incomingDependencies"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference wsmodel.ecore#//WNamedElement/outgoingDependencies"/>
+      <genOperations ecoreOperation="wsmodel.ecore#//WNamedElement/getParent"/>
+      <genOperations ecoreOperation="wsmodel.ecore#//WNamedElement/getChildren"/>
+      <genOperations ecoreOperation="wsmodel.ecore#//WNamedElement/setParent">
+        <genParameters ecoreParameter="wsmodel.ecore#//WNamedElement/setParent/parent"/>
+      </genOperations>
+      <genOperations ecoreOperation="wsmodel.ecore#//WNamedElement/addChild">
+        <genParameters ecoreParameter="wsmodel.ecore#//WNamedElement/addChild/child"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="wsmodel.ecore#//WDependency">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference wsmodel.ecore#//WDependency/from"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference wsmodel.ecore#//WDependency/to"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute wsmodel.ecore#//WDependency/type"/>
+    </genClasses>
+    <genClasses ecoreClass="wsmodel.ecore#//WPackageFragmentRoot">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference wsmodel.ecore#//WPackageFragmentRoot/project"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference wsmodel.ecore#//WPackageFragmentRoot/packageFragments"/>
+    </genClasses>
+    <genClasses ecoreClass="wsmodel.ecore#//WPackageFragment">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference wsmodel.ecore#//WPackageFragment/packageFragmentRoot"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference wsmodel.ecore#//WPackageFragment/compilationUnits"/>
+    </genClasses>
+    <genClasses ecoreClass="wsmodel.ecore#//WCompilationUnit">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference wsmodel.ecore#//WCompilationUnit/packageFragment"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference wsmodel.ecore#//WCompilationUnit/types"/>
+    </genClasses>
+    <genClasses ecoreClass="wsmodel.ecore#//WType">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference wsmodel.ecore#//WType/compilationUnit"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference wsmodel.ecore#//WType/methods"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference wsmodel.ecore#//WType/fields"/>
+    </genClasses>
+    <genClasses ecoreClass="wsmodel.ecore#//WMethod">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference wsmodel.ecore#//WMethod/type"/>
+    </genClasses>
+    <genClasses ecoreClass="wsmodel.ecore#//WField">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference wsmodel.ecore#//WField/type"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

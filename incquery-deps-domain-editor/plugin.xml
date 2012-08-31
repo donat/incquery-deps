@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="hu.bme.incquery.deps.wsmodel.presentation.WsmodelModelWizardID"
+            name="%_UI_WsmodelModelWizard_label"
+            class="hu.bme.incquery.deps.wsmodel.presentation.WsmodelModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/WsmodelModelFile.gif">
+         <description>%_UI_WsmodelModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <editor
+            id="hu.bme.incquery.deps.wsmodel.presentation.WsmodelEditorID"
+            name="%_UI_WsmodelEditor_label"
+            icon="icons/full/obj16/WsmodelModelFile.gif"
+            extensions="wsmodel"
+            class="hu.bme.incquery.deps.wsmodel.presentation.WsmodelEditor"
+            contributorClass="hu.bme.incquery.deps.wsmodel.presentation.WsmodelActionBarContributor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="hu.bme.incquery.deps.viewer.ModelViewer"
+            id="hu.bme.incquery.deps.viewer.modelviewer"
+            name="Workspace model"
+            restorable="true">
+      </view>
+   </extension>
+
+</plugin>

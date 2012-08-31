@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="hu.bme.incquery.deps.core.Startup">
+      </startup>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.popupMenus">
+          <objectContribution
+            adaptable="false"
+            id="cern.devtools.depanalysis.modelfinder.objectContribution2"
+            objectClass="org.eclipse.jdt.core.IJavaProject">
+         <action
+               class="hu.bme.incquery.deps.core.EnableTracingOnProjectAction"
+               id="cern.devtools.depanalysis.modelfinder.action3"
+               label="Toggle Dependency Analysis"
+               menubarPath="additions">
+         </action>
+      </objectContribution>
+         </extension>
+</plugin>
