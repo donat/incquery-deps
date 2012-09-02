@@ -4,6 +4,8 @@
  */
 package hu.bme.incquery.deps.core;
 
+import hu.bme.incquery.deps.wsmodel.WWorkspace;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,7 +28,7 @@ public class WorkspaceEventDispatcher implements IElementChangedListener {
 
 	private List<IJavaProject> tracedProjects;
 	
-	private PreferenceStore prefs = new PreferenceStore();
+	private PreferenceStore prefs = PreferenceStore.getStore();
 
 	public WorkspaceEventDispatcher() {
 		listenerRepo = new WsChangeListenerRepo();
@@ -47,14 +49,6 @@ public class WorkspaceEventDispatcher implements IElementChangedListener {
 		}
 		return tracedProjects;
 	}
-
-	public void addTracedProject(IJavaProject project) {
-		if (tracedProjects == null) {
-			initTracedProjectList();
-		}
-		prefs.addTracedProject(project.getElementName());
-		tracedProjects.add(project);
-	}
 	
 	public void addTracedProjectAndDiscoverIt(IJavaProject project) {
 		if (tracedProjects == null) {
@@ -65,13 +59,6 @@ public class WorkspaceEventDispatcher implements IElementChangedListener {
 		builder.addProject(project);
 	}
 	
-	public void removeTracedProject(IJavaProject project) {
-		if (tracedProjects == null) {
-			initTracedProjectList();
-		}
-		prefs.removeTracedProject(project.getElementName());
-		tracedProjects.remove(project);
-	}
 	
 	public void removeTracedProjectWithStructure(IJavaProject project) {
 		if (tracedProjects == null) {
@@ -95,7 +82,7 @@ public class WorkspaceEventDispatcher implements IElementChangedListener {
 			tracedProjects = new LinkedList<IJavaProject>();
 			IWorkspace jdtWorkspace = ResourcesPlugin.getWorkspace();
 			IWorkspaceRoot jdtWsRoot = jdtWorkspace.getRoot();
-			for (IJavaProject project : JavaModelWalker.childrenOf(jdtWsRoot)) {
+			for (IJavaProject project : JdtModelWalker.childrenOf(jdtWsRoot)) {
 				if (enabledProjectNames.contains(project.getElementName())) {
 					tracedProjects.add((IJavaProject) project);
 				}
@@ -128,4 +115,8 @@ public class WorkspaceEventDispatcher implements IElementChangedListener {
 		}
 	}
 
+	public WWorkspace getWorkspace() {
+		return builder.getWorkspace();
+	}
+	
 }

@@ -44,7 +44,6 @@ public class EnableTracingOnProjectAction implements IObjectActionDelegate {
 					Activator.getDefault().getWsService().removeTracedProjectWithStructure(project);
 				}
 			}
-			
 		}
 	}
 

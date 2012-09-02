@@ -57,7 +57,7 @@ public class WsStructure {
 		WsBuildPrimitives prim = new WsBuildPrimitives(workspace);
 		try {
 			WsDeps deps = new WsDeps(prim);
-			for (IJavaElement elem : JavaModelWalker.allElements(projects)) {
+			for (IJavaElement elem : JdtModelWalker.allElements(projects)) {
 				if (elem instanceof IType || elem instanceof IMethod) {
 					deps.addElementToSearch(elem);
 				}

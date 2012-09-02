@@ -27,7 +27,7 @@ public class AddEntireProject implements ModelBuilder {
 		WsBuildPrimitives prim = new WsBuildPrimitives(workspace);
 		try {
 			WsDeps deps = new WsDeps(prim);
-			for (IJavaElement elem : JavaModelWalker.allElements(project) ){
+			for (IJavaElement elem : JdtModelWalker.allElements(project) ){
 				if (elem instanceof IMethod || elem instanceof IField) {
 					deps.addElementToSearch(elem);
 				}

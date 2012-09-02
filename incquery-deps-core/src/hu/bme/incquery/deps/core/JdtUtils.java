@@ -6,6 +6,11 @@
  */
 package hu.bme.incquery.deps.core;
 
+import java.util.Collection;
+import java.util.List;
+
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaModelException;
@@ -122,5 +127,41 @@ public final class JdtUtils {
 
 	public static String getDeltaKind(int type) {
 		return deltaTypes[type] == null ? "null" : deltaTypes[type];
+	}
+	
+	public static long classesLastModificationTime(Collection<IJavaProject> projects) {
+		long result = -1l;
+		for (IJavaProject project : projects) {
+			long ts = calcLastMod(project);
+			if (ts > result) {
+				result = ts;
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * Calculates the last modification time of a Java project.
+	 * 
+	 * @return
+	 */
+	public static long calcLastMod(IJavaProject project) {
+		try {
+			List<ICompilationUnit> cus = JdtModelWalker.allCompilationUnitsIn(project);
+			long maxTs = -1l;
+			for (ICompilationUnit cu : cus) {
+				if (cu.getResource() == null) {
+					System.err.println("Resource not found for compilation unit: " + cu + ".");
+				} else {
+					long cuts = cu.getResource().getModificationStamp();
+					if (cuts > maxTs) {
+						maxTs = cuts;
+					}
+				}
+			}
+			return maxTs;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

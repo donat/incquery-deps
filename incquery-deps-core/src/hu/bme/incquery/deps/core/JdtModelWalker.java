@@ -6,6 +6,7 @@
  */
 package hu.bme.incquery.deps.core;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaCore;
 
-public class JavaModelWalker {
+public class JdtModelWalker {
 
 	public static List<IJavaProject> childrenOf(IWorkspaceRoot root) throws CoreException {
 		List<IJavaProject> result = new LinkedList<IJavaProject>();
@@ -143,6 +144,21 @@ public class JavaModelWalker {
 		for (IType type : types) {
 			List<IJavaElement> methodsOrFields = childrenOf(type);
 			result.addAll( methodsOrFields);
+		}
+		return result;
+	}
+	
+	public static List<ICompilationUnit> allCompilationUnitsIn(IJavaProject p) throws CoreException {
+		List<ICompilationUnit> result = new LinkedList<ICompilationUnit>();
+		for (IPackageFragmentRoot pfr : p.getPackageFragmentRoots()) {
+			if (!pfr.isArchive()) {
+				for (IJavaElement pfElem : pfr.getChildren()) {
+					if (pfElem instanceof IPackageFragment) {
+						IPackageFragment pf = (IPackageFragment) pfElem;
+						result.addAll(Arrays.asList(pf.getCompilationUnits()));
+					}
+				}
+			}
 		}
 		return result;
 	}

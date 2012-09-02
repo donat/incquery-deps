@@ -20,19 +20,27 @@ import org.osgi.service.prefs.Preferences;
 public class PreferenceStore {
 
 	private final String TRACED_PROJECTS = PLUGIN_ID + ".prefs.TRACED_PROJECTS";
+	private final String CACHE_MODIFIED = PLUGIN_ID + ".prefs.CACHE_MODIFIED";
 
+	private static PreferenceStore INSTANCE;
+
+	private PreferenceStore() {
+	}
 	
+	public static PreferenceStore getStore () {
+		return INSTANCE == null ? INSTANCE = new PreferenceStore() : INSTANCE;
+	}
+
 	public List<String> tracedProjectNames() {
 		Preferences preferences = ConfigurationScope.INSTANCE.getNode(PLUGIN_ID);
 		String mergedProjectNames = preferences.get(TRACED_PROJECTS, "");
-		if("".equals(mergedProjectNames)) {
+		if ("".equals(mergedProjectNames)) {
 			return Collections.emptyList();
-		}
-		else {
+		} else {
 			return Arrays.asList(mergedProjectNames.split(","));
 		}
 	}
-	
+
 	public void addTracedProject(String projectName) {
 		List<String> projects = new LinkedList<String>(tracedProjectNames());
 		projects.add(projectName);
@@ -42,25 +50,40 @@ public class PreferenceStore {
 	private void storeTracedProjects(List<String> projects) {
 		StringBuffer prefToStore = new StringBuffer();
 		String sep = "";
-		for(String project : projects) {
+		for (String project : projects) {
 			prefToStore.append(sep);
 			prefToStore.append(project);
 			sep = ",";
 		}
-		
+
 		Preferences preferences = ConfigurationScope.INSTANCE.getNode(PLUGIN_ID);
 		preferences.put(TRACED_PROJECTS, prefToStore.toString());
-		
+
 		try {
 			preferences.flush();
 		} catch (BackingStoreException e) {
 			e.printStackTrace();
 		}
-	} 
+	}
 	
 	public void removeTracedProject(String projectName) {
 		List<String> projects = new LinkedList<String>(tracedProjectNames());
 		projects.remove(projectName);
 		storeTracedProjects(projects);
+	}
+	
+	public long getCacheModTime() {
+		Preferences preferences = ConfigurationScope.INSTANCE.getNode(PLUGIN_ID);
+		return preferences.getLong(CACHE_MODIFIED, -1l);
+	}
+	
+	public void setCacheModTime(long val) {
+		Preferences preferences = ConfigurationScope.INSTANCE.getNode(PLUGIN_ID);
+		preferences.putLong(CACHE_MODIFIED, val);
+		try {
+			preferences.flush();
+		} catch (BackingStoreException e) {
+			e.printStackTrace();
+		}
 	}
 }
