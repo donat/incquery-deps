@@ -2,30 +2,54 @@
 <plugin>
 
    <extension
-         id="modelfinder.incquery.cern.devtools.deps.query.joinProject"
+         id="modelfinder.incquery.modelfinder.incquery.cern.devtools.deps.query.joinProject"
          name=""
          point="org.eclipse.viatra2.emf.incquery.matcherfactory">
       <matcher
-            id="cern.devtools.deps.query.joinProject"
-            factoryProvider="cern.devtools.deps.query.joinproject.JoinProjectMatcherFactory$Provider">
+            factoryProvider="cern.devtools.deps.query.joinproject.JoinProjectMatcherFactory$Provider"
+            id="cern.devtools.deps.query.joinProject">
       </matcher>
    </extension>
    <extension
-         id="modelfinder.incquery.cern.devtools.deps.query.joinClass"
+         id="modelfinder.incquery.modelfinder.incquery.cern.devtools.deps.query.joinClass"
          name=""
          point="org.eclipse.viatra2.emf.incquery.matcherfactory">
       <matcher
-            id="cern.devtools.deps.query.joinClass"
-            factoryProvider="cern.devtools.deps.query.joinclass.JoinClassMatcherFactory$Provider">
+            factoryProvider="cern.devtools.deps.query.joinclass.JoinClassMatcherFactory$Provider"
+            id="cern.devtools.deps.query.joinClass">
       </matcher>
    </extension>
    <extension
-         id="modelfinder.incquery.cern.devtools.deps.query.joinMethod"
+         id="modelfinder.incquery.modelfinder.incquery.cern.devtools.deps.query.joinMethod"
          name=""
          point="org.eclipse.viatra2.emf.incquery.matcherfactory">
       <matcher
-            id="cern.devtools.deps.query.joinMethod"
-            factoryProvider="cern.devtools.deps.query.joinmethod.JoinMethodMatcherFactory$Provider">
+            factoryProvider="cern.devtools.deps.query.joinmethod.JoinMethodMatcherFactory$Provider"
+            id="cern.devtools.deps.query.joinMethod">
+      </matcher>
+   </extension>
+   <extension
+         id="cern.devtools.deps.query.joinProject"
+         point="org.eclipse.viatra2.emf.incquery.matcherfactory">
+      <matcher
+            factoryProvider="cern.devtools.deps.query.joinproject.JoinProjectMatcherFactory$Provider"
+            id="cern.devtools.deps.query.joinProject">
+      </matcher>
+   </extension>
+   <extension
+         id="cern.devtools.deps.query.joinClass"
+         point="org.eclipse.viatra2.emf.incquery.matcherfactory">
+      <matcher
+            factoryProvider="cern.devtools.deps.query.joinclass.JoinClassMatcherFactory$Provider"
+            id="cern.devtools.deps.query.joinClass">
+      </matcher>
+   </extension>
+   <extension
+         id="cern.devtools.deps.query.joinMethod"
+         point="org.eclipse.viatra2.emf.incquery.matcherfactory">
+      <matcher
+            factoryProvider="cern.devtools.deps.query.joinmethod.JoinMethodMatcherFactory$Provider"
+            id="cern.devtools.deps.query.joinMethod">
       </matcher>
    </extension>
 
