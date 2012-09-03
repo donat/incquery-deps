@@ -3,13 +3,16 @@ package cern.devtools.deps.query
 import "http://inf.mit.bme.hu/donat/incquery-deps/wsmodel"
 import "http://inf.mit.bme.hu/donat/incquery-deps/repomodel"
 
+// ----------------------------------------------------------------------------
+// Join queries
+// ----------------------------------------------------------------------------
 pattern joinProject(rp : RProject, wp : WProject) = {
 	RProject.name(rp, commonName);
 	WProject.name(wp, commonName);
 }
 
 pattern joinClass(rc : RClass, wc : WType) = {
-	// Join project.
+// Join project.
 	RProject.rClasses(rp, rc);
 	WProject.packageFragmentRoots.packageFragments.compilationUnits.types(wp, wc);
 	find joinProject(rp, wp);
@@ -25,8 +28,8 @@ pattern joinClass(rc : RClass, wc : WType) = {
 }
 
 pattern joinMethod(rm : RMethod, wm : WMethod) = {
-	// Join project.
-	RProject.rClasses.rMethods(rp, rm);	
+// Join project.
+	RProject.rClasses.rMethods(rp, rm);
 	WProject.packageFragmentRoots.packageFragments.compilationUnits.types.methods(wp, wm);
 	find joinProject(rp, wp);
 
@@ -35,16 +38,15 @@ pattern joinMethod(rm : RMethod, wm : WMethod) = {
 	// RClass.rMethods(rc, rm);
 	// WType.methods(wc, wm);
 	// find joinClass(rc, wc);
-	
+
 	// join methods by signature
 	RMethod.signature(rm, signature);
 	WMethod.signature(wm, signature);
 }
 
-
 pattern joinField(rm : RField, wm : WField) = {
-	// Join project.
-	RProject.rClasses.rFields(rp, rm);	
+// Join project.
+	RProject.rClasses.rFields(rp, rm);
 	WProject.packageFragmentRoots.packageFragments.compilationUnits.types.fields(wp, wm);
 	find joinProject(rp, wp);
 
@@ -53,49 +55,153 @@ pattern joinField(rm : RField, wm : WField) = {
 	// RClass.rMethods(rc, rm);
 	// WType.methods(wc, wm);
 	// find joinClass(rc, wc);
-	
+
 	// join methods by signature
 	RField.signature(rm, signature);
 	WField.signature(wm, signature);
 }
 
-
+// ----------------------------------------------------------------------------
+// Incoming dependency queries
+// ----------------------------------------------------------------------------
 pattern incomingInheritanceDeps(from : RClass, to : RClass, wsTo : WType) = {
-	// Find the correspondent items.
+// Find the correspondent items.
 	find joinClass(to, wsTo);
-	
+
 	// Join on dependencies.
 	RDependency.rFrom(d, from);
 	RDependency.rTo(d, to);
-	
+
 	// Select only inheritance dependencies.
-	RDependency.depType(d,5);
+	RDependency.depType(d, 5);
 }
 
 pattern incomingClassUsageDeps(from : RClass, to : RClass, wsTo : WType) = {
 	find joinClass(to, wsTo);
 	RDependency.rFrom(d, from);
 	RDependency.rTo(d, to);
-	RDependency.depType(d,4);
+	RDependency.depType(d, 4);
 }
 
-pattern incomingMethodCallDeps(from : RMethod , to : RMethod, wsTo : WMethod) = {
+pattern
+incomingMethodCallDeps(from : RMethod, to : RMethod, wsTo : WMethod) = {
 	find joinMethod(to, wsTo);
 	RDependency.rFrom(d, from);
 	RDependency.rTo(d, to);
-	RDependency.depType(d,1);
+	RDependency.depType(d, 1);
 }
 
-pattern incomingMethodOverrideDeps(from : RMethod , to : RMethod, wsTo : WMethod) = {
+pattern
+incomingMethodOverrideDeps(from : RMethod, to : RMethod, wsTo : WMethod) = {
 	find joinMethod(to, wsTo);
 	RDependency.rFrom(d, from);
 	RDependency.rTo(d, to);
-	RDependency.depType(d,2);
+	RDependency.depType(d, 2);
 }
 
-pattern incomingFieldAccessDeps(from : RMethod , to : RField, wsTo : WField) = {
+pattern
+incomingFieldAccessDeps(from : RMethod, to : RField, wsTo : WField) = {
 	find joinField(to, wsTo);
 	RDependency.rFrom(d, from);
 	RDependency.rTo(d, to);
-	RDependency.depType(d,3);
+	RDependency.depType(d, 3);
 }
+
+// ----------------------------------------------------------------------------
+// Delta queries
+// ----------------------------------------------------------------------------
+pattern addedClasses(c : WType) = {
+	WPackageFragment.compilationUnits.types(p, c);
+	WPackageFragment.name(p, packageName);
+	WType.name(c, simpleName);
+	WProject.packageFragmentRoots.packageFragments.compilationUnits.types(wp, c);
+	// same project
+	find joinProject(rp, wp);
+	// but the class does not exist in the workspace
+	neg find repoClassNameAndPackageName(rp, packageName, simpleName);
+}
+
+pattern removedClasses(c : RClass) = {
+	RClass.simpleName(c, simpleName);
+	RClass.packageName(c, packageName);
+	RProject.rClasses(rp, c);
+
+	// same project
+	find joinProject(rp, wp);
+
+	// but the workspace does not contain the class stored in the project
+	neg find workspaceClassnameAndPackageName(wp, packageName, simpleName);
+}
+
+pattern addedMethods(c : WMethod) = {
+	WMethod.signature(c, signature);
+	WProject.packageFragmentRoots.packageFragments.compilationUnits.types.methods(p, c);
+
+	//same project
+	find joinProject(rp, p);
+	neg find repoMethodSignatures(rp, signature);
+}
+
+pattern removedMethod(m : RMethod) = {
+	RMethod.signature(m, signature);
+	RProject.rClasses.rMethods(rp, m);
+	
+	find joinProject(rp, wp);
+	neg find workspaceMethodSignatures(wp, signature);
+	
+	check (!signature.contains("<clinit>"));
+}
+
+pattern addedFields(f : WField) = {
+	WField.signature(f, signature);
+	WProject.packageFragmentRoots.packageFragments.compilationUnits.types.fields(p, f);
+
+	//same project
+	find joinProject(rp, p);
+	neg find repoFieldSignatures(rp, signature);
+}
+
+pattern removedFields(f : RField) = {
+	RField.signature(f, signature);
+	RProject.rClasses.rFields(rp, f);
+	
+	find joinProject(rp, wp);
+	neg find workspaceFieldSignatures(wp, signature);
+}
+
+
+pattern workspaceClassnameAndPackageName(wp, packageName, simpleName) = {
+	WType(c);
+	WProject.packageFragmentRoots.packageFragments.compilationUnits.types(wp, c);
+	WPackageFragment.compilationUnits.types(p, c);
+	WPackageFragment.name(p, packageName);
+	WType.name(c, simpleName);
+}
+
+pattern repoClassNameAndPackageName(rp, packageName, simpleName) = {
+	RProject.rClasses(rp, rc);
+	RClass(rc);
+	RClass.packageName(rc, packageName);
+	RClass.simpleName(rc, simpleName);
+}
+
+pattern repoMethodSignatures(rp, signature) = {
+	RProject(rp);
+	RProject.rClasses.rMethods.signature(rp, signature);
+}
+
+pattern workspaceMethodSignatures(wp, signature) = {
+	WProject(wp);
+	WProject.packageFragmentRoots.packageFragments.compilationUnits.types.methods.signature(wp, signature);
+}
+
+pattern repoFieldSignatures(rp, signature) = {
+	RProject(rp);
+	RProject.rClasses.rFields.signature(rp, signature);
+}
+
+pattern workspaceFieldSignatures(wp, signature) = {
+	WProject(wp);
+	WProject.packageFragmentRoots.packageFragments.compilationUnits.types.fields.signature(wp, signature);
+}
+
