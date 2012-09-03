@@ -162,6 +162,10 @@
   <children xmi:type="notation:Node" xmi:id="_1tKKx_NJEeG4rfs0cqx5SQ" type="1001">
     <children xmi:type="notation:Node" xmi:id="_1tKKyvNJEeG4rfs0cqx5SQ" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_1tKKy_NJEeG4rfs0cqx5SQ" type="5001">
+      <children xmi:type="notation:Node" xmi:id="_-5DX4PXNEeGku-uzDgh8Pg" type="2001">
+        <element xmi:type="ecore:EAttribute" href="wsmodel.ecore#//WField/signature"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_-5DX4fXNEeGku-uzDgh8Pg"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_1tKKzPNJEeG4rfs0cqx5SQ"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_1tKKzfNJEeG4rfs0cqx5SQ"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_1tKKzvNJEeG4rfs0cqx5SQ"/>

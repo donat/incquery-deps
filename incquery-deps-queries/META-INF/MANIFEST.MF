@@ -3,7 +3,13 @@ Bundle-ManifestVersion: 2
 Bundle-Name: modelfinder.incquery
 Bundle-SymbolicName: modelfinder.incquery;singleton:=true
 Bundle-Version: 0.0.1.qualifier
-Export-Package: cern.devtools.deps.query.joinclass,
+Export-Package: cern.devtools.deps.query.incomingclassusagedeps,
+ cern.devtools.deps.query.incomingfieldaccessdeps,
+ cern.devtools.deps.query.incominginheritancedeps,
+ cern.devtools.deps.query.incomingmethodcalldeps,
+ cern.devtools.deps.query.incomingmethodoverridedeps,
+ cern.devtools.deps.query.joinclass,
+ cern.devtools.deps.query.joinfield,
  cern.devtools.deps.query.joinmethod,
  cern.devtools.deps.query.joinproject
 Require-Bundle: org.eclipse.pde.core,

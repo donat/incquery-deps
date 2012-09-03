@@ -4,7 +4,6 @@ package hu.bme.incquery.deps.wsmodel.provider;
 
 
 import hu.bme.incquery.deps.internal.WsmodelEditPlugin;
-
 import hu.bme.incquery.deps.wsmodel.WDependency;
 import hu.bme.incquery.deps.wsmodel.WDependencyType;
 import hu.bme.incquery.deps.wsmodel.WsmodelPackage;
@@ -14,9 +13,7 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -151,15 +148,18 @@ public class WDependencyItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
-		WDependencyType labelValue = ((WDependency)object).getType();
-		String label = labelValue == null ? null : labelValue.toString();
-		return label == null || label.length() == 0 ?
-			getString("_UI_WDependency_type") :
-			getString("_UI_WDependency_type") + " " + label;
+		WDependency  dep = ((WDependency)object);
+		return String.format("%s from=%s, to=%s", dep.getType().getLiteral(),dep.getFrom().toString(), dep.getTo().toString());
+		
+//		WDependencyType labelValue = ((WDependency)object).getType();
+//		String label = labelValue == null ? null : labelValue.toString();
+//		return label == null || label.length() == 0 ?
+//			getString("_UI_WDependency_type") :
+//			getString("_UI_WDependency_type") + " " + label;
 	}
 
 	/**

@@ -40,3 +40,62 @@ pattern joinMethod(rm : RMethod, wm : WMethod) = {
 	RMethod.signature(rm, signature);
 	WMethod.signature(wm, signature);
 }
+
+
+pattern joinField(rm : RField, wm : WField) = {
+	// Join project.
+	RProject.rClasses.rFields(rp, rm);	
+	WProject.packageFragmentRoots.packageFragments.compilationUnits.types.fields(wp, wm);
+	find joinProject(rp, wp);
+
+	// Join classes.
+	// There is no need for it: signature contains the fully qualified names.
+	// RClass.rMethods(rc, rm);
+	// WType.methods(wc, wm);
+	// find joinClass(rc, wc);
+	
+	// join methods by signature
+	RField.signature(rm, signature);
+	WField.signature(wm, signature);
+}
+
+
+pattern incomingInheritanceDeps(from : RClass, to : RClass, wsTo : WType) = {
+	// Find the correspondent items.
+	find joinClass(to, wsTo);
+	
+	// Join on dependencies.
+	RDependency.rFrom(d, from);
+	RDependency.rTo(d, to);
+	
+	// Select only inheritance dependencies.
+	RDependency.depType(d,5);
+}
+
+pattern incomingClassUsageDeps(from : RClass, to : RClass, wsTo : WType) = {
+	find joinClass(to, wsTo);
+	RDependency.rFrom(d, from);
+	RDependency.rTo(d, to);
+	RDependency.depType(d,4);
+}
+
+pattern incomingMethodCallDeps(from : RMethod , to : RMethod, wsTo : WMethod) = {
+	find joinMethod(to, wsTo);
+	RDependency.rFrom(d, from);
+	RDependency.rTo(d, to);
+	RDependency.depType(d,1);
+}
+
+pattern incomingMethodOverrideDeps(from : RMethod , to : RMethod, wsTo : WMethod) = {
+	find joinMethod(to, wsTo);
+	RDependency.rFrom(d, from);
+	RDependency.rTo(d, to);
+	RDependency.depType(d,2);
+}
+
+pattern incomingFieldAccessDeps(from : RMethod , to : RField, wsTo : WField) = {
+	find joinField(to, wsTo);
+	RDependency.rFrom(d, from);
+	RDependency.rTo(d, to);
+	RDependency.depType(d,3);
+}

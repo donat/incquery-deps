@@ -24,12 +24,32 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * The following features are implemented:
  * <ul>
  *   <li>{@link hu.bme.incquery.deps.wsmodel.impl.WFieldImpl#getType <em>Type</em>}</li>
+ *   <li>{@link hu.bme.incquery.deps.wsmodel.impl.WFieldImpl#getSignature <em>Signature</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
 public class WFieldImpl extends WNamedElementImpl implements WField {
+	/**
+	 * The default value of the '{@link #getSignature() <em>Signature</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSignature()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String SIGNATURE_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getSignature() <em>Signature</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSignature()
+	 * @generated
+	 * @ordered
+	 */
+	protected String signature = SIGNATURE_EDEFAULT;
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -95,6 +115,27 @@ public class WFieldImpl extends WNamedElementImpl implements WField {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getSignature() {
+		return signature;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setSignature(String newSignature) {
+		String oldSignature = signature;
+		signature = newSignature;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, WsmodelPackage.WFIELD__SIGNATURE, oldSignature, signature));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -144,6 +185,8 @@ public class WFieldImpl extends WNamedElementImpl implements WField {
 		switch (featureID) {
 			case WsmodelPackage.WFIELD__TYPE:
 				return getType();
+			case WsmodelPackage.WFIELD__SIGNATURE:
+				return getSignature();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -158,6 +201,9 @@ public class WFieldImpl extends WNamedElementImpl implements WField {
 		switch (featureID) {
 			case WsmodelPackage.WFIELD__TYPE:
 				setType((WType)newValue);
+				return;
+			case WsmodelPackage.WFIELD__SIGNATURE:
+				setSignature((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -174,6 +220,9 @@ public class WFieldImpl extends WNamedElementImpl implements WField {
 			case WsmodelPackage.WFIELD__TYPE:
 				setType((WType)null);
 				return;
+			case WsmodelPackage.WFIELD__SIGNATURE:
+				setSignature(SIGNATURE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -188,6 +237,8 @@ public class WFieldImpl extends WNamedElementImpl implements WField {
 		switch (featureID) {
 			case WsmodelPackage.WFIELD__TYPE:
 				return getType() != null;
+			case WsmodelPackage.WFIELD__SIGNATURE:
+				return SIGNATURE_EDEFAULT == null ? signature != null : !SIGNATURE_EDEFAULT.equals(signature);
 		}
 		return super.eIsSet(featureID);
 	}

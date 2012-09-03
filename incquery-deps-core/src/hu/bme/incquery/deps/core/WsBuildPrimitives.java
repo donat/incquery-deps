@@ -8,6 +8,7 @@ package hu.bme.incquery.deps.core;
 
 import hu.bme.incquery.deps.wsmodel.WDependency;
 import hu.bme.incquery.deps.wsmodel.WDependencyType;
+import hu.bme.incquery.deps.wsmodel.WField;
 import hu.bme.incquery.deps.wsmodel.WMethod;
 import hu.bme.incquery.deps.wsmodel.WNamedElement;
 import hu.bme.incquery.deps.wsmodel.WProject;
@@ -76,6 +77,7 @@ public class WsBuildPrimitives {
 			}
 		} else if (jdtItem instanceof IField) {
 			elem = WsmodelFactory.eINSTANCE.createWField();
+			((WField)elem).setSignature(JdtUtils.fullyQualify(((IField)jdtItem)));
 		} else {
 			throw new RuntimeException("Unsupported type");
 		}

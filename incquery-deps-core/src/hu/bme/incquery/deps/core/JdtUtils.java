@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IField;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IType;
@@ -72,6 +73,10 @@ public final class JdtUtils {
 
 		//System.out.println(result);
 		return result;
+	}
+	
+	public static String fullyQualify(IField el) {
+		return fullyQualify((IType) el.getParent()) + "." + el.getElementName();
 	}
 
 	public static String decodeSourceSignature(IMethod method) {

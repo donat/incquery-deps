@@ -482,6 +482,15 @@ public class WsmodelPackageImpl extends EPackageImpl implements WsmodelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getWField_Signature() {
+		return (EAttribute)wFieldEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getWDependencyType() {
 		return wDependencyTypeEEnum;
 	}
@@ -557,6 +566,7 @@ public class WsmodelPackageImpl extends EPackageImpl implements WsmodelPackage {
 
 		wFieldEClass = createEClass(WFIELD);
 		createEReference(wFieldEClass, WFIELD__TYPE);
+		createEAttribute(wFieldEClass, WFIELD__SIGNATURE);
 
 		// Create enums
 		wDependencyTypeEEnum = createEEnum(WDEPENDENCY_TYPE);
@@ -656,6 +666,7 @@ public class WsmodelPackageImpl extends EPackageImpl implements WsmodelPackage {
 
 		initEClass(wFieldEClass, WField.class, "WField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getWField_Type(), this.getWType(), this.getWType_Fields(), "type", null, 0, 1, WField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getWField_Signature(), ecorePackage.getEString(), "signature", null, 0, 1, WField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(wDependencyTypeEEnum, WDependencyType.class, "WDependencyType");
