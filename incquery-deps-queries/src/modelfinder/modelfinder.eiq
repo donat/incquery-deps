@@ -9,7 +9,7 @@ import "http://inf.mit.bme.hu/donat/incquery-deps/repomodel"
 pattern joinProject(rp : RProject, wp : WProject) = {
 	RProject.name(rp, commonName);
 	WProject.name(wp, commonName);
-}
+} 
 
 pattern joinClass(rc : RClass, wc : WType) = {
 // Join project.
