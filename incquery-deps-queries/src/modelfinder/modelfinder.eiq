@@ -170,7 +170,7 @@ pattern removedFields(f : RField) = {
 }
 
 
-pattern workspaceClassnameAndPackageName(wp, packageName, simpleName) = {
+private pattern workspaceClassnameAndPackageName(wp, packageName, simpleName) = {
 	WType(c);
 	WProject.packageFragmentRoots.packageFragments.compilationUnits.types(wp, c);
 	WPackageFragment.compilationUnits.types(p, c);
@@ -178,29 +178,29 @@ pattern workspaceClassnameAndPackageName(wp, packageName, simpleName) = {
 	WType.name(c, simpleName);
 }
 
-pattern repoClassNameAndPackageName(rp, packageName, simpleName) = {
+private pattern repoClassNameAndPackageName(rp, packageName, simpleName) = {
 	RProject.rClasses(rp, rc);
 	RClass(rc);
 	RClass.packageName(rc, packageName);
 	RClass.simpleName(rc, simpleName);
 }
 
-pattern repoMethodSignatures(rp, signature) = {
+private pattern repoMethodSignatures(rp, signature) = {
 	RProject(rp);
 	RProject.rClasses.rMethods.signature(rp, signature);
 }
 
-pattern workspaceMethodSignatures(wp, signature) = {
+private pattern workspaceMethodSignatures(wp, signature) = {
 	WProject(wp);
 	WProject.packageFragmentRoots.packageFragments.compilationUnits.types.methods.signature(wp, signature);
 }
 
-pattern repoFieldSignatures(rp, signature) = {
+private pattern repoFieldSignatures(rp, signature) = {
 	RProject(rp);
 	RProject.rClasses.rFields.signature(rp, signature);
 }
 
-pattern workspaceFieldSignatures(wp, signature) = {
+private pattern workspaceFieldSignatures(wp, signature) = {
 	WProject(wp);
 	WProject.packageFragmentRoots.packageFragments.compilationUnits.types.fields.signature(wp, signature);
 }
