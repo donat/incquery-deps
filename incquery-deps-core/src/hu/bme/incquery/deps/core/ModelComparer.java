@@ -49,11 +49,15 @@ public class ModelComparer {
 	}
 
 	private void findAndApplyChanges(IJavaElementDelta delta2) {
+		
 		// Leave out every delta which does not belong to the traced projects.
 		if (delta2.getElement().getJavaProject() != null
 				&& !Activator.getDefault().getWsService().isTracedProject(delta2.getElement().getJavaProject())) {
 			return;
 		}
+		
+		if (delta2.getElement().getJavaProject() != null)
+			System.out.println(">>>" + delta2.getElement().getJavaProject().getElementName());
 
 		switch (delta2.getKind()) {
 		case IJavaElementDelta.ADDED:
@@ -133,7 +137,9 @@ public class ModelComparer {
 
 			Set<IJavaProject> projects = new HashSet<IJavaProject>();
 			for (IJavaElementDelta child : delta.getAffectedChildren()) {
-				projects.add(child.getElement().getJavaProject());
+				if (Activator.getDefault().getWsService().isTracedProject(delta.getElement().getJavaProject())) {
+					projects.add(child.getElement().getJavaProject());	
+				}
 			}
 
 			for (IJavaProject project : projects) {

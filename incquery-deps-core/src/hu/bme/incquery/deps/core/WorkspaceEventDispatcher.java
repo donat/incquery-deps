@@ -101,6 +101,7 @@ public class WorkspaceEventDispatcher implements IElementChangedListener {
 			return;
 		}
 		if ((delta.getElement() instanceof IJavaModel)) {
+			
 			try {
 				// Handle delta.
 				builder.updateWorkspaceModel(delta);

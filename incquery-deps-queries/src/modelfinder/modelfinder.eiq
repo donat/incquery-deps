@@ -9,7 +9,7 @@ import "http://inf.mit.bme.hu/donat/incquery-deps/repomodel"
 pattern joinProject(rp : RProject, wp : WProject) = {
 	RProject.name(rp, commonName);
 	WProject.name(wp, commonName);
-} 
+}
 
 pattern joinClass(rc : RClass, wc : WType) = {
 // Join project.
@@ -42,7 +42,7 @@ pattern joinMethod(rm : RMethod, wm : WMethod) = {
 	// join methods by signature
 	RMethod.signature(rm, signature);
 	WMethod.signature(wm, signature);
-}
+} 
 
 pattern joinField(rm : RField, wm : WField) = {
 // Join project.
@@ -120,7 +120,7 @@ pattern addedClasses(c : WType) = {
 	// but the class does not exist in the workspace
 	neg find repoClassNameAndPackageName(rp, packageName, simpleName);
 }
-
+ 
 pattern removedClasses(c : RClass) = {
 	RClass.simpleName(c, simpleName);
 	RClass.packageName(c, packageName);
@@ -145,11 +145,11 @@ pattern addedMethods(c : WMethod) = {
 pattern removedMethod(m : RMethod) = {
 	RMethod.signature(m, signature);
 	RProject.rClasses.rMethods(rp, m);
-	
+
 	find joinProject(rp, wp);
 	neg find workspaceMethodSignatures(wp, signature);
-	
-	check (!signature.contains("<clinit>"));
+
+	check(! signature.contains("<clinit>"));
 }
 
 pattern addedFields(f : WField) = {
@@ -164,13 +164,13 @@ pattern addedFields(f : WField) = {
 pattern removedFields(f : RField) = {
 	RField.signature(f, signature);
 	RProject.rClasses.rFields(rp, f);
-	
+
 	find joinProject(rp, wp);
 	neg find workspaceFieldSignatures(wp, signature);
 }
 
-
-private pattern workspaceClassnameAndPackageName(wp, packageName, simpleName) = {
+private pattern
+workspaceClassnameAndPackageName(wp, packageName, simpleName) = {
 	WType(c);
 	WProject.packageFragmentRoots.packageFragments.compilationUnits.types(wp, c);
 	WPackageFragment.compilationUnits.types(p, c);
