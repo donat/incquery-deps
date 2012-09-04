@@ -43,19 +43,19 @@ public class ModelComparer {
 	}
 
 	private void doUpdate() {
-		wsAfterChanges = createNewModel();
+		wsAfterChanges = createModelOfModifiedProjects(delta);
 		buildNew = new WsBuildPrimitives(wsAfterChanges);
 		findAndApplyChanges(delta);
 	}
 
 	private void findAndApplyChanges(IJavaElementDelta delta2) {
-		
+
 		// Leave out every delta which does not belong to the traced projects.
 		if (delta2.getElement().getJavaProject() != null
 				&& !Activator.getDefault().getWsService().isTracedProject(delta2.getElement().getJavaProject())) {
 			return;
 		}
-		
+
 		if (delta2.getElement().getJavaProject() != null)
 			System.out.println(">>>" + delta2.getElement().getJavaProject().getElementName());
 
@@ -67,7 +67,7 @@ public class ModelComparer {
 			removeElement(delta2);
 			break;
 		case IJavaElementDelta.CHANGED:
-			if (delta2.getElement() instanceof ICompilationUnit) {
+			if (delta2.getElement() instanceof ICompilationUnit && (delta2.getFlags() & IJavaElementDelta.F_PRIMARY_RESOURCE) != 0) {
 				refreshCompilationUnit((ICompilationUnit) delta2.getElement());
 			} else {
 				for (IJavaElementDelta child : delta2.getAffectedChildren()) {
@@ -78,6 +78,22 @@ public class ModelComparer {
 		default:
 			break;
 		}
+	}
+
+	private boolean updateShouldBeProcessed(IJavaElementDelta delta) {
+		if (delta.getElement().getElementType() == IJavaElement.COMPILATION_UNIT
+				&& (delta.getFlags() & IJavaElementDelta.F_PRIMARY_RESOURCE) != 0) {
+			return true;
+		}
+
+		boolean result = false;
+
+		for (IJavaElementDelta child : delta.getAffectedChildren()) {
+			result |= updateShouldBeProcessed(child);
+		}
+
+		return result;
+
 	}
 
 	@SuppressWarnings("unchecked")
@@ -107,13 +123,12 @@ public class ModelComparer {
 			if (elem instanceof WType) {
 				IType type = (IType) JavaCore.create(elem.getHandler());
 				deps.addTypeToSearch(type);
-				
-			}
-			else if (elem instanceof WMethod) {
+
+			} else if (elem instanceof WMethod) {
 				IMethod method = (IMethod) JavaCore.create(elem.getHandler());
 				deps.addMethodToSearch(method);
 			}
-			
+
 			deps.execute();
 			updateChildrenDependenciesRecurive(elem.getChildren());
 		}
@@ -123,22 +138,21 @@ public class ModelComparer {
 		WNamedElement oldEmfCu = buildOld.findJdtElementInEmfModel(cu);
 		WNamedElement oldEmfParent = oldEmfCu.getParent();
 		WNamedElement newEmfCu = buildNew.findJdtElementInEmfModel(cu);
-		
-		
+
 		buildOld.removeNamedElementsRecursive(Arrays.asList(oldEmfCu));
 		buildOld.moveItemToNewParent(wsAfterChanges, oldEmfParent, newEmfCu);
-		updateChildrenDependenciesRecurive(Arrays.asList(newEmfCu));	
+		updateChildrenDependenciesRecurive(Arrays.asList(newEmfCu));
 	}
 
-	private WWorkspace createNewModel() {
+	private static WWorkspace createModelOfModifiedProjects(IJavaElementDelta javaModelDelta) {
 		try {
 			WWorkspace wsAfterChanges = WsmodelFactory.eINSTANCE.createWWorkspace();
 			WsBuildPrimitives buildPrimitives = new WsBuildPrimitives(wsAfterChanges);
 
 			Set<IJavaProject> projects = new HashSet<IJavaProject>();
-			for (IJavaElementDelta child : delta.getAffectedChildren()) {
-				if (Activator.getDefault().getWsService().isTracedProject(delta.getElement().getJavaProject())) {
-					projects.add(child.getElement().getJavaProject());	
+			for (IJavaElementDelta child : javaModelDelta.getAffectedChildren()) {
+				if (Activator.getDefault().getWsService().isTracedProject(child.getElement().getJavaProject())) {
+					projects.add(child.getElement().getJavaProject());
 				}
 			}
 
@@ -169,7 +183,7 @@ public class ModelComparer {
 		}
 	}
 
-	private void addType(WNamedElement emfCu, IType t, WsBuildPrimitives buildPrimitives) throws JavaModelException {
+	private static void addType(WNamedElement emfCu, IType t, WsBuildPrimitives buildPrimitives) throws JavaModelException {
 		WNamedElement emfType = buildPrimitives.addNamedElement(emfCu, t);
 		for (IType innerType : t.getTypes()) {
 			addType(emfCu, innerType, buildPrimitives);
@@ -184,5 +198,4 @@ public class ModelComparer {
 		}
 	}
 
-	
 }
