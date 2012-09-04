@@ -107,14 +107,16 @@ public class WPackageFragmentItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((WPackageFragment)object).getName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_WPackageFragment_type") :
-			getString("_UI_WPackageFragment_type") + " " + label;
+		String name = ((WPackageFragment)object).getName();
+		return name.equals("") ? "<default>" : name;
+//		String label = ((WPackageFragment)object).getName();
+//		return label == null || label.length() == 0 ?
+//			getString("_UI_WPackageFragment_type") :
+//			getString("_UI_WPackageFragment_type") + " " + label;
 	}
 
 	/**

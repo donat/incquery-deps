@@ -5,7 +5,9 @@ package hu.bme.incquery.deps.wsmodel.provider;
 
 import hu.bme.incquery.deps.internal.WsmodelEditPlugin;
 import hu.bme.incquery.deps.wsmodel.WDependency;
-import hu.bme.incquery.deps.wsmodel.WDependencyType;
+import hu.bme.incquery.deps.wsmodel.WMethod;
+import hu.bme.incquery.deps.wsmodel.WNamedElement;
+import hu.bme.incquery.deps.wsmodel.WPackageFragment;
 import hu.bme.incquery.deps.wsmodel.WsmodelPackage;
 
 import java.util.Collection;
@@ -153,13 +155,32 @@ public class WDependencyItemProvider
 	@Override
 	public String getText(Object object) {
 		WDependency  dep = ((WDependency)object);
-		return String.format("%s from=%s, to=%s", dep.getType().getLiteral(),dep.getFrom().toString(), dep.getTo().toString());
+		
+		String from = getFormattedText(dep.getFrom());
+		String to = getFormattedText(dep.getTo());
+		return String.format("%s from=%s, to=%s", dep.getType().getLiteral(), from, to);
 		
 //		WDependencyType labelValue = ((WDependency)object).getType();
 //		String label = labelValue == null ? null : labelValue.toString();
 //		return label == null || label.length() == 0 ?
 //			getString("_UI_WDependency_type") :
 //			getString("_UI_WDependency_type") + " " + label;
+	}
+
+	/**
+	 * @generated NOT
+	 * @param from
+	 * @return
+	 */
+	private String getFormattedText(WNamedElement from) {
+		String result = from.getName();
+		if (from instanceof WPackageFragment && result.equals("")) {
+			return "<default>";
+		}
+		else if (from instanceof WMethod) {
+			return (result + "()"); 
+		}
+		return result;
 	}
 
 	/**

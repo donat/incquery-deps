@@ -56,9 +56,6 @@ public class ModelComparer {
 			return;
 		}
 
-		if (delta2.getElement().getJavaProject() != null)
-			System.out.println(">>>" + delta2.getElement().getJavaProject().getElementName());
-
 		switch (delta2.getKind()) {
 		case IJavaElementDelta.ADDED:
 			addElement(delta2);
@@ -78,22 +75,6 @@ public class ModelComparer {
 		default:
 			break;
 		}
-	}
-
-	private boolean updateShouldBeProcessed(IJavaElementDelta delta) {
-		if (delta.getElement().getElementType() == IJavaElement.COMPILATION_UNIT
-				&& (delta.getFlags() & IJavaElementDelta.F_PRIMARY_RESOURCE) != 0) {
-			return true;
-		}
-
-		boolean result = false;
-
-		for (IJavaElementDelta child : delta.getAffectedChildren()) {
-			result |= updateShouldBeProcessed(child);
-		}
-
-		return result;
-
 	}
 
 	@SuppressWarnings("unchecked")
