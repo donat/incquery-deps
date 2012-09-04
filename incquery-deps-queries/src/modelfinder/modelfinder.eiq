@@ -2,6 +2,7 @@ package cern.devtools.deps.query
 
 import "http://inf.mit.bme.hu/donat/incquery-deps/wsmodel"
 import "http://inf.mit.bme.hu/donat/incquery-deps/repomodel"
+import "http://www.eclipse.org/emf/2002/Ecore"
 
 // ----------------------------------------------------------------------------
 // Join queries
@@ -42,7 +43,7 @@ pattern joinMethod(rm : RMethod, wm : WMethod) = {
 	// join methods by signature
 	RMethod.signature(rm, signature);
 	WMethod.signature(wm, signature);
-} 
+}
 
 pattern joinField(rm : RField, wm : WField) = {
 // Join project.
@@ -56,7 +57,7 @@ pattern joinField(rm : RField, wm : WField) = {
 	// WType.methods(wc, wm);
 	// find joinClass(rc, wc);
 
-	// join methods by signature
+	// join methods by signature 
 	RField.signature(rm, signature);
 	WField.signature(wm, signature);
 }
@@ -120,7 +121,7 @@ pattern addedClasses(c : WType) = {
 	// but the class does not exist in the workspace
 	neg find repoClassNameAndPackageName(rp, packageName, simpleName);
 }
- 
+
 pattern removedClasses(c : RClass) = {
 	RClass.simpleName(c, simpleName);
 	RClass.packageName(c, packageName);
@@ -204,4 +205,47 @@ private pattern workspaceFieldSignatures(wp, signature) = {
 	WProject(wp);
 	WProject.packageFragmentRoots.packageFragments.compilationUnits.types.fields.signature(wp, signature);
 }
+
+// ----------------------------------------------------------------------------
+// Impact
+// ----------------------------------------------------------------------------
+pattern impactCausedByRemovedFields(from : RMethod, to : RField) = {
+	find removedFields(to);
+	RDependency.rFrom(d, from);
+	RDependency.rTo(d, to);
+	RDependency.depType(d, 3);
+}
+
+pattern impactCausedByRemovedMethods(from: RMethod, to : RMethod) = {
+	// method call.
+	find removedMethod(to);
+	RDependency.rFrom(d, from);
+	RDependency.rTo(d, to);
+	RDependency.depType(d, 1);
+} or {
+	// or method override
+	find removedMethod(to);
+	RDependency.rFrom(d, from);
+	RDependency.rTo(d, to);
+	RDependency.depType(d, 2);
+}
+
+pattern impactCausedByRemovedClasses(from : RClass, to : RClass) = {
+	// class usage.
+	find removedClasses(to);
+	RDependency.rFrom(d, from);
+	RDependency.rTo(d, to);
+	RDependency.depType(d, 4);
+} 
+or {
+	// or inheritance
+	find removedClasses(to);
+	RDependency.rFrom(d, from);
+	RDependency.rTo(d, to);
+	RDependency.depType(d, 5);
+}
+
+
+
+
 
