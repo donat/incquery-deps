@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: incquery-deps-domain-ext
+Bundle-SymbolicName: hu.bme.incquery.deps.repomodel;singleton:=true
+Bundle-Version: 1.0.0.dev
+Bundle-Activator: hu.bme.incquery.deps.internal.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.emf.ecore;bundle-version="2.8.0"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: hu.bme.incquery.deps.repomodel,
+ hu.bme.incquery.deps.repomodel.impl,
+ hu.bme.incquery.deps.repomodel.util

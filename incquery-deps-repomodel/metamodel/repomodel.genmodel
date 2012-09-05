@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/incquery-deps-repomodel/src" modelPluginID="hu.bme.incquery.deps.repomodel"
+    modelName="Repomodel-incquery" modelPluginClass="" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="6.0" copyrightFields="false">
+  <foreignModel>repomodel.ecore</foreignModel>
+  <genPackages prefix="Repomodel" basePackage="hu.bme.incquery.deps" disposableProviderFactory="true"
+      ecorePackage="repomodel.ecore#/">
+    <genClasses image="false" ecoreClass="repomodel.ecore#//RRepositoryItem">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute repomodel.ecore#//RRepositoryItem/uuid"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="repomodel.ecore#//RCodeElement">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference repomodel.ecore#//RCodeElement/rIncoming"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference repomodel.ecore#//RCodeElement/rOutgoing"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute repomodel.ecore#//RCodeElement/versions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute repomodel.ecore#//RCodeElement/id"/>
+      <genOperations ecoreOperation="repomodel.ecore#//RCodeElement/getDisplayName"/>
+    </genClasses>
+    <genClasses ecoreClass="repomodel.ecore#//RProject">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute repomodel.ecore#//RProject/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference repomodel.ecore#//RProject/rClasses"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute repomodel.ecore#//RProject/containingFolders"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute repomodel.ecore#//RProject/productPath"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute repomodel.ecore#//RProject/storeLocation"/>
+    </genClasses>
+    <genClasses ecoreClass="repomodel.ecore#//RClass">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute repomodel.ecore#//RClass/simpleName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute repomodel.ecore#//RClass/packageName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference repomodel.ecore#//RClass/rMethods"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference repomodel.ecore#//RClass/rFields"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference repomodel.ecore#//RClass/rProject"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute repomodel.ecore#//RClass/extends"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute repomodel.ecore#//RClass/implements"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute repomodel.ecore#//RClass/private"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute repomodel.ecore#//RClass/anonymous"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute repomodel.ecore#//RClass/referencedClasses"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute repomodel.ecore#//RClass/fqName"/>
+      <genOperations ecoreOperation="repomodel.ecore#//RClass/getSourcePath"/>
+    </genClasses>
+    <genClasses ecoreClass="repomodel.ecore#//RMethod">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute repomodel.ecore#//RMethod/signature"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference repomodel.ecore#//RMethod/rClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute repomodel.ecore#//RMethod/private"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute repomodel.ecore#//RMethod/referencedFields"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute repomodel.ecore#//RMethod/referencedMethods"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute repomodel.ecore#//RMethod/static"/>
+    </genClasses>
+    <genClasses ecoreClass="repomodel.ecore#//RField">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute repomodel.ecore#//RField/signature"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference repomodel.ecore#//RField/rClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute repomodel.ecore#//RField/private"/>
+    </genClasses>
+    <genClasses ecoreClass="repomodel.ecore#//RDependency">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference repomodel.ecore#//RDependency/rFrom"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference repomodel.ecore#//RDependency/rTo"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute repomodel.ecore#//RDependency/depType"/>
+    </genClasses>
+    <genClasses ecoreClass="repomodel.ecore#//RRepository">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference repomodel.ecore#//RRepository/rDependencies"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference repomodel.ecore#//RRepository/rProjects"/>
+    </genClasses>
+    <genClasses ecoreClass="repomodel.ecore#//RTransitiveDependency">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference repomodel.ecore#//RTransitiveDependency/rTtransitiveFrom"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
