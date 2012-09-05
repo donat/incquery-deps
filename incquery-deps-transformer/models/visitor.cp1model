@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ASCII"?>
+<cp1:CP1Repository xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:cp1="http://inf.mit.bme.hu/donat/incquery-deps/cp1model">
+  <projects id="1" name="devtools-deps-example-service">
+    <classes id="2" extends="" implements="cern.devtools.depanalysis.example.service.VisitableNumber" simpleName="ComplexNumber" packageName="cern.devtools.depanalysis.example.service">
+      <methods id="3" signature="cern.devtools.depanalysis.example.service.ComplexNumber#ComplexNumber(float,float):void"/>
+      <methods id="4" signature="cern.devtools.depanalysis.example.service.ComplexNumber#getIm():float"/>
+      <methods id="5" signature="cern.devtools.depanalysis.example.service.ComplexNumber#setIm(float):void"/>
+      <methods id="6" signature="cern.devtools.depanalysis.example.service.ComplexNumber#getRe():float"/>
+      <methods id="7" signature="cern.devtools.depanalysis.example.service.ComplexNumber#setRe(float):void"/>
+      <methods id="8" signature="cern.devtools.depanalysis.example.service.ComplexNumber#accept(cern.devtools.depanalysis.example.service.NumberVisitor):void"/>
+      <fields id="9" signature="cern.devtools.depanalysis.example.service.ComplexNumber.im"/>
+      <fields id="10" signature="cern.devtools.depanalysis.example.service.ComplexNumber.re"/>
+    </classes>
+    <classes id="11" extends="" implements="" simpleName="NumberCrunchingService" packageName="cern.devtools.depanalysis.example.service">
+      <methods id="12" signature="cern.devtools.depanalysis.example.service.NumberCrunchingService#&lt;clinit>():void"/>
+      <methods id="13" signature="cern.devtools.depanalysis.example.service.NumberCrunchingService#NumberCrunchingService():void"/>
+      <methods id="14" signature="cern.devtools.depanalysis.example.service.NumberCrunchingService#registerVisitor(cern.devtools.depanalysis.example.service.NumberVisitor):void"/>
+      <methods id="15" signature="cern.devtools.depanalysis.example.service.NumberCrunchingService#startService():void"/>
+      <fields id="16" signature="cern.devtools.depanalysis.example.service.NumberCrunchingService.INSTANCE"/>
+      <fields id="17" signature="cern.devtools.depanalysis.example.service.NumberCrunchingService.visitors"/>
+    </classes>
+    <classes id="18" extends="" implements="" simpleName="VisitableNumber" packageName="cern.devtools.depanalysis.example.service">
+      <methods id="19" signature="cern.devtools.depanalysis.example.service.VisitableNumber#accept(cern.devtools.depanalysis.example.service.NumberVisitor):void"/>
+    </classes>
+    <classes id="20" extends="" implements="cern.devtools.depanalysis.example.service.VisitableNumber" simpleName="RealNumber" packageName="cern.devtools.depanalysis.example.service">
+      <methods id="21" signature="cern.devtools.depanalysis.example.service.RealNumber#RealNumber(float):void"/>
+      <methods id="22" signature="cern.devtools.depanalysis.example.service.RealNumber#getValue():float"/>
+      <methods id="23" signature="cern.devtools.depanalysis.example.service.RealNumber#setValue(float):void"/>
+      <methods id="24" signature="cern.devtools.depanalysis.example.service.RealNumber#accept(cern.devtools.depanalysis.example.service.NumberVisitor):void"/>
+      <fields id="25" signature="cern.devtools.depanalysis.example.service.RealNumber.value"/>
+    </classes>
+    <classes id="26" extends="" implements="" simpleName="NumberVisitor" packageName="cern.devtools.depanalysis.example.service">
+      <methods id="27" signature="cern.devtools.depanalysis.example.service.NumberVisitor#visit(cern.devtools.depanalysis.example.service.RealNumber):void"/>
+      <methods id="28" signature="cern.devtools.depanalysis.example.service.NumberVisitor#visit(cern.devtools.depanalysis.example.service.ComplexNumber):void"/>
+    </classes>
+    <classes id="29" extends="" implements="cern.devtools.depanalysis.example.service.NumberVisitor" simpleName="AbstractVisitor" packageName="cern.devtools.depanalysis.example.service">
+      <methods id="30" signature="cern.devtools.depanalysis.example.service.AbstractVisitor#AbstractVisitor():void"/>
+      <methods id="31" signature="cern.devtools.depanalysis.example.service.AbstractVisitor#visit(cern.devtools.depanalysis.example.service.RealNumber):void"/>
+      <methods id="32" signature="cern.devtools.depanalysis.example.service.AbstractVisitor#visit(cern.devtools.depanalysis.example.service.ComplexNumber):void"/>
+    </classes>
+  </projects>
+  <projects id="33" name="devtools-deps-example-impl">
+    <classes id="34" extends="cern.devtools.depanalysis.example.dependant.SumRealNumbersVisitor" implements="" simpleName="SubSubVisitor" packageName="cern.devtools.depanalysis.example.dependant">
+      <methods id="35" signature="cern.devtools.depanalysis.example.dependant.SubSubVisitor#SubSubVisitor():void"/>
+      <methods id="36" signature="cern.devtools.depanalysis.example.dependant.SubSubVisitor#visit(cern.devtools.depanalysis.example.service.ComplexNumber):void"/>
+      <methods id="37" signature="cern.devtools.depanalysis.example.dependant.SubSubVisitor#visit(cern.devtools.depanalysis.example.service.RealNumber):void"/>
+    </classes>
+    <classes id="38" extends="" implements="" simpleName="ServiceInitiator" packageName="cern.devtools.depanalysis.example.dependant">
+      <methods id="39" signature="cern.devtools.depanalysis.example.dependant.ServiceInitiator#ServiceInitiator():void"/>
+      <methods id="40" signature="cern.devtools.depanalysis.example.dependant.ServiceInitiator#main(java.lang.String[]):void"/>
+    </classes>
+    <classes id="41" extends="cern.devtools.depanalysis.example.service.AbstractVisitor" implements="cern.devtools.depanalysis.example.service.NumberVisitor" simpleName="SumRealNumbersVisitor" packageName="cern.devtools.depanalysis.example.dependant">
+      <methods id="42" signature="cern.devtools.depanalysis.example.dependant.SumRealNumbersVisitor#SumRealNumbersVisitor():void"/>
+      <methods id="43" signature="cern.devtools.depanalysis.example.dependant.SumRealNumbersVisitor#visit(cern.devtools.depanalysis.example.service.RealNumber):void"/>
+      <methods id="44" signature="cern.devtools.depanalysis.example.dependant.SumRealNumbersVisitor#visit(cern.devtools.depanalysis.example.service.ComplexNumber):void"/>
+      <methods id="45" signature="cern.devtools.depanalysis.example.dependant.SumRealNumbersVisitor#getResult():float"/>
+      <fields id="46" signature="cern.devtools.depanalysis.example.dependant.SumRealNumbersVisitor.sum"/>
+    </classes>
+  </projects>
+  <dependencies from="38" to="11" type="4"/>
+  <dependencies from="40" to="14" type="1"/>
+  <dependencies from="40" to="15" type="1"/>
+  <dependencies from="40" to="16" type="3"/>
+  <dependencies from="41" to="29" type="5"/>
+  <dependencies from="41" to="26" type="5"/>
+  <dependencies from="41" to="29" type="4"/>
+  <dependencies from="41" to="26" type="4"/>
+  <dependencies from="41" to="20" type="4"/>
+  <dependencies from="42" to="30" type="1"/>
+  <dependencies from="43" to="22" type="1"/>
+  <dependencies from="44" to="32" type="1"/>
+  <dependencies from="43" to="31" type="2"/>
+  <dependencies from="44" to="32" type="2"/>
+</cp1:CP1Repository>

@@ -3,7 +3,8 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="cp3model" nsURI="http://inf.mit.bme.hu/donat/incquery-deps/cp1model"
     nsPrefix="cp3">
   <eClassifiers xsi:type="ecore:EClass" name="CP3StElem">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"
+        iD="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="attr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EShort"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="sig" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ch" upperBound="-1" eType="#//CP3StElem"
