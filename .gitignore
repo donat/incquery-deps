@@ -1,7 +1,1 @@
-incquery-deps-core/bin/**/*
-incquery-deps-domain/bin/**/*
-incquery-deps-domain-edit/bin/**/*
-incquery-deps-domain-editor/bin/**/*
-incquery-deps-domain-ext/bin/**/*
-incquery-deps-queries/bin/**/*
-incquery-deps-ui/bin/**/*
+**/bin/**/*
