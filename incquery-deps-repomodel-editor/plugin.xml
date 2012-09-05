@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="hu.bme.incquery.deps.repomodel.presentation.RepomodelModelWizardID"
+            name="%_UI_RepomodelModelWizard_label"
+            class="hu.bme.incquery.deps.repomodel.presentation.RepomodelModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/RepomodelModelFile.gif">
+         <description>%_UI_RepomodelModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <editor
+            id="hu.bme.incquery.deps.repomodel.presentation.RepomodelEditorID"
+            name="%_UI_RepomodelEditor_label"
+            icon="icons/full/obj16/RepomodelModelFile.gif"
+            extensions="repomodel"
+            class="hu.bme.incquery.deps.repomodel.presentation.RepomodelEditor"
+            contributorClass="hu.bme.incquery.deps.repomodel.presentation.RepomodelActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>

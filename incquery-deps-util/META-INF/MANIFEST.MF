@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: incquery-deps-util
+Bundle-SymbolicName: incquery-deps-util
+Bundle-Version: 1.0.0.dev
+Bundle-Activator: hu.bme.incquery.deps.internal.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: hu.bme.incquery.deps.util
