@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="hu.bme.incquery.deps.cp1model.presentation.Cp1modelModelWizardID"
+            name="%_UI_Cp1modelModelWizard_label"
+            class="hu.bme.incquery.deps.cp1model.presentation.Cp1modelModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/Cp1modelModelFile.gif">
+         <description>%_UI_Cp1modelModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <editor
+            id="hu.bme.incquery.deps.cp1model.presentation.Cp1modelEditorID"
+            name="%_UI_Cp1modelEditor_label"
+            icon="icons/full/obj16/Cp1modelModelFile.gif"
+            extensions="cp1model"
+            class="hu.bme.incquery.deps.cp1model.presentation.Cp1modelEditor"
+            contributorClass="hu.bme.incquery.deps.cp1model.presentation.Cp1modelActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>

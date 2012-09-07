@@ -70,6 +70,7 @@ public class TransformRepoModelToCP1Model {
 		long id = 0;
 
 		for (RProject project : repoModel.getRProjects()) {
+			
 			// Add project
 			CP1Project p = Cp1modelFactory.eINSTANCE.createCP1Project();
 			p.setName(project.getName());
@@ -122,9 +123,8 @@ public class TransformRepoModelToCP1Model {
 
 	public static void main(String[] args) throws IOException {
 		new TransformRepoModelToCP1Model(
-				"C:/opt/workspace/github/incquery-deps/incquery-deps-transformer/models/visitor.repomodel",
-				"C:/opt/workspace/github/incquery-deps/incquery-deps-transformer/models/visitor.cp1model")
+				"C:/opt/workspace/github/incquery-deps/incquery-deps-transformer/models/submodel_2048.repomodel",
+				"C:/opt/workspace/github/incquery-deps/incquery-deps-transformer/models/submodel_2048.cp1model")
 				.transform();
-
 	}
 }
