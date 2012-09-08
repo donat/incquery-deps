@@ -5,6 +5,7 @@ package hu.bme.incquery.deps.cp1model.impl;
 import hu.bme.incquery.deps.cp1model.CP1Class;
 import hu.bme.incquery.deps.cp1model.CP1CodeElement;
 import hu.bme.incquery.deps.cp1model.CP1Dependency;
+import hu.bme.incquery.deps.cp1model.CP1DependencyType;
 import hu.bme.incquery.deps.cp1model.CP1Field;
 import hu.bme.incquery.deps.cp1model.CP1Method;
 import hu.bme.incquery.deps.cp1model.CP1Project;
@@ -14,6 +15,7 @@ import hu.bme.incquery.deps.cp1model.Cp1modelPackage;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -74,6 +76,13 @@ public class Cp1modelPackageImpl extends EPackageImpl implements Cp1modelPackage
 	 * @generated
 	 */
 	private EClass cp1CodeElementEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum cp1DependencyTypeEEnum = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -348,6 +357,15 @@ public class Cp1modelPackageImpl extends EPackageImpl implements Cp1modelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EEnum getCP1DependencyType() {
+		return cp1DependencyTypeEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Cp1modelFactory getCp1modelFactory() {
 		return (Cp1modelFactory)getEFactoryInstance();
 	}
@@ -400,6 +418,9 @@ public class Cp1modelPackageImpl extends EPackageImpl implements Cp1modelPackage
 
 		cp1CodeElementEClass = createEClass(CP1_CODE_ELEMENT);
 		createEAttribute(cp1CodeElementEClass, CP1_CODE_ELEMENT__ID);
+
+		// Create enums
+		cp1DependencyTypeEEnum = createEEnum(CP1_DEPENDENCY_TYPE);
 	}
 
 	/**
@@ -447,7 +468,7 @@ public class Cp1modelPackageImpl extends EPackageImpl implements Cp1modelPackage
 		initEClass(cp1DependencyEClass, CP1Dependency.class, "CP1Dependency", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCP1Dependency_From(), this.getCP1CodeElement(), null, "from", null, 1, 1, CP1Dependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCP1Dependency_To(), this.getCP1CodeElement(), null, "to", null, 1, 1, CP1Dependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getCP1Dependency_Type(), ecorePackage.getEShort(), "type", null, 0, 1, CP1Dependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCP1Dependency_Type(), this.getCP1DependencyType(), "type", null, 0, 1, CP1Dependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cp1ClassEClass, CP1Class.class, "CP1Class", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCP1Class_Methods(), this.getCP1Method(), null, "methods", null, 0, -1, CP1Class.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -465,6 +486,14 @@ public class Cp1modelPackageImpl extends EPackageImpl implements Cp1modelPackage
 
 		initEClass(cp1CodeElementEClass, CP1CodeElement.class, "CP1CodeElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getCP1CodeElement_Id(), ecorePackage.getELong(), "id", null, 0, 1, CP1CodeElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		// Initialize enums and add enum literals
+		initEEnum(cp1DependencyTypeEEnum, CP1DependencyType.class, "CP1DependencyType");
+		addEEnumLiteral(cp1DependencyTypeEEnum, CP1DependencyType.INHERITANCE);
+		addEEnumLiteral(cp1DependencyTypeEEnum, CP1DependencyType.METHOD_CALL);
+		addEEnumLiteral(cp1DependencyTypeEEnum, CP1DependencyType.METHOD_OVERRIDE);
+		addEEnumLiteral(cp1DependencyTypeEEnum, CP1DependencyType.FIELD_REFERENCE);
+		addEEnumLiteral(cp1DependencyTypeEEnum, CP1DependencyType.CLASS_USAGE);
 
 		// Create resource
 		createResource(eNS_URI);

@@ -3,6 +3,7 @@ package hu.bme.incquery.deps.transformer;
 import hu.bme.incquery.deps.cp1model.CP1Class;
 import hu.bme.incquery.deps.cp1model.CP1CodeElement;
 import hu.bme.incquery.deps.cp1model.CP1Dependency;
+import hu.bme.incquery.deps.cp1model.CP1DependencyType;
 import hu.bme.incquery.deps.cp1model.CP1Field;
 import hu.bme.incquery.deps.cp1model.CP1Method;
 import hu.bme.incquery.deps.cp1model.CP1Project;
@@ -30,6 +31,11 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
+/**
+ * Wrong: Dependency transformation does not work.
+ * @author dcsikos
+ *
+ */
 public class TransformRepoModelToCP1Model {
 
 	private final String file;
@@ -111,7 +117,8 @@ public class TransformRepoModelToCP1Model {
 			CP1Dependency d = Cp1modelFactory.eINSTANCE.createCP1Dependency();
 			d.setFrom(itemMap.get(dependency.getRFrom()));
 			d.setTo(itemMap.get(dependency.getRTo()));
-			d.setType((short) dependency.getDepType());
+			// TODO: this part does not work
+			d.setType(CP1DependencyType.get(Integer.valueOf(dependency.getDepType()).toString()));
 			repo.getDependencies().add(d);
 		}
 
@@ -123,8 +130,8 @@ public class TransformRepoModelToCP1Model {
 
 	public static void main(String[] args) throws IOException {
 		new TransformRepoModelToCP1Model(
-				"C:/opt/workspace/github/incquery-deps/incquery-deps-transformer/models/submodel_2048.repomodel",
-				"C:/opt/workspace/github/incquery-deps/incquery-deps-transformer/models/submodel_2048.cp1model")
+				"C:/opt/workspace/github/incquery-deps/incquery-deps-transformer/models/visitor.repomodel",
+				"C:/opt/workspace/github/incquery-deps/incquery-deps-transformer/models/visitor.cp1model")
 				.transform();
 	}
 }

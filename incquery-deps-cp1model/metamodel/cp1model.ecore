@@ -16,7 +16,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="CP1Dependency">
     <eStructuralFeatures xsi:type="ecore:EReference" name="from" lowerBound="1" eType="#//CP1CodeElement"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="to" lowerBound="1" eType="#//CP1CodeElement"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EShort"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//CP1DependencyType"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CP1Class" eSuperTypes="#//CP1CodeElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="methods" upperBound="-1"
@@ -37,5 +37,12 @@
   <eClassifiers xsi:type="ecore:EClass" name="CP1CodeElement" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"
         iD="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="CP1DependencyType">
+    <eLiterals name="METHOD_CALL" value="1" literal="1"/>
+    <eLiterals name="METHOD_OVERRIDE" value="2" literal="2"/>
+    <eLiterals name="FIELD_REFERENCE" value="3" literal="3"/>
+    <eLiterals name="CLASS_USAGE" value="4" literal="4"/>
+    <eLiterals name="INHERITANCE" value="5" literal="5"/>
   </eClassifiers>
 </ecore:EPackage>

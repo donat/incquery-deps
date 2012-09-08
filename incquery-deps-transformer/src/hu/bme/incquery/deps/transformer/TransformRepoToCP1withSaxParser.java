@@ -105,7 +105,6 @@ public class TransformRepoToCP1withSaxParser {
 
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -133,7 +132,6 @@ public class TransformRepoToCP1withSaxParser {
 				writer.write("</cp1:CP1Repository>");
 				writer.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -151,7 +149,7 @@ public class TransformRepoToCP1withSaxParser {
 	}
 
 	public static void main(String[] args) throws Exception {
-		new TransformRepoToCP1withSaxParser().transform("models/submodel_2048.repomodel",
-				"models/submodel_2048.cp1model");
+		new TransformRepoToCP1withSaxParser().transform("models/commonbuild-full-pro.repomodel",
+				"models/commonbuild-full-pro.cp1model");
 	}
 }

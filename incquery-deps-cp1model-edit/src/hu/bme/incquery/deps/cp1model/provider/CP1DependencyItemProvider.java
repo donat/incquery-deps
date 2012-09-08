@@ -4,6 +4,7 @@ package hu.bme.incquery.deps.cp1model.provider;
 
 
 import hu.bme.incquery.deps.cp1model.CP1Dependency;
+import hu.bme.incquery.deps.cp1model.CP1DependencyType;
 import hu.bme.incquery.deps.cp1model.Cp1modelPackage;
 
 import java.util.Collection;
@@ -128,7 +129,7 @@ public class CP1DependencyItemProvider
 				 true,
 				 false,
 				 false,
-				 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
 				 null,
 				 null));
 	}
@@ -152,8 +153,11 @@ public class CP1DependencyItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		CP1Dependency cp1Dependency = (CP1Dependency)object;
-		return getString("_UI_CP1Dependency_type") + " " + cp1Dependency.getType();
+		CP1DependencyType labelValue = ((CP1Dependency)object).getType();
+		String label = labelValue == null ? null : labelValue.toString();
+		return label == null || label.length() == 0 ?
+			getString("_UI_CP1Dependency_type") :
+			getString("_UI_CP1Dependency_type") + " " + label;
 	}
 
 	/**

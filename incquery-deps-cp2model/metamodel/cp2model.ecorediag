@@ -142,7 +142,7 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_b1yTMfdeEeGAT5cePq4ESQ" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
     <element xmi:type="ecore:EClass" href="cp2model.ecore#//CP2Dependency"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b1yTMvdeEeGAT5cePq4ESQ" x="715" y="105"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_b1yTMvdeEeGAT5cePq4ESQ" x="730" y="125"/>
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_6kcDwfdcEeGAT5cePq4ESQ"/>
   <element xmi:type="ecore:EPackage" href="cp2model.ecore#/"/>
@@ -249,6 +249,6 @@
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_fpcLAfdeEeGAT5cePq4ESQ" lineColor="4210752"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_fpcLAvdeEeGAT5cePq4ESQ" fontColor="4210752" fontName="Segoe UI" fontHeight="10"/>
     <element xmi:type="ecore:EReference" href="cp2model.ecore#//CP2Dependency/to"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_fpcLA_deEeGAT5cePq4ESQ" points="[-30, -24, 208, -49]$[-72, -59, 166, -84]$[-147, -53, 91, -78]$[-210, 1, 28, -24]"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_fpcLA_deEeGAT5cePq4ESQ" points="[-23, -24, 230, -29]$[-62, -66, 191, -71]$[-157, -66, 96, -71]$[-220, -19, 33, -24]"/>
   </edges>
 </notation:Diagram>

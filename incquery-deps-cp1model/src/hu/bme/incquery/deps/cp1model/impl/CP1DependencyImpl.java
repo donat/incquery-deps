@@ -4,6 +4,7 @@ package hu.bme.incquery.deps.cp1model.impl;
 
 import hu.bme.incquery.deps.cp1model.CP1CodeElement;
 import hu.bme.incquery.deps.cp1model.CP1Dependency;
+import hu.bme.incquery.deps.cp1model.CP1DependencyType;
 import hu.bme.incquery.deps.cp1model.Cp1modelPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -58,7 +59,7 @@ public class CP1DependencyImpl extends EObjectImpl implements CP1Dependency {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final short TYPE_EDEFAULT = 0;
+	protected static final CP1DependencyType TYPE_EDEFAULT = CP1DependencyType.INHERITANCE;
 
 	/**
 	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
@@ -68,7 +69,7 @@ public class CP1DependencyImpl extends EObjectImpl implements CP1Dependency {
 	 * @generated
 	 * @ordered
 	 */
-	protected short type = TYPE_EDEFAULT;
+	protected CP1DependencyType type = TYPE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -170,7 +171,7 @@ public class CP1DependencyImpl extends EObjectImpl implements CP1Dependency {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public short getType() {
+	public CP1DependencyType getType() {
 		return type;
 	}
 
@@ -179,9 +180,9 @@ public class CP1DependencyImpl extends EObjectImpl implements CP1Dependency {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setType(short newType) {
-		short oldType = type;
-		type = newType;
+	public void setType(CP1DependencyType newType) {
+		CP1DependencyType oldType = type;
+		type = newType == null ? TYPE_EDEFAULT : newType;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, Cp1modelPackage.CP1_DEPENDENCY__TYPE, oldType, type));
 	}
@@ -221,7 +222,7 @@ public class CP1DependencyImpl extends EObjectImpl implements CP1Dependency {
 				setTo((CP1CodeElement)newValue);
 				return;
 			case Cp1modelPackage.CP1_DEPENDENCY__TYPE:
-				setType((Short)newValue);
+				setType((CP1DependencyType)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

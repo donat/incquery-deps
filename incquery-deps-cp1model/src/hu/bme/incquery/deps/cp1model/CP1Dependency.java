@@ -77,6 +77,7 @@ public interface CP1Dependency extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Type</b></em>' attribute.
+	 * The literals are from the enumeration {@link hu.bme.incquery.deps.cp1model.CP1DependencyType}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Type</em>' attribute isn't clear,
@@ -84,21 +85,23 @@ public interface CP1Dependency extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Type</em>' attribute.
-	 * @see #setType(short)
+	 * @see hu.bme.incquery.deps.cp1model.CP1DependencyType
+	 * @see #setType(CP1DependencyType)
 	 * @see hu.bme.incquery.deps.cp1model.Cp1modelPackage#getCP1Dependency_Type()
 	 * @model
 	 * @generated
 	 */
-	short getType();
+	CP1DependencyType getType();
 
 	/**
 	 * Sets the value of the '{@link hu.bme.incquery.deps.cp1model.CP1Dependency#getType <em>Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Type</em>' attribute.
+	 * @see hu.bme.incquery.deps.cp1model.CP1DependencyType
 	 * @see #getType()
 	 * @generated
 	 */
-	void setType(short value);
+	void setType(CP1DependencyType value);
 
 } // CP1Dependency

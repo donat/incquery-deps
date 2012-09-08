@@ -146,17 +146,11 @@ public class CP1MethodImpl extends CP1CodeElementImpl implements CP1Method {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (signature: ");
-		result.append(signature);
-		result.append(')');
-		return result.toString();
+		return String.format("CP1MethodImpl(%s)", signature);
 	}
 
 } //CP1MethodImpl

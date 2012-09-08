@@ -148,6 +148,37 @@
     <element xmi:type="ecore:EClass" href="cp1model.ecore#//CP1CodeElement"/>
     <layoutConstraint xmi:type="notation:Bounds" xmi:id="_4gf9cvdZEeGAT5cePq4ESQ" x="890" y="125"/>
   </children>
+  <children xmi:type="notation:Node" xmi:id="_1kAk8PkLEeGkF6ri2IT30Q" type="1005">
+    <children xmi:type="notation:Node" xmi:id="_1kBMAPkLEeGkF6ri2IT30Q" type="4010"/>
+    <children xmi:type="notation:Node" xmi:id="_1kBzEPkLEeGkF6ri2IT30Q" type="5008">
+      <children xmi:type="notation:Node" xmi:id="_BlbvcPkMEeGkF6ri2IT30Q" type="2006">
+        <element xmi:type="ecore:EEnumLiteral" href="cp1model.ecore#//CP1DependencyType/METHOD_CALL"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_BlbvcfkMEeGkF6ri2IT30Q"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_FT8BgPkMEeGkF6ri2IT30Q" type="2006">
+        <element xmi:type="ecore:EEnumLiteral" href="cp1model.ecore#//CP1DependencyType/METHOD_OVERRIDE"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_FT8BgfkMEeGkF6ri2IT30Q"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_F-jr0PkMEeGkF6ri2IT30Q" type="2006">
+        <element xmi:type="ecore:EEnumLiteral" href="cp1model.ecore#//CP1DependencyType/FIELD_REFERENCE"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_F-jr0fkMEeGkF6ri2IT30Q"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_I41EkPkMEeGkF6ri2IT30Q" type="2006">
+        <element xmi:type="ecore:EEnumLiteral" href="cp1model.ecore#//CP1DependencyType/CLASS_USAGE"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_I41EkfkMEeGkF6ri2IT30Q"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_4I8m4PkLEeGkF6ri2IT30Q" type="2006">
+        <element xmi:type="ecore:EEnumLiteral" href="cp1model.ecore#//CP1DependencyType/INHERITANCE"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_4I8m4fkLEeGkF6ri2IT30Q"/>
+      </children>
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_1kBzEfkLEeGkF6ri2IT30Q"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_1kBzEvkLEeGkF6ri2IT30Q"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_1kBzE_kLEeGkF6ri2IT30Q"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_1kAk8fkLEeGkF6ri2IT30Q" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
+    <element xmi:type="ecore:EEnum" href="cp1model.ecore#//CP1DependencyType"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_1kAk8vkLEeGkF6ri2IT30Q" x="280" y="30" width="203"/>
+  </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_xXr9IfdYEeGAT5cePq4ESQ"/>
   <element xmi:type="ecore:EPackage" href="cp1model.ecore#/"/>
   <edges xmi:type="notation:Edge" xmi:id="_H1u3gPdZEeGAT5cePq4ESQ" type="3002" source="_4nRwUPdYEeGAT5cePq4ESQ" target="_BwjB8PdZEeGAT5cePq4ESQ">

@@ -5,6 +5,7 @@ package hu.bme.incquery.deps.cp1model.impl;
 import hu.bme.incquery.deps.cp1model.*;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -72,6 +73,36 @@ public class Cp1modelFactoryImpl extends EFactoryImpl implements Cp1modelFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
+	public Object createFromString(EDataType eDataType, String initialValue) {
+		switch (eDataType.getClassifierID()) {
+			case Cp1modelPackage.CP1_DEPENDENCY_TYPE:
+				return createCP1DependencyTypeFromString(eDataType, initialValue);
+			default:
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String convertToString(EDataType eDataType, Object instanceValue) {
+		switch (eDataType.getClassifierID()) {
+			case Cp1modelPackage.CP1_DEPENDENCY_TYPE:
+				return convertCP1DependencyTypeToString(eDataType, instanceValue);
+			default:
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public CP1Repository createCP1Repository() {
 		CP1RepositoryImpl cp1Repository = new CP1RepositoryImpl();
 		return cp1Repository;
@@ -125,6 +156,26 @@ public class Cp1modelFactoryImpl extends EFactoryImpl implements Cp1modelFactory
 	public CP1Field createCP1Field() {
 		CP1FieldImpl cp1Field = new CP1FieldImpl();
 		return cp1Field;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public CP1DependencyType createCP1DependencyTypeFromString(EDataType eDataType, String initialValue) {
+		CP1DependencyType result = CP1DependencyType.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertCP1DependencyTypeToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
 	}
 
 	/**

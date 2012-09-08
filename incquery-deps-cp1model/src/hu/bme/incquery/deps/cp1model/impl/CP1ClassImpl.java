@@ -398,23 +398,11 @@ public class CP1ClassImpl extends CP1CodeElementImpl implements CP1Class {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (extends: ");
-		result.append(extends_);
-		result.append(", implements: ");
-		result.append(implements_);
-		result.append(", simpleName: ");
-		result.append(simpleName);
-		result.append(", packageName: ");
-		result.append(packageName);
-		result.append(')');
-		return result.toString();
+		return String.format("CP1ClassImpl(%s.%s)", packageName, simpleName);
 	}
 
 } //CP1ClassImpl

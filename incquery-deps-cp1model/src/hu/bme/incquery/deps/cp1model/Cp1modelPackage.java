@@ -4,6 +4,7 @@ package hu.bme.incquery.deps.cp1model;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -370,6 +371,17 @@ public interface Cp1modelPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link hu.bme.incquery.deps.cp1model.CP1DependencyType <em>CP1 Dependency Type</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see hu.bme.incquery.deps.cp1model.CP1DependencyType
+	 * @see hu.bme.incquery.deps.cp1model.impl.Cp1modelPackageImpl#getCP1DependencyType()
+	 * @generated
+	 */
+	int CP1_DEPENDENCY_TYPE = 7;
+
+
+	/**
 	 * Returns the meta object for class '{@link hu.bme.incquery.deps.cp1model.CP1Repository <em>CP1 Repository</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -616,6 +628,16 @@ public interface Cp1modelPackage extends EPackage {
 	EAttribute getCP1CodeElement_Id();
 
 	/**
+	 * Returns the meta object for enum '{@link hu.bme.incquery.deps.cp1model.CP1DependencyType <em>CP1 Dependency Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>CP1 Dependency Type</em>'.
+	 * @see hu.bme.incquery.deps.cp1model.CP1DependencyType
+	 * @generated
+	 */
+	EEnum getCP1DependencyType();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -834,6 +856,16 @@ public interface Cp1modelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CP1_CODE_ELEMENT__ID = eINSTANCE.getCP1CodeElement_Id();
+
+		/**
+		 * The meta object literal for the '{@link hu.bme.incquery.deps.cp1model.CP1DependencyType <em>CP1 Dependency Type</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see hu.bme.incquery.deps.cp1model.CP1DependencyType
+		 * @see hu.bme.incquery.deps.cp1model.impl.Cp1modelPackageImpl#getCP1DependencyType()
+		 * @generated
+		 */
+		EEnum CP1_DEPENDENCY_TYPE = eINSTANCE.getCP1DependencyType();
 
 	}
 

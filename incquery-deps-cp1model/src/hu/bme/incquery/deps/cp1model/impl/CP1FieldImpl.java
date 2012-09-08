@@ -146,17 +146,11 @@ public class CP1FieldImpl extends CP1CodeElementImpl implements CP1Field {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (signature: ");
-		result.append(signature);
-		result.append(')');
-		return result.toString();
+		return String.format("CP1FieldImpl(%s)", signature);
 	}
 
 } //CP1FieldImpl
