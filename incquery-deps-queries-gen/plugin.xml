@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.viatra2.emf.incquery.matcherfactory">
+      <matcher
+            factoryProvider="cern.devtools.deps.query.cp1.addedclasses.AddedClassesMatcherFactory$Provider"
+            id="cern.devtools.deps.query.cp1.addedClasses">
+      </matcher>
+   </extension>
+   
+
+</plugin>

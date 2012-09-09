@@ -66,6 +66,7 @@ public class BuildScheduler {
 			protected IStatus run(IProgressMonitor monitor) {
 				try {
 					doUpdate(delta);
+					Activator.getDefault().getIncQueryDepsEngine().update();
 					return JobUtils.okStatus("Gathering Workspace Emf model was successful");
 				} catch (Exception e) {
 					workspace = doBuildWorkspaceModel(dispatcher.getTracedProjects(), false);

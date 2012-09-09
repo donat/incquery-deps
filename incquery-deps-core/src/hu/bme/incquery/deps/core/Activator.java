@@ -1,5 +1,7 @@
 package hu.bme.incquery.deps.core;
 
+import hu.bme.incquery.deps.wsmodel.WWorkspace;
+
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -18,6 +20,8 @@ public class Activator extends AbstractUIPlugin {
 	// java source code changing listener
 	WorkspaceEventDispatcher workspaceModelService = new WorkspaceEventDispatcher();
 
+	// incquery deps engine
+	IncQueryDepsEngine incQueryDepsEngine = new IncQueryDepsEngine();
 	/**
 	 * The constructor
 	 */
@@ -33,6 +37,20 @@ public class Activator extends AbstractUIPlugin {
 		super.start(context);
 		plugin = this;
 		JavaCore.addElementChangedListener(workspaceModelService);
+		workspaceModelService.registerWorkspaceListener(new WsChangeEventListener() {
+			
+			@Override
+			public void recover(WWorkspace workspace) {
+				incQueryDepsEngine.setWorkspaceModel(workspace);
+				
+			}
+			
+			@Override
+			public void init(WWorkspace workspace) {
+				incQueryDepsEngine.setWorkspaceModel(workspace);
+			}
+		});
+		incQueryDepsEngine.initialize();
 	}
 
 	/*
@@ -61,9 +79,15 @@ public class Activator extends AbstractUIPlugin {
 	public WorkspaceEventDispatcher getWsService() {
 		return workspaceModelService;
 	}
+	
+	
 
 	public static void logDebug(String caller, String msg) {
 		System.err.println("[" + caller + "] " + msg);
+	}
+
+	public IncQueryDepsEngine getIncQueryDepsEngine() {
+		return incQueryDepsEngine;
 	}
 	
 }
