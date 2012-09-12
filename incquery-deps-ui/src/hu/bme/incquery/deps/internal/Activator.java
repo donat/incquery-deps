@@ -1,27 +1,9 @@
 package hu.bme.incquery.deps.internal;
 
-import hu.bme.incquery.deps.core.WsChangeEventListener;
-import hu.bme.incquery.deps.cp1model.Cp1modelPackage;
-import hu.bme.incquery.deps.repomodel.RepomodelPackage;
-import hu.bme.incquery.deps.wsmodel.WWorkspace;
-import hu.bme.incquery.deps.wsmodel.WsmodelPackage;
-
-import java.util.Collections;
-
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.eclipse.viatra2.emf.incquery.runtime.api.IMatcherFactory;
-import org.eclipse.viatra2.emf.incquery.runtime.api.IncQueryMatcher;
-import org.eclipse.viatra2.emf.incquery.runtime.extensibility.MatcherFactoryRegistry;
 import org.osgi.framework.BundleContext;
 
-import cern.devtools.deps.query.cp1.addedclasses.AddedClassesMatch;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -33,8 +15,6 @@ public class Activator extends AbstractUIPlugin {
 
 	// The shared instance
 	private static Activator plugin;
-
-	private IncQueryMatcher matcher;
 
 	/**
 	 * The constructor

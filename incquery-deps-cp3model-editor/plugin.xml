@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="hu.bme.incquery.deps.cp3model.presentation.Cp3modelModelWizardID"
+            name="%_UI_Cp3modelModelWizard_label"
+            class="hu.bme.incquery.deps.cp3model.presentation.Cp3modelModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/Cp3modelModelFile.gif">
+         <description>%_UI_Cp3modelModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <editor
+            id="hu.bme.incquery.deps.cp3model.presentation.Cp3modelEditorID"
+            name="%_UI_Cp3modelEditor_label"
+            icon="icons/full/obj16/Cp3modelModelFile.gif"
+            extensions="cp3model"
+            class="hu.bme.incquery.deps.cp3model.presentation.Cp3modelEditor"
+            contributorClass="hu.bme.incquery.deps.cp3model.presentation.Cp3modelActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>

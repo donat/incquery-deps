@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.0"?>
 
-<!--
--->
-
 <plugin>
   
  <extension point="org.eclipse.emf.ecore.generated_package">
       <package
             class="hu.bme.incquery.deps.wsmodel.WsmodelPackage"
-            genModel="metamodel/wsmodel.ecore"
+            genModel="metamodel/wsmodel.genmodel"
             uri="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel"/>
    </extension>
    

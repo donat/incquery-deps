@@ -10,9 +10,11 @@ import hu.bme.incquery.deps.wsmodel.WWorkspace;
 
 public abstract class WsChangeEventListener {
 
-	public abstract void init(WWorkspace workspace);
+	public abstract void init(WWorkspace resource);
 
-	public abstract void recover(WWorkspace workspace);
+	public abstract void recover(WWorkspace resource);
+	
+	public abstract void update(WWorkspace resource);
 	
 
 }

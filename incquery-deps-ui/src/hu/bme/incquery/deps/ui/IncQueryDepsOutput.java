@@ -4,7 +4,8 @@ import java.util.Collection;
 import java.util.Set;
 
 import hu.bme.incquery.deps.core.Activator;
-import hu.bme.incquery.deps.core.IncQueryDepsChangeListener;
+import hu.bme.incquery.deps.engine.IncQueryDepsChangeListener;
+//import hu.bme.incquery.deps.engine.IncQueryDepsChangeListener;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -19,7 +20,11 @@ import org.eclipse.viatra2.emf.incquery.runtime.api.IncQueryMatcher;
 import cern.devtools.deps.query.cp1.addedclasses.AddedClassesMatch;
 import cern.devtools.deps.query.cp1.addedclasses.AddedClassesMatcher;
 
+import cern.devtools.deps.query.cp1.addedclasses.AddedClassesMatch;
+import cern.devtools.deps.query.cp1.addedclasses.AddedClassesMatcher;
+
 public class IncQueryDepsOutput extends ViewPart {
+
 	private Text txtNumOfAddedMethods;
 
 	public IncQueryDepsOutput() {
@@ -49,32 +54,33 @@ public class IncQueryDepsOutput extends ViewPart {
 	}
 
 	private void initTxtinput() {
-		Activator.getDefault().getIncQueryDepsEngine().registerChangeListener(new IncQueryDepsChangeListener() {
+		IncQueryDepsChangeListener listener = new IncQueryDepsChangeListener() {
 
 			@Override
 			public void matchesChanged(Set<IncQueryMatcher<?>> matchers) {
 				for (IncQueryMatcher<?> m : matchers) {
 					if (m instanceof AddedClassesMatcher) {
 						Collection<AddedClassesMatch> matches = ((AddedClassesMatcher) m).getAllMatches();
-						final String[] result = {""};
+						final String[] result = { "" };
 						for (AddedClassesMatch acm : matches) {
 							result[0] += acm.getWsClass().toString() + "\n";
 						}
-						
+
 						Display.getDefault().syncExec(new Runnable() {
-							
+
 							@Override
 							public void run() {
 								txtNumOfAddedMethods.setText(result[0]);
 							}
 						});
-						
+
 					}
 
 				}
 
 			}
-		});
+		};
+		hu.bme.incquery.deps.engine.Activator.getDefault().getIncQueryDepsEngine().registerChangeListener(listener);
 
 	}
 

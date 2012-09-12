@@ -66,7 +66,7 @@ public class BuildScheduler {
 			protected IStatus run(IProgressMonitor monitor) {
 				try {
 					doUpdate(delta);
-					Activator.getDefault().getIncQueryDepsEngine().update();
+					listenerRepo.notifyUpdate(workspace);
 					return JobUtils.okStatus("Gathering Workspace Emf model was successful");
 				} catch (Exception e) {
 					workspace = doBuildWorkspaceModel(dispatcher.getTracedProjects(), false);
@@ -93,26 +93,15 @@ public class BuildScheduler {
 		WWorkspace result = WorkspaceModelBuilder.fromScratch(dispatcher.getTracedProjects()).getWorkspace();
 		return result;
 	}
-	
-	
 
 	private WWorkspace loadCache(List<IJavaProject> projects) {
-		try {
-			
-			long workspaceTs = JdtUtils.classesLastModificationTime(projects);
-			long cacheTs = PreferenceStore.getStore().getCacheModTime();
-			if (cacheTs >= workspaceTs) {
-				return EmfUtils.loadModel();
-			}
-			else {
-				return null;
-			}
+
+		long workspaceTs = JdtUtils.classesLastModificationTime(projects);
+		long cacheTs = PreferenceStore.getStore().getCacheModTime();
+		if (cacheTs >= workspaceTs) {
+			return EmfUtils.loadModel();
 		}
-		catch (Exception e)  {
-			System.out.println("cache load failed");
-			e.printStackTrace();
-			return null;
-		}
+		else return null;
 	}
 
 	public void addProject(final IJavaProject project) {
@@ -150,7 +139,7 @@ public class BuildScheduler {
 
 		jobHelper.schedule(removeProjectJob);
 	}
-	
+
 	public WWorkspace getWorkspace() {
 		return workspace;
 	}

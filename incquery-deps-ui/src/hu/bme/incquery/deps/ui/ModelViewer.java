@@ -35,6 +35,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.SaveAsDialog;
@@ -50,13 +51,30 @@ public class ModelViewer extends ViewPart {
 	private WsChangeEventListener wsChangeListener = new WsChangeEventListener() {
 
 		@Override
-		public void recover(WWorkspace workspace) {
-			viewer.setInput(workspace);
+		public void recover(final WWorkspace workspace) {
+			Display.getDefault().syncExec(new Runnable() {
+
+				@Override
+				public void run() {
+					viewer.setInput(workspace);
+				}
+			});
 		}
 
 		@Override
-		public void init(WWorkspace workspace) {
-			viewer.setInput(workspace);
+		public void init(final WWorkspace workspace) {
+			Display.getDefault().syncExec(new Runnable() {
+
+				@Override
+				public void run() {
+					viewer.setInput(workspace);
+				}
+			});
+		}
+
+		@Override
+		public void update(WWorkspace workspace) {
+			// No reason to use it.
 		}
 	};
 	private Action saveEmfModelAction;
@@ -109,32 +127,34 @@ public class ModelViewer extends ViewPart {
 					// Choose file
 					SaveAsDialog sd = new SaveAsDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
 					sd.setTitle("Save workspace model");
-				
+
 					// Add default file name option with proper extension.
 					sd.setOriginalName("default." + WsmodelPackage.eNAME);
-					//String path = fd.open();
-					
+					// String path = fd.open();
+
 					sd.setBlockOnOpen(true);
 					int r = sd.open();
 					if (Window.OK == r) {
 						IPath path = sd.getResult();
-						
-						System.err.println( path );
-	
+
+						System.err.println(path);
+
 						// Store information to file.
 						ResourceSet resourceSet = new ResourceSetImpl();
 						resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
 								.put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
-						//URI fileURI = URI.createFileURI(new File(path).getAbsolutePath());
-						URI fileURI = URI.createPlatformResourceURI( path.toOSString(), true );
+						// URI fileURI = URI.createFileURI(new File(path).getAbsolutePath());
+						URI fileURI = URI.createPlatformResourceURI(path.toOSString(), true);
 						Resource resource = resourceSet.createResource(fileURI);
 						resource.getContents().add((EObject) viewer.getInput());
 						try {
 							resource.save(Collections.EMPTY_MAP);
-							MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Information", "Emf model saved successfully!");
+							MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+									.getShell(), "Information", "Emf model saved successfully!");
 						} catch (IOException e) {
 							e.printStackTrace();
-							MessageDialog.openWarning(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Warning", "Error on save: " + e.getMessage() + ".");
+							MessageDialog.openWarning(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+									"Warning", "Error on save: " + e.getMessage() + ".");
 						}
 					}
 				}
@@ -157,7 +177,7 @@ public class ModelViewer extends ViewPart {
 	 * Initialize the menu.
 	 */
 	private void initializeMenu() {
-		/*IMenuManager menuManager =*/ getViewSite().getActionBars().getMenuManager();
+		/* IMenuManager menuManager = */getViewSite().getActionBars().getMenuManager();
 	}
 
 	@Override

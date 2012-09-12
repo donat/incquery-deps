@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -23,7 +24,8 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 public class EmfUtils {
 
-	public static String WS_MODEL_CACHE_LOC = "model_cache." + WsmodelPackage.eNAME;
+	// public static String WS_MODEL_CACHE_LOC = "model_cache." + WsmodelPackage.eNAME;
+	private static String cacheLocation;
 
 	public static String printModel(WWorkspace ws) {
 		StringBuffer buffer = new StringBuffer();
@@ -42,10 +44,18 @@ public class EmfUtils {
 		return buffer.toString();
 	}
 
+	private static String getCacheFile() {
+		if (cacheLocation == null) {
+			cacheLocation = ResourcesPlugin.getWorkspace().getRoot().getLocation().toFile().getAbsolutePath()
+					+ "/model_cache." + WsmodelPackage.eNAME;
+		}
+		return cacheLocation;
+	}
+
 	public static void saveModel(WWorkspace ws) throws IOException {
 		// check fileName extension.
-		if (!WS_MODEL_CACHE_LOC.endsWith(WsmodelPackage.eNAME)) {
-			throw new IOException(String.format("File %s does not have a proper extension: %s.", WS_MODEL_CACHE_LOC,
+		if (!getCacheFile().endsWith(WsmodelPackage.eNAME)) {
+			throw new IOException(String.format("File %s does not have a proper extension: %s.", getCacheFile(),
 					WsmodelPackage.eNAME));
 		}
 
@@ -54,7 +64,7 @@ public class EmfUtils {
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
 				.put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
 		// URI fileURI = URI.createFileURI(new File(path).getAbsolutePath());
-		URI fileURI = URI.createFileURI(WS_MODEL_CACHE_LOC);
+		URI fileURI = URI.createFileURI(getCacheFile());
 		Resource resource = resourceSet.createResource(fileURI);
 		resource.getContents().add(ws);
 		resource.save(Collections.EMPTY_MAP);
@@ -63,19 +73,19 @@ public class EmfUtils {
 		PreferenceStore.getStore().setCacheModTime(System.currentTimeMillis());
 	}
 
-	public static WWorkspace loadModel() throws IOException {
+	public static WWorkspace loadModel() {
 		try {
 			ResourceSet resourceSet = new ResourceSetImpl();
 			resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
 					.put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
-			URI fileURI = URI.createFileURI(WS_MODEL_CACHE_LOC);
+			URI fileURI = URI.createFileURI(getCacheFile());
 			Resource resource = resourceSet.createResource(fileURI);
 			resource.load(Collections.EMPTY_MAP);
 			return (WWorkspace) resource.getContents().get(0);
-		} catch (Exception e) {
+		} catch (IOException e) {
 			// On error, delete the file and throw a new IOException.
-			new File(WS_MODEL_CACHE_LOC).delete();
-			throw new IOException(e);
+			new File(getCacheFile()).delete();
+			return null;
 		}
 	}
 }

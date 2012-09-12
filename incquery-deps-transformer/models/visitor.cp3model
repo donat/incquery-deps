@@ -1,0 +1,4 @@
+<cp3:CP3Repo xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:cp3="http://inf.mit.bme.hu/donat/incquery-deps/cp3model">
+  <elems id="1" name="devtools-deps-example-service">
+  <elems id="2" name="devtools-deps-example-impl">
+</cp3:CP3Repo>

@@ -11,13 +11,11 @@ import hu.bme.incquery.deps.wsmodel.WWorkspace;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.swt.widgets.Display;
-
 public class WsChangeListenerRepo {
 	private WsModelState state = WsModelState.UNINITIALIZED;
 
 	private List<WsChangeEventListener> listeners = new LinkedList<WsChangeEventListener>();
-	
+
 	private WWorkspace workspace;
 
 	public void addWsChangeEventListener(WsChangeEventListener l) {
@@ -31,32 +29,27 @@ public class WsChangeListenerRepo {
 		listeners.remove(l);
 	}
 
-	
 	public void notifyInit(final WWorkspace workspace) {
 		this.workspace = workspace;
 		state = WsModelState.AVAILABLE;
-		
-		Display.getDefault().syncExec(new Runnable() {
-			@Override
-			public void run() {
-				for (WsChangeEventListener l : listeners) {
-					l.init(workspace);
-				}
-			}
-		});
-		
+
+		for (WsChangeEventListener l : listeners) {
+			l.init(workspace);
+		}
+
 	}
-	
+
 	public void notifyRecovery(final WWorkspace workspace) {
 		this.workspace = workspace;
-		
-		Display.getDefault().syncExec(new Runnable() {
-			@Override
-			public void run() {
-				for (WsChangeEventListener l : listeners) {
-					l.recover(workspace);
-				}
-			}
-		});
+
+		for (WsChangeEventListener l : listeners) {
+			l.recover(workspace);
+		}
+	}
+
+	public void notifyUpdate(WWorkspace workspace) {
+		for (WsChangeEventListener l : listeners) {
+			l.update(workspace);
+		}
 	}
 }
