@@ -14,6 +14,7 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.ElementChangedEvent;
+import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IElementChangedListener;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaElementDelta;
@@ -27,7 +28,7 @@ public class WorkspaceEventDispatcher implements IElementChangedListener {
 	private final BuildScheduler builder;
 
 	private List<IJavaProject> tracedProjects;
-	
+
 	private PreferenceStore prefs = PreferenceStore.getStore();
 
 	public WorkspaceEventDispatcher() {
@@ -49,7 +50,7 @@ public class WorkspaceEventDispatcher implements IElementChangedListener {
 		}
 		return tracedProjects;
 	}
-	
+
 	public void addTracedProjectAndDiscoverIt(IJavaProject project) {
 		if (tracedProjects == null) {
 			initTracedProjectList();
@@ -58,8 +59,7 @@ public class WorkspaceEventDispatcher implements IElementChangedListener {
 		tracedProjects.add(project);
 		builder.addProject(project);
 	}
-	
-	
+
 	public void removeTracedProjectWithStructure(IJavaProject project) {
 		if (tracedProjects == null) {
 			initTracedProjectList();
@@ -96,28 +96,60 @@ public class WorkspaceEventDispatcher implements IElementChangedListener {
 	@Override
 	public void elementChanged(final ElementChangedEvent event) {
 		IJavaElementDelta delta = event.getDelta();
-		
-		if (delta.getElement().getElementType() != IJavaElement.JAVA_MODEL) {
+		if (eventDisposable(event)) {
 			return;
 		}
-		if ((delta.getElement() instanceof IJavaModel)) {
-			
-			try {
-				// Handle delta.
-				builder.updateWorkspaceModel(delta);
-			} catch (Exception e) {
-				// Print the reconcile process.
-				System.err.println("<<Model out of sync>>");
-				e.printStackTrace();
-				System.err.println("<<Reinitializing model>>");
-				builder.rebuildWorkspaceModel(tracedProjects);
 
+		try {
+			// Handle delta.
+			builder.updateWorkspaceModel(delta);
+		} catch (Exception e) {
+			// Print the reconcile process.
+			System.err.println("<<Model out of sync>>");
+			e.printStackTrace();
+			System.err.println("<<Reinitializing model>>");
+			builder.rebuildWorkspaceModel(tracedProjects);
+
+		}
+	}
+
+	private boolean eventDisposable(ElementChangedEvent event) {
+		// Interested only the java model changes
+		if (event.getDelta().getElement().getElementType() != IJavaElement.JAVA_MODEL) {
+			return true;
+		}
+
+		// we want to enable two things:
+
+		List<IJavaElementDelta> flattenDeltas = gatherDeltas(new LinkedList<IJavaElementDelta>(), event.getDelta());
+		return !containsImportantModifications(flattenDeltas);
+	}
+
+	private boolean containsImportantModifications(List<IJavaElementDelta> flattenDeltas) {
+		for (IJavaElementDelta delta : flattenDeltas) {
+			// If at least one element is added or removed (== Not changed), than it should be forwarded.
+			if (delta.getKind() != IJavaElementDelta.CHANGED) {
+				return true;
+			}
+			// The second option is when a compilation unit is saved.
+			else if (delta.getElement().getElementType() == IJavaElement.COMPILATION_UNIT
+					&& (delta.getFlags() & IJavaElementDelta.F_PRIMARY_RESOURCE) != 0) {
+				return true;
 			}
 		}
+		return false;
+	}
+
+	private List<IJavaElementDelta> gatherDeltas(List<IJavaElementDelta> container, IJavaElementDelta delta) {
+		container.add(delta);
+		for (IJavaElementDelta child : delta.getAffectedChildren()) {
+			gatherDeltas(container, child);
+		}
+		return container;
 	}
 
 	public WWorkspace getWorkspace() {
 		return builder.getWorkspace();
 	}
-	
+
 }
