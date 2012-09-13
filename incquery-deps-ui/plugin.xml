@@ -22,6 +22,11 @@
             id="hu.bme.incquery.deps.viewer.category"
             name="IncQuery Deps">
       </category>
+      <view
+            class="hu.bme.incquery.deps.ui.IncQueryDepsViewer"
+            id="hu.bme.incquery.deps.ui.IncQueryDepsViewer"
+            name="Dependency Overview">
+      </view>
    </extension>
    
      <extension
@@ -85,6 +90,10 @@
             </command>
          </menu>
       </menuContribution>
+   </extension>
+   <extension
+         id="id1"
+         point="org.eclipse.core.resources.markers">
    </extension>
          
 </plugin>

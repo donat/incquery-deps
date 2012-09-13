@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: incquery-deps-engine
+Bundle-SymbolicName: hu.bme.incquery.deps.engine;singleton:=true
+Bundle-Version: 1.0.0.qdev
+Bundle-Activator: hu.bme.incquery.deps.engine.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ hu.bme.incquery.deps.core;bundle-version="1.0.0",
+ hu.bme.incquery.deps.wsmodel;bundle-version="1.0.0",
+ hu.bme.incquery.deps.cp1model;bundle-version="1.0.0",
+ org.eclipse.viatra2.emf.incquery.runtime;bundle-version="0.6.0";visibility:=reexport,
+ incquery-deps-matchers;bundle-version="0.0.1"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: hu.bme.incquery.deps.engine
