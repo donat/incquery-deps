@@ -23,9 +23,10 @@
             name="IncQuery Deps">
       </category>
       <view
-            class="hu.bme.incquery.deps.ui.IncQueryDepsViewer"
-            id="hu.bme.incquery.deps.ui.IncQueryDepsViewer"
-            name="Dependency Overview">
+            category="hu.bme.incquery.deps.viewer.category"
+            class="hu.bme.incquery.deps.metrics.JavaMetricsView"
+            id="hu.bme.incquery.deps.ui.metrics"
+            name="IncQueryDeps Metrics">
       </view>
    </extension>
    
@@ -91,9 +92,9 @@
          </menu>
       </menuContribution>
    </extension>
-   <extension
-         id="id1"
-         point="org.eclipse.core.resources.markers">
-   </extension>
+
+
+      
+
          
 </plugin>
