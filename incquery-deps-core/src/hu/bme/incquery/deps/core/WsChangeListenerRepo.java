@@ -36,7 +36,6 @@ public class WsChangeListenerRepo {
 		for (WsChangeEventListener l : listeners) {
 			l.init(workspace);
 		}
-
 	}
 
 	public void notifyRecovery(final WWorkspace workspace) {

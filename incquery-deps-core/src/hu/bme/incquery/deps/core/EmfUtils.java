@@ -68,6 +68,7 @@ public class EmfUtils {
 		Resource resource = resourceSet.createResource(fileURI);
 		resource.getContents().add(ws);
 		resource.save(Collections.EMPTY_MAP);
+		System.out.println("Workspace model saved");
 
 		// Save when the save happened.
 		PreferenceStore.getStore().setCacheModTime(System.currentTimeMillis());

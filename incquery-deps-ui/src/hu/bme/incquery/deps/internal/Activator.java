@@ -2,7 +2,6 @@ package hu.bme.incquery.deps.internal;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.eclipse.xtext.util.MergeableManifest;
 import org.osgi.framework.BundleContext;
 
 /**

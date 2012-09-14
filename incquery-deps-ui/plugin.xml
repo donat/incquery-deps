@@ -24,9 +24,9 @@
       </category>
       <view
             category="hu.bme.incquery.deps.viewer.category"
-            class="hu.bme.incquery.deps.metrics.JavaMetricsView"
-            id="hu.bme.incquery.deps.ui.metrics"
-            name="IncQueryDeps Metrics">
+            class="hu.bme.incquery.deps.ui.result.IncqueryResultView"
+            id="hu.bme.incquery.deps.ui.views.incqueryresultview"
+            name="Dependencies">
       </view>
    </extension>
    

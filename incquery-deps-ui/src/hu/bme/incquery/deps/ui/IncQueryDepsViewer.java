@@ -3,9 +3,9 @@ package hu.bme.incquery.deps.ui;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.swt.custom.StackLayout;
 
 public class IncQueryDepsViewer extends ViewPart {
 
@@ -22,6 +22,7 @@ public class IncQueryDepsViewer extends ViewPart {
 	public void createPartControl(Composite parent) {
 		parent.setLayout(new StackLayout());
 		
+		@SuppressWarnings("unused")
 		Composite classViewComposite = new Composite(parent, SWT.NONE);
 		
 		createActions();
@@ -44,6 +45,7 @@ public class IncQueryDepsViewer extends ViewPart {
 	 * Initialize the toolbar.
 	 */
 	private void initializeToolBar() {
+		@SuppressWarnings("unused")
 		IToolBarManager tbm = getViewSite().getActionBars().getToolBarManager();
 	}
 
@@ -51,6 +53,7 @@ public class IncQueryDepsViewer extends ViewPart {
 	 * Initialize the menu.
 	 */
 	private void initializeMenu() {
+		@SuppressWarnings("unused")
 		IMenuManager manager = getViewSite().getActionBars().getMenuManager();
 	}
 
