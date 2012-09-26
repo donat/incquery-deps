@@ -2,27 +2,51 @@
 <plugin>
 
    <extension
-         id="cern.devtools.deps.query.cp1.wsProject"
-         point="org.eclipse.viatra2.emf.incquery.matcherfactory">
-      <matcher
-            factoryProvider="cern.devtools.deps.query.cp1.wsproject.WsProjectMatcherFactory$Provider"
-            id="cern.devtools.deps.query.cp1.wsProject">
-      </matcher>
-   </extension>
-   <extension
-         id="cern.devtools.deps.query.cp1.repoProject"
-         point="org.eclipse.viatra2.emf.incquery.matcherfactory">
-      <matcher
-            factoryProvider="cern.devtools.deps.query.cp1.repoproject.RepoProjectMatcherFactory$Provider"
-            id="cern.devtools.deps.query.cp1.repoProject">
-      </matcher>
-   </extension>
-   <extension
          id="cern.devtools.deps.query.cp1.projectsWithSameName"
          point="org.eclipse.viatra2.emf.incquery.matcherfactory">
       <matcher
             factoryProvider="cern.devtools.deps.query.cp1.projectswithsamename.ProjectsWithSameNameMatcherFactory$Provider"
             id="cern.devtools.deps.query.cp1.projectsWithSameName">
+      </matcher>
+   </extension>
+   <extension
+         id="cern.devtools.deps.query.cp1.typesInWsProject"
+         point="org.eclipse.viatra2.emf.incquery.matcherfactory">
+      <matcher
+            factoryProvider="cern.devtools.deps.query.cp1.typesinwsproject.TypesInWsProjectMatcherFactory$Provider"
+            id="cern.devtools.deps.query.cp1.typesInWsProject">
+      </matcher>
+   </extension>
+   <extension
+         id="cern.devtools.deps.query.cp1.methodsInWsType"
+         point="org.eclipse.viatra2.emf.incquery.matcherfactory">
+      <matcher
+            factoryProvider="cern.devtools.deps.query.cp1.methodsinwstype.MethodsInWsTypeMatcherFactory$Provider"
+            id="cern.devtools.deps.query.cp1.methodsInWsType">
+      </matcher>
+   </extension>
+   <extension
+         id="cern.devtools.deps.query.cp1.fieldsInWsType"
+         point="org.eclipse.viatra2.emf.incquery.matcherfactory">
+      <matcher
+            factoryProvider="cern.devtools.deps.query.cp1.fieldsinwstype.FieldsInWsTypeMatcherFactory$Provider"
+            id="cern.devtools.deps.query.cp1.fieldsInWsType">
+      </matcher>
+   </extension>
+   <extension
+         id="cern.devtools.deps.query.cp1.addedClasses"
+         point="org.eclipse.viatra2.emf.incquery.matcherfactory">
+      <matcher
+            factoryProvider="cern.devtools.deps.query.cp1.addedclasses.AddedClassesMatcherFactory$Provider"
+            id="cern.devtools.deps.query.cp1.addedClasses">
+      </matcher>
+   </extension>
+   <extension
+         id="cern.devtools.deps.query.cp1.removedClassesFromProject"
+         point="org.eclipse.viatra2.emf.incquery.matcherfactory">
+      <matcher
+            factoryProvider="cern.devtools.deps.query.cp1.removedclassesfromproject.RemovedClassesFromProjectMatcherFactory$Provider"
+            id="cern.devtools.deps.query.cp1.removedClassesFromProject">
       </matcher>
    </extension>
    <extension
@@ -87,14 +111,6 @@
       <matcher
             factoryProvider="cern.devtools.deps.query.cp1.incomingfieldaccesses.IncomingFieldAccessesMatcherFactory$Provider"
             id="cern.devtools.deps.query.cp1.incomingFieldAccesses">
-      </matcher>
-   </extension>
-   <extension
-         id="cern.devtools.deps.query.cp1.addedClasses"
-         point="org.eclipse.viatra2.emf.incquery.matcherfactory">
-      <matcher
-            factoryProvider="cern.devtools.deps.query.cp1.addedclasses.AddedClassesMatcherFactory$Provider"
-            id="cern.devtools.deps.query.cp1.addedClasses">
       </matcher>
    </extension>
    <extension

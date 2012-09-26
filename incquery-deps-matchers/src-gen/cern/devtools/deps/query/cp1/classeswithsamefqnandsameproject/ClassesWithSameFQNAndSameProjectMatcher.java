@@ -24,6 +24,12 @@ import org.eclipse.viatra2.gtasm.patternmatcher.incremental.rete.tuple.Tuple;
  * 
  * 
  * 
+ * // ----------------------------------------------------------------------------
+ * // 1) Join queries
+ * // ----------------------------------------------------------------------------
+ * 
+ * 
+ * 
  *  
  * pattern classesWithSameFQNAndSameProject(repoClass : CP1Class, wsClass : WType) = {
  * 	// Pattern applies only classes within a project with the same name.

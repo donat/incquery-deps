@@ -1,3 +1,4 @@
 **/bin/**/*
+**/src-gen/**/*
 incquery-deps-transformer/models/commonbuild-full-pro.cp1model
 incquery-deps-transformer/models/commonbuild-full-pro.repomodel

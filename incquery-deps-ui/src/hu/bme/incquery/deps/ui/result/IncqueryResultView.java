@@ -78,10 +78,8 @@ public class IncqueryResultView extends ViewPart implements ISelectionListener {
 		if (selection instanceof TreeSelection) {
 			TreeSelection te = (TreeSelection) selection;
 			Object element = te.getFirstElement();
-			if (element != null) {
-				treeViewer.setInput(element);
-				return;
-			}
+			refresh(element);
+			return;
 		}
 		if (selection instanceof IJavaProject) {
 			treeViewer.setInput(selection);
@@ -89,17 +87,22 @@ public class IncqueryResultView extends ViewPart implements ISelectionListener {
 		}
 		if (selection instanceof IStructuredSelection) {
 			ICompilationUnit cu = getCompilationUnit((IStructuredSelection) selection);
-			if (cu != null) {
-				treeViewer.setInput(cu);
-				return;
-			}
+			refresh(cu);
+			return;
 		} else if (selection instanceof TextSelection) {
 			IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 			IJavaElement jdtElem = JavaUI.getEditorInputJavaElement(editor.getEditorInput());
 			if (jdtElem != null && jdtElem instanceof ICompilationUnit) {
-				treeViewer.setInput((ICompilationUnit) jdtElem);
+				refresh((ICompilationUnit) jdtElem);
 			}
 		}
+	}
+
+	private void refresh(Object element) {
+		if (element != null) {
+			treeViewer.setInput(element);
+		}
+		treeViewer.expandAll();
 	}
 
 	/*

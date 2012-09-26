@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/incquery-deps-cp2model/src" modelPluginID="hu.bme.incquery.deps.cp2model"
+    modelName="Cp2model" modelPluginClass="" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="6.0" copyrightFields="false">
+  <foreignModel>cp2model.ecore</foreignModel>
+  <genPackages prefix="Cp2model" basePackage="hu.bme.incquery.deps" disposableProviderFactory="true"
+      ecorePackage="cp2model.ecore#/">
+    <genClasses ecoreClass="cp2model.ecore#//CP2Repository">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cp2model.ecore#//CP2Repository/elements"/>
+    </genClasses>
+    <genClasses ecoreClass="cp2model.ecore#//CP2Project">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cp2model.ecore#//CP2Project/classes"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cp2model.ecore#//CP2Project/name"/>
+    </genClasses>
+    <genClasses ecoreClass="cp2model.ecore#//CP2Class">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cp2model.ecore#//CP2Class/fields"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cp2model.ecore#//CP2Class/methods"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cp2model.ecore#//CP2Class/extends"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cp2model.ecore#//CP2Class/implements"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cp2model.ecore#//CP2Class/simpleName"/>
+    </genClasses>
+    <genClasses ecoreClass="cp2model.ecore#//CP2Field">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cp2model.ecore#//CP2Field/name"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="cp2model.ecore#//C2CodeElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cp2model.ecore#//C2CodeElement/id"/>
+    </genClasses>
+    <genClasses ecoreClass="cp2model.ecore#//C2Methods">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cp2model.ecore#//C2Methods/name"/>
+    </genClasses>
+    <genClasses ecoreClass="cp2model.ecore#//CP2Dependency">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cp2model.ecore#//CP2Dependency/from"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cp2model.ecore#//CP2Dependency/to"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cp2model.ecore#//CP2Dependency/type"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

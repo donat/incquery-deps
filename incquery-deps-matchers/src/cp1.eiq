@@ -11,22 +11,8 @@ package cern.devtools.deps.query.cp1
 import "http://inf.mit.bme.hu/donat/incquery-deps/wsmodel"
 import "http://inf.mit.bme.hu/donat/incquery-deps/cp1model"
 import "http://www.eclipse.org/emf/2002/Ecore"
- 
-// ----------------------------------------------------------------------------
-// 0) Basic
-// ----------------------------------------------------------------------------
-pattern wsProject(p) = { 
-	WProject(p);
-}
-
-pattern repoProject(p) = {
-	CP1Project(p);
-}
+    
    
-   
-// ----------------------------------------------------------------------------
-// 1) Join queries
-// ----------------------------------------------------------------------------
 
 /**
  * Finds projects in the models with the same names,
@@ -35,6 +21,62 @@ pattern projectsWithSameName(repoProject : CP1Project, wsProject : WProject) = {
 	CP1Project.name(repoProject, commonName);
 	WProject.name(wsProject, commonName);
 }
+
+ 
+ /**
+  * Finds all the defined types in the container project.
+  */
+pattern typesInWsProject(wsType : WType, wsProject: WProject) = {
+	WProject.packageFragmentRoots.packageFragments.compilationUnits.types(wsProject, wsType);
+}
+
+
+pattern methodsInWsType(wsMethod : WMethod, wsType : WType) = {
+	WType.methods(wsType, wsMethod);	
+}
+
+pattern fieldsInWsType(wsField: WField, wsType : WType) = {
+	WType.fields(wsType, wsField);	
+}
+
+
+/**
+ * Matches all the classes in the workspace which does not exist in the repository.
+ */
+pattern addedClasses(wsClass : WType) = {
+	// Find the following attributes for the selected type: package name, simple name, project.
+	WPackageFragment.compilationUnits.types(wsPackage, wsClass);
+	WPackageFragment.name(wsPackage, packageName);
+	WType.name(wsClass, simpleName);
+	WProject.packageFragmentRoots.packageFragments.compilationUnits.types(wsProject, wsClass);
+
+	// Find the project in the repository.
+	find projectsWithSameName(repoProject, wsProject);
+
+	// Check that the repository project does not contain a class with the same name.
+	neg find classNamesInRepoProjects(repoProject, packageName, simpleName);
+}
+
+/**
+ * Matches all the classes in the repository which has been deleted from the workspace.
+ */
+pattern removedClassesFromProject(repoClass : CP1Class, repoProject : CP1Project) = {
+	CP1Class.simpleName(repoClass, simpleName);
+	CP1Class.packageName(repoClass, packageName);
+	CP1Project.classes(repoProject, repoClass);
+
+	// Find the project in the workspace.
+	find projectsWithSameName(repoProject, wsProject);
+
+	// Check that the workspace does not contain a class with the same name.
+	neg find classNamesInWorkspaceProjects(wsProject, packageName, simpleName);
+}
+
+// ----------------------------------------------------------------------------
+// 1) Join queries
+// ----------------------------------------------------------------------------
+
+
 
 /*
  * Finds correspondent classes in the models.
@@ -171,22 +213,7 @@ pattern incomingFieldAccesses(repoSource : CP1Method, wsTarget : WField) = {
 // 3) Delta queries
 // ----------------------------------------------------------------------------
 
-/**
- * Matches all the classes in the workspace which does not exist in the repository.
- */
-pattern addedClasses(wsClass : WType) = {
-	// Find the following attributes for the selected type: package name, simple name, project.
-	WPackageFragment.compilationUnits.types(wsPackage, wsClass);
-	WPackageFragment.name(wsPackage, packageName);
-	WType.name(wsClass, simpleName);
-	WProject.packageFragmentRoots.packageFragments.compilationUnits.types(wsProject, wsClass);
 
-	// Find the project in the repository.
-	find projectsWithSameName(repoProject, wsProject);
-
-	// Check that the repository project does not contain a class with the same name.
-	neg find classNamesInRepoProjects(repoProject, packageName, simpleName);
-}
 
 /**
  * Matches for all class names in the repository projects.
@@ -226,10 +253,13 @@ private pattern classNamesInWorkspaceProjects(wsProject, packageName, simpleName
 /**
  * Matches all methods in the workspace which does not exist in the repository.
  */
-pattern addedMethods(wsMethod : WMethod) = {
+pattern addedMethods(wsMethod : WMethod, wsClass: WType) = {
 	// Find the method's project.
 	WMethod.signature(wsMethod, signature);
 	WProject.packageFragmentRoots.packageFragments.compilationUnits.types.methods(wsProject, wsMethod);
+
+	//Assign the type to the class.
+	WType.methods(wsClass, wsMethod);
 
 	// Find the project in the repository.
 	find projectsWithSameName(repoProject, wsProject);

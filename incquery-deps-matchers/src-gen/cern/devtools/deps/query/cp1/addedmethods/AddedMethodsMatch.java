@@ -1,6 +1,7 @@
 package cern.devtools.deps.query.cp1.addedmethods;
 
 import hu.bme.incquery.deps.wsmodel.WMethod;
+import hu.bme.incquery.deps.wsmodel.WType;
 import java.util.Arrays;
 import org.eclipse.viatra2.emf.incquery.runtime.api.IPatternMatch;
 import org.eclipse.viatra2.emf.incquery.runtime.api.impl.BasePatternMatch;
@@ -23,16 +24,20 @@ import org.eclipse.viatra2.patternlanguage.core.patternLanguage.Pattern;
 public final class AddedMethodsMatch extends BasePatternMatch implements IPatternMatch {
   private WMethod fWsMethod;
   
-  private static String[] parameterNames = {"wsMethod"};
+  private WType fWsClass;
   
-  AddedMethodsMatch(final WMethod pWsMethod) {
+  private static String[] parameterNames = {"wsMethod", "wsClass"};
+  
+  AddedMethodsMatch(final WMethod pWsMethod, final WType pWsClass) {
     this.fWsMethod = pWsMethod;
+    this.fWsClass = pWsClass;
     
   }
   
   @Override
   public Object get(final String parameterName) {
     if ("wsMethod".equals(parameterName)) return this.fWsMethod;
+    if ("wsClass".equals(parameterName)) return this.fWsClass;
     return null;
     
   }
@@ -42,10 +47,19 @@ public final class AddedMethodsMatch extends BasePatternMatch implements IPatter
     
   }
   
+  public WType getWsClass() {
+    return this.fWsClass;
+    
+  }
+  
   @Override
   public boolean set(final String parameterName, final Object newValue) {
     if ("wsMethod".equals(parameterName) && newValue instanceof hu.bme.incquery.deps.wsmodel.WMethod) {
     	this.fWsMethod = (hu.bme.incquery.deps.wsmodel.WMethod) newValue;
+    	return true;
+    }
+    if ("wsClass".equals(parameterName) && newValue instanceof hu.bme.incquery.deps.wsmodel.WType) {
+    	this.fWsClass = (hu.bme.incquery.deps.wsmodel.WType) newValue;
     	return true;
     }
     return false;
@@ -54,6 +68,11 @@ public final class AddedMethodsMatch extends BasePatternMatch implements IPatter
   
   public void setWsMethod(final WMethod pWsMethod) {
     this.fWsMethod = pWsMethod;
+    
+  }
+  
+  public void setWsClass(final WType pWsClass) {
+    this.fWsClass = pWsClass;
     
   }
   
@@ -71,14 +90,15 @@ public final class AddedMethodsMatch extends BasePatternMatch implements IPatter
   
   @Override
   public Object[] toArray() {
-    return new Object[]{fWsMethod};
+    return new Object[]{fWsMethod, fWsClass};
     
   }
   
   @Override
   public String prettyPrint() {
     StringBuilder result = new StringBuilder();
-    result.append("\"wsMethod\"=" + prettyPrintValue(fWsMethod));
+    result.append("\"wsMethod\"=" + prettyPrintValue(fWsMethod) + ", ");
+    result.append("\"wsClass\"=" + prettyPrintValue(fWsClass));
     return result.toString();
     
   }
@@ -88,6 +108,7 @@ public final class AddedMethodsMatch extends BasePatternMatch implements IPatter
     final int prime = 31;
     int result = 1;
     result = prime * result + ((fWsMethod == null) ? 0 : fWsMethod.hashCode()); 
+    result = prime * result + ((fWsClass == null) ? 0 : fWsClass.hashCode()); 
     return result; 
     
   }
@@ -108,6 +129,8 @@ public final class AddedMethodsMatch extends BasePatternMatch implements IPatter
     AddedMethodsMatch other = (AddedMethodsMatch) obj;
     if (fWsMethod == null) {if (other.fWsMethod != null) return false;}
     else if (!fWsMethod.equals(other.fWsMethod)) return false;
+    if (fWsClass == null) {if (other.fWsClass != null) return false;}
+    else if (!fWsClass.equals(other.fWsClass)) return false;
     return true;
   }
   

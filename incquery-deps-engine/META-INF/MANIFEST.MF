@@ -9,8 +9,8 @@ Require-Bundle: org.eclipse.ui,
  hu.bme.incquery.deps.core;bundle-version="1.0.0",
  hu.bme.incquery.deps.wsmodel;bundle-version="1.0.0",
  hu.bme.incquery.deps.cp1model;bundle-version="1.0.0",
- org.eclipse.viatra2.emf.incquery.runtime;bundle-version="0.6.0";visibility:=reexport,
- incquery-deps-matchers;bundle-version="0.0.1"
+ incquery-deps-matchers;bundle-version="0.0.1",
+ hu.bme.incquery.deps.modelloader;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: hu.bme.incquery.deps.engine

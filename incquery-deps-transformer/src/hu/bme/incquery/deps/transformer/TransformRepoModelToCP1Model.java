@@ -129,9 +129,11 @@ public class TransformRepoModelToCP1Model {
 	}
 
 	public static void main(String[] args) throws IOException {
+		long ms = System.currentTimeMillis();
 		new TransformRepoModelToCP1Model(
 				"C:/opt/workspace/github/incquery-deps/incquery-deps-transformer/models/visitor.repomodel",
 				"C:/opt/workspace/github/incquery-deps/incquery-deps-transformer/models/visitor.cp1model")
 				.transform();
+		System.out.println(String.format("Model loaded. Execution took %s seconds.", ((System.currentTimeMillis() - ms) / 1000l)));
 	}
 }

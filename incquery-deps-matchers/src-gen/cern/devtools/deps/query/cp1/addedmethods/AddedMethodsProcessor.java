@@ -2,6 +2,7 @@ package cern.devtools.deps.query.cp1.addedmethods;
 
 import cern.devtools.deps.query.cp1.addedmethods.AddedMethodsMatch;
 import hu.bme.incquery.deps.wsmodel.WMethod;
+import hu.bme.incquery.deps.wsmodel.WType;
 import org.eclipse.viatra2.emf.incquery.runtime.api.IMatchProcessor;
 
 /**
@@ -14,13 +15,14 @@ public abstract class AddedMethodsProcessor implements IMatchProcessor<AddedMeth
   /**
    * Defines the action that is to be executed on each match.
    * @param pWsMethod the value of pattern parameter wsMethod in the currently processed match 
+   * @param pWsClass the value of pattern parameter wsClass in the currently processed match 
    * 
    */
-  public abstract void process(final WMethod wsMethod);
+  public abstract void process(final WMethod wsMethod, final WType wsClass);
   
   @Override
   public void process(final AddedMethodsMatch match) {
-    process(match.getWsMethod());  				
+    process(match.getWsMethod(), match.getWsClass());  				
     
   }
 }

@@ -1,27 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
 <eMFPatternLanguage:PatternModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:eMFPatternLanguage="http://www.eclipse.org/viatra2/patternlanguage/EMFPatternLanguage" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:patternLanguage="http://www.eclipse.org/viatra2/patternlanguage/core/PatternLanguage" xmlns:types="http://www.eclipse.org/xtext/common/JavaVMTypes" xmlns:xbase="http://www.eclipse.org/xtext/xbase/Xbase">
-  <patterns name="cern.devtools.deps.query.cp1.wsProject" fileName="platform:/resource/incquery-deps-matchers/src/cp1.eiq">
-    <parameters name="p"/>
-    <bodies>
-      <constraints xsi:type="eMFPatternLanguage:EClassifierConstraint">
-        <type xsi:type="eMFPatternLanguage:ClassType">
-          <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject"/>
-        </type>
-        <var var="p"/>
-      </constraints>
-    </bodies>
-  </patterns>
-  <patterns name="cern.devtools.deps.query.cp1.repoProject" fileName="platform:/resource/incquery-deps-matchers/src/cp1.eiq">
-    <parameters name="p"/>
-    <bodies>
-      <constraints xsi:type="eMFPatternLanguage:EClassifierConstraint">
-        <type xsi:type="eMFPatternLanguage:ClassType">
-          <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Project"/>
-        </type>
-        <var var="p"/>
-      </constraints>
-    </bodies>
-  </patterns>
   <patterns name="cern.devtools.deps.query.cp1.projectsWithSameName" fileName="platform:/resource/incquery-deps-matchers/src/cp1.eiq">
     <parameters name="repoProject">
       <type xsi:type="eMFPatternLanguage:ClassType">
@@ -65,6 +43,312 @@
             <value var="commonName"/>
           </dst>
         </head>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp1.typesInWsProject" fileName="platform:/resource/incquery-deps-matchers/src/cp1.eiq">
+    <parameters name="wsType">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
+      </type>
+    </parameters>
+    <parameters name="wsProject">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject/packageFragmentRoots"/>
+            </type>
+            <tail>
+              <type xsi:type="eMFPatternLanguage:ReferenceType">
+                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragmentRoot/packageFragments"/>
+              </type>
+              <tail>
+                <type xsi:type="eMFPatternLanguage:ReferenceType">
+                  <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragment/compilationUnits"/>
+                </type>
+                <tail>
+                  <type xsi:type="eMFPatternLanguage:ReferenceType">
+                    <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WCompilationUnit/types"/>
+                  </type>
+                </tail>
+              </tail>
+            </tail>
+          </tail>
+          <src var="wsProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="wsType"/>
+          </dst>
+        </head>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp1.methodsInWsType" fileName="platform:/resource/incquery-deps-matchers/src/cp1.eiq">
+    <parameters name="wsMethod">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WMethod"/>
+      </type>
+    </parameters>
+    <parameters name="wsType">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType/methods"/>
+            </type>
+          </tail>
+          <src var="wsType"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="wsMethod"/>
+          </dst>
+        </head>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp1.fieldsInWsType" fileName="platform:/resource/incquery-deps-matchers/src/cp1.eiq">
+    <parameters name="wsField">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WField"/>
+      </type>
+    </parameters>
+    <parameters name="wsType">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType/fields"/>
+            </type>
+          </tail>
+          <src var="wsType"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="wsField"/>
+          </dst>
+        </head>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp1.addedClasses" fileName="platform:/resource/incquery-deps-matchers/src/cp1.eiq">
+    <parameters name="wsClass">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragment"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragment/compilationUnits"/>
+            </type>
+            <tail>
+              <type xsi:type="eMFPatternLanguage:ReferenceType">
+                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WCompilationUnit/types"/>
+              </type>
+            </tail>
+          </tail>
+          <src var="wsPackage"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="wsClass"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragment"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WNamedElement/name"/>
+            </type>
+          </tail>
+          <src var="wsPackage"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="packageName"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WNamedElement/name"/>
+            </type>
+          </tail>
+          <src var="wsClass"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="simpleName"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject/packageFragmentRoots"/>
+            </type>
+            <tail>
+              <type xsi:type="eMFPatternLanguage:ReferenceType">
+                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragmentRoot/packageFragments"/>
+              </type>
+              <tail>
+                <type xsi:type="eMFPatternLanguage:ReferenceType">
+                  <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragment/compilationUnits"/>
+                </type>
+                <tail>
+                  <type xsi:type="eMFPatternLanguage:ReferenceType">
+                    <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WCompilationUnit/types"/>
+                  </type>
+                </tail>
+              </tail>
+            </tail>
+          </tail>
+          <src var="wsProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="wsClass"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.0">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoProject"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsProject"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint" negative="true">
+        <call patternRef="//@patterns.14">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoProject"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="packageName"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="simpleName"/>
+          </parameters>
+        </call>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp1.removedClassesFromProject" fileName="platform:/resource/incquery-deps-matchers/src/cp1.eiq">
+    <parameters name="repoClass">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class"/>
+      </type>
+    </parameters>
+    <parameters name="repoProject">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Project"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class/simpleName"/>
+            </type>
+          </tail>
+          <src var="repoClass"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="simpleName"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class/packageName"/>
+            </type>
+          </tail>
+          <src var="repoClass"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="packageName"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Project"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Project/classes"/>
+            </type>
+          </tail>
+          <src var="repoProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoClass"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.0">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoProject"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsProject"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint" negative="true">
+        <call patternRef="//@patterns.16">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsProject"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="packageName"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="simpleName"/>
+          </parameters>
+        </call>
       </constraints>
     </bodies>
   </patterns>
@@ -128,7 +412,7 @@
         </head>
       </constraints>
       <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
-        <call patternRef="//@patterns.2">
+        <call patternRef="//@patterns.0">
           <parameters xsi:type="patternLanguage:VariableValue">
             <value var="repoProject"/>
           </parameters>
@@ -294,7 +578,7 @@
         </head>
       </constraints>
       <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
-        <call patternRef="//@patterns.2">
+        <call patternRef="//@patterns.0">
           <parameters xsi:type="patternLanguage:VariableValue">
             <value var="repoProject"/>
           </parameters>
@@ -407,7 +691,7 @@
         </head>
       </constraints>
       <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
-        <call patternRef="//@patterns.2">
+        <call patternRef="//@patterns.0">
           <parameters xsi:type="patternLanguage:VariableValue">
             <value var="repoProject"/>
           </parameters>
@@ -463,7 +747,7 @@
     </parameters>
     <bodies>
       <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
-        <call patternRef="//@patterns.3">
+        <call patternRef="//@patterns.6">
           <parameters xsi:type="patternLanguage:VariableValue">
             <value var="repoTarget"/>
           </parameters>
@@ -542,7 +826,7 @@
     </parameters>
     <bodies>
       <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
-        <call patternRef="//@patterns.3">
+        <call patternRef="//@patterns.6">
           <parameters xsi:type="patternLanguage:VariableValue">
             <value var="repoTarget"/>
           </parameters>
@@ -621,7 +905,7 @@
     </parameters>
     <bodies>
       <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
-        <call patternRef="//@patterns.4">
+        <call patternRef="//@patterns.7">
           <parameters xsi:type="patternLanguage:VariableValue">
             <value var="repoTarget"/>
           </parameters>
@@ -700,7 +984,7 @@
     </parameters>
     <bodies>
       <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
-        <call patternRef="//@patterns.4">
+        <call patternRef="//@patterns.7">
           <parameters xsi:type="patternLanguage:VariableValue">
             <value var="repoTarget"/>
           </parameters>
@@ -779,7 +1063,7 @@
     </parameters>
     <bodies>
       <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
-        <call patternRef="//@patterns.5">
+        <call patternRef="//@patterns.8">
           <parameters xsi:type="patternLanguage:VariableValue">
             <value var="repoTarget"/>
           </parameters>
@@ -842,122 +1126,6 @@
             <literal href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1DependencyType/FIELD_REFERENCE"/>
           </dst>
         </head>
-      </constraints>
-    </bodies>
-  </patterns>
-  <patterns name="cern.devtools.deps.query.cp1.addedClasses" fileName="platform:/resource/incquery-deps-matchers/src/cp1.eiq">
-    <parameters name="wsClass">
-      <type xsi:type="eMFPatternLanguage:ClassType">
-        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
-      </type>
-    </parameters>
-    <bodies>
-      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
-        <head>
-          <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragment"/>
-          </type>
-          <tail>
-            <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragment/compilationUnits"/>
-            </type>
-            <tail>
-              <type xsi:type="eMFPatternLanguage:ReferenceType">
-                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WCompilationUnit/types"/>
-              </type>
-            </tail>
-          </tail>
-          <src var="wsPackage"/>
-          <dst xsi:type="patternLanguage:VariableValue">
-            <value var="wsClass"/>
-          </dst>
-        </head>
-      </constraints>
-      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
-        <head>
-          <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragment"/>
-          </type>
-          <tail>
-            <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WNamedElement/name"/>
-            </type>
-          </tail>
-          <src var="wsPackage"/>
-          <dst xsi:type="patternLanguage:VariableValue">
-            <value var="packageName"/>
-          </dst>
-        </head>
-      </constraints>
-      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
-        <head>
-          <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
-          </type>
-          <tail>
-            <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WNamedElement/name"/>
-            </type>
-          </tail>
-          <src var="wsClass"/>
-          <dst xsi:type="patternLanguage:VariableValue">
-            <value var="simpleName"/>
-          </dst>
-        </head>
-      </constraints>
-      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
-        <head>
-          <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject"/>
-          </type>
-          <tail>
-            <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject/packageFragmentRoots"/>
-            </type>
-            <tail>
-              <type xsi:type="eMFPatternLanguage:ReferenceType">
-                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragmentRoot/packageFragments"/>
-              </type>
-              <tail>
-                <type xsi:type="eMFPatternLanguage:ReferenceType">
-                  <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragment/compilationUnits"/>
-                </type>
-                <tail>
-                  <type xsi:type="eMFPatternLanguage:ReferenceType">
-                    <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WCompilationUnit/types"/>
-                  </type>
-                </tail>
-              </tail>
-            </tail>
-          </tail>
-          <src var="wsProject"/>
-          <dst xsi:type="patternLanguage:VariableValue">
-            <value var="wsClass"/>
-          </dst>
-        </head>
-      </constraints>
-      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
-        <call patternRef="//@patterns.2">
-          <parameters xsi:type="patternLanguage:VariableValue">
-            <value var="repoProject"/>
-          </parameters>
-          <parameters xsi:type="patternLanguage:VariableValue">
-            <value var="wsProject"/>
-          </parameters>
-        </call>
-      </constraints>
-      <constraints xsi:type="patternLanguage:PatternCompositionConstraint" negative="true">
-        <call patternRef="//@patterns.12">
-          <parameters xsi:type="patternLanguage:VariableValue">
-            <value var="repoProject"/>
-          </parameters>
-          <parameters xsi:type="patternLanguage:VariableValue">
-            <value var="packageName"/>
-          </parameters>
-          <parameters xsi:type="patternLanguage:VariableValue">
-            <value var="simpleName"/>
-          </parameters>
-        </call>
       </constraints>
     </bodies>
   </patterns>
@@ -1079,7 +1247,7 @@
         </head>
       </constraints>
       <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
-        <call patternRef="//@patterns.2">
+        <call patternRef="//@patterns.0">
           <parameters xsi:type="patternLanguage:VariableValue">
             <value var="repoProject"/>
           </parameters>
@@ -1089,7 +1257,7 @@
         </call>
       </constraints>
       <constraints xsi:type="patternLanguage:PatternCompositionConstraint" negative="true">
-        <call patternRef="//@patterns.14">
+        <call patternRef="//@patterns.16">
           <parameters xsi:type="patternLanguage:VariableValue">
             <value var="wsProject"/>
           </parameters>
@@ -1207,6 +1375,11 @@
         <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WMethod"/>
       </type>
     </parameters>
+    <parameters name="wsClass">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
+      </type>
+    </parameters>
     <bodies>
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
@@ -1260,8 +1433,24 @@
           </dst>
         </head>
       </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType/methods"/>
+            </type>
+          </tail>
+          <src var="wsClass"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="wsMethod"/>
+          </dst>
+        </head>
+      </constraints>
       <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
-        <call patternRef="//@patterns.2">
+        <call patternRef="//@patterns.0">
           <parameters xsi:type="patternLanguage:VariableValue">
             <value var="repoProject"/>
           </parameters>
@@ -1271,7 +1460,7 @@
         </call>
       </constraints>
       <constraints xsi:type="patternLanguage:PatternCompositionConstraint" negative="true">
-        <call patternRef="//@patterns.16">
+        <call patternRef="//@patterns.18">
           <parameters xsi:type="patternLanguage:VariableValue">
             <value var="repoProject"/>
           </parameters>
@@ -1366,7 +1555,7 @@
         </head>
       </constraints>
       <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
-        <call patternRef="//@patterns.2">
+        <call patternRef="//@patterns.0">
           <parameters xsi:type="patternLanguage:VariableValue">
             <value var="repoProject"/>
           </parameters>
@@ -1376,7 +1565,7 @@
         </call>
       </constraints>
       <constraints xsi:type="patternLanguage:PatternCompositionConstraint" negative="true">
-        <call patternRef="//@patterns.18">
+        <call patternRef="//@patterns.20">
           <parameters xsi:type="patternLanguage:VariableValue">
             <value var="wsProject"/>
           </parameters>
@@ -1390,7 +1579,7 @@
           <feature xsi:type="types:JvmOperation" href="java:/Objects/org.eclipse.xtext.xbase.lib.BooleanExtensions#org.eclipse.xtext.xbase.lib.BooleanExtensions.operator_not(boolean)"/>
           <operand xsi:type="xbase:XMemberFeatureCall" explicitOperationCall="true">
             <feature xsi:type="types:JvmOperation" href="java:/Objects/java.lang.String#java.lang.String.contains(java.lang.CharSequence)"/>
-            <memberCallTarget xsi:type="xbase:XFeatureCall" feature="//@patterns.17/@bodies.0/@variables.2"/>
+            <memberCallTarget xsi:type="xbase:XFeatureCall" feature="//@patterns.19/@bodies.0/@variables.2"/>
             <memberCallArguments xsi:type="xbase:XStringLiteral" value="&lt;clinit>"/>
           </operand>
         </expression>
@@ -1511,7 +1700,7 @@
         </head>
       </constraints>
       <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
-        <call patternRef="//@patterns.2">
+        <call patternRef="//@patterns.0">
           <parameters xsi:type="patternLanguage:VariableValue">
             <value var="repoProject"/>
           </parameters>
@@ -1521,7 +1710,7 @@
         </call>
       </constraints>
       <constraints xsi:type="patternLanguage:PatternCompositionConstraint" negative="true">
-        <call patternRef="//@patterns.20">
+        <call patternRef="//@patterns.22">
           <parameters xsi:type="patternLanguage:VariableValue">
             <value var="repoProject"/>
           </parameters>
@@ -1616,7 +1805,7 @@
         </head>
       </constraints>
       <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
-        <call patternRef="//@patterns.2">
+        <call patternRef="//@patterns.0">
           <parameters xsi:type="patternLanguage:VariableValue">
             <value var="repoProject"/>
           </parameters>
@@ -1626,7 +1815,7 @@
         </call>
       </constraints>
       <constraints xsi:type="patternLanguage:PatternCompositionConstraint" negative="true">
-        <call patternRef="//@patterns.22">
+        <call patternRef="//@patterns.24">
           <parameters xsi:type="patternLanguage:VariableValue">
             <value var="wsProject"/>
           </parameters>
@@ -1709,7 +1898,7 @@
     </parameters>
     <bodies>
       <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
-        <call patternRef="//@patterns.21">
+        <call patternRef="//@patterns.23">
           <parameters xsi:type="patternLanguage:VariableValue">
             <value var="repoTo"/>
           </parameters>
@@ -1799,7 +1988,7 @@
     </parameters>
     <bodies>
       <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
-        <call patternRef="//@patterns.17">
+        <call patternRef="//@patterns.19">
           <parameters xsi:type="patternLanguage:VariableValue">
             <value var="repoTo"/>
           </parameters>
@@ -1872,7 +2061,7 @@
     </bodies>
     <bodies>
       <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
-        <call patternRef="//@patterns.17">
+        <call patternRef="//@patterns.19">
           <parameters xsi:type="patternLanguage:VariableValue">
             <value var="repoTo"/>
           </parameters>
@@ -1962,7 +2151,7 @@
     </parameters>
     <bodies>
       <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
-        <call patternRef="//@patterns.13">
+        <call patternRef="//@patterns.15">
           <parameters xsi:type="patternLanguage:VariableValue">
             <value var="repoTo"/>
           </parameters>
@@ -2035,7 +2224,7 @@
     </bodies>
     <bodies>
       <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
-        <call patternRef="//@patterns.13">
+        <call patternRef="//@patterns.15">
           <parameters xsi:type="patternLanguage:VariableValue">
             <value var="repoTo"/>
           </parameters>
@@ -2108,10 +2297,10 @@
     </bodies>
   </patterns>
   <importPackages>
-    <ePackage href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#/"/>
+    <ePackage href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#/"/>
   </importPackages>
   <importPackages>
-    <ePackage href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#/"/>
+    <ePackage href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#/"/>
   </importPackages>
   <importPackages>
     <ePackage href="http://www.eclipse.org/emf/2002/Ecore#/"/>

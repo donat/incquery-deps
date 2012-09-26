@@ -23,11 +23,8 @@ import org.eclipse.viatra2.gtasm.patternmatcher.incremental.rete.tuple.Tuple;
  * providing pattern-specific query methods.
  * 
  * 
+ *     
  *    
- *    
- * // ----------------------------------------------------------------------------
- * // 1) Join queries
- * // ----------------------------------------------------------------------------
  * 
  *  
  * pattern projectsWithSameName(repoProject : CP1Project, wsProject : WProject) = {

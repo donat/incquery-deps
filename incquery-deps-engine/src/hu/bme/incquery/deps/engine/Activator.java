@@ -1,10 +1,13 @@
 package hu.bme.incquery.deps.engine;
 
 import hu.bme.incquery.deps.core.WsChangeEventListener;
+import hu.bme.incquery.deps.modelloader.RepoModelLoadingService;
 import hu.bme.incquery.deps.wsmodel.WWorkspace;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -18,7 +21,11 @@ public class Activator extends AbstractUIPlugin {
 	private static Activator plugin;
 
 	IncQueryDepsEngine engine = new IncQueryDepsEngine();
-
+	
+	private ServiceTracker modelLoaderServiceTracker;
+	ServiceReference<RepoModelLoadingService> serviceReference;
+	
+	
 	/**
 	 * The constructor
 	 */
@@ -33,25 +40,11 @@ public class Activator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
-		hu.bme.incquery.deps.core.Activator.getDefault().getWsService()
-				.registerWorkspaceListener(new WsChangeEventListener() {
 
-					@Override
-					public void init(WWorkspace resource) {
-						engine.setWorkspaceModel(resource);
-					}
-
-					@Override
-					public void recover(WWorkspace resource) {
-						engine.setWorkspaceModel(resource);
-					}
-
-					@Override
-					public void update(WWorkspace resource) {
-						engine.setWorkspaceModel(resource);
-					}
-				});
-		engine.initialize();
+		modelLoaderServiceTracker = new ServiceTracker(context, RepoModelLoadingService.class.getName(), null);
+		modelLoaderServiceTracker.open();
+		
+		engine.getInitJob().schedule();
 	}
 
 	/*
@@ -62,6 +55,7 @@ public class Activator extends AbstractUIPlugin {
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
+		modelLoaderServiceTracker.close();
 	}
 
 	/**
@@ -75,6 +69,10 @@ public class Activator extends AbstractUIPlugin {
 
 	public IncQueryDepsEngine getIncQueryDepsEngine() {
 		return engine;
+	}
+
+	public ServiceTracker getModelLoaderServiceTracker() {
+		return modelLoaderServiceTracker;
 	}
 
 }
