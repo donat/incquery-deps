@@ -28,7 +28,7 @@
 \usepackage{lastpage}
 \usepackage{anysize}
 \usepackage{longtable}
-\usepackage[magyar]{babel}
+\usepackage[english,magyar]{babel}
 \usepackage{sectsty}
 \usepackage{setspace}
 \usepackage[hang]{caption}
@@ -64,11 +64,9 @@
 \end{figure}
 }
 
-% section reference
-\newcommand{\secref}[1]{Section~\ref{#1}} 
 
-% formatted code
-\newcommand{\code}[1]{{\upshape\ttfamily\scriptsize\indent #1}}
+\newcommand{\secref}[1]{Section~\ref{#1}}                       % section reference
+\newcommand{\code}[1]{{\upshape\ttfamily\scriptsize\indent #1}} % formatted code
 
 
 %--------------------------------------------------------------------------------------
@@ -78,7 +76,7 @@
 \newcommand{\psvisor}{dr.~István Ráth, Ákos Horváth}
 \newcommand{\ptitle}{Incremental dependency analysis over large software infrastructure}
 \newcommand{\pdep}{Department of Measurement and Information Systems}
-\newcommand{\ptype}{TDK dolgozat}
+\newcommand{\ptype}{}
 
 
 %--------------------------------------------------------------------------------------
@@ -106,11 +104,11 @@
 % (like the ToC, the References, and the Chapter pages)remain in plane style
 
 \pagestyle{plain}
-%\setlength{\parindent}{0pt} % more clear; in english documents
-%\setlength{\parskip}{8pt plus 3pt minus 3pt}  % áttekinthetõbb, angol nyelvû
-\setlength{\parindent}{12pt} % in hungarian documents
-\setlength{\parskip}{0pt} % in hungarian documents
-\marginsize{35mm}{25mm}{15mm}{15mm} % anysize package
+%\setlength{\parindent}{0pt}                  % more clear; in english documents
+%\setlength{\parskip}{8pt plus 3pt minus 3pt} % more clear; in english documents
+\setlength{\parindent}{12pt}                  % in hungarian documents
+\setlength{\parskip}{0pt}                     % in hungarian documents
+\marginsize{35mm}{25mm}{15mm}{15mm}           % anysize package
 \setcounter{secnumdepth}{0}
 \sectionfont{\large\upshape\bfseries}
 \setcounter{secnumdepth}{2}
@@ -178,7 +176,13 @@ aboveskip=10pt}
 
 \pagenumbering{arabic}
 \onehalfspacing
+
+
+\selectlanguage{english}
 \include{title}
+
+\tableofcontents
+
 \include{chapter1}
 \include{chapter2}
 \include{chapter3}
