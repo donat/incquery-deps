@@ -1,12 +1,47 @@
 \chapter{Background}
 %------------------------------------------------------------------------------
-10 pages. For motivation: Design pattern figure. (Service registration pattern).
-Introduce used technologies.
-\begin{itemize}
-	\item Eclipse/EMF (Complete text available)
-	\item EMF-IncQuery
-	\item Dependency Analysis
-	\item Java Bytecode Specification and Apache BCEL.
-	\item Implementation-specific technologies: Spring Framework, Oracle dbms.
-\end{itemize}
+%10 pages. For motivation: Design pattern figure. (Service registration pattern).
 %------------------------------------------------------------------------------
+
+\section{Service Provider Framework}
+\cite{Bloch08}
+I will highlight the problem and the solution by introducing an simple example. 
+
+This is a pattern described...
+
+
+\picr{exampleclasses.pdf}{Service Provider framework example}
+
+\section{Related technologies}
+In this chapter I try to present the used technologies in order to make the rest of the paper more understandable.
+
+\subsection{Eclipse Integrated Development Environment}
+%copy paste from istvan's work
+
+\subsection{Eclipse Modeling Framework}
+% I think it is more or less the same
+
+% Find overview on the documentation website and cite it. 
+% https://viatra.inf.mit.bme.hu/incquery/documentation
+
+\subsection{Java Byte Code}
+% described in the virtual machine specification 
+% http://docs.oracle.com/javase/specs/jvms/se5.0/html/VMSpecTOC.doc.html 
+% how the virtual machine works
+% what kind of infomration is available in the bytecode 
+
+\subsection{Apache Commons Byte Code Engineering Library}
+% look for summary what it does. 
+
+\subsection{Other related technologies}
+\begin{description}
+\item[Spring Framework] To develop modular, testable and configurable applications.
+\item[Maven] Build system
+\item[Tycho] Maven extension to build eclipse plugins.
+\item[Oracle Database] Commercial relational database management system. Full sql support. Extensive feature set, one of the market-leaders. 
+\end{description}
+
+% maybe it is easy to put here something from wikipedia.
+\subsection{EMF-IncQuery} 
+
+sdf

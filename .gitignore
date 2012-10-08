@@ -9,3 +9,6 @@ incquery-deps-documentation/*.pdf
 incquery-deps-documentation/*.out
 incquery-deps-documentation/*.thm
 incquery-deps-documentation/*.toc
+incquery-deps-documentation/*.bbl
+incquery-deps-documentation/*.blg
+incquery-deps-documentation/**/*.~vsd

@@ -65,6 +65,7 @@
 }
 
 
+\newcommand{\figref}[1]{Figure~\autoref{fig:#1}}                      
 \newcommand{\secref}[1]{Section~\ref{#1}}                       % section reference
 \newcommand{\code}[1]{{\upshape\ttfamily\scriptsize\indent #1}} % formatted code
 
@@ -189,9 +190,10 @@ aboveskip=10pt}
 \include{chapter4}
 \include{chapter5}
 \include{chapter6}
-%\addcontentsline{toc}{chapter}{Irodalomjegyzék}
-%\bibliographystyle{plain}
-%\bibliography{mybib}
+
+\addcontentsline{toc}{chapter}{Bibliography} % Add bibliography
+\bibliographystyle{plain}                    % use plain style
+\bibliography{bib}                           % include the entries
 
 
 %\include{appendices}
