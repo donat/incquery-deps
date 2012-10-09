@@ -3,45 +3,67 @@
 %10 pages. For motivation: Design pattern figure. (Service registration pattern).
 %------------------------------------------------------------------------------
 
-\section{Service Provider Framework}
-\cite{Bloch08}
-I will highlight the problem and the solution by introducing an simple example. 
+%------------------------------------------------------------------------------
+% Example
+%------------------------------------------------------------------------------
+\section{Example: Service Provider Framework}
+\label{sect:example}
 
-This is a pattern described...
+The service provider framework is a possible use-case for the Adapter design pattern. The implementation I am going to present derived from the book \cite{Bloch08} Effective Java.
 
-
+Overview of the pattern. 
 \picr{exampleclasses.pdf}{Service Provider framework example}
+Three different people 
 
+Description of the classes one-by one. Possible source code can be inserted here. 
+
+
+%------------------------------------------------------------------------------
+% Related technologies
+%------------------------------------------------------------------------------
 \section{Related technologies}
-In this chapter I try to present the used technologies in order to make the rest of the paper more understandable.
+Before proceeding to the main part of this paper, I am going to give an overview about the related technologies used by my solution. I
+Why do we have to present the related technologies. 
 
-\subsection{Eclipse Integrated Development Environment}
-%copy paste from istvan's work
 
-\subsection{Eclipse Modeling Framework}
-% I think it is more or less the same
+\subsection{Java byte code specification}
+How the java vm works.
+What is the input. 
+What kind of information can be extracted from here. 
 
-% Find overview on the documentation website and cite it. 
-% https://viatra.inf.mit.bme.hu/incquery/documentation
 
-\subsection{Java Byte Code}
+\subsection{Apache Commons Byte Code Engineering Library}
 % described in the virtual machine specification 
 % http://docs.oracle.com/javase/specs/jvms/se5.0/html/VMSpecTOC.doc.html 
 % how the virtual machine works
 % what kind of infomration is available in the bytecode 
+\cite{BCEL}
+Abstraction over Java byte code specification. 
+How it works. Create diagram!
+Possible use-cases.
 
-\subsection{Apache Commons Byte Code Engineering Library}
-% look for summary what it does. 
+\subsection{Eclipse Integrated Development Environment}
+Copy it from the stock text.
+
+
+\subsection{Eclipse Modeling Framework}
+Copy it from the stock text.
+% Find overview on the documentation website and cite it. 
+% https://viatra.inf.mit.bme.hu/incquery/documentation
+
+\subsection{EMF-IncQuery} 
+Incremental model queries over emf models. Documentation site.
+
+
 
 \subsection{Other related technologies}
-\begin{description}
-\item[Spring Framework] To develop modular, testable and configurable applications.
-\item[Maven] Build system
-\item[Tycho] Maven extension to build eclipse plugins.
-\item[Oracle Database] Commercial relational database management system. Full sql support. Extensive feature set, one of the market-leaders. 
-\end{description}
 
+\subsubsection{Spring Framework}
+To develop modular, testable and configurable applications.
+\subsubsection{Maven}
+Build system
+\subsubsection{Tycho}
+Maven extension to build eclipse plugins.
+\subsubsection{Oracle database}
+Commercial relational database management system. Full sql support. Extensive feature set, one of the market-leaders. 
 % maybe it is easy to put here something from wikipedia.
-\subsection{EMF-IncQuery} 
-
-sdf

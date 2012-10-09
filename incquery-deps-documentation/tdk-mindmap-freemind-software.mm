@@ -10,9 +10,8 @@
       Hol mutassam be, hogy ez az &#233;n munk&#225;m?
     </p>
   </body>
-</html>
-</richcontent>
-<node COLOR="#ff6666" CREATED="1349452708177" ID="ID_588802986" MODIFIED="1349455649314" POSITION="right" STYLE="fork" TEXT="Introduction (2p)">
+</html></richcontent>
+<node COLOR="#ff6666" CREATED="1349452708177" ID="ID_588802986" MODIFIED="1349726053926" POSITION="right" STYLE="fork" TEXT="Introduction (2p)">
 <node CREATED="1349454418688" ID="ID_1127936123" MODIFIED="1349455526336" TEXT="CERN control systems">
 <node CREATED="1349454814200" ID="ID_426053451" MODIFIED="1349455526336" TEXT="What is CERN"/>
 <node CREATED="1349454818405" ID="ID_1608873333" MODIFIED="1349455526336" TEXT="Complexity of controls systems"/>
@@ -30,34 +29,51 @@
 <node CREATED="1349454595189" ID="ID_834794681" MODIFIED="1349455559530" TEXT="Incoming dependencies">
 <node CREATED="1349454992311" ID="ID_718711701" MODIFIED="1349455638564" TEXT="introduce it by example (Vito&apos;s article)"/>
 <node CREATED="1349455025693" ID="ID_1285213075" MODIFIED="1349455526336" TEXT="my tool gives a way to access this information"/>
-<node CREATED="1349455037192" ID="ID_793767385" MODIFIED="1349455526336" TEXT="why it exists: no off-the-shelf solution"/>
+<node CREATED="1349455037192" ID="ID_793767385" MODIFIED="1349455526336" TEXT="why it exists: no off-the-shelf solution">
+<node CREATED="1349695775700" ID="ID_602312366" MODIFIED="1349695780460" TEXT="specific usecase"/>
+<node CREATED="1349695780988" ID="ID_1257970895" MODIFIED="1349695788780" TEXT="closed-world semantics"/>
+</node>
 <node CREATED="1349455056592" ID="ID_1176658171" MODIFIED="1349455526336" TEXT="chapter description"/>
 </node>
 </node>
 <node COLOR="#ff6666" CREATED="1349452731760" ID="ID_1956038418" MODIFIED="1349455926579" POSITION="right" TEXT="Background(10p)">
-<node CREATED="1349455655544" ID="ID_51689455" MODIFIED="1349455663348" TEXT="Service Provider Framework">
-<node CREATED="1349455933901" ID="ID_1046474791" MODIFIED="1349455964505" TEXT="Example to show the problem with the incoming dependencies and how my tool solves it"/>
-<node CREATED="1349456029479" ID="ID_1445984428" MODIFIED="1349456075611" TEXT="This code basicaly from the book &quot;Effective Java&quot; from Joshua Bloch"/>
-<node CREATED="1349455972253" ID="ID_854712652" MODIFIED="1349455994595" TEXT="Description of the server classes"/>
-<node CREATED="1349455997333" ID="ID_1039390662" MODIFIED="1349456013587" TEXT="Description of the implmenetation classes"/>
-<node CREATED="1349456005153" ID="ID_918055434" MODIFIED="1349456023671" TEXT="Desciption of the clint classes"/>
-</node>
-<node CREATED="1349455665016" ID="ID_236615527" MODIFIED="1349455918099" TEXT="Related Technologies">
-<node CREATED="1349456119965" ID="ID_1260836808" MODIFIED="1349456138785" TEXT="Java Technology">
+<node CREATED="1349455665016" ID="ID_236615527" MODIFIED="1349731355773" TEXT="Related Technologies">
+<richcontent TYPE="NOTE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Before we proceed, let's
+    </p>
+  </body>
+</html>
+</richcontent>
+<node CREATED="1349456119965" ID="ID_1260836808" MODIFIED="1349726148796" TEXT="Java runtime">
 <node CREATED="1349456145913" ID="ID_1821429294" MODIFIED="1349456154505" TEXT="Java Byte Code"/>
 <node CREATED="1349456169047" ID="ID_78729996" MODIFIED="1349456171669" TEXT="BCEL"/>
 </node>
-<node CREATED="1349456100121" ID="ID_651478493" MODIFIED="1349456102172" TEXT="Eclipse">
+<node CREATED="1349456100121" ID="ID_651478493" MODIFIED="1349726148276" TEXT="Eclipse">
 <node CREATED="1349456102173" ID="ID_1793670403" MODIFIED="1349456107943" TEXT="IDE"/>
 <node CREATED="1349639548734" ID="ID_1140372553" MODIFIED="1349639550936" TEXT="JDT"/>
-<node CREATED="1349456108651" ID="ID_1009356800" MODIFIED="1349456110693" TEXT="EMF"/>
+<node CREATED="1349456108651" ID="ID_1009356800" MODIFIED="1349456110693" TEXT="EMF">
+<node CREATED="1349731358790" ID="ID_182987218" MODIFIED="1349731366453" TEXT="brief description"/>
+<node CREATED="1349731367177" ID="ID_659561757" MODIFIED="1349731376305" TEXT="modeling and metamodeling"/>
 </node>
-<node CREATED="1349456176601" ID="ID_87179803" MODIFIED="1349456200445" TEXT="Other, implementation-specific technologies">
+</node>
+<node CREATED="1349456176601" FOLDED="true" ID="ID_87179803" MODIFIED="1349726109856" TEXT="Other, implementation-specific technologies">
 <node CREATED="1349456205053" ID="ID_1825618693" MODIFIED="1349456209165" TEXT="Spring"/>
 <node CREATED="1349456212103" ID="ID_1107290523" MODIFIED="1349456213315" TEXT="Maven"/>
 <node CREATED="1349456216643" ID="ID_226483377" MODIFIED="1349456218775" TEXT="Tycho"/>
 <node CREATED="1349456218983" ID="ID_1058445986" MODIFIED="1349456223145" TEXT="Oracle"/>
 </node>
+</node>
+<node CREATED="1349455655544" ID="ID_51689455" MODIFIED="1349731354790" TEXT="Example: Service Provider Framework">
+<node CREATED="1349455933901" ID="ID_1046474791" MODIFIED="1349455964505" TEXT="Example to show the problem with the incoming dependencies and how my tool solves it"/>
+<node CREATED="1349456029479" ID="ID_1445984428" MODIFIED="1349456075611" TEXT="This code basicaly from the book &quot;Effective Java&quot; from Joshua Bloch"/>
+<node CREATED="1349455972253" ID="ID_854712652" MODIFIED="1349455994595" TEXT="Description of the server classes"/>
+<node CREATED="1349455997333" ID="ID_1039390662" MODIFIED="1349456013587" TEXT="Description of the implmenetation classes"/>
+<node CREATED="1349456005153" ID="ID_918055434" MODIFIED="1349456023671" TEXT="Desciption of the clint classes"/>
 </node>
 </node>
 <node CREATED="1349454278808" ID="ID_19162639" MODIFIED="1349454304263" POSITION="right" TEXT="Overview(3p)">
@@ -71,8 +87,7 @@
       Dep. An Tool? Dep. An Framework?
     </p>
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 <node CREATED="1349457130677" ID="ID_275780060" MODIFIED="1349457134109" TEXT="Introduction">
 <node CREATED="1349457141819" ID="ID_203140934" MODIFIED="1349457183561" TEXT="My tool for solve the problem described in the previous chapter"/>
 <node CREATED="1349457188879" ID="ID_309637038" MODIFIED="1349457225073" TEXT="Figure shows the layout">
@@ -126,8 +141,7 @@
       created at CERN and at the University
     </p>
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 <node CREATED="1349457695765" ID="ID_1000257724" MODIFIED="1349457832610" TEXT="original implementation direct queries">
 <node CREATED="1349457748927" ID="ID_49523214" MODIFIED="1349457767840" TEXT="user requests the incoming dependencies"/>
 <node CREATED="1349457768468" ID="ID_1904973842" MODIFIED="1349457775350" TEXT="Client initiates a query "/>
@@ -154,10 +168,9 @@
       describe in greater detail how the process workflow works
     </p>
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
-<node CREATED="1349458076524" FOLDED="true" ID="ID_97907642" MODIFIED="1349640409447" TEXT="Byte Code Analysis">
+<node CREATED="1349458076524" ID="ID_97907642" MODIFIED="1349732627909" TEXT="Byte Code Analysis">
 <richcontent TYPE="NOTE"><html>
   <head>
     
@@ -167,8 +180,7 @@
       Also add the example in this part
     </p>
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 <node CREATED="1349458098354" ID="ID_1878719889" MODIFIED="1349458121202" TEXT="Why don&apos;t we want to work with the surce code"/>
 <node CREATED="1349458121830" ID="ID_1028027661" MODIFIED="1349458151424" TEXT="What is the structure of the binary code"/>
 <node CREATED="1349458137112" ID="ID_8738470" MODIFIED="1349458174134" TEXT="What kind of  information can we obtain ftom the bytecode">
@@ -227,8 +239,7 @@
       now the repo model is loaded at startup
     </p>
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 <node CREATED="1349640238480" ID="ID_1202811069" MODIFIED="1349640252444" TEXT="Create more precise dependency information"/>
 </node>

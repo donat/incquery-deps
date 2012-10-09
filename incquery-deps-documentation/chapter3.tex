@@ -4,20 +4,27 @@
 %TODO:find a proper name for this chapter.
 %------------------------------------------------------------------------------
 
-\section{Modules}
 
-\picr{superfigure.pdf}{Superfigure}
+The tool aims to find incoming dependencies as it was described in the previous chapter.
+Two sentenced about the main goal.
 
-Figure, static view of the high-level components.
+\picr{superfigure.pdf}{Overview of the implemented system}
 
-Present the infrastructure.
-Commonbuild for build system and release management. Legacy tool, now it is about to change to maven.
-Svn repository for source code. Release process in commonbuild creates an SVN tag. 
-rigorous structure. Everything is stored in one big svn repository.
+The overview of the implemented software is on figure. \autoref{fig:superfigure.pdf}
+The system is implemented in two steps. First the CERN part. Direct queries. The second was done in the university. Model  loading and creation and pattern matching with EMF-IncQuery. I will detail it later.
 
-Present the development environment. 
-Every java developer uses Eclipse for development and commonbuild to release the software.
+The first element on the figure to discuss is the ,,Central repository management''. CERN infrastructure contains an Ant-based software called Commonbuild. Commonbuild's covers the common tasks with softwares such as building, resolving dependencies, releasing and deployment. As a result of using Commonbuild we have a well-maintained source code repository (released versions as svn tags) and directory of the released binary files with a good description. 
 
-Present the server-side.
+A typical workflow. Developer checks out a source code from the SVN and starts to work on it. For querying the dependencies he has 2 options. Direct queries or using the pattern matching. A direct query means.. A pattern means. At every save. Fast but requires more memory. Trade-off. 
 
-Present the client-side.
+The direct queries was developed at CERN.
+The pattern-based is an extension for this work
+
+\paragraph{The server side} 
+Upon somebody does a release in the repositories, the server process finds the correspondent released binaries (jar format) and tries to map the structure and dependencies using bytecode analysis. In order not to fiddle parsing binary files the server utilizes the Apache BCEL. The structure and the dependencies are passed to the storage engine which defines a set of operations to find, store and retrieve certain subset of the model. 
+
+\paragraph{The client side} The ,,Direct queries''' module enables the developer to execute queries which return the. As soon the result comes back from the server it is displayed in a view for further analization.
+
+The extension is a pattern matching solution. The "Ws model creator" generates an incrementally updates an emf instance model (driven by the workspace changes). Also an emf instance model describing the structure and the dependencies in the repository is loaded from the server process. 
+
+The two emf model serves as an input for the EMF-IncQuery engine. The IncQuery loads the models and tries to find more refined dependency information by applying a set of patterns on the models. 
