@@ -2,10 +2,10 @@
 **/src-gen/**/*
 incquery-deps-transformer/models/commonbuild-full-pro.cp1model
 incquery-deps-transformer/models/commonbuild-full-pro.repomodel
-incquery-deps-documentation/*.gz
+incquery-deps-documentation/pdf/*.gz
+incquery-deps-documentation/pdf/*.pdf
 incquery-deps-documentation/tmp/*.aux
 incquery-deps-documentation/tmp/*.log
-incquery-deps-documentation/*.pdf
 incquery-deps-documentation/tmp/*.out
 incquery-deps-documentation/tmp/*.thm
 incquery-deps-documentation/tmp/*.toc
