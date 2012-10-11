@@ -3,8 +3,28 @@
 %10 pages. For motivation: Design pattern figure. (Service registration pattern).
 %------------------------------------------------------------------------------
 
+%------------------------------------------------------------------------------
+% Example
+%------------------------------------------------------------------------------
+\section{Example: Service Provider Framework}
+\label{sect:example}
+
+The service provider framework is a possible use-case for the Adapter design
+pattern. The implementation I am going to present derived from the book
+\cite{Bloch08} Effective Java.
+
+Overview of the pattern. 
+\picr{exampleclasses.pdf}{Service Provider framework example}
+Three different people 
+
+Description of the classes one-by one. Possible source code can be inserted
+here.
+
+
+% ------------------------------------------------------------------------------
+% Related technologies
+% ------------------------------------------------------------------------------
 \section{Related technologies}
-% Why we want to introducte related technologies.
 Before proceeding to the main part of this paper, I am going to give an overview
 about the related technologies used by my solution. I Why do we have to present
 the related technologies.
@@ -26,32 +46,8 @@ Abstraction over Java byte code specification.
 How it works. Create diagram!
 Possible use-cases.
 
-\subsection{Eclipse}
-
 \subsection{Eclipse Integrated Development Environment}
-The Eclipse Project \cite{Eclipseproject} is an open source software development
-project dedicated to providing a robust, full-featured, commercial-quality,
-industry platform for the development of highly integrated tools. It was
-developed by IBM from 1999, and a few months after the first version was
-shipped, IBM donated the source code to the Eclipse Foundation.
-
-The Eclipse project consists of many subprojects, the most important being the
-Eclipse Platform, that defines the set of frameworks and common services that
-collectively make up ,,integrationware'' required to support a comprehensive
-tool integration platform. These services and frameworks represent the common
-facilities required by most tool builders, including a standard workbench user
-interface and project model for managing resources, portable native widget and
-user interface libraries, automatic resource delta management for incremental
-compilers and builders, language-independent debug infrastructure and
-infrastructure for distributed multi-user versioned resource management.
-
-The Eclipse Platform has an easily-extendable modular architecture, where all
-functionality is achieved by plugins, running over a low-level core called
-Platform Runtime. This runtime core is only responsible for loading and
-connecting the available plugins, every other functionality, such as the
-editors, views, project management, is handled by plugins. The plugins bundled
-with Eclipse Platform include general user interface components, a common help
-system for all Eclipse components, project management and team work support.
+Copy it from the stock text.
 
 
 \subsection{Eclipse Modeling Framework}
@@ -76,21 +72,3 @@ Maven extension to build eclipse plugins.
 Commercial relational database management system. Full sql support. Extensive
 feature set, one of the market-leaders.
 % maybe it is easy to put here something from wikipedia.
-
-
-\section{Example: Service Provider Framework}
-\label{sect:example}
-
-The service provider framework is a possible use-case for the Adapter design
-pattern. The implementation I am going to present derived from the book
-\cite{Bloch08} Effective Java.
-
-Overview of the pattern. 
-\picr{exampleclasses.pdf}{Service Provider framework example}
-Three different people 
-
-Description of the classes one-by one. Possible source code can be inserted
-here.
-
-
-
