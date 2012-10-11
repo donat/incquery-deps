@@ -64,7 +64,7 @@ generation facility for building tools and other applications based on a
 structured model. EMF is also maintained by the Eclipse Foundation within the
 scope of Eclipse Tools Project. EMF started out as an implementation of the OMG
 Meta Object Facility (MOF) specification, and evolved into a highly efficient
-product for model-based software design
+product for model-based software design.
 
 EMF requires a metamodel as an input; it can import metamodels from different
 sources, such as Rational Rose, XMI or XML Schema documents, or a special syntax
@@ -97,11 +97,52 @@ Incremental model queries over emf models. Documentation site.
 \subsection{Other related technologies}
 
 \subsubsection{Spring Framework}
-To develop modular, testable and configurable applications.
+%
+The Spring Framework is an open source application framework and Inversion of
+Control container for the Java platform. The core features of the Spring
+Framework can be used by any Java application, but there are extensions for
+building web applications on top of the Java EE platform. Although the Spring
+Framework does not impose any specific programming model, it has become popular
+in the Java community as an alternative to, replacement for, or even addition to
+the Enterprise JavaBean (EJB) model.
+
+%
+The main advantage of using Spring framework is a configurability through
+dependency injection. 
+
+
 \subsubsection{Maven}
-Build system
+Build tool for Java projects. done by apache Same purpose as ant, but different
+concept.
+Standardize the build process by defining goals for building.
+Defining project is done via descriptor xml containing a POM (Project object
+model).
+Pom can be used to configure the entire build process, but he most importan part
+is: dependency management, build customization,
+
+Maven is customizable via plugins which can be done
+
+Maven comes with a definition of a repository management. A maven repository can be 
+attached to the process
+
+
 \subsubsection{Tycho}
-Maven extension to build eclipse plugins.
+Tycho is a set of Maven plugins and extensions for building Eclipse plugins and
+OSGi bundles with Maven. It exists because Eclipse plugins have their own way of
+describing metadata such as version numbers and dependencies which normally
+would be placed in the Maven POM. Tycho reuses this native metadata 
+and uses the POM to configure and drive the build. Tycho also knows
+how to run JUnit test plugins using OSGi runtime and there is also support for
+sharing build results using Maven artifact repositories. Tycho introduces
+new packaging types and the corresponding lifecycle bindings that allow Maven to
+use OSGi and Eclipse metadata during a Maven build.
+
+Although Tycho is useful for building Eclipse plugins in a headless way but it
+still has not reached the production quality (the current version number is
+0.14) and it is still under heavy development. The current modifications and
+enchantments can be found on the project's website.
+
+
 \subsubsection{Oracle database}
 Commercial relational database management system. Full sql support. Extensive
 feature set, one of the market-leaders.
