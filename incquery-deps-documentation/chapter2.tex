@@ -59,6 +59,36 @@ system for all Eclipse components, project management and team work support.
 % TODO: Write jdt description with the same details as the Eclipse platform.
 
 \subsubsection{Eclipse Modeling Framework}
+The Eclipse Modeling Framework (EMF) \cite{EMF} is a Java framework and code
+generation facility for building tools and other applications based on a
+structured model. EMF is also maintained by the Eclipse Foundation within the
+scope of Eclipse Tools Project. EMF started out as an implementation of the OMG
+Meta Object Facility (MOF) specification, and evolved into a highly efficient
+product for model-based software design
+
+EMF requires a metamodel as an input; it can import metamodels from different
+sources, such as Rational Rose, XMI or XML Schema documents, or a special syntax
+can be used to annotate existing Java source files with EMF model properties.
+Once an EMF model is specified, the built-in code generator can create a
+corresponding set of Java implementation classes.
+These generated classes can be edited to add methods and instance variables;
+additions will be preserved during code-regeneration. In addition to simply
+increasing productivity, building an application using EMF provides several
+other benefits like model change notification, persistence support including
+default XMI and schema-based XML serialization, a framework for model
+validation, and a very efficient reflective API for manipulating EMF objects
+generically. Most important of all, EMF provides the foundation for
+interoperability with other EMF-based tools and applications.
+
+EMF consists of two fundamental frameworks: the core framework and EMF.Edit. The
+core framework provides basic generation and runtime support to create Java
+implementation classes for a model.
+
+EMF has a built-in serialization facility, which enables the developer to save
+(and load) in-stances of the model into industry-standard XMI format. EMF also
+provides a notational and persistence mechanism, on top of which
+model-manipulating tools can easily be constructed.
+
 
 \subsubsection{EMF-IncQuery} 
 Incremental model queries over emf models. Documentation site.
