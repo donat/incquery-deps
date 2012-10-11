@@ -144,10 +144,10 @@ enchantments can be found on the project's website.
 
 
 \subsubsection{Oracle database}
-The Oracle Database is a relational database management system (RDBMS) from the
-Oracle Corporation. Originally developed in 1977 by Lawrence Ellison and other
-developers, Oracle DB is one of the most trusted and widely-used relational
-database engines.
+The Oracle Database (also known as Oracle DB, Oracle RDBMS or just Oracle) is a
+relational database management system (RDBMS) from the Oracle Corporation.
+Originally developed in 1977 by Lawrence Ellison and other developers, Oracle DB
+is one of the most trusted and widely-used relational database engines.
 
 The system is built around a relational database framework in which data objects
 may be directly accessed by users (or an application front end) through
@@ -156,19 +156,61 @@ architecture and is often used by global enterprises, which manage and process
 data across wide and local area networks. The Oracle database has its own
 network component to allow communications across networks.
 
-Also known as Oracle DB, Oracle RDBMS, and sometimes just Oracle.
-
 
 \section{Example: Service Provider Framework}
-\label{sect:example}
 
-The service provider framework is a possible use-case for the Adapter design
-pattern. The implementation I am going to present derived from the book
-\cite{Bloch08} Effective Java.
+To make the following chapters easier to understand, I am going to introduce a
+simple use-case example. It is a design pattern called Service Provider
+Framework. It is a practical application of the original Adapter pattern and it
+was described in the famous book ,,Effective Java'' \cite{Bloch08}. This pattern
+is the simplified version how the Java Database Connectivitz (JDBC) works.
 
-Overview of the pattern. 
-\picr{exampleclasses.pdf}{Service Provider framework example}
-Three different people 
+\picr{exampleclasses.pdf}{Structure of Service Provider Framework pattern}
 
-Description of the classes one-by one. Possible source code can be inserted
-here.
+You can see the structure of the pattern on figure
+\autoref{fig:exampleclasses.pdf}. As of the packages it contains 3 major parts.
+The \code{service} package contains the core pattern classes. The \code{impl}
+and the \code{impl} packages are external users of the pattern and therefore
+they are considered depending client libraries.
+
+First let's discuss the pattern itself. The main goal for the patter is to
+provide a registry of implementations for a desired service. This service is
+described in the \code{Service} interface. The \code{Provider} interface is
+serves as a factory instance; it has a single function to instantiate a new
+Service object. The \code{Services} class has the role of the registry.
+The service implementers register their implementation using the static
+\code{registerProvider()} and \code{registerDefaultProvider()} methods. The
+parameters the identifier string for the registered service and Provider
+instance which will instantiate the Service instances. The clients will
+instantiate the Service instance with the \code{newInstance()} function.
+Depending the passed identifier string, the method will look up if a Provider
+was registered with the same name, and if the answer is yes then it calls the
+\code{Provider.newInstance()} and return its result.
+
+The \code{DEFAULT\_PROVIDER\_NAME} is a static public field which can be used to
+obtain the default Service implementation. The \code{AbstractService} is a
+utility class which implements one of the function of the Service interface.
+
+The \code{impl} package contains one possible implementation to use the
+described pattern. The \code{BasicService} contains the implementation and the
+\code{BasicProvider} is responsible for properly initializing and returning a
+new instance of this version. The \code{BasicImplUtil} -- as its name implies --
+holds utility classes which register the implementation in the Services class.
+
+The \code{client} package holds one single \code{Main} class, which contains a
+simple evaluation. It invokes the \code{Services.newInstance()} function passing
+the default provider's name as an argument and invokes the \code{serviceA()} and
+\code{serviceB()} function.
+
+Although the example is fairly simple, the source code can be found in appendix A.
+
+So why are we looking at this example? Imagine that the three packages are
+distributed into three different software which have their individual
+responsible developer. Now let's say, somebody wants to change some parts of the
+service without preciesly knowing who is using which part of the code. Not this
+will be our example which I will use to present how my software works and how
+can this problem be solved by it.
+
+
+
+

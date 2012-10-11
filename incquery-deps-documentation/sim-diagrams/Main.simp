@@ -222,7 +222,7 @@
                   </text>
                 </documentation>
               </attribute>
-              <attribute id="a0631fc2de29b47ddb40d4aa338e48b36337" name="DEFAULT_PROVIDER_NAME" type="String" type-id="Uml.String" visibility="private" abstract="false" virtual="false">
+              <attribute id="a0631fc2de29b47ddb40d4aa338e48b36337" name="DEFAULT_PROVIDER_NAME" type="String" type-id="Uml.String" visibility="public" abstract="false" virtual="false">
                 <stereotypes />
                 <documentation>
                   <text>
@@ -235,7 +235,7 @@
               <operation id="o287f98cc62f94c41bf2413dd41adfac3787" name="registerProvider" type="void" type-id="void" visibility="public" abstract="false" virtual="false" static="true">
                 <parameters>
                   <parameter id="" name="String" type="" type-id="" default-value="" />
-                  <parameter id="" name="  Provider" type="" type-id="" default-value="" />
+                  <parameter id="" name="Provider" type="" type-id="" default-value="" />
                 </parameters>
                 <stereotypes />
                 <documentation>
@@ -263,7 +263,9 @@
               </operation>
             </operations>
             <template-parameters>
-              <source-codes />
+              <source-codes>
+                <source-code language="ActionScript" />
+              </source-codes>
             </template-parameters>
           </item>
           <item id="ddip468001988625781434_791018017576689253" cid="PKG001" type="package" name="service" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creator="Pc366556f5b714078bc5ef8f26ab9c767" creation-date="10/03/2012 17:36:40">
@@ -398,16 +400,7 @@
             <tagged-values />
             <documentation>
               <text>
-                <content>
-                  <p index="0">
-                    <t />
-                    <style font-name="Arial" font-size="12" font-bold="false" font-italic="false" font-underline="false" font-strikeout="false">
-                      <text>
-                        <solid-brush color="#FF000000" />
-                      </text>
-                    </style>
-                  </p>
-                </content>
+                <content />
               </text>
             </documentation>
             <cooperation>
@@ -430,9 +423,7 @@
               </operation>
             </operations>
             <template-parameters>
-              <source-codes>
-                <source-code language="ActionScript" />
-              </source-codes>
+              <source-codes />
             </template-parameters>
           </item>
           <item id="ddip468001988625781434_567485589283770724" cid="DEP004" type="dependency" name="" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/04/2012 23:18:25">
