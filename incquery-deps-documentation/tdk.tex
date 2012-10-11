@@ -95,7 +95,8 @@
 \title{\ptitle}
 \includeonly{
 	title,%
-	chapter1, chapter2, chapter3, chapter4, chapter5, chapter6%
+	chapter1, chapter2, chapter3, chapter4, chapter5, chapter6,%
+	appendix,
 }
 
 %--------------------------------------------------------------------------------------
@@ -155,7 +156,7 @@
 	columns=fixed,
 	backgroundcolor=\color{lightgray},
 } 		
-\def\lstlistingname{lista}	
+%\def\lstlistingname{lista}	
 
 
 %--------------------------------------------------------------------------------------
@@ -198,7 +199,7 @@ aboveskip=10pt}
 \bibliography{bib}                           % include the entries
 
 
-%\include{appendices}
+\include{appendix}
 
 \label{page:last}
 \end{document}

@@ -1,0 +1,69 @@
+\appendix
+\chapter{Service Provider framework source}
+\label{examplesource}
+
+\begin{lstlisting}[caption=Classes of the \code{service} package]
+public interface Service {
+	void serviceA();
+	void serviceB();
+}
+
+public abstract class AbstractService implements Service {
+	public void serviceB() {System.out.println("Default serviceB()."); }
+}
+
+public interface Provider {
+	Service newService();
+}
+
+public class Services {
+	private static final Map<String, Provider> providers = 
+		new ConcurrentHashMap<String, Provider>();
+	public static final String DEFAULT_PROVIDER_NAME = "<default_provider>";
+	
+	private Services() {
+	}
+	public static void registerDefaultProvider(Provider p) { 
+		providers.put(DEFAULT_PROVIDER_NAME, p); 
+	}
+	public static void registerProvider(String name, Provider p) { 
+		providers.put(name, p); 
+	}
+	public static Service newInstance(String name) {
+		Provider p = providers.get(name);
+		if (p == null) 
+			throw new IllegalArgumentException("Provider does not exist.");
+		return p.newService();
+	}
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Classes of the \code{impl} package]
+public class BasicService extends AbstractService {
+	public void serviceA() { System.out.println("Executed basic service"); }
+} 
+
+public class BasicProvider implements Provider {
+	public Service newService() { return new BasicService(); }
+}
+
+public class BasicImplUtil {
+	public static void registerImplementation() { 
+		Services.registerProvider("basic", new BasicProvider()); 
+	}
+	public static void registerImplementationAsDefault() { 
+		Services.registerProvider(Services.DEFAULT_PROVIDER_NAME, 
+			new BasicProvider()); 
+	}
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Classes of the \code{client} package]
+public class Main {
+	public static void main(String[] args) {
+		BasicImplUtil.registerImplementationAsDefault();
+		Service service = Services.newInstance(Services.DEFAULT_PROVIDER_NAME);
+		service.serviceB();
+	}
+}
+\end{lstlisting}
