@@ -15,8 +15,9 @@
 %--------------------------------------------------------------------------------------
 % Package incudes
 %--------------------------------------------------------------------------------------
-\usepackage{t1enc}
+%\usepackage{t1enc}
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{enumerate}
@@ -28,16 +29,16 @@
 \usepackage{lastpage}
 \usepackage{anysize}
 \usepackage{longtable}
-\usepackage[english,magyar]{babel}
+\usepackage[english]{babel}
 \usepackage{sectsty}
 \usepackage{setspace}
 \usepackage[hang]{caption}
 \usepackage{subcaption}
-\usepackage{hyperref}
+\usepackage{hyperref} 
 \usepackage{tabularx}
-\usepackage{palatino}
+\usepackage{times} 
 \usepackage{hyphenat}
-
+ 
 
 %--------------------------------------------------------------------------------------
 % Custom commands
@@ -53,7 +54,7 @@
 }
 
 % insert and resize picture
-\newcommand{\picr}[2]{ 
+\newcommand{\picr}[2]{
 \begin{figure}[htb]
    \center   
    \caption{#2}
@@ -66,10 +67,10 @@
 
 
 \newcommand{\figref}[1]{Figure~\autoref{fig:#1}}                      
-\newcommand{\secref}[1]{Section~\ref{#1}}                       % section reference
+\newcommand{\secref}[1]{Section~\ref{#1}}                        % section reference
 %\newcommand{\code}[1]{{\upshape\ttfamily\scriptsize\indent #1}} % formatted code
-\newcommand{\code}[1]{{\small \tt #1}} % formatted code
-
+\newcommand{\code}[1]{{\small \textit{#1}}} % formatted code
+\newcommand{\tool}[1]{\textit{#1}}
 
 %--------------------------------------------------------------------------------------
 % Constant strings
@@ -181,8 +182,6 @@ aboveskip=10pt}
 \pagenumbering{arabic}
 \onehalfspacing
 
-
-\selectlanguage{english}
 \include{title}
 
 \tableofcontents

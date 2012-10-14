@@ -1,53 +1,96 @@
 \chapter{Overview}
-%------------------------------------------------------------------------------
-%3 pages. Super figure which describes the entire solution. Choosing proper abstraction level for the %figure is essential. Every item on this figure will be an additional chapter in this paper.
-%TODO:find a proper name for this chapter.
-%------------------------------------------------------------------------------
+% ------------------------------------------------------------------------------
+% 3 pages. Super figure which describes the entire solution. Choosing proper
+% abstraction level for the %figure is essential. Every item on this figure will
+% be an additional chapter in this paper.
+% TODO:find a proper name for this chapter.
+% ------------------------------------------------------------------------------
 
+\section{Structure}
+% My implementation.
+As it was discussed previously one of the most effective  way of achieving
+smooth upgrades is to discover incoming dependencies. For this I designed and
+implemented a solution called \ptool{}. \picr{superfigure.pdf}{Overview of the
+implemented system} Figure \autoref{fig:superfigure.pdf} shows the overview of
+it.
 
-The tool aims to find incoming dependencies as it was described in the previous
-chapter.
-Two sentenced about the main goal.
+% CERN-related.
+% NOTE, that the current implementation is bound to the CERN Control system's
+% infrastructure. All used source and the way of getting them described by the
+% internals. Let alone this fact, it is fairly simple to change the implementation
+% to be usable in an arbitrary environment because only a tiny part of the code is
+% responsibe to retrieve the required resources.
 
-\picr{superfigure.pdf}{Overview of the implemented system}
+% Two implementation
+This systems was implemented in two separate steps. My work at CERN covered an
+implementation of a system which gives the ability to the users to query certain
+parts of the source code for incoming dependencies. After my job was done I
+created an extension which utilizes EMF-IncQuery to run faster, information-rich
+and more extensive queries. Let's examine the elements of the figure one-by-one.
 
-The overview of the implemented software is on figure.
-\autoref{fig:superfigure.pdf} The system is implemented in two steps. First the
-CERN part. Direct queries. The second was done in the university. Model  loading
-and creation and pattern matching with EMF-IncQuery. I will detail it later.
+\subsection{Central repository management}
+% Central repository management.
+The first element on the figure is the ,,Central repository management''. It
+refers all the internal resources CERN Control systems contains. Its central
+element is a tool called \tool{Common Build} which is a build tool for Java
+softwares. Common Build is an Apache Ant based software similar to Maven. It
+provides functionality to describe and resolve dependencies, build, generate
+documentation and release the softwares\footnote{Or \textit{products} as they
+are referred at CERN}. The released softwares are put into a binary repository
+which has a well-defined layout. On top of it, source repository is tightly
+attached to the release repository; there is a 1-1 relationship between the
+source code and the binaries.
 
-The first element on the figure to discuss is the ,,Central repository
-management''. CERN infrastructure contains an Ant-based software called
-Commonbuild. Commonbuild's covers the common tasks with softwares such as
-building, resolving dependencies, releasing and deployment. As a result of using
-Commonbuild we have a well-maintained source code repository (released versions
-as svn tags) and directory of the released binary files with a good description.
+\subsection{The server side}
+The server side is a standalone Java application which runs on a Linux server.
+It has two functionality: 1) it discovers and stores the structure of the
+products and 2) provides an interface for serving dependency queries. 
+
+For discovering, the process listens if a new release happens in the repository.
+If it happens the freshly added binaries (jar files) are passed to the byte code
+analysis module which parses the file and discovers the contained structure and
+the dependencies utilizing the Apache BCEL library.  The structure and the
+dependencies are passed to the storage engine to store it. The storage engine
+itself defines a set of operations to find, store and retrieve certain subset of
+the model. The remote query interface also use this module to get the necessary 
+dependency information for the clients.
+
+\subsection{The client side}
+% Plugin
+The client-side of the solution is an Eclipse plugin (or more precisely a set of
+plugins) which gives the developer a convenient way to access to the dependency
+information.
+
+% Model load and direct queries
+The base of the plugin is the repository model loader. It provides a simple API
+for accessing and querying the dependency information from the server. The
+simple use-case for this, when the user directly asks the dependency information
+from the Java source editor through UI contribution (marked as direct queries on
+the figure).
+
+% ws model creator
+The workspace model creator is a separate plugin 
+The extension is a pattern matching solution. The "Ws model creator" generates
+an incrementally updates an emf instance model (driven by the workspace
+changes). Also an emf instance model describing the structure and the
+dependencies in the repository is loaded from the server process.
+
+% pattern maching over.
+
+% Interface and initiator.
 
 A typical workflow. Developer checks out a source code from the SVN and starts
 to work on it. For querying the dependencies he has 2 options. Direct queries or
 using the pattern matching. A direct query means.. A pattern means. At every
 save. Fast but requires more memory. Trade-off.
 
-The direct queries was developed at CERN.
-The pattern-based is an extension for this work
 
-\paragraph{The server side} 
-Upon somebody does a release in the repositories, the server process finds the
-correspondent released binaries (jar format) and tries to map the structure and
-dependencies using bytecode analysis. In order not to fiddle parsing binary
-files the server utilizes the Apache BCEL. The structure and the dependencies
-are passed to the storage engine which defines a set of operations to find,
-store and retrieve certain subset of the model.
-
-\paragraph{The client side} The ,,Direct queries''' module enables the developer
+ The ,,Direct queries''' module enables the developer
 to execute queries which return the. As soon the result comes back from the
-server it is displayed in a view for further analization.
+server it is displayed in a view for further to analyze..
 
-The extension is a pattern matching solution. The "Ws model creator" generates
-an incrementally updates an emf instance model (driven by the workspace
-changes). Also an emf instance model describing the structure and the
-dependencies in the repository is loaded from the server process.
 
-The two emf model serves as an input for the EMF-IncQuery engine. The IncQuery 
-loads the models and tries to find more refined dependency information by applying
-a set of patterns on the models. 
+
+The two emf model serves as an input for the EMF-IncQuery engine. The IncQuery
+loads the models and tries to find more refined dependency information by
+applying a set of patterns on the models.
