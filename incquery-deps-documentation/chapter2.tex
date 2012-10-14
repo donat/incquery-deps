@@ -3,7 +3,6 @@
 %10 pages. For motivation: Design pattern figure. (Service registration pattern).
 %------------------------------------------------------------------------------
 
-
 \section{Related technologies}
 % Why do we need this part.
 Before proceeding to the main part of this paper, I am going to give an overview
@@ -13,10 +12,56 @@ the related technologies.
 \subsection{Java Runtime}
 
 \subsubsection{Java byte code specification}
-How the java vm works.
-What is the input.
-What kind of information can be extracted from here.
+% Java language
+The Java \cite{JavaSpec} programming language is a general-purpose, concurrent,
+object-oriented language. Its syntax is similar to C and C++, but it omits many
+of the features that make C and C++ complex, confusing, and unsafe. The Java
+platform was initially developed to address the problems of building software
+for networked consumer devices. It was designed to support multiple host
+architectures and to allow secure delivery of software components. To meet these
+requirements, compiled code had to survive transport across networks, operate on
+any client, and assure the client that it was safe to run.
 
+% Java Virtual machine
+The Java virtual machine is an abstract computing machine. Like a real computing
+machine, it has an instruction set and manipulates various memory areas at
+runtime. It is reasonably common to implement a programming language using a
+virtual machine. The Java virtual machine knows nothing of the Java programming
+language, only of a particular binary format, the  \code{class} file format. A
+\code{class} file contains Java virtual machine instructions (or 
+\emph{bytecodes}) and a symbol table, as well as other ancillary information.
+
+% What is a class file
+The class file format is a hardware- and operating system-independent binary
+format which is executed by the virtual machine. Typically (but not necessarily)
+stored in a file. The class file format precisely defines the representation of a
+class or interface, including details such as byte ordering that might be taken
+for granted in a platform-specific object file format.
+
+% How is a class file used.
+\pic{compilation.pdf}{Compilation and execution of Java classes}
+Figure \autoref{fig:compilation.pdf} illustrates the procedure of compiling and
+executing a Java class: The source file is compiled into a Java class file,
+loaded by the byte code interpreter and executed. In order to implement
+additional features, researchers may want to transform class files (drawn with
+bold lines) before they get actually executed.
+This application area is one of the main issues of this article.
+
+% Internals of the class file
+\pic{classfile.pdf}{Simplified structure of a class file}
+Figure \autoref{fig:classfile.pdf} shows a simplified example of the contents of a
+Java class file: It starts with a header containing a "magic number"
+(0xCAFEBABE) and the version number, followed by the constant pool, which can be
+roughly thought of as the text segment of an executable, the access rights of
+the class encoded by a bit mask, a list of interfaces implemented by the class,
+lists containing the fields and methods of the class, and finally the class
+attributes, e.g., the SourceFile attribute telling the name of the source file.
+Attributes are a way of putting additional, user-defined information into class
+file data structures. For example, a custom class loader may evaluate such
+attribute data in order to perform its transformations. The JVM specification
+declares that unknown, i.e., user-defined attributes must be ignored by any
+Virtual Machine implementation.
+ 
 \subsubsection{Apache Commons Byte Code Engineering Library}
 % described in the virtual machine specification 
 % http://docs.oracle.com/javase/specs/jvms/se5.0/html/VMSpecTOC.doc.html 
@@ -56,7 +101,20 @@ with Eclipse Platform include general user interface components, a common help
 system for all Eclipse components, project management and team work support.
 
 \subsubsection{Eclipse Java Development Tools}
-% TODO: Write jdt description with the same details as the Eclipse platform.
+The Eclipse Java Development Tools (JDT) project \cite{JDT} contributes a set of
+plugins that add the capabilities of a full-featured Java IDE to the Eclipse
+platform. The JDT plugins provide APIs so that they can themselves be further
+extended by other tool builders. The JDT plugins are categorized into five main
+projects: Annotation Processing (APT), Core, Debug, Text, and User Interface
+(UI).
+
+The most important part -- in the context of this paper -- is the Core project
+which implements all the necessary non-UI infrastructure for developing Java
+applications on the Eclipse platform. It contains an incremental Java builder,
+support for code assist, a searching facility and a \emph{Java Model}, that
+provides API for navigating the Java element tree. This lets the contributors
+access the structure and the changes of the java applications loaded into the
+workspace.
 
 \subsubsection{Eclipse Modeling Framework}
 The Eclipse Modeling Framework (EMF) \cite{EMF} is a Java framework and code
@@ -91,8 +149,52 @@ model-manipulating tools can easily be constructed.
 
 
 \subsubsection{EMF-IncQuery} 
-Incremental model queries over emf models. Documentation site.
-% https://viatra.inf.mit.bme.hu/incquery/documentation
+% Problem to solve.
+Working with models it is quite common to query the model for checking and
+validating certain properties. The EMF-IncQuery \cite{EMFIncQuery} tool provides
+one solution for this problem: it is a framework to execute fast model queries
+over EMF models. It is actively developed at Budapest University of Technology
+and Economics. Although it is still in development status (the current
+version is 0.6.0) it already proved its usability through industrial use-cases
+and university researches.
+
+% Core.
+The core of the framework is a query evaluator engine built on top of graph
+pattern matching engine using RETE \cite{RETE} algorithm adapted from expert
+systems to facilitate the efficient storage and retrieval of partial views of
+graph-like models. In a nutshell RETE maintains a hierarchical query data
+structure on top of the model which stores the result of sub-queries. On model
+change, the event propagates through this data structure leaving the unmodified
+part of the model untouched. This results in fast, near zero response time and
+size-independence on small model change. In return the model and the query
+structure has to be loaded into the memory which can be a significant resource
+expense.
+
+% API.
+To access the capabilities of the core, an easy-to-use, type safe API is
+defined. Using the API, EMF resources and object hierarchies can be loaded and
+queried incrementally. In addition certain extensions -- such as the validation
+framework -- can be attached.
+
+% Query lanuage.
+Along the API, a complete query language is defined. It provides a declarative
+way to express the queries over the EMF model in a form of patterns. With the
+language the user can express combined queries, negative patterns, checking
+property conditions, simple calculations, calculate disjunctions and transitive
+closures, etc.
+
+% Tooling.
+The framework comes with a rich UI tooling which helps the users to effectively
+develop test and integrate queries into their solution. The first element of the
+tooling is the rich XText based editor for the query language which aids writing
+well formed queries providing content assist, error markings and such. The next
+part of the tooling is the ability to load EMF models and execute the queries on
+them as the user writes them giving rich visual feedback about the result.
+The last important part is the code generation. The tooling dynamically
+generates the source code which contains the programmatic equivalent of the
+model queries. The users can integrate this code out of the box in Eclipse
+plugins as well as headless applications to execute queries and get back the
+results from the source code level.
 
 \subsection{Other related technologies}
 
@@ -211,7 +313,5 @@ responsible developer. Now let's say, somebody wants to change some parts of the
 service without precisely knowing who is using which part of the code. Not this
 will be our example which I will use to present how my software works and how
 can this problem be solved by it. 
-
-
 
 
