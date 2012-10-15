@@ -17,25 +17,26 @@ Hadron Collider) and all the necessary infrastructure.
 % The Controls group.
 Obviously not only physicists work az CERN: numerous scientist and engineers are
 working on the design and the maintenance of the software and hardware
-equipments in a well-defined structure. The Controls Group is responsible for --
-among the others -- the design and implementation of both software and hardware
-used in the controls systems. This involves providing software frameworks,
-providing alarm systems and communication middleware and numerous related tasks.
+equipments in a well-defined structure. One member of this community is the
+Controls Group which is responsible for -- among the others -- the design and
+implementation of both software and hardware used in the controls systems. This
+involves providing software frameworks, providing alarm systems and
+communication middleware and numerous related tasks.
 
 % Main goal for Controls group.
-After the LHC became operational the number one objective for the Controls Group
-is to maintain the operation uninterrupted without any downtime. This implies
-that a upgrading certain parts of the system should not interfere with other
+After the LHC became operational the  primary objective for the Controls Group
+is to maintain uninterrupted operation without any downtime. This implies that a
+upgrading certain parts of the systems should not interfere with arbitrary
 components.
 
 % Controls systems.
-The controls systems is a complex, distributed and highly modular system which
-has three tiers. On the top there are the GUI applications which are written in
-Java. The middle or business layer is also consists of Java applications. On the
-lowest or hardware level there are C/C++ applications running on real-time
-systems. Maintaining a complex system like this requires a set of special
-approaches provide desired quality and maximize the availability of the systems
-in one.
+The controls systems itself is a complex, distributed and highly modular system
+which has three tiers. On the top there are the GUI applications which are
+written in Java. The middle or business layer is also consists of Java
+applications. On the lowest or hardware level there are C/C++ applications
+running on real-time systems. Maintaining a complex system like this requires a
+set of special approaches provide desired quality and maximize the availability
+of the systems in one.
 
 \section{Main goal: Smooth upgrades}
 % What is a smooth upgrade.

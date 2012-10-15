@@ -84,7 +84,7 @@ shipped, IBM donated the source code to the Eclipse Foundation.
 
 The Eclipse project consists of many subprojects, the most important being the
 Eclipse Platform, that defines the set of frameworks and common services that
-collectively make up ,,integration-ware'' required to support a comprehensive
+collectively make up ,,integ\-ration-ware'' required to support a comprehensive
 tool integration platform. These services and frameworks represent the common
 facilities required by most tool builders, including a standard workbench user
 interface and project model for managing resources, portable native widget and
@@ -210,19 +210,29 @@ dependency injection.
 
 
 \subsubsection{Maven}
-Build tool for Java projects. done by apache Same purpose as ant, but different
-concept.
-Standardize the build process by defining goals for building.
-Defining project is done via descriptor xml containing a POM (Project object
-model).
-Pom can be used to configure the entire build process, but he most important part
-is: dependency management, build customization,
+In three words Apache Maven is a project management framework. The main goal is 
+similar to Ant but Maven offers an integrated approach to make Java development
+manageable. 
 
-Maven is customizable via plugins which can be done
+Maven standardizes the entire development process by defining explicit lifecycle
+steps for dependency management, building, packaging, deploying and so on.
+Although the lifecycle elements are set, they can be configurable through the 
+key element of Maven: the Project Object Model (POM). POM is an XML document in 
+the project's folder describing every necessary information about it to make 
+maven be able to do its job. 
 
-Maven comes with a definition of a repository management. A maven repository can
-be attached to the process
+Through the POM file almost everything related to the project is configurable,
+yet the most important feature is the dependency management. One can define
+certain dependencies in this file, and during the build Maven will download
+them automatically from the Maven repositories.
 
+Also POM is the place to define almost every relevant information about the project:
+source and binary folders, package format, deployment location, etc. These information
+are used during the build process.
+
+Maven is also extendable through plugin mechanism. One can develop extensions for it
+for achieve various non-standard goals such as integration testing or building 
+non-standalone Java applications.
 
 \subsubsection{Tycho}
 Tycho is a set of Maven plugins and extensions for building Eclipse plugins and
