@@ -53,13 +53,25 @@
 \end{figure}
 }
 
-% insert and resize picture
+% insert and resize picture to the width of the screen
 \newcommand{\picr}[2]{
 \begin{figure}[htb]
    \center   
    \caption{#2}
    \label{fig:#1}  
      \resizebox{\linewidth}{!}{
+      \includegraphics{figures/#1}
+      } 
+\end{figure}
+}
+
+
+\newcommand{\pics}[3]{
+\begin{figure}[htb]
+   \center   
+   \caption{#2} 
+   \label{fig:#1}  
+     \resizebox{((#3)*\linewidth}{!}{
       \includegraphics{figures/#1}
       } 
 \end{figure}
