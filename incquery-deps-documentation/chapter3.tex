@@ -69,28 +69,37 @@ from the Java source editor through UI contribution (marked as direct queries on
 the figure).
 
 % ws model creator
-The workspace model creator is a separate plugin 
-The extension is a pattern matching solution. The "Ws model creator" generates
-an incrementally updates an emf instance model (driven by the workspace
-changes). Also an emf instance model describing the structure and the
-dependencies in the repository is loaded from the server process.
+The workspace model creator is module generating an EMF model describing the
+state of the workspace. The generated model contains the loaded projects, the
+contained packages, classes, methods, etc. The model also contains the
+dependency structure between the elements (e.g. method calls, field accesses and
+such). The information is gathered through the Eclipse Java Development Tools'
+API. After the model is created it is incrementally maintained even through 
+restarts.
 
 % pattern maching over.
+The pattern matcher module executes complex model queries on top of the acquired
+models to provide dependency information. First it loads an EMF model from the
+server describing the structure of all projects in the central repository.
+Afterward the workspace model is loaded from the module described above. Both of
+the models are loaded to the EMF-IncQuery engine. Through complex queries the two
+models are joined and queried for the dependency information. With this more 
+accurate and extensive dependency analysis can be achieved because this approach
+takes into account the changes which were done in the workspace. The workspace 
+model is updated upon every change of the workspace giving up-to-date feedback 
+for the users while they are working on the development. 
 
-% Interface and initiator.
+% Interface.
+Both direct queries and the pattern matching module return the result in Eclipse 
+views. After the result is evaluated, the user's responsibility to evaluate their
+results and act accordingly.
 
-A typical workflow. Developer checks out a source code from the SVN and starts
-to work on it. For querying the dependencies he has 2 options. Direct queries or
-using the pattern matching. A direct query means.. A pattern means. At every
-save. Fast but requires more memory. Trade-off.
-
-
- The ,,Direct queries''' module enables the developer
-to execute queries which return the. As soon the result comes back from the
-server it is displayed in a view for further to analyze..
-
-
-
-The two emf model serves as an input for the EMF-IncQuery engine. The IncQuery
-loads the models and tries to find more refined dependency information by
-applying a set of patterns on the models.
+% limitation.
+Using direct queries brings no limitations. The queries are simple remote method
+calls and the result set is a relatively small data set which easy to store and
+present on the Eclipse UI. On the other hand, the pattern matching solution is
+far from being that easy, because in order to load make EMF-IncQuery work, the
+entire repository has to be loaded. By default this model is a few hundred
+megabytes sized in a serialized form. This implies that the implementation has to 
+optimize this model without dropping useful information to make it loadable to 
+the memory.
