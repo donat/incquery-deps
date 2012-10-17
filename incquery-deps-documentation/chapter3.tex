@@ -1,4 +1,3 @@
-\chapter{Overview}
 % ------------------------------------------------------------------------------
 % 3 pages. Super figure which describes the entire solution. Choosing proper
 % abstraction level for the %figure is essential. Every item on this figure will
@@ -6,7 +5,11 @@
 % TODO:find a proper name for this chapter.
 % ------------------------------------------------------------------------------
 
-\section{Structure}
+\chapter{Overview}
+In this chapter\ldots
+
+\section{Architecture}
+
 % My implementation.
 As it was discussed previously one of the most effective  way of achieving
 smooth upgrades is to discover incoming dependencies. For this I designed and
@@ -103,3 +106,60 @@ entire repository has to be loaded. By default this model is a few hundred
 megabytes sized in a serialized form. This implies that the implementation has to 
 optimize this model without dropping useful information to make it loadable to 
 the memory.
+
+\section{Service Provider Framework}
+
+To make the following chapters easier to understand, I am going to introduce a
+simple use-case example. It is a design pattern called Service Provider
+Framework. It is a practical application of the original Adapter pattern and it
+was described in the famous book ,,Effective Java'' \cite{Bloch08}. This pattern
+is the simplified version how the Java Database Connectivity (JDBC) works.
+
+\picr{exampleclasses.pdf}{Structure of Service Provider Framework pattern}
+
+You can see the structure of the pattern on figure
+\autoref{fig:exampleclasses.pdf}. As of the packages it contains 3 major parts.
+The \code{service} package contains the core pattern classes. The \code{impl}
+and the \code{impl} packages are external users of the pattern and therefore
+they are considered depending client libraries.
+
+First let's discuss the pattern itself. The main goal for the patter is to
+provide a registry of implementations for a desired service. This service is
+described in the \code{Service} interface. The \code{Provider} interface is
+serves as a factory instance; it has a single function to instantiate a new
+Service object. The \code{Services} class has the role of the registry.
+The service implementers register their implementation using the static
+\code{registerProvider()} and \code{registerDefaultProvider()} methods. The
+parameters the identifier string for the registered service and Provider
+instance which will instantiate the Service instances. The clients will
+instantiate the Service instance with the \code{newInstance()} function.
+Depending the passed identifier string, the method will look up if a Provider
+was registered with the same name, and if the answer is yes then it calls the
+\code{Provider.newInstance()} and return its result.
+
+The \code{DEFAULT\_PROVIDER\_NAME} is a static public field which can be used to
+obtain the default Service implementation. The \code{AbstractService} is a
+utility class which implements one of the function of the Service interface.
+
+The \code{impl} package contains one possible implementation to use the
+described pattern. The \code{BasicService} contains the implementation and the
+\code{BasicProvider} is responsible for properly initializing and returning a
+new instance of this version. The \code{BasicImplUtil} -- as its name implies --
+holds utility classes which register the implementation in the Services class.
+
+The \code{client} package holds one single \code{Main} class, which contains a
+simple evaluation. It invokes the \code{Services.newInstance()} function passing
+the default provider's name as an argument and invokes the \code{serviceA()} and
+\code{serviceB()} function.
+
+Although the example is fairly simple, the related source code can be found in
+appendix \autoref{examplesource}.
+
+So why are we looking at this example? Imagine that the three packages are
+distributed into three different software which have their individual
+responsible developer. Now let's say, somebody wants to change some parts of the
+service without precisely knowing who is using which part of the code. Not this
+will be our example which I will use to present how my software works and how
+can this problem be solved by it. 
+
+

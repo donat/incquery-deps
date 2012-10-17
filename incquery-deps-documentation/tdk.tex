@@ -15,9 +15,8 @@
 %--------------------------------------------------------------------------------------
 % Package incudes
 %--------------------------------------------------------------------------------------
-%\usepackage{t1enc}
+\usepackage{t1enc}
 \usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{enumerate}
@@ -36,9 +35,10 @@
 \usepackage{subcaption}
 \usepackage{hyperref} 
 \usepackage{tabularx}
-\usepackage{times} 
+\usepackage{palatino}
 \usepackage{hyphenat}
 \usepackage{enumitem}
+\usepackage{inconsolata} % typewriter 
 
 %--------------------------------------------------------------------------------------
 % Custom commands
@@ -66,14 +66,14 @@
 }
 
 
-\newcommand{\pics}[3]{
+\newcommand{\picfifty}[2]{
 \begin{figure}[htb]
-   \center   
-   \caption{#2} 
-   \label{fig:#1}  
-     \resizebox{((#3)*\linewidth}{!}{
+   \center
+   \caption{#2}
+   \label{fig:#1}
+     \resizebox{0.5\linewidth}{!}{
       \includegraphics{figures/#1}
-      } 
+      }
 \end{figure}
 }
 
@@ -81,9 +81,8 @@
 \newcommand{\figref}[1]{Figure~\autoref{fig:#1}}                      
 \newcommand{\secref}[1]{Section~\ref{#1}}                        % section reference
 %\newcommand{\code}[1]{{\upshape\ttfamily\scriptsize\indent #1}} % formatted code
-\newcommand{\code}[1]{{\small \textit{#1}}} % formatted code
-\newcommand{\tool}[1]{\textit{#1}}
-
+\newcommand{\code}[1]{{\small \texttt{#1}}} % formatted code
+\newcommand{\tool}[1]{\texttt{#1}}
 %--------------------------------------------------------------------------------------
 % Constant strings
 %--------------------------------------------------------------------------------------
@@ -91,7 +90,7 @@
 \newcommand{\psvisor}{dr. Istv\'an R\'ath, \'Akos Horv\'ath}
 \newcommand{\ptitle}{Incremental dependency analysis over large software infrastructure}
 \newcommand{\pdep}{Department of Measurement and Information Systems}
-\newcommand{\ptype}{}
+\newcommand{\ptype}{Scientific Students' Associations Report}
 \newcommand{\ptool}{Dependency Analysis Tool}
 
 
@@ -103,7 +102,7 @@
 \DeclareMathOperator{\sign}{sgn}
 \DeclareMathOperator{\rot}{rot}
 \definecolor{lightgray}{rgb}{0.95,0.95,0.95}
-
+ 
 \author{\pauthor}
 \title{\ptitle}
 \includeonly{
@@ -131,7 +130,8 @@
 \setcounter{secnumdepth}{2}
 \singlespacing{}
 \frenchspacing{}
-\setlist[description]{leftmargin=0em}           % remove indent from descriptions
+%\setlist[description]{leftmargin=0em}                      % remove indent from descriptions
+\setitemize{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}  % compact list
 
 %--------------------------------------------------------------------------------------
 %	Setup hyperref package

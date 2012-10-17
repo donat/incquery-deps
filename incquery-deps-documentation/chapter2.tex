@@ -1,17 +1,15 @@
-\chapter{Background}
+\chapter{Related Technologies}
 %------------------------------------------------------------------------------
 %10 pages. For motivation: Design pattern figure. (Service registration pattern).
 %------------------------------------------------------------------------------
 
-\section{Related technologies}
-% Why do we need this part.
 Before proceeding to the main part of this paper, I am going to give an overview
 about the related technologies used by my solution. I Why do we have to present
 the related technologies.
 
-\subsection{Java Runtime}
+\section{Java Runtime}
 
-\subsubsection{Java byte code specification TODO}
+\subsection{Java byte code specification TODO}
 % Java language
 The Java \cite{JavaSpec} programming language is a general-purpose, concurrent,
 object-oriented language. Its syntax is similar to C and C++, but it omits many
@@ -62,7 +60,7 @@ attribute data in order to perform its transformations. The JVM specification
 declares that unknown, i.e., user-defined attributes must be ignored by any
 Virtual Machine implementation.
  
-\subsubsection{Apache Commons Byte Code Engineering Library - TODO}
+\subsection{Apache Commons Byte Code Engineering Library - TODO}
 % described in the virtual machine specification 
 % http://docs.oracle.com/javase/specs/jvms/se5.0/html/VMSpecTOC.doc.html 
 % how the virtual machine works
@@ -73,9 +71,9 @@ How it works. Create diagram!
 Possible use-cases.
 
 
-\subsection{Eclipse}
+\section{Eclipse}
 
-\subsubsection{Eclipse Integrated Development Environment}
+\subsection{Eclipse Integrated Development Environment}
 The Eclipse Project \cite{Eclipseproject} is an open source software development
 project dedicated to providing a robust, full-featured, commercial-quality,
 industry platform for the development of highly integrated tools. It was
@@ -100,7 +98,7 @@ editors, views, project management, is handled by plugins. The plugins bundled
 with Eclipse Platform include general user interface components, a common help
 system for all Eclipse components, project management and team work support.
 
-\subsubsection{Eclipse Java Development Tools}
+\subsection{Eclipse Java Development Tools}
 The Eclipse Java Development Tools (JDT) project \cite{JDT} contributes a set of
 plugins that add the capabilities of a full-featured Java IDE to the Eclipse
 platform. The JDT plugins provide APIs so that they can themselves be further
@@ -116,7 +114,7 @@ provides API for navigating the Java element tree. This lets the contributors
 access the structure and the changes of the java applications loaded into the
 workspace.
 
-\subsubsection{Eclipse Modeling Framework}
+\subsection{Eclipse Modeling Framework}
 The Eclipse Modeling Framework (EMF) \cite{EMF} is a Java framework and code
 generation facility for building tools and other applications based on a
 structured model. EMF is also maintained by the Eclipse Foundation within the
@@ -144,15 +142,16 @@ provides a notational and persistence mechanism, on top of which
 model-manipulating tools can easily be constructed.
 
 
-\subsubsection{EMF-IncQuery} 
+\subsection{EMF-IncQuery} 
 % Problem to solve.
 Working with models it is quite common to query the model for checking and
 validating certain properties. The EMF-IncQuery \cite{EMFIncQuery} tool provides
 one solution for this problem: it is a framework to execute fast model queries
 over EMF models. It is actively developed at Budapest University of Technology
-and Economics. Although it is still in development status (the current
-version is 0.6.0) it already proved its usability through industrial use-cases
-and university researches.
+and Economics. Although it is still in development status (the current version
+is 0.6.0) it already proved its usability through industrial use-cases and
+university researches. % TODO: reference results for these use-cases.
+
 
 % Core.
 The core of the framework is a query evaluator engine built on top of graph
@@ -192,9 +191,9 @@ model queries. The users can integrate this code out of the box in Eclipse
 plugins as well as headless applications to execute queries and get back the
 results from the source code level.
 
-\subsection{Other related technologies}
+\section{Other related technologies}
 
-\subsubsection{Spring Framework}
+\subsection{Spring Framework}
 %
 The Spring Framework is an open source application framework and Inversion of
 Control container for the Java platform. The core features of the Spring
@@ -209,7 +208,7 @@ The main advantage of using Spring framework is a configurability through
 dependency injection. 
 
 
-\subsubsection{Maven}
+\subsection{Maven}
 In three words Apache Maven is a project management framework. The main goal is 
 similar to Ant but Maven offers an integrated approach to make Java development
 manageable. 
@@ -234,7 +233,7 @@ Maven is also extendable through plugin mechanism. One can develop extensions fo
 for achieve various non-standard goals such as integration testing or building 
 non-standalone Java applications.
 
-\subsubsection{Tycho}
+\subsection{Tycho}
 Tycho is a set of Maven plugins and extensions for building Eclipse plugins and
 OSGi bundles with Maven. It exists because Eclipse plugins have their own way of
 describing metadata such as version numbers and dependencies which normally
@@ -251,7 +250,7 @@ still has not reached the production quality (the current version number is
 enchantments can be found on the project's website.
 
 
-\subsubsection{Oracle database}
+\subsection{Oracle database}
 The Oracle Database (also known as Oracle DB, Oracle RDBMS or just Oracle) is a
 relational database management system (RDBMS) from the Oracle Corporation.
 Originally developed in 1977 by Lawrence Ellison and other developers, Oracle DB
@@ -263,61 +262,5 @@ structured query language (SQL). Oracle is a fully scalable relational database
 architecture and is often used by global enterprises, which manage and process
 data across wide and local area networks. The Oracle database has its own
 network component to allow communications across networks.
-
-
-\section{Example: Service Provider Framework}
-
-To make the following chapters easier to understand, I am going to introduce a
-simple use-case example. It is a design pattern called Service Provider
-Framework. It is a practical application of the original Adapter pattern and it
-was described in the famous book ,,Effective Java'' \cite{Bloch08}. This pattern
-is the simplified version how the Java Database Connectivity (JDBC) works.
-
-\picr{exampleclasses.pdf}{Structure of Service Provider Framework pattern}
-
-You can see the structure of the pattern on figure
-\autoref{fig:exampleclasses.pdf}. As of the packages it contains 3 major parts.
-The \code{service} package contains the core pattern classes. The \code{impl}
-and the \code{impl} packages are external users of the pattern and therefore
-they are considered depending client libraries.
-
-First let's discuss the pattern itself. The main goal for the patter is to
-provide a registry of implementations for a desired service. This service is
-described in the \code{Service} interface. The \code{Provider} interface is
-serves as a factory instance; it has a single function to instantiate a new
-Service object. The \code{Services} class has the role of the registry.
-The service implementers register their implementation using the static
-\code{registerProvider()} and \code{registerDefaultProvider()} methods. The
-parameters the identifier string for the registered service and Provider
-instance which will instantiate the Service instances. The clients will
-instantiate the Service instance with the \code{newInstance()} function.
-Depending the passed identifier string, the method will look up if a Provider
-was registered with the same name, and if the answer is yes then it calls the
-\code{Provider.newInstance()} and return its result.
-
-The \code{DEFAULT\_PROVIDER\_NAME} is a static public field which can be used to
-obtain the default Service implementation. The \code{AbstractService} is a
-utility class which implements one of the function of the Service interface.
-
-The \code{impl} package contains one possible implementation to use the
-described pattern. The \code{BasicService} contains the implementation and the
-\code{BasicProvider} is responsible for properly initializing and returning a
-new instance of this version. The \code{BasicImplUtil} -- as its name implies --
-holds utility classes which register the implementation in the Services class.
-
-The \code{client} package holds one single \code{Main} class, which contains a
-simple evaluation. It invokes the \code{Services.newInstance()} function passing
-the default provider's name as an argument and invokes the \code{serviceA()} and
-\code{serviceB()} function.
-
-Although the example is fairly simple, the related source code can be found in
-appendix \autoref{examplesource}.
-
-So why are we looking at this example? Imagine that the three packages are
-distributed into three different software which have their individual
-responsible developer. Now let's say, somebody wants to change some parts of the
-service without precisely knowing who is using which part of the code. Not this
-will be our example which I will use to present how my software works and how
-can this problem be solved by it. 
 
 
