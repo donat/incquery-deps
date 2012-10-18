@@ -461,6 +461,32 @@
       <owned-items />
       <style class="default" />
     </item>
+    <item id="ddip326298358391107389_459623114363663712" cid="LL004" type="lifeline" name="Bytecode analyzer" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/18/2012 11:20:03">
+      <stereotypes />
+      <tagged-values />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <lifeline classifier-name="" is-active="false" is-multi-object="false" />
+    </item>
+    <item id="ddip326298358391107389_754452665824898495" cid="LL004" type="lifeline" name="Storage Engine" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:04:16">
+      <stereotypes />
+      <tagged-values />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <lifeline classifier-name="" is-active="false" is-multi-object="false" />
+    </item>
+    <item id="ddip326298358391107389_733964559486613385" cid="AN001" type="sequence-action" name="Action1" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:06:56">
+      <stereotypes />
+      <tagged-values />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <sequence-action type="send" message="newJars()" is-asynchronous="false" from="ddip326298358391107389_493751581288402041" to="ddip326298358391107389_887772431479017580" return-value="" assign-to-variable="">
+        <parameters />
+      </sequence-action>
+    </item>
     <item id="di864881834502807176" cid="REL007" type="relationship" name="" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="05/03/2012 16:45:36">
       <stereotypes />
       <tagged-values />
@@ -520,6 +546,26 @@
         <start-role id="" name="classes" multiplicity="*" navigability="" association-type="association" visibility="public" />
         <end-role id="" name="product" multiplicity="1" navigability="" association-type="composition" visibility="public" />
       </relation>
+    </item>
+    <item id="ddip326298358391107389_629293009419734243" cid="AN003" type="sequence-action" name="Action3" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:08:38">
+      <stereotypes />
+      <tagged-values />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <sequence-action type="call" message="analizeJarStructure()" is-asynchronous="false" from="ddip326298358391107389_887772431479017580" to="ddip326298358391107389_528949064573994287" return-value="" assign-to-variable="">
+        <parameters />
+      </sequence-action>
+    </item>
+    <item id="ddip326298358391107389_810848621486016051" cid="FR002" type="fragment" name="Fragment2" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:09:53">
+      <stereotypes />
+      <tagged-values />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <fragment operator="loop">
+        <operands />
+      </fragment>
     </item>
     <item id="di441144993495296283" cid="C013" type="class" name="Product" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="05/03/2012 16:44:46">
       <stereotypes />
@@ -626,9 +672,107 @@
         <source-codes />
       </template-parameters>
     </item>
+    <item id="ddip326298358391107389_231443594395024167" cid="AN004" type="sequence-action" name="Action4" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:10:43">
+      <stereotypes />
+      <tagged-values />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <sequence-action type="call" message="analizeClassInJar()" is-asynchronous="false" from="ddip326298358391107389_528949064573994287" to="ddip326298358391107389_147831920109848318" return-value="" assign-to-variable="">
+        <parameters />
+      </sequence-action>
+    </item>
+    <item id="ddip326298358391107389_150368312952753059" cid="FR003" type="fragment" name="Fragment3" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:11:15">
+      <stereotypes />
+      <tagged-values />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <fragment operator="loop">
+        <operands />
+      </fragment>
+    </item>
+    <item id="ddip326298358391107389_923907957851712363" cid="AN006" type="sequence-action" name="Action6" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:12:43">
+      <stereotypes />
+      <tagged-values />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <sequence-action type="call" message="storeJarStructure()" is-asynchronous="false" from="ddip326298358391107389_528949064573994287" to="ddip326298358391107389_679538573938062673" return-value="" assign-to-variable="">
+        <parameters />
+      </sequence-action>
+    </item>
+    <item id="ddip326298358391107389_910762530379688854" cid="FR002" type="fragment" name="Fragment2" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:09:53">
+      <stereotypes />
+      <tagged-values />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <fragment operator="loop">
+        <operands />
+      </fragment>
+    </item>
+    <item id="ddip326298358391107389_852569910540770978" cid="AN003" type="sequence-action" name="Action3" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:08:38">
+      <stereotypes />
+      <tagged-values />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <sequence-action type="call" message="analizeJarDependencies()" is-asynchronous="false" from="ddip326298358391107389_887772431479017580" to="ddip326298358391107389_528949064573994287" return-value="" assign-to-variable="">
+        <parameters />
+      </sequence-action>
+    </item>
+    <item id="ddip326298358391107389_707031482750734162" cid="FR003" type="fragment" name="Fragment3" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:11:15">
+      <stereotypes />
+      <tagged-values />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <fragment operator="loop">
+        <operands />
+      </fragment>
+    </item>
+    <item id="ddip326298358391107389_736778141518131322" cid="AN004" type="sequence-action" name="Action4" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:10:43">
+      <stereotypes />
+      <tagged-values />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <sequence-action type="call" message="findClassDeps()" is-asynchronous="false" from="ddip326298358391107389_528949064573994287" to="ddip326298358391107389_147831920109848318" return-value="" assign-to-variable="">
+        <parameters />
+      </sequence-action>
+    </item>
+    <item id="ddip326298358391107389_918785388461772605" cid="AN006" type="sequence-action" name="Action6" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:12:43">
+      <stereotypes />
+      <tagged-values />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <sequence-action type="call" message="storeDeps()" is-asynchronous="false" from="ddip326298358391107389_528949064573994287" to="ddip326298358391107389_679538573938062673" return-value="" assign-to-variable="">
+        <parameters />
+      </sequence-action>
+    </item>
+    <item id="ddip326298358391107389_704358600643073088" cid="AN008" type="sequence-action" name="Action8" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:39:49">
+      <stereotypes />
+      <tagged-values />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <sequence-action type="return" message="classStructure" is-asynchronous="false" from="ddip326298358391107389_147831920109848318" to="ddip326298358391107389_528949064573994287" return-value="" assign-to-variable="">
+        <parameters />
+      </sequence-action>
+    </item>
+    <item id="ddip326298358391107389_998424619797390694" cid="LL002" type="lifeline" name="RepositoryListerer" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:02:25">
+      <stereotypes />
+      <tagged-values />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <lifeline classifier-name="" is-active="false" is-multi-object="false" />
+    </item>
   </items>
   <models>
-    <model id="p678902682132727573" name="Model 1" type="model" namespace="" order-index="1">
+    <model id="p678902682132727573" name="Dependency Analysis Tool" type="model" namespace="" order-index="1">
       <meta>
         <authors>
           <author> </author>
@@ -1113,47 +1257,13 @@
           </authors>
           <description />
           <creation-date>10/15/2012 20:58:48</creation-date>
-          <change-date>10/15/2012 21:40:09</change-date>
+          <change-date>10/18/2012 12:31:46</change-date>
           <revision-count>0</revision-count>
           <version />
         </meta>
         <tagged-values />
         <abstract-items>
-          <item id="ddip326298358391107389_549284535721796617" cid="LL003" type="lifeline" name="Bytecode Analyser" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:02:53">
-            <stereotypes />
-            <tagged-values />
-            <associated-diagrams />
-            <owned-items />
-            <style class="default" />
-            <lifeline classifier-name="" is-active="false" is-multi-object="false" />
-          </item>
-          <item id="ddip326298358391107389_998424619797390694" cid="LL002" type="lifeline" name="RepositoryListerer" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:02:25">
-            <stereotypes />
-            <tagged-values />
-            <associated-diagrams />
-            <owned-items />
-            <style class="default" />
-            <lifeline classifier-name="" is-active="false" is-multi-object="false" />
-          </item>
-          <item id="ddip326298358391107389_754452665824898495" cid="LL004" type="lifeline" name="Storage Engine" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:04:16">
-            <stereotypes />
-            <tagged-values />
-            <associated-diagrams />
-            <owned-items />
-            <style class="default" />
-            <lifeline classifier-name="" is-active="false" is-multi-object="false" />
-          </item>
-          <item id="ddip326298358391107389_733964559486613385" cid="AN001" type="sequence-action" name="Action1" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:06:56">
-            <stereotypes />
-            <tagged-values />
-            <associated-diagrams />
-            <owned-items />
-            <style class="default" />
-            <sequence-action type="send" message="newJars()" is-asynchronous="false" from="ddip326298358391107389_100939310528517523" to="ddip326298358391107389_373787155238112003" return-value="" assign-to-variable="">
-              <parameters />
-            </sequence-action>
-          </item>
-          <item id="ddip326298358391107389_100939310528517523" cid="AB001" type="activation-bar" name="ActivationBar1" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:06:58">
+          <item id="ddip326298358391107389_493751581288402041" cid="AB001" type="activation-bar" name="ActivationBar1" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:06:58">
             <stereotypes />
             <tagged-values />
             <associated-diagrams />
@@ -1161,7 +1271,15 @@
             <style class="default" />
             <activation-bar lifeline-ref="ddip326298358391107389_998424619797390694" />
           </item>
-          <item id="ddip326298358391107389_373787155238112003" cid="AB002" type="activation-bar" name="ActivationBar2" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:06:58">
+          <item id="ddip326298358391107389_493751581288402041" cid="AB001" type="activation-bar" name="ActivationBar1" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:06:58">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <activation-bar lifeline-ref="ddip326298358391107389_998424619797390694" />
+          </item>
+          <item id="ddip326298358391107389_887772431479017580" cid="AB002" type="activation-bar" name="ActivationBar2" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:06:58">
             <stereotypes />
             <tagged-values />
             <associated-diagrams />
@@ -1177,26 +1295,6 @@
             <style class="default" />
             <activation-bar lifeline-ref="ddip326298358391107389_549284535721796617" />
           </item>
-          <item id="ddip326298358391107389_629293009419734243" cid="AN003" type="sequence-action" name="Action3" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:08:38">
-            <stereotypes />
-            <tagged-values />
-            <associated-diagrams />
-            <owned-items />
-            <style class="default" />
-            <sequence-action type="call" message="analizeJarStructure()" is-asynchronous="false" from="ddip326298358391107389_373787155238112003" to="ddip326298358391107389_528949064573994287" return-value="" assign-to-variable="">
-              <parameters />
-            </sequence-action>
-          </item>
-          <item id="ddip326298358391107389_810848621486016051" cid="FR002" type="fragment" name="Fragment2" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:09:53">
-            <stereotypes />
-            <tagged-values />
-            <associated-diagrams />
-            <owned-items />
-            <style class="default" />
-            <fragment operator="loop">
-              <operands />
-            </fragment>
-          </item>
           <item id="ddip326298358391107389_147831920109848318" cid="AB004" type="activation-bar" name="ActivationBar2" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:10:32">
             <stereotypes />
             <tagged-values />
@@ -1204,36 +1302,6 @@
             <owned-items />
             <style class="default" />
             <activation-bar lifeline-ref="ddip326298358391107389_549284535721796617" />
-          </item>
-          <item id="ddip326298358391107389_231443594395024167" cid="AN004" type="sequence-action" name="Action4" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:10:43">
-            <stereotypes />
-            <tagged-values />
-            <associated-diagrams />
-            <owned-items />
-            <style class="default" />
-            <sequence-action type="call" message="analizeClassInJar()" is-asynchronous="false" from="ddip326298358391107389_528949064573994287" to="ddip326298358391107389_147831920109848318" return-value="" assign-to-variable="">
-              <parameters />
-            </sequence-action>
-          </item>
-          <item id="ddip326298358391107389_150368312952753059" cid="FR003" type="fragment" name="Fragment3" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:11:15">
-            <stereotypes />
-            <tagged-values />
-            <associated-diagrams />
-            <owned-items />
-            <style class="default" />
-            <fragment operator="loop">
-              <operands />
-            </fragment>
-          </item>
-          <item id="ddip326298358391107389_923907957851712363" cid="AN006" type="sequence-action" name="Action6" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:12:43">
-            <stereotypes />
-            <tagged-values />
-            <associated-diagrams />
-            <owned-items />
-            <style class="default" />
-            <sequence-action type="call" message="storeJarStructure()" is-asynchronous="false" from="ddip326298358391107389_528949064573994287" to="ddip326298358391107389_679538573938062673" return-value="" assign-to-variable="">
-              <parameters />
-            </sequence-action>
           </item>
           <item id="ddip326298358391107389_679538573938062673" cid="AB005" type="activation-bar" name="ActivationBar3" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:12:44">
             <stereotypes />
@@ -1351,16 +1419,6 @@
             <style class="default" />
             <activation-bar lifeline-ref="ddip326298358391107389_170571826891372794" />
           </item>
-          <item id="ddip326298358391107389_910762530379688854" cid="FR002" type="fragment" name="Fragment2" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:09:53">
-            <stereotypes />
-            <tagged-values />
-            <associated-diagrams />
-            <owned-items />
-            <style class="default" />
-            <fragment operator="loop">
-              <operands />
-            </fragment>
-          </item>
           <item id="ddip326298358391107389_279457112270404839" cid="AB003" type="activation-bar" name="ActivationBar1" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:08:22">
             <stereotypes />
             <tagged-values />
@@ -1375,7 +1433,7 @@
             <associated-diagrams />
             <owned-items />
             <style class="default" />
-            <sequence-action type="call" message="analizeJarStructure()" is-asynchronous="false" from="ddip326298358391107389_373787155238112003" to="ddip326298358391107389_279457112270404839" return-value="" assign-to-variable="">
+            <sequence-action type="call" message="analizeJarStructure()" is-asynchronous="false" from="ddip326298358391107389_887772431479017580" to="ddip326298358391107389_279457112270404839" return-value="" assign-to-variable="">
               <parameters />
             </sequence-action>
           </item>
@@ -1439,7 +1497,7 @@
             <associated-diagrams />
             <owned-items />
             <style class="default" />
-            <sequence-action type="call" message="analizeJarStructure()" is-asynchronous="false" from="ddip326298358391107389_373787155238112003" to="ddip326298358391107389_704478839495617385" return-value="" assign-to-variable="">
+            <sequence-action type="call" message="analizeJarStructure()" is-asynchronous="false" from="ddip326298358391107389_887772431479017580" to="ddip326298358391107389_704478839495617385" return-value="" assign-to-variable="">
               <parameters />
             </sequence-action>
           </item>
@@ -1489,16 +1547,6 @@
             <style class="default" />
             <activation-bar lifeline-ref="ddip326298358391107389_754452665824898495" />
           </item>
-          <item id="ddip326298358391107389_852569910540770978" cid="AN003" type="sequence-action" name="Action3" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:08:38">
-            <stereotypes />
-            <tagged-values />
-            <associated-diagrams />
-            <owned-items />
-            <style class="default" />
-            <sequence-action type="call" message="analizeJarDependencies()" is-asynchronous="false" from="ddip326298358391107389_373787155238112003" to="ddip326298358391107389_528949064573994287" return-value="" assign-to-variable="">
-              <parameters />
-            </sequence-action>
-          </item>
           <item id="ddip326298358391107389_290523127289963369" cid="AB006" type="activation-bar" name="ActivationBar3" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:24:59">
             <stereotypes />
             <tagged-values />
@@ -1523,36 +1571,6 @@
             <style class="default" />
             <activation-bar lifeline-ref="ddip326298358391107389_549284535721796617" />
           </item>
-          <item id="ddip326298358391107389_707031482750734162" cid="FR003" type="fragment" name="Fragment3" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:11:15">
-            <stereotypes />
-            <tagged-values />
-            <associated-diagrams />
-            <owned-items />
-            <style class="default" />
-            <fragment operator="loop">
-              <operands />
-            </fragment>
-          </item>
-          <item id="ddip326298358391107389_736778141518131322" cid="AN004" type="sequence-action" name="Action4" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:10:43">
-            <stereotypes />
-            <tagged-values />
-            <associated-diagrams />
-            <owned-items />
-            <style class="default" />
-            <sequence-action type="call" message="findClassDeps()" is-asynchronous="false" from="ddip326298358391107389_528949064573994287" to="ddip326298358391107389_147831920109848318" return-value="" assign-to-variable="">
-              <parameters />
-            </sequence-action>
-          </item>
-          <item id="ddip326298358391107389_918785388461772605" cid="AN006" type="sequence-action" name="Action6" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:12:43">
-            <stereotypes />
-            <tagged-values />
-            <associated-diagrams />
-            <owned-items />
-            <style class="default" />
-            <sequence-action type="call" message="storeDeps()" is-asynchronous="false" from="ddip326298358391107389_528949064573994287" to="ddip326298358391107389_679538573938062673" return-value="" assign-to-variable="">
-              <parameters />
-            </sequence-action>
-          </item>
           <item id="ddip326298358391107389_207395588506571068" cid="AB005" type="activation-bar" name="ActivationBar3" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:12:44">
             <stereotypes />
             <tagged-values />
@@ -1569,94 +1587,297 @@
             <style class="default" />
             <activation-bar lifeline-ref="ddip326298358391107389_754452665824898495" />
           </item>
-          <item id="ddip326298358391107389_704358600643073088" cid="AN008" type="sequence-action" name="Action8" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:39:49">
+          <item id="ddip326298358391107389_887772431479017580" cid="AB002" type="activation-bar" name="ActivationBar2" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:06:58">
             <stereotypes />
             <tagged-values />
             <associated-diagrams />
             <owned-items />
             <style class="default" />
-            <sequence-action type="return" message="classStructure" is-asynchronous="false" from="ddip326298358391107389_147831920109848318" to="ddip326298358391107389_528949064573994287" return-value="" assign-to-variable="">
+            <activation-bar lifeline-ref="ddip326298358391107389_549284535721796617" />
+          </item>
+          <item id="ddip326298358391107389_352992392596863886" cid="ELEM001" type="frame" name="Dependency processing" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/18/2012 11:16:43">
+            <stereotypes />
+            <tagged-values />
+            <documentation>
+              <text>
+                <content>
+                  <p index="0">
+                    <t />
+                    <style font-name="Arial" font-size="12" font-bold="false" font-italic="false" font-underline="false" font-strikeout="false">
+                      <text>
+                        <solid-brush color="#FF000000" />
+                      </text>
+                    </style>
+                  </p>
+                </content>
+              </text>
+            </documentation>
+            <cooperation>
+              <participants />
+              <comments />
+            </cooperation>
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <frame type="sd" />
+          </item>
+          <item id="ddip326298358391107389_357879934281280927" cid="ELEM005" type="found-message" name="FoundMessage5" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/18/2012 11:29:24">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <sequence-action type="call" message="jars" is-asynchronous="false" to="ddip326298358391107389_853569403833250290" return-value="" assign-to-variable="">
               <parameters />
             </sequence-action>
           </item>
+          <item id="ddip326298358391107389_806350745840184602" cid="LL004" type="lifeline" name="Dependency Processor" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/18/2012 11:20:03">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <lifeline classifier-name="" is-active="false" is-multi-object="false" />
+          </item>
+          <item id="ddip326298358391107389_388034927688967328" cid="LL004" type="lifeline" name="Storage engine" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/18/2012 11:20:03">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <lifeline classifier-name="" is-active="false" is-multi-object="false" />
+          </item>
+          <item id="ddip326298358391107389_817110247338312228" cid="FR003" type="fragment" name="Fragment3" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/15/2012 21:11:15">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <fragment operator="loop">
+              <operands />
+            </fragment>
+          </item>
+          <item id="ddip326298358391107389_853569403833250290" cid="AB013" type="activation-bar" name="ActivationBar13" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/18/2012 11:29:25">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <activation-bar lifeline-ref="ddip326298358391107389_459623114363663712" />
+          </item>
+          <item id="ddip326298358391107389_370871483422356311" cid="FR001" type="fragment" name="Fragment1" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/18/2012 12:10:21">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <fragment operator="loop">
+              <operands />
+            </fragment>
+          </item>
+          <item id="ddip326298358391107389_543391634598422869" cid="AN015" type="sequence-action" name="Action15" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/18/2012 12:11:23">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <sequence-action type="call" message="analyze (jar)" is-asynchronous="false" from="ddip326298358391107389_853569403833250290" to="ddip326298358391107389_853569403833250290" return-value="" assign-to-variable="">
+              <parameters />
+            </sequence-action>
+          </item>
+          <item id="ddip326298358391107389_447352664581035610" cid="AN016" type="sequence-action" name="Action16" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/18/2012 12:16:36">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <sequence-action type="send" message="process(jar)" is-asynchronous="false" from="ddip326298358391107389_853569403833250290" to="ddip326298358391107389_896873927285575142" return-value="" assign-to-variable="">
+              <parameters />
+            </sequence-action>
+          </item>
+          <item id="ddip326298358391107389_896873927285575142" cid="AB017" type="activation-bar" name="ActivationBar16" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/18/2012 12:16:40">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <activation-bar lifeline-ref="ddip326298358391107389_806350745840184602" />
+          </item>
+          <item id="ddip326298358391107389_759728737693921371" cid="AN017" type="sequence-action" name="Action17" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/18/2012 12:17:00">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <sequence-action type="call" message="storeStructure(jar)" is-asynchronous="false" from="ddip326298358391107389_896873927285575142" to="ddip326298358391107389_556591160720162774" return-value="" assign-to-variable="">
+              <parameters />
+            </sequence-action>
+          </item>
+          <item id="ddip326298358391107389_556591160720162774" cid="AB018" type="activation-bar" name="ActivationBar17" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/18/2012 12:17:03">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <activation-bar lifeline-ref="ddip326298358391107389_388034927688967328" />
+          </item>
+          <item id="ddip326298358391107389_204627204368217870" cid="FR001" type="fragment" name="Fragment1" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/18/2012 12:10:21">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <fragment operator="loop">
+              <operands />
+            </fragment>
+          </item>
+          <item id="ddip326298358391107389_414465238516405864" cid="AN026" type="sequence-action" name="Action26" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/18/2012 12:28:44">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <sequence-action type="call" message="analyze(jar)" is-asynchronous="false" from="ddip326298358391107389_853569403833250290" to="ddip326298358391107389_853569403833250290" return-value="" assign-to-variable="">
+              <parameters />
+            </sequence-action>
+          </item>
+          <item id="ddip326298358391107389_276057303852865598" cid="AN019" type="sequence-action" name="Action19" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/18/2012 12:23:35">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <sequence-action type="call" message="process(jar)" is-asynchronous="false" from="ddip326298358391107389_853569403833250290" to="ddip326298358391107389_655938753169983270" return-value="" assign-to-variable="">
+              <parameters />
+            </sequence-action>
+          </item>
+          <item id="ddip326298358391107389_655938753169983270" cid="AB019" type="activation-bar" name="ActivationBar18" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/18/2012 12:23:38">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <activation-bar lifeline-ref="ddip326298358391107389_806350745840184602" />
+          </item>
+          <item id="ddip326298358391107389_777184485607377863" cid="AN020" type="sequence-action" name="Action20" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/18/2012 12:24:19">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <sequence-action type="send" message="searchReferencedElements()" is-asynchronous="false" from="ddip326298358391107389_655938753169983270" to="ddip326298358391107389_686883152560418779" return-value="" assign-to-variable="">
+              <parameters />
+            </sequence-action>
+          </item>
+          <item id="ddip326298358391107389_686883152560418779" cid="AB020" type="activation-bar" name="ActivationBar19" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/18/2012 12:24:21">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <activation-bar lifeline-ref="ddip326298358391107389_388034927688967328" />
+          </item>
+          <item id="ddip326298358391107389_218300066579095162" cid="AN021" type="sequence-action" name="Action21" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/18/2012 12:25:01">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <sequence-action type="return" message="elements" is-asynchronous="false" from="ddip326298358391107389_686883152560418779" to="ddip326298358391107389_655938753169983270" return-value="" assign-to-variable="">
+              <parameters />
+            </sequence-action>
+          </item>
+          <item id="ddip326298358391107389_105235279313832975" cid="AN022" type="sequence-action" name="Action22" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/18/2012 12:27:19">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <sequence-action type="call" message="saveDependencies()" is-asynchronous="false" from="ddip326298358391107389_655938753169983270" to="ddip326298358391107389_162192205805722552" return-value="" assign-to-variable="">
+              <parameters />
+            </sequence-action>
+          </item>
+          <item id="ddip326298358391107389_162192205805722552" cid="AB021" type="activation-bar" name="ActivationBar20" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="10/18/2012 12:27:21">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <activation-bar lifeline-ref="ddip326298358391107389_388034927688967328" />
+          </item>
         </abstract-items>
         <layer name="Default" visible="true" enabled="true" locked="false">
-          <item id="ddip326298358391107389_998424619797390694" iid="9ec5f4449e68481c990ee43abe2437b5" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/15/2012 21:02:25" order-index="1" type="lifeline">
-            <layout ax="109" ay="50" awidth="140" aheight="616" x="109" y="51" width="140" height="616" angle="0" />
+          <item id="ddip326298358391107389_352992392596863886" iid="a953244c4d3843cd8eb2f7bfb162510f" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/18/2012 11:16:43" order-index="20" type="entity">
+            <layout ax="672" ay="14" awidth="621" aheight="538" x="672" y="14" width="621" height="538" angle="0" />
           </item>
-          <item id="ddip326298358391107389_549284535721796617" iid="e7d7be956c9e4f818b3243cc6ca21237" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/15/2012 21:02:53" order-index="2" type="lifeline">
-            <layout ax="313" ay="50" awidth="139" aheight="608" x="313" y="23" width="139" height="608" angle="0" />
+          <item id="ddip326298358391107389_806350745840184602" iid="c6cf807139bc43b48089b3d2ffbe6515" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/18/2012 11:20:03" order-index="22" type="lifeline">
+            <layout ax="936" ay="50" awidth="102" aheight="498" x="936" y="50" width="102" height="498" angle="0" />
           </item>
-          <item id="ddip326298358391107389_754452665824898495" iid="43045b0afa1d48708cf9c6cab476c8af" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/15/2012 21:04:16" order-index="3" type="lifeline">
-            <layout ax="511" ay="50" awidth="112" aheight="609" x="511" y="53" width="112" height="609" angle="0" />
+          <item id="ddip326298358391107389_388034927688967328" iid="ecfe8a31f34241ddab6c866f133e0e5d" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/18/2012 11:20:03" order-index="22" type="lifeline">
+            <layout ax="1149" ay="50" awidth="99" aheight="497" x="1149" y="50" width="99" height="497" angle="0" />
           </item>
-          <item id="ddip326298358391107389_733964559486613385" iid="4c649f7d224840038bc672f85d3dbcec" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/15/2012 21:06:56" order-index="4" type="sequence-action">
-            <layout x1="189" y1="135" x2="372" y2="135" ax="189" ay="120" awidth="183" aheight="20" x="189" y="120" width="183" height="20" message-x="1" message-y="-4" />
-            <sequence-action from="ddip326298358391107389_100939310528517523" to="ddip326298358391107389_373787155238112003" />
+          <item id="ddip326298358391107389_459623114363663712" iid="da065bcbf1d1474c972d42a9c81c5e18" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/18/2012 11:20:03" order-index="22" type="lifeline">
+            <layout ax="753" ay="50" awidth="91" aheight="497" x="753" y="50" width="91" height="497" angle="0" />
           </item>
-          <item id="ddip326298358391107389_100939310528517523" iid="a66f6c6f0dac4656a4c81a628af83f57" container="ddip326298358391107389_998424619797390694" container-iid="9ec5f4449e68481c990ee43abe2437b5" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/15/2012 21:06:58" order-index="5" type="entity">
-            <layout ax="169" ay="130" awidth="20" aheight="34" x="169" y="130" width="18" height="34" angle="0" />
+          <item id="ddip326298358391107389_357879934281280927" iid="7ed3dede4d524193a1d66fc3aa3dfe75" container="ddip326298358391107389_352992392596863886" container-iid="a953244c4d3843cd8eb2f7bfb162510f" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/18/2012 11:29:24" order-index="23" type="sequence-action">
+            <layout x1="671" y1="132" x2="788" y2="132" ax="671" ay="117" awidth="117" aheight="20" x="0" y="0" width="0" height="0" message-x="32" message-y="-8" />
+            <sequence-action to="ddip326298358391107389_853569403833250290" />
           </item>
-          <item id="ddip326298358391107389_373787155238112003" iid="07689c1be1f1471e99309647688de6de" container="ddip326298358391107389_549284535721796617" container-iid="e7d7be956c9e4f818b3243cc6ca21237" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/15/2012 21:06:58" order-index="6" type="entity">
-            <layout ax="372.5" ay="135" awidth="20" aheight="494" x="372.5" y="135" width="19" height="485" angle="0" />
+          <item id="ddip326298358391107389_853569403833250290" iid="f45f752f2a8e43cf899514a8e745eebc" container="ddip326298358391107389_459623114363663712" container-iid="da065bcbf1d1474c972d42a9c81c5e18" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/18/2012 11:29:25" order-index="24" type="entity">
+            <layout ax="788.5" ay="130" awidth="20" aheight="235" x="788.5" y="130" width="19" height="235" angle="0" />
           </item>
-          <item id="ddip326298358391107389_528949064573994287" iid="73f48526f8a24567864b5270696bb425" container="ddip326298358391107389_549284535721796617" container-iid="e7d7be956c9e4f818b3243cc6ca21237" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/15/2012 21:08:22" order-index="7" type="entity">
-            <layout ax="382.5" ay="186" awidth="20" aheight="433" x="372.5" y="186" width="14" height="165" angle="0" />
+          <item id="ddip326298358391107389_370871483422356311" iid="d294523fd94a488287fbc59993eb7bc0" container="ddip326298358391107389_352992392596863886" container-iid="a953244c4d3843cd8eb2f7bfb162510f" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/18/2012 12:10:21" order-index="25" type="entity">
+            <layout ax="707" ay="146" awidth="556" aheight="126" x="704" y="146" width="556" height="126" angle="0" />
           </item>
-          <item id="ddip326298358391107389_629293009419734243" iid="63bdba4d6c4b410f9ef57f74ab80d27f" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/15/2012 21:08:38" order-index="8" type="sequence-action">
-            <layout x1="392" y1="169" x2="402" y2="197" ax="392" ay="169" awidth="37" aheight="28" x="392" y="169" width="37" height="28" message-x="56" message-y="-22" />
-            <sequence-action from="ddip326298358391107389_373787155238112003" to="ddip326298358391107389_528949064573994287" />
+          <item id="ddip326298358391107389_543391634598422869" iid="0a293dd99ee04261a69dd2993e14ad58" container="ddip326298358391107389_352992392596863886" container-iid="a953244c4d3843cd8eb2f7bfb162510f" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/18/2012 12:11:23" order-index="26" type="sequence-action">
+            <layout x1="808" y1="166" x2="808" y2="192" ax="808" ay="166" awidth="61" aheight="26" x="0" y="0" width="0" height="0" message-x="23" message-y="-17" />
+            <sequence-action from="ddip326298358391107389_853569403833250290" to="ddip326298358391107389_853569403833250290" />
           </item>
-          <item id="ddip326298358391107389_810848621486016051" iid="36421558219d4028ac62a18cda6de29a" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/15/2012 21:09:53" order-index="9" type="entity">
-            <layout ax="268" ay="151" awidth="337" aheight="232" x="268" y="151" width="337" height="232" angle="0" />
+          <item id="ddip326298358391107389_447352664581035610" iid="1c5ccd6a664b41db9cbd91a86c1a8c32" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/18/2012 12:16:36" order-index="27" type="sequence-action">
+            <layout x1="808" y1="212" x2="977" y2="212" ax="808" ay="197" awidth="169" aheight="20" x="798" y="197" width="0" height="0" message-x="10" message-y="-3" />
+            <sequence-action from="ddip326298358391107389_853569403833250290" to="ddip326298358391107389_896873927285575142" />
           </item>
-          <item id="ddip326298358391107389_147831920109848318" iid="7f195c9e5ffd45459a453b71f2c5f07e" container="ddip326298358391107389_549284535721796617" container-iid="e7d7be956c9e4f818b3243cc6ca21237" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/15/2012 21:10:32" order-index="10" type="entity">
-            <layout ax="392.5" ay="246" awidth="20" aheight="363" x="372.5" y="246" width="19" height="60" angle="0" />
+          <item id="ddip326298358391107389_896873927285575142" iid="be4a126859b143baa631c453fcff2f75" container="ddip326298358391107389_806350745840184602" container-iid="c6cf807139bc43b48089b3d2ffbe6515" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/18/2012 12:16:40" order-index="28" type="entity">
+            <layout ax="977" ay="192" awidth="20" aheight="40" x="977" y="192" width="20" height="40" angle="0" />
           </item>
-          <item id="ddip326298358391107389_231443594395024167" iid="1bcbc98f42874b65a397940f96c9fef4" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/15/2012 21:10:43" order-index="11" type="sequence-action">
-            <layout x1="402" y1="226" x2="412" y2="254" ax="402" ay="226" awidth="45" aheight="28" x="402" y="226" width="45" height="28" message-x="49" message-y="-18" />
-            <sequence-action from="ddip326298358391107389_528949064573994287" to="ddip326298358391107389_147831920109848318" />
+          <item id="ddip326298358391107389_759728737693921371" iid="941f9a2f4a70416eac0c74e5a27245c9" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/18/2012 12:17:00" order-index="29" type="sequence-action">
+            <layout x1="997" y1="225" x2="1188" y2="225" ax="997" ay="210" awidth="191" aheight="20" x="1007" y="210" width="0" height="0" message-x="-3" message-y="-3" />
+            <sequence-action from="ddip326298358391107389_896873927285575142" to="ddip326298358391107389_556591160720162774" />
           </item>
-          <item id="ddip326298358391107389_150368312952753059" iid="444f7fe804a84d6e86d07bdaca4bafd0" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/15/2012 21:11:15" order-index="12" type="entity">
-            <layout ax="294" ay="212" awidth="248" aheight="114" x="294" y="212" width="248" height="114" angle="0" />
+          <item id="ddip326298358391107389_556591160720162774" iid="763af523c8484d52abd2e080a96a5238" container="ddip326298358391107389_388034927688967328" container-iid="ecfe8a31f34241ddab6c866f133e0e5d" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/18/2012 12:17:03" order-index="30" type="entity">
+            <layout ax="1188.5" ay="225" awidth="20" aheight="40" x="1188.5" y="225" width="20" height="40" angle="0" />
           </item>
-          <item id="ddip326298358391107389_923907957851712363" iid="ee575939d0874c23b9647e7a5dc6752a" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/15/2012 21:12:43" order-index="14" type="sequence-action">
-            <layout x1="402" y1="347" x2="557" y2="347" ax="402" ay="332" awidth="155" aheight="20" x="402" y="332" width="155" height="20" message-x="6" message-y="-4" />
-            <sequence-action from="ddip326298358391107389_528949064573994287" to="ddip326298358391107389_679538573938062673" />
+          <item id="ddip326298358391107389_204627204368217870" iid="2f17337d8c51418285f016b5a123a4b9" container="ddip326298358391107389_352992392596863886" container-iid="a953244c4d3843cd8eb2f7bfb162510f" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/18/2012 12:10:21" order-index="25" type="entity">
+            <layout ax="707" ay="286" awidth="556" aheight="226" x="707" y="286" width="556" height="226" angle="0" />
           </item>
-          <item id="ddip326298358391107389_679538573938062673" iid="2ab887870976425bb64627d37bb9dc9b" container="ddip326298358391107389_754452665824898495" container-iid="43045b0afa1d48708cf9c6cab476c8af" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/15/2012 21:12:44" order-index="15" type="entity">
-            <layout ax="557" ay="347" awidth="20" aheight="214" x="557" y="347" width="22" height="21" angle="0" />
+          <item id="ddip326298358391107389_276057303852865598" iid="5949dfe1cdda49cc8cc66c2bbfe359b3" container="ddip326298358391107389_352992392596863886" container-iid="a953244c4d3843cd8eb2f7bfb162510f" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/18/2012 12:23:35" order-index="31" type="sequence-action">
+            <layout x1="808" y1="349" x2="977" y2="349" ax="808" ay="334" awidth="169" aheight="20" x="808" y="334" width="0" height="0" message-x="1" message-y="-4" />
+            <sequence-action from="ddip326298358391107389_853569403833250290" to="ddip326298358391107389_655938753169983270" />
           </item>
-          <item id="ddip326298358391107389_910762530379688854" iid="b37fd6d0c1864869ad8e7aacc3220e1a" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/15/2012 21:09:53" order-index="9" type="entity">
-            <layout ax="270" ay="400" awidth="337" aheight="232" x="270" y="400" width="337" height="232" angle="0" />
+          <item id="ddip326298358391107389_655938753169983270" iid="d715b5dfb953429aa7448df9d990793f" container="ddip326298358391107389_806350745840184602" container-iid="c6cf807139bc43b48089b3d2ffbe6515" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/18/2012 12:23:38" order-index="32" type="entity">
+            <layout ax="977" ay="319" awidth="20" aheight="144" x="977" y="319" width="20" height="144" angle="0" />
           </item>
-          <item id="ddip326298358391107389_852569910540770978" iid="2974d04f75ba47a3ba8aa894ffd3a87a" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/15/2012 21:08:38" order-index="8" type="sequence-action">
-            <layout x1="392" y1="422" x2="402" y2="450" ax="392" ay="422" awidth="37" aheight="28" x="392" y="422" width="37" height="28" message-x="76" message-y="-23" />
-            <sequence-action from="ddip326298358391107389_373787155238112003" to="ddip326298358391107389_528949064573994287" />
+          <item id="ddip326298358391107389_777184485607377863" iid="64bb263a64ad4619a59ed6396281ad1d" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/18/2012 12:24:19" order-index="33" type="sequence-action">
+            <layout x1="997" y1="357" x2="1188" y2="357" ax="997" ay="342" awidth="191" aheight="20" x="1007" y="342" width="0" height="0" message-x="6" message-y="-3" />
+            <sequence-action from="ddip326298358391107389_655938753169983270" to="ddip326298358391107389_686883152560418779" />
           </item>
-          <item id="ddip326298358391107389_290523127289963369" iid="1d009e8592df4c56b1f6bacbfb62f78f" container="ddip326298358391107389_549284535721796617" container-iid="e7d7be956c9e4f818b3243cc6ca21237" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/15/2012 21:24:59" order-index="16" type="entity">
-            <layout ax="402.5" ay="442" awidth="20" aheight="157" x="372.5" y="442" width="20" height="157" angle="0" />
+          <item id="ddip326298358391107389_686883152560418779" iid="667485d8cb4d447c814fbd641953cef9" container="ddip326298358391107389_388034927688967328" container-iid="ecfe8a31f34241ddab6c866f133e0e5d" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/18/2012 12:24:21" order-index="34" type="entity">
+            <layout ax="1188.5" ay="357" awidth="20" aheight="30" x="1188.5" y="357" width="20" height="16" angle="0" />
           </item>
-          <item id="ddip326298358391107389_370346463972994142" iid="176d50f3ee2a49b78e784c00955559af" container="ddip326298358391107389_549284535721796617" container-iid="e7d7be956c9e4f818b3243cc6ca21237" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/15/2012 21:25:22" order-index="17" type="entity">
-            <layout ax="412.5" ay="487" awidth="20" aheight="50" x="372.5" y="487" width="20" height="50" angle="0" />
+          <item id="ddip326298358391107389_218300066579095162" iid="75b790b52a2f434a815ed216b3ccddcc" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/18/2012 12:25:01" order-index="35" type="sequence-action">
+            <layout x1="1188" y1="387" x2="997" y2="387" ax="997" ay="372" awidth="191" aheight="20" x="1007" y="372" width="0" height="0" message-x="21" message-y="-3" />
+            <sequence-action from="ddip326298358391107389_686883152560418779" to="ddip326298358391107389_655938753169983270" />
           </item>
-          <item id="ddip326298358391107389_707031482750734162" iid="37f037eb97c247cb96c9e05202bdc03d" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/15/2012 21:11:15" order-index="12" type="entity">
-            <layout ax="296" ay="465" awidth="301" aheight="128" x="296" y="465" width="301" height="128" angle="0" />
+          <item id="ddip326298358391107389_105235279313832975" iid="881ee2133a9745c681d60642aa1d58d9" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/18/2012 12:27:19" order-index="36" type="sequence-action">
+            <layout x1="997" y1="443" x2="1188" y2="443" ax="997" ay="428" awidth="191" aheight="20" x="1007" y="428" width="0" height="0" message-x="2" message-y="-2" />
+            <sequence-action from="ddip326298358391107389_655938753169983270" to="ddip326298358391107389_162192205805722552" />
           </item>
-          <item id="ddip326298358391107389_736778141518131322" iid="e27eac3f90a043c38cef78504d2cd198" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/15/2012 21:10:43" order-index="11" type="sequence-action">
-            <layout x1="402" y1="480" x2="412" y2="508" ax="402" ay="480" awidth="45" aheight="28" x="402" y="480" width="45" height="28" message-x="40" message-y="-19" />
-            <sequence-action from="ddip326298358391107389_528949064573994287" to="ddip326298358391107389_147831920109848318" />
+          <item id="ddip326298358391107389_162192205805722552" iid="6e7b7830218746e2b6ba8851b53d06b6" container="ddip326298358391107389_388034927688967328" container-iid="ecfe8a31f34241ddab6c866f133e0e5d" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/18/2012 12:27:21" order-index="37" type="entity">
+            <layout ax="1188.5" ay="443" awidth="20" aheight="40" x="1188.5" y="443" width="20" height="40" angle="0" />
           </item>
-          <item id="ddip326298358391107389_918785388461772605" iid="455d8879654c4fd7ad5ed1f33f58f2c4" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/15/2012 21:12:43" order-index="14" type="sequence-action">
-            <layout x1="402" y1="561" x2="557" y2="561" ax="402" ay="546" awidth="155" aheight="20" x="402" y="546" width="155" height="20" message-x="7" message-y="-4" />
-            <sequence-action from="ddip326298358391107389_528949064573994287" to="ddip326298358391107389_679538573938062673" />
-          </item>
-          <item id="ddip326298358391107389_118242317865005646" iid="575d9c9039dd4185bb9958da1f88a044" container="ddip326298358391107389_754452665824898495" container-iid="43045b0afa1d48708cf9c6cab476c8af" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/15/2012 21:28:05" order-index="18" type="entity">
-            <layout ax="557" ay="561" awidth="20" aheight="20" x="557" y="561" width="20" height="20" angle="0" />
-          </item>
-          <item id="ddip326298358391107389_704358600643073088" iid="6ea7940e3c7847d5aca222d5fd820079" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/15/2012 21:39:49" order-index="19" type="sequence-action">
-            <layout x1="412" y1="281" x2="402" y2="316" ax="402" ay="281" awidth="45" aheight="35" x="402" y="281" width="45" height="35" message-x="40" message-y="-21" />
-            <sequence-action from="ddip326298358391107389_147831920109848318" to="ddip326298358391107389_528949064573994287" />
+          <item id="ddip326298358391107389_414465238516405864" iid="7ac99af2dc214dbb9b254362064fd9ff" container="ddip326298358391107389_352992392596863886" container-iid="a953244c4d3843cd8eb2f7bfb162510f" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="10/18/2012 12:28:44" order-index="38" type="sequence-action">
+            <layout x1="808" y1="305" x2="808" y2="327" ax="808" ay="305" awidth="58" aheight="22" x="808" y="305" width="0" height="0" message-x="21" message-y="-19" />
+            <sequence-action from="ddip326298358391107389_853569403833250290" to="ddip326298358391107389_853569403833250290" />
           </item>
         </layer>
       </diagram>

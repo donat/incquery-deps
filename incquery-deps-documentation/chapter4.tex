@@ -1,22 +1,25 @@
 \chapter{Details}
-%------------------------------------------------------------------------------
-% Elaboration
-%20 pages. Details of the Dependency Analysis Plugin (DAP. Describe the DAP-DB and %DAP-INCQUERY solution too. 
-%------------------------------------------------------------------------------
+% ------------------------------------------------------------------------------
+% Elaboration 20 pages. Details of the Dependency Analysis Plugin (DAP. Describe
+% the DAP-DB and %DAP-INCQUERY solution too.
+% ------------------------------------------------------------------------------
 
-%
+
 \section{Infrastructure at CERN controls systems}
 
+
 \subsection{Used tools}
-- Describe, how a typical developer works at CERN BE-CO 
-- Tools: SVN, Eclipse, Common Build, JIRA, etc. % check this at some papers of vito.
+- Describe, how a typical developer works at CERN BE-CO - Tools: SVN, Eclipse,
+Common Build, JIRA, etc. % check this at some papers of vito.
+
 
 \subsection{Development workflow}
 - Original idea comes from the typical development workflow lifecycle at CERN
 control systems. %Insert one-by one the explanation form my thesis1 report.
 
+
 % ------------------------------------------------------------------------------
-% Bytecode analysis
+% MODULE: Bytecode analysis
 % ------------------------------------------------------------------------------
 \section{Bytecode analyzer}
 % Why
@@ -24,9 +27,11 @@ Before the system performs dependency analysis, it needs to extract the
 necessary information from the source code.
 % What
 The Bytecode analyzer module takes the input java binaries (in the form of jar
-files) parses the contained class files with the help of Apache BCEL and
-maps it into an object graph which can be effectively used during the dependency
-processing. 
+files) parses the contained class files with the help of Apache BCEL and maps it
+into an object graph which can be effectively used during the dependency
+processing.
+
+
 % How
 \subsection{Anatomy of a Java binary}
 The Bytecode analyzer module takes a set of jars as an input. A jar file is
@@ -36,6 +41,7 @@ dependencies between pure Java applications then no meta-information is used;
 the bytecode analyzer gets the information from the class files contained in the
 jars.
 
+
 % Describe the ConstantMethodRef/FieldRef/Class/String in more details?
 Figure \autoref{fig:classfile.pdf} shows a simplified view how a single class
 file is built. This structure is precisely defined in Java Runtime
@@ -44,9 +50,7 @@ Specification. The class begins with a marker header followed by the part called
 the i) constant strings ii) referenced methods and fields and iii) the names of
 the external classes. The Java virtual machine is only able to load a class file
 if all the referenced external classes are loaded.
-
 \pic{classfile.pdf}{Internal structure of a class file}
-
 After the constant pool the access flags, the implemented interfaces and the
 field list are located in separate places.
 
@@ -62,8 +66,8 @@ looking for are also fairly easily to extract, because they are defined in the
 constant pool. The only challenging part to solve is to match, where exactly are
 the external resources are used in the bytecode itself.
 
-\subsection{The analysis process}
 
+\subsection{The analysis process}
 The module extract all necessary information from the class files for processing
 them. This could be done by brute-force parsing binary files, but it would be an
 tedious and error-prone task. Instead of this the implementation reuses Apache
@@ -111,41 +115,100 @@ parsed in a jar file.
 \subsection{Extracted domain model}
 The output of the analyzer is a java domain model.
 \picr{domainmodelsimp.pdf}{Classes of the domain model used by the bytecode analyzer}
-\autoref{fig:domainmodelsimp.pdf} shows the elements of this model. Because this model
-is used for the dependency processing too the model has additional elements which is 
-now not important. 
+\autoref{fig:domainmodelsimp.pdf} shows the elements of this model. Because this
+model is used for the dependency processing too the model has additional
+elements which is now not important.
 
 All element inherits from abstract \code{CodeElement} class which is a top-level
 interface for handing the items of the model. The processed jar files are named
 as \code{Product}s, because that's what it is: a software product. A product
 contains several classes named \code{ApiClass} which store the class-level
 properties. The required classes are stored in the \code{referencedClasses}
-list. The classes contain some \code{Field}s and some \code{Method}s which both have 
-a -- source formatted -- signature and some access properties. The \code{referencedFields}
-and the \code{referencedMethods} hold all the external field and method references which are
-accessed or invoked in the bytecode of the represented method. 
+list. The classes contain some \code{Field}s and some \code{Method}s which both
+have a -- source formatted -- signature and some access properties. The
+\code{referencedFields} and the \code{referencedMethods} hold all the external
+field and method references which are accessed or invoked in the bytecode of the
+represented method.
 
-With an instance of this domain model the dependency processing module is capable of 
-discovering the dependency relationships between certain parts of the dependency.
+With an instance of this domain model the dependency processing module is
+capable of discovering the dependency relationships between certain parts of the
+dependency.
  
- 
- 
+
+% ------------------------------------------------------------------------------
+% MODULE: Dependeney processor
+% ------------------------------------------------------------------------------
 \section{Dependency processor}
-- Sequence, how the dependency analysis works. 
-- Summarize what should be found if execute the analysis in the example
-\begin{figure}[htb]                                            
-   \center   
-   \caption{Sequence of bytecode analysis} 
-   \label{fig:analization.pdf}  
-     \resizebox{0.7\linewidth}{!}{
-      \includegraphics{figures/analization.pdf}
-      } 
-\end{figure}
+% Why
+The bytecode analyzer gathers all structural elements and the textual references
+of the dependencies. For resolving the references the dependency processor
+component is responsible.
 
-%------------------------------------------------------------------------------
-% Persistence
-%------------------------------------------------------------------------------
-\section{Persisting dependencies} 
+% What
+To achieve this the processor takes the models of the jar files, compares the
+contained references with the structure of the external jars. When a match is
+found it means that there is a dependency between a two elements and as a result
+a dependency is stored.
+
+% How
+\subsection{Discovered dependencies}
+During the work at CERN we decided to narrow down the search for basic
+dependencies which could be extracted from the binary code without interpreting
+what does a class really do. By this we could exactly define what information
+will be accessible for the users. The following list contains the discovered
+dependencies:
+\begin{description}
+\item[Class import] When a class uses \emph{any} part of an external class. 
+Practically this is a relationship between two classes when one class requires
+the other to get loaded in the Java virtual machine. On a binary level it is 
+expressed as a \code{ConstantClass} entry in the constant pool.  
+\item[Inheritance] When a class inherits from another. This dependency type 
+covers both the case when an interface is implemented and when a class is 
+extended. 
+\item[Method call] When a method calls an another method. Covers both static 
+and non-static method calls.
+\item[Method override] When a class extends from an another and the subclass 
+has a method with a same signature which was already defined in the superclass.  
+\item[Field access] When a method accesses or gives a value of a field defined 
+in an external class.
+\end{description}
+
+
+\subsection{Discovery process}
+After defining the searched dependencies let's see how exactly the dependency
+discovery process work. The main objective here is to do the analysis on a large
+set of Java binaries without having memory problems. Obviously if one loads all
+jars at the same to the memory and searches for all references it will need an
+enormous size of memory which will go up if the input number of the binaries
+increasing.
+
+\picr{analization.pdf}{Sequence of the dependency discovery process}
+\autoref{fig:analization.pdf} shows how the tool solves this issue. The process
+starts with an update in the binary repository. The new, not analyzed binaries
+are passed to the bytecode analyzer components which produces a model for each
+jar files. These models passed for the dependency processor which stores the jar
+structure in the database. By doing this the implementation holds only one model
+in the memory which implies that the memory requirement is independent from the
+number of input binaries. Also only the structure is pushed into the database,
+the references are considered as transient data. This is necessary because the
+references need huge space to store: on average they took 60\% of the size of a
+class file and leaving them out is a big saving in the storage.
+ 
+After all jar's  structure is saved in the database, the process re-initiates
+the bytecode analysis on every jars one-by one and passes the models again to
+the dependency processor. The processor now tries to execute certain queries on
+the database for searching dependencies. For external references it tries to
+find the elements with the same fully qualified, for inheritance searches for
+superclass in the database and for method override it looks for methods with
+the same signature in the superclass. Every found element from the database 
+result in a dependency entry at the end of the analysis of the current jar. 
+
+\paragraph{} The result of the analysis is a database containing all the structure
+and the dependency information. The clients execute queries on it to analyze the
+relationships between certain elements in order to decide whether or not a
+specific code could be changed.
+ 
+\section{Storage engine} 
 - describe the saved domain model.
 - describe the how the operations work:
  * store structure
@@ -175,14 +238,12 @@ name of the default provider name.
  * and how to listen to changes.
 
 \section{Pattern matching}
-- Mention again that the source code and the repository contains the same information. (+svn tags)
-- How to obtain more precise information.
-- The repository model. 
+- Mention again that the source code and the repository contains the same
+information. (+svn tags) - How to obtain more precise information.
+- The repository model.
 - Describing the queries.
-* joining the two implementation. 
-* incoming dependencies
-* impact analysis
-  * added and removed methods
-  * removed methods
-  * changed methods: the outgoing dependency set has new elements, which does not exist in the repo model. 
+* joining the two implementation.
+* incoming dependencies * impact analysis
+  * added and removed methods * removed methods * changed methods: the outgoing
+  dependency set has new elements, which does not exist in the repo model.
 -  Show it on the example.

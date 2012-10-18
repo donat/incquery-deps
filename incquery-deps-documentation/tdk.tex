@@ -77,6 +77,17 @@
 \end{figure}
 }
 
+\newcommand{\picseventy}[2]{
+\begin{figure}[htb]
+   \center
+   \caption{#2}
+   \label{fig:#1}
+     \resizebox{0.7\linewidth}{!}{
+      \includegraphics{figures/#1}
+      }
+\end{figure}
+}
+
 
 \newcommand{\figref}[1]{Figure~\autoref{fig:#1}}                      
 \newcommand{\secref}[1]{Section~\ref{#1}}                        % section reference
