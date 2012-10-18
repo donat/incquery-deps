@@ -209,12 +209,43 @@ relationships between certain elements in order to decide whether or not a
 specific code could be changed.
  
 \section{Storage engine} 
-- describe the saved domain model.
-- describe the how the operations work:
- * store structure
- * find and insert dependencies
-- introduce different implementation 
-- the result 
+
+The dependency processing requires requires some database functionality to 
+properly work. This is defined in the storage engine component.
+
+Although this component is defined by a single Java interface it comes with
+important and complex responsibilities. First it is an abstraction layer over
+the concrete database implementation. Second it provides transactional behaviour
+automatically to the database. 
+
+The interface defines operations for two purposes: i) Store and retrieve the
+structure of a jar and the dependencies ii) search for items based on their
+names and iii) query incoming dependencies of an element.
+
+The usage of the first is easy the understand: if the analyze process starts it
+has to be checked if the a jar is in the database and if not, it has to be
+stored. The second in the list is part of the dependency processing. It is the
+responsibility of the database component how to represent the data and thus
+finding references also belongs here. The last part covers the queries which are
+initiated by the clients and the result is also provided by this module.
+
+To make the domain model usable to store dependencies and make it work with the
+same jar products with multiple versions some additions were added (see
+\autoref{fig:domainmodelext.pdf}). \pic{domainmodelext.pdf}{Additions to the
+domain model} Every element has a list of version numbers where they are
+present. Also a \code{Dependency} class is added to effectively handle
+dependencies between them.
+
+% I will present the EMF backend later along with the emf model loader.
+This database engine is just a specification how it should work. It has two
+practical implementation: one which uses Oracle database and one which stores
+the data in an EMF model. The Oracle database maps the entities into tables and
+execute complex SQL queries in order to find the desired elements.
+The EMF version is an in-memory implementation with an optional serialization
+feature implemented.
+
+
+ 
 
 \section{Direct queries}
 - Explain eclipse plugin; ui contribution.
