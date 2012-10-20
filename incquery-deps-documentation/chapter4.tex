@@ -242,12 +242,13 @@ practical implementation: one which uses Oracle database and one which stores
 the data in an EMF model. The Oracle database maps the entities into tables and
 execute complex SQL queries in order to find the desired elements.
 The EMF version is an in-memory implementation with an optional serialization
-feature implemented.
+feature implemented. 
+
+\section{Client plugin}
+Explain the two interfaces, the direct queries and the model comparers
 
 
- 
-
-\section{Direct queries}
+\subsection{Direct queries}
 - Explain eclipse plugin; ui contribution.
 - Simple workflow: right click on source code->jdt resolves it as a
 class-method-field-> fully qualify it -> sends the query for the server process
@@ -257,24 +258,106 @@ the result is visualized in a view.
 signature of a service function OR what if he wants to change the name of the
 name of the default provider name.
 
-\section{Repository EMF model}
-% bonus: retrieve the model to the client
+\section{Source code model synchronizer}
+% what
+creates emf model from the structure of the projects contained by the Eclipse
+workspace.
+% why
+input for finding dependency information related to teh workspace Direct query
+interface: knows nothing about the workspace; displays  dependencies to a given
+module.
+Not it is possible match the modifications of the owrkspace and do an impact
+analysis: upon cvs commit what is added, removed, how big the impact of the
+change is.
+% how
+module attaches to jdt, gathers structural information and subscribes to the
+workspace changes to incrementally update the EMF model every time a change
+occurred.
 
-\section{Creation of workspace EMF model}
-- Java Model representation in Eclipse. 
-- Dependency search in Eclipse.
-- EMF model generation:
- * How to obtain the structure 
- * How to obtain internal dependency environment
- * and how to listen to changes.
+\subsection{Eclipse Java Model}
+Eclipse Java Development Tools main objective: assist java editing. It comes
+with incremental builder and rich and extensive tooling for java editing.
+Contributors can get all the necessary information about the state of the
+workspace.
 
-\section{Pattern matching}
-- Mention again that the source code and the repository contains the same
-information. (+svn tags) - How to obtain more precise information.
-- The repository model.
-- Describing the queries.
-* joining the two implementation.
-* incoming dependencies * impact analysis
-  * added and removed methods * removed methods * changed methods: the outgoing
-  dependency set has new elements, which does not exist in the repo model.
--  Show it on the example.
+The state of the Java projects are exposed through an API called \emph{Java
+Model}.
+It is a complex yet intuitive set of Java interfaces which can be traversed
+easily.
+\begin{figure}
+        \centering
+        \begin{subfigure}[b]{0.5\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{figures/javamodel2.png}
+                \caption{Java Model elements from the source code}
+                \label{fig:javamodel2.png}
+        \end{subfigure}~
+        \begin{subfigure}[b]{0.5\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{figures/javamodel1.png}
+                \caption{Java Model elements from the navigator}
+                \label{fig:javamodel1.png}
+        \end{subfigure}
+        \caption{Elements of the Java Model}\label{fig:javamodel}
+\end{figure}
+\autoref{fig:javamodel} (which comes from JDT's documentation) shows the
+accessible interfaces if the Java model. Visible: literally every aspect 
+is accessible from the projects down to method level.
+
+Along numerous other features the plugin uses two specific ones:
+subscription for model change:
+\code{JavaCore.addElementChangedListener(IElementChangedListener);} static
+method 
+Search feature to resolve the dependency relationshisp between the elements.
+
+The model change works: argument is a hierarchical delta with all the necessary infomration;
+the implementations resp. to filter the information out.
+We filter for the save methods.
+
+
+
+\subsection{The generated EMF model}
+\picr{wsmodel.pdf}{EMF model storing the structure of the Java projects}
+\autoref{fig:wsmodel.pdf} shows the EMF model which is extracted and maintained from from the Java Model.
+
+\subsection{The model synchronization process}
+
+figure: > eclipse startup > gather all projects/classes/methods/relationships
+and store them in the model.
+Model change > filter > generate delta model > compare and merge emf subtrees.
+
+Note: filter for save modifications, don't want to handle the incoherent working copy states. 
+
+
+\section{Dependency data synchronizer}
+RMI interface.
+model queries.
+Load workspace model.
+Compact repository model.
+ 
+
+\section{Model Query}
+
+\subsection{Direct queries}
+Explain the process how the direct queries go.
+1-1 in the original documentation
+
+\subsection{Pattern matching}
+USing incquery to load models. To find dependencies. execute a set of matches.
+Every time a workspace changes the result is updated.
+Show the queries. What are they doing.
+Join patterns.
+
+Incoming queries. 
+Impact analysis.
+
+
+
+\section{UI Components}
+How the user accesses to the  plugin
+
+Input: user contributions.
+
+Input: user saves the data > jdt propagates event to the source code moodel synchronizer.
+
+

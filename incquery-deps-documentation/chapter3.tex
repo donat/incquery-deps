@@ -109,6 +109,8 @@ the memory.
 
 \section{Service Provider Framework}
 
+\subsection{Description of the pattern}
+
 To make the following chapters easier to understand, I am going to introduce a
 simple use-case example. It is a design pattern called Service Provider
 Framework. It is a practical application of the original Adapter pattern and it
@@ -155,11 +157,17 @@ the default provider's name as an argument and invokes the \code{serviceA()} and
 Although the example is fairly simple, the related source code can be found in
 appendix \autoref{examplesource}.
 
+\subsection{Description of the problem}
 So why are we looking at this example? Imagine that the three packages are
 distributed into three different software which have their individual
-responsible developer. Now let's say, somebody wants to change some parts of the
-service without precisely knowing who is using which part of the code. Not this
-will be our example which I will use to present how my software works and how
-can this problem be solved by it. 
+developers. If somebody wants to change some parts of the service without
+precisely knowing who is using which part of the code he won't know how many
+dependant projects will be broken afterwards.
 
+Let's see two examples. The responsible for the service package wants to modify
+two parts of the classes: he wants to add a string parameter to the
+\code{Service.serviceA()} method, and he wants to change the name of the
+\code{Services.DEFAULT\_PROVIDER\_NAME} field. I will show how the solutions
+presented in this paper let the developer figure out, who is using these parts
+of the code and how can he resolve this problem.
 
