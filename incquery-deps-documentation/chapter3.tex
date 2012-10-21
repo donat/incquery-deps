@@ -4,25 +4,16 @@
 % be an additional chapter in this paper.
 % TODO:find a proper name for this chapter.
 % ------------------------------------------------------------------------------
-
 \chapter{Overview}
-In this chapter\ldots
+
 
 \section{Architecture}
-
 % My implementation.
 As it was discussed previously one of the most effective  way of achieving
 smooth upgrades is to discover incoming dependencies. For this I designed and
 implemented a solution called \ptool{}. \picr{superfigure.pdf}{Overview of the
 implemented system} Figure \autoref{fig:superfigure.pdf} shows the overview of
 it.
-
-% CERN-related.
-% NOTE, that the current implementation is bound to the CERN Control system's
-% infrastructure. All used source and the way of getting them described by the
-% internals. Let alone this fact, it is fairly simple to change the implementation
-% to be usable in an arbitrary environment because only a tiny part of the code is
-% responsibe to retrieve the required resources.
 
 % Two implementation
 This systems was implemented in two separate steps. My work at CERN covered an
@@ -31,18 +22,17 @@ parts of the source code for incoming dependencies. After my job was done I
 created an extension which utilizes EMF-IncQuery to run faster, information-rich
 and more extensive queries. Let's examine the elements of the figure one-by-one.
 
-\subsection{Central repository management}
+
+\subsection{Repository management}
 % Central repository management.
-The first element on the figure is the ,,Central repository management''. It
-refers all the internal resources CERN Control systems contains. Its central
-element is a tool called \tool{Common Build} which is a build tool for Java
-softwares. Common Build is an Apache Ant based software similar to Maven. It
-provides functionality to describe and resolve dependencies, build, generate
-documentation and release the softwares\footnote{Or \textit{products} as they
-are referred at CERN}. The released softwares are put into a binary repository
-which has a well-defined layout. On top of it, source repository is tightly
-attached to the release repository; there is a 1-1 relationship between the
-source code and the binaries.
+The first elements on the figure to discuss are the ''Source repository'' and
+the 'Binary component repository' . They contain both the source code and the
+build binary version of the internally developed softwares\footnote{Or
+\textit{products} as they are referred at CERN}. These elements are centrally
+managed and have a well-defined structure. The developers work on the source 
+code and if they finish one milestone they publish their improvements by putting
+the compiled version into the binary repository through an automated process.
+The binary repository is the input for the dependency analysis.
 
 \subsection{The server side}
 The server side is a standalone Java application which runs on a Linux server.
@@ -57,6 +47,7 @@ dependencies are passed to the storage engine to store it. The storage engine
 itself defines a set of operations to find, store and retrieve certain subset of
 the model. The remote query interface also use this module to get the necessary 
 dependency information for the clients.
+
 
 \subsection{The client side}
 % Plugin
@@ -158,16 +149,33 @@ Although the example is fairly simple, the related source code can be found in
 appendix \autoref{examplesource}.
 
 \subsection{Description of the problem}
-So why are we looking at this example? Imagine that the three packages are
-distributed into three different software which have their individual
-developers. If somebody wants to change some parts of the service without
-precisely knowing who is using which part of the code he won't know how many
-dependant projects will be broken afterwards.
+As it was described in the introduction we would like give the developers the
+ability to check who is using the certain parts of the API. To present this this
+pattern will be our use-case.
+
+Imagine that the three packages are distributed into three different software
+which have their individual developers. If somebody wants to change some parts
+of the service without precisely knowing who is using which part of the code he
+won't know how many dependant projects will be broken afterwards.
 
 Let's see two examples. The responsible for the service package wants to modify
 two parts of the classes: he wants to add a string parameter to the
 \code{Service.serviceA()} method, and he wants to change the name of the
-\code{Services.DEFAULT\_PROVIDER\_NAME} field. I will show how the solutions
-presented in this paper let the developer figure out, who is using these parts
-of the code and how can he resolve this problem.
+\code{Services.DEFAULT\_PROVIDER\_NAME} field. 
+
+By using \ptool{} the developers are able to execute queries on any part of the
+API. The result will be the primary starting point for considering what to do.
+Three different outcome can happen: the selected part of the API doesn't have
+dependencies, it has a few dependencies or it has got a lot and the developer's
+decision depends on it. 
+
+If there is no incoming dependency than any modifications can be done without
+causing any compatibility issues. The developer can do whatever he wants.
+If there is a lot of incoming dependency, than it means that the queried code
+element is used by a lot of clients and any modifications would cause a build
+error therefore backward compatibility has to be maintained. The third option is
+that there are several dependencies. In this case the developer has to negotiate
+with the clients how to proceed: he has to provide backward compatibility or the
+clients has to align their code to the modifications.
+
 

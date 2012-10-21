@@ -7,16 +7,54 @@
 
 \section{Infrastructure at CERN controls systems}
 
+% Eclipse
+At CERN Controls group has a definite set of tools used for development. Because
+C/C++ and Java applications are developed, the used Integrated Development
+Environment is an internally maintained Eclipse distribution with correct
+plugins installed.
 
-\subsection{Used tools}
-- Describe, how a typical developer works at CERN BE-CO - Tools: SVN, Eclipse,
-Common Build, JIRA, etc. % check this at some papers of vito.
+% SVN, JIRA, Bamboo
+To maintain concurrent versions of the source code an SVN server is used. Also
+there are a variety of tools used for typical developments tasks: issue
+tracking, continuous integration, source code browsing, static code analysis,
+etc. 
 
+% Common Build
+The central element for the development is a tool called \tool{Common Build}
+\cite{CommonBuild}. It is a build and release tool for Java softwares. Common
+Build is an Apache Ant based software similar to Maven. It provides
+functionality to describe and resolve dependencies, build, generate
+documentation and release the softwares. This tool was developed before the
+first version of complex build systems such as Apache Maven was published so 
+Common Build remained as an in-house build tool. 
 
-\subsection{Development workflow}
-- Original idea comes from the typical development workflow lifecycle at CERN
-control systems. %Insert one-by one the explanation form my thesis1 report.
+% Common build intergration with source and binary repositories
+Common build is tightly coupled both to the SVN server and to the binary release
+repository as it automates the not just the building but the the release of the
+Java products too.
 
+% Development workflow
+\picseventy{commonbuild.pdf}{Build workflow using Common Build}
+\autoref{fig:commonbuild.pdf} highlights this relationship by showing a typical
+workflow of the development process. The developer first checks out the source
+code from the SVN repository and starts working on it. Along source code
+modification there is an XML descriptor containing the information required by
+Common Build (such as name and version of the product and the required
+dependencies). Also Common Build is capable to setup build path and the related
+options for Eclipse development. 
+
+% building
+When the source code is ready, the developer executes the Common Build client to
+build it. The client itself is a customized Ant distribution and acts in the
+same way. It resolves the dependencies from the dedicated binary repository
+which contains all previously released products and all used third party
+libraries. The content is also defined in a XML file.
+
+% release
+If all source code is ready the developer can hit release. This fist initiates
+the same build process, but it is extended by two things. First the source code
+is tagged in the SVN repository which the version number as tag name. Second the
+compiled jar file is put into the binary repository. 
 
 % ------------------------------------------------------------------------------
 % MODULE: Bytecode analysis
@@ -40,7 +78,7 @@ class files and meta-information. Because the system has to discover
 dependencies between pure Java applications then no meta-information is used;
 the bytecode analyzer gets the information from the class files contained in the
 jars.
-
+ 
 
 % Describe the ConstantMethodRef/FieldRef/Class/String in more details?
 Figure \autoref{fig:classfile.pdf} shows a simplified view how a single class
@@ -50,7 +88,7 @@ Specification. The class begins with a marker header followed by the part called
 the i) constant strings ii) referenced methods and fields and iii) the names of
 the external classes. The Java virtual machine is only able to load a class file
 if all the referenced external classes are loaded.
-\pic{classfile.pdf}{Internal structure of a class file}
+%\pic{classfile.pdf}{Internal structure of a class file}
 After the constant pool the access flags, the implemented interfaces and the
 field list are located in separate places.
 

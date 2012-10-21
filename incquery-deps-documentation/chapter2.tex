@@ -3,14 +3,10 @@
 %10 pages. For motivation: Design pattern figure. (Service registration pattern).
 %------------------------------------------------------------------------------
 
-Before proceeding to the main part of this paper, I am going to give an overview
-about the related technologies used by my solution. I Why do we have to present
-the related technologies.
-
 \section{Java Runtime}
 
-\subsection{Java byte code specification TODO}
-% Java language
+\subsection{Java byte code specification}
+% Java platform
 The Java \cite{JavaSpec} programming language is a general-purpose, concurrent,
 object-oriented language. Its syntax is similar to C and C++, but it omits many
 of the features that make C and C++ complex, confusing, and unsafe. The Java
@@ -36,7 +32,7 @@ stored in a file. The class file format precisely defines the representation of 
 class or interface, including details such as byte ordering that might be taken
 for granted in a platform-specific object file format.
 
-% How is a class file used.
+% Compile source code
 \pic{compilation.pdf}{Compilation and execution of Java classes}
 Figure \autoref{fig:compilation.pdf} illustrates the procedure of compiling and
 executing a Java class: The source file is compiled into a Java class file,
@@ -44,6 +40,8 @@ loaded by the byte code interpreter and executed. In order to implement
 additional features, researchers may want to transform class files (drawn with
 bold lines) before they get actually executed.
 This application area is one of the main issues of this article.
+
+\subsubsection{Internals of a class file}
 
 % Internals of the class file
 \pic{classfile.pdf}{Simplified structure of a class file}
@@ -59,16 +57,70 @@ file data structures. For example, a custom class loader may evaluate such
 attribute data in order to perform its transformations. The JVM specification
 declares that unknown, i.e., user-defined attributes must be ignored by any
 Virtual Machine implementation.
- 
-\subsection{Apache Commons Byte Code Engineering Library - TODO}
-% described in the virtual machine specification 
-% http://docs.oracle.com/javase/specs/jvms/se5.0/html/VMSpecTOC.doc.html 
-% how the virtual machine works
-% what kind of infomration is available in the bytecode 
-\cite{BCEL}
-Abstraction over Java byte code specification. 
-How it works. Create diagram!
-Possible use-cases.
+
+Because all of the information needed to dynamically resolve the symbolic
+references to classes, fields and methods at run-time is coded with string
+constants, the constant pool contains in fact the largest portion of an average
+class file, approximately 60\%. In fact, this makes the constant pool an easy
+target for code manipulation issues. The byte code instructions themselves just
+make up 12\%. 
+
+The right upper box shows a "zoomed" excerpt of the constant pool, while the
+rounded box below depicts some instructions that are contained within a method
+of the example class. These instructions represent the straightforward
+translation of the well-known \code{System.out.println("Hello, world");} statement.
+
+The first instruction loads the contents of the field out of class
+\code{java.lang.System} onto the operand stack. This is an instance of the class
+\code{java.io.PrintStream}. The \code{ldc} ("Load constant") pushes a reference
+to the string "Hello world" on the stack. The next instruction invokes the
+instance method \code{println} which takes both values as parameters (Instance
+methods always implicitly take an instance reference as their first argument).
+
+Instructions, other data structures within the class file and constants
+themselves may refer to constants in the constant pool. Such references are
+implemented via fixed indexes encoded directly into the instructions. This is
+illustrated for some items of the figure emphasized with a surrounding box.
+
+For example, the \code{invokevirtual} instruction refers to a MethodRef constant that
+contains information about the name of the called method, the signature (i.e.,
+the encoded argument and return types), and to which class the method belongs.
+In fact, as emphasized by the boxed value, the \code{MethodRef} constant itself just
+refers to other entries holding the real data, e.g., it refers to a
+\code{ConstantClass} entry containing a symbolic reference to the class
+\code{java.io.PrintStream}. To keep the class file compact, such constants are
+typically shared by different instructions and other constant pool entries.
+Similarly, a field is represented by a \code{Fieldref} constant that includes
+information about the name, the type and the containing class of the field.
+
+The constant pool basically holds the following types of constants: References
+to methods, fields and classes, strings, integers, floats, longs, and doubles.
+
+
+\subsection{Apache Commons Byte Code Engineering Library} 
+% what is apache bcel
+The Byte Code Engineering Library (BCEL) \cite{BCEL} is intended to give users a
+convenient way to analyze, create, and manipulate (binary) Java files. Classes
+are represented by objects which contain all the symbolic information of the
+given class: methods, fields and byte code instructions, in particular.
+
+% static part of the api
+The BCEL API abstracts from the concrete circumstances of the Java Virtual
+Machine and how to read and write binary Java class files. The package which is
+responsible for reading the class files called the ''Static'' part.
+
+It contains a set of classes reflecting the class file format not intended for
+byte code modifications. The classes may be used to read and write class files
+from or to a file. This is useful especially for analyzing Java classes without
+having the source files at hand. The main data structure is called
+\code{JavaClass} which contains methods, fields, etc..
+
+% what are the benefits of using this
+By using the BCEL library we can extract internals of the java binaries without
+ending up doing parsing binary data by hand. With this Libra it fairly easy to
+i) gather any structural information such as class name, superclass, signature
+of the defined methods, etc. and ii) process external references used in the 
+bytecode.
 
 
 \section{Eclipse}
@@ -144,7 +196,7 @@ model-manipulating tools can easily be constructed.
 
 \subsection{EMF-IncQuery} 
 % Problem to solve.
-Working with models it is quite common to query the model for checking and
+Working with models it is quite a to query the model for checking and
 validating certain properties. The EMF-IncQuery \cite{EMFIncQuery} tool provides
 one solution for this problem: it is a framework to execute fast model queries
 over EMF models. It is actively developed at Budapest University of Technology
