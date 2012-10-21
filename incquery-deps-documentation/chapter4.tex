@@ -246,8 +246,8 @@ and the dependency information. The clients execute queries on it to analyze the
 relationships between certain elements in order to decide whether or not a
 specific code could be changed.
  
+ 
 \section{Storage engine} 
-
 The dependency processing requires requires some database functionality to 
 properly work. This is defined in the storage engine component.
 
@@ -274,28 +274,99 @@ domain model} Every element has a list of version numbers where they are
 present. Also a \code{Dependency} class is added to effectively handle
 dependencies between them.
 
-% I will present the EMF backend later along with the emf model loader.
+% emf and oracle implementation.
 This database engine is just a specification how it should work. It has two
 practical implementation: one which uses Oracle database and one which stores
 the data in an EMF model. The Oracle database maps the entities into tables and
 execute complex SQL queries in order to find the desired elements.
+
 The EMF version is an in-memory implementation with an optional serialization
-feature implemented. 
+feature implemented. The EMF metamodel used for creating the model has the same
+structure as the domain model (see \autoref{fig:domainmodelsimp.pdf} and
+\autoref{fig:domainmodelext.pdf}).
 
-\section{Client plugin}
-Explain the two interfaces, the direct queries and the model comparers
 
+% ------------------------------------------------------------------------------
+% MODULE: Dependeney processor
+% ------------------------------------------------------------------------------
+\section{Dependency database synchronizer}
+% what
+The Dependency database component is responsible for querying the server for
+dependency information related to a selected element or elements. It loads the
+sub-part of the dependency data stored by the storage engine module through a
+simple RMI interface and pushes it to the model queries components where the
+result is evaluated.
+% why: TODO
 
-\subsection{Direct queries}
-- Explain eclipse plugin; ui contribution.
-- Simple workflow: right click on source code->jdt resolves it as a
-class-method-field-> fully qualify it -> sends the query for the server process
--> the process returns the incoming dependencies depending the passed type. ->
-the result is visualized in a view.
-- Show it on the example: what if the developer wants to change the the
-signature of a service function OR what if he wants to change the name of the
-name of the default provider name.
+The component has to inputs: either it can load a compacted representation of the 
+entire dependency model or it can query the incoming dependencies for just one 
+single code element. 
 
+The single element query is the use-case where the user of the \ptool  executes
+direct queries by asking the incoming incoming dependencies of one element in
+the workspace. In this case a simple RMI interface method is called where the
+argument is the queried object (as an instance of a ApiClass, a Method or a
+Field types from \autoref{fig:domainmodelsimp.pdf}. This argument is passed to
+the server, which turns it into an SQL query or a search on the EMF model
+(depending which back-end is loaded). The result is passed back as a collection
+of \code{Dependency} instances. The result model is unattached by the model
+queries component and gets instantly visualized in the UI component.
+
+For letting the model queries component run real queries, this model has to load
+a representation of the data stored by the database engine component. If it was
+loaded one-by-one into an EMF model and passed to the client, then it would be
+simply too big to load. The binary repository holds more than a thousand jars
+just as latest production versions. The serialized EMF model equivalent is more
+than 400 MiB in size. To load an EMF model this size, more than one GiB  of
+RAM is needed.
+
+Important details about the environment at CERN is that the developers usually
+do the development on dedicated virtual machines which have more privileges to
+access internal resources. The drawback is that usually a virtual machine has
+1-2 GiB RAM total, so we cannot make an Eclipse plugin which consumes all
+remaining resources at once. Also EMF-IncQuery has a practical limitation as it
+can easily handle EMF instance models up to 100 MiB.
+
+These facts implied that the repository model has to be compacted. We can drop
+the unnecessary information or merge certain data and structure to spare some
+space without introducing false negative results. If we leave information the
+clients may end up false conclusions as they for example see an empty incoming
+dependency set where should be some. 
+
+Sure this compacting process introduces some false-positive results, but in 
+return lets the model queries component to do super fast model queries which
+are automatically updated every time the source code has changed. 
+
+The structure of the compacted EMF model is shown on \autoref{fig:cp3model.pdf}.
+\picseventy{cp3model.pdf}{Compacted repository model}
+The first thing which was left out are most of the fields of the classes; only a
+\code{name} field stores the textual representation of the code element. This is
+reasonable because the dependency discovery is done on the server and we
+navigate only on the dependency edges. The second thing is not explicitly
+visible on the figure. The fully qualified name was merged down into simple
+names. It means that there is only one \code{Service} class for all products in
+the repository and one \code{newService()} function. If there are more than one
+exist, they are merged into one and also all dependencies becomes common. This
+also comes with the change that the original one-to-many containment
+relationships became many-to-many. The third compacting change is to drop the
+signature of the methods, only the name has left. The merging process is the
+same as described.
+
+This compacted repository model is loaded at start-up time and used till Eclipse
+is closed. This is reasonable because the repository is not a rapidly changing
+entity. Only a few elements are modified each day. Apart from that it wouldn't
+be hard to implement a model eviction mechanism, where a new repository model is
+loaded every time when somebody does a change in the repository. Luckily this 
+wouldn't change anything in the results of this paper.  
+
+\paragraph{}
+The described compact model sadly contains some simplification but small enough to
+load it into the memory: the serialized representation of the entire workspace is
+around 70 MiB which is considered small enough to work with. 
+
+% ------------------------------------------------------------------------------
+% MODULE: Source code model synchronizer
+% ------------------------------------------------------------------------------
 \section{Source code model synchronizer}
 % what
 creates emf model from the structure of the projects contained by the Eclipse
@@ -304,6 +375,7 @@ workspace.
 input for finding dependency information related to teh workspace Direct query
 interface: knows nothing about the workspace; displays  dependencies to a given
 module.
+
 Not it is possible match the modifications of the owrkspace and do an impact
 analysis: upon cvs commit what is added, removed, how big the impact of the
 change is.
@@ -366,21 +438,16 @@ Model change > filter > generate delta model > compare and merge emf subtrees.
 
 Note: filter for save modifications, don't want to handle the incoherent working copy states. 
 
-
-\section{Dependency data synchronizer}
-RMI interface.
-model queries.
-Load workspace model.
-Compact repository model.
  
 
-\section{Model Query}
+\section{Model queries}
 
-\subsection{Direct queries}
-Explain the process how the direct queries go.
-1-1 in the original documentation
+%Through the explicit queries interface only the
+%elements which are in the SVN repository can be queried. If something is changed,
+%the tool won't have any information about it.  plus super fase
 
-\subsection{Pattern matching}
+% super fast.
+
 USing incquery to load models. To find dependencies. execute a set of matches.
 Every time a workspace changes the result is updated.
 Show the queries. What are they doing.
@@ -395,6 +462,10 @@ Impact analysis.
 How the user accesses to the  plugin
 
 Input: user contributions.
+
+Fully qualification of the source code.
+
+Result in JFace viewers. 
 
 Input: user saves the data > jdt propagates event to the source code moodel synchronizer.
 
