@@ -285,6 +285,9 @@ feature implemented. The EMF metamodel used for creating the model has the same
 structure as the domain model (see \autoref{fig:domainmodelsimp.pdf} and
 \autoref{fig:domainmodelext.pdf}).
 
+% TODO: maybe the explanation of the two deps implementation would be fine to
+% show here
+
 
 % ------------------------------------------------------------------------------
 % MODULE: Dependeney processor
@@ -352,6 +355,7 @@ relationships became many-to-many. The third compacting change is to drop the
 signature of the methods, only the name has left. The merging process is the
 same as described.
 
+% TODO: this shoulcd be replaced with true slicing
 This compacted repository model is loaded at start-up time and used till Eclipse
 is closed. This is reasonable because the repository is not a rapidly changing
 entity. Only a few elements are modified each day. Apart from that it wouldn't
@@ -369,32 +373,25 @@ around 70 MiB which is considered small enough to work with.
 % ------------------------------------------------------------------------------
 \section{Source code model synchronizer}
 % what
-creates emf model from the structure of the projects contained by the Eclipse
-workspace.
-% why
-input for finding dependency information related to teh workspace Direct query
-interface: knows nothing about the workspace; displays  dependencies to a given
-module.
-
-Not it is possible match the modifications of the owrkspace and do an impact
-analysis: upon cvs commit what is added, removed, how big the impact of the
-change is.
-% how
-module attaches to jdt, gathers structural information and subscribes to the
-workspace changes to incrementally update the EMF model every time a change
-occurred.
+To make the repository model comparable with the state of the workspace the
+source code model synchronizer generates an EMF model describing the elements
+int the workspace and keeps it synchronized along every workspace modification.
+Maintaining an EMF model lets the model queries component dynamically examine
+the current state of the workspace without accessing the JDT API.
 
 \subsection{Eclipse Java Model}
-Eclipse Java Development Tools main objective: assist java editing. It comes
-with incremental builder and rich and extensive tooling for java editing.
+Eclipse Java Development Tools main objective is to give feature-rich,
+integrated and extendable environment for editing Java source code. It comes
+with incremental builder and rich and extensive tooling for Java editing.
 Contributors can get all the necessary information about the state of the
 workspace.
 
 The state of the Java projects are exposed through an API called \emph{Java
-Model}.
-It is a complex yet intuitive set of Java interfaces which can be traversed
-easily.
-\begin{figure}
+Model}. It is a complex yet intuitive set of Java interfaces which can be
+traversed easily. Instead explaining what classes and interfaces are present in
+this API, let's examine which API elements represents which Eclipse- and
+Java-specific elements.
+\begin{figure} 
         \centering
         \begin{subfigure}[b]{0.5\textwidth}
                 \centering
@@ -408,45 +405,116 @@ easily.
                 \caption{Java Model elements from the navigator}
                 \label{fig:javamodel1.png}
         \end{subfigure}
-        \caption{Elements of the Java Model}\label{fig:javamodel}
+        \caption{Java Model elements}\label{fig:javamodel}
 \end{figure}
-\autoref{fig:javamodel} (which comes from JDT's documentation) shows the
-accessible interfaces if the Java model. Visible: literally every aspect 
-is accessible from the projects down to method level.
+\autoref{fig:javamodel} (which comes from JDT's documentation) shows these
+relationships as the main elements of the Java model. Visible: literally every aspect 
+is accessible from the defined projects down to the method level. As the Java Model 
+is hierarchical the implementation simply traverses it to build the java model. 
 
-Along numerous other features the plugin uses two specific ones:
-subscription for model change:
-\code{JavaCore.addElementChangedListener(IElementChangedListener);} static
-method 
-Search feature to resolve the dependency relationshisp between the elements.
-
-The model change works: argument is a hierarchical delta with all the necessary infomration;
-the implementations resp. to filter the information out.
-We filter for the save methods.
-
-
+The elements explained above is enough to create a model about the structure of
+the Java projects. To add dependency information to this model, the JDT's search
+feature comes into picture. With this the component is able to query the dependencies
+for every structural element. 
 
 \subsection{The generated EMF model}
+% structure and JDT
 \picr{wsmodel.pdf}{EMF model storing the structure of the Java projects}
-\autoref{fig:wsmodel.pdf} shows the EMF model which is extracted and maintained from from the Java Model.
+\autoref{fig:wsmodel.pdf} shows the EMF model which is extracted and maintained
+from from the Java Model. It mostly mirrors the structure of the Java model's
+interface structure. The key element is the \code{WNamedElement} which is common
+superclass for all items. The \code{handler} property holds an identifier string
+which uniquely identifies the represented Java Model object. To gain access to
+the correspondent Java Model object, only the \code{JavaCore.create(String)} is
+required.
+
+% structural hierarchy.
+The containment hierarchy starts form the lower right corner of the figure with
+the \code{WProject} class which represents a Java project loaded into the
+workspace. It contains \code{WPackageFragmentRoot} elements which represent the
+source folders and the jar files on the classpath and has some Java packages as
+children(as \code{WPackageFragment} instances). Under the Java packages there
+are the \code{WCompilationUnit}s which are represent the java files and which
+define some java types (\code{WType}). On the lowest level in the containment
+hierarchy lie the methods and fields (\code{WMethod} and \code{WField}
+instances).
+
+% dependency hierarchy.
+Just like in the repository model here also the dependencies are defined upon
+the common supertype, but here a \code{WDependency} has a two-way relationships
+for both the source and the target part of the dependency relation. For one
+\code{WNamedElement} the incoming and outgoing dependencies are directly
+accessible. Again, the same dependency types are defined as before.
+
+% root
+The model has one common root, a \code{WWorkspace} instance which contains both
+the structural elements and the dependencies.
 
 \subsection{The model synchronization process}
+% describe the process itself
+\picr{sourcesync.pdf}{The maintenance process of the source code model}
+\autoref{fig:sourcesync.pdf} shows how the process  of model building works. It
+starts with mapping the entire workspace structure (projects, classes, etc.)
+into the model. During the process the entire workspace is traversed. If it is 
+done the components executes a dependency search for each relevant element 
+utilizing JDT's integrated search engine. The found dependencies are associated 
+with the proper model element.
 
-figure: > eclipse startup > gather all projects/classes/methods/relationships
-and store them in the model.
-Model change > filter > generate delta model > compare and merge emf subtrees.
+When the initial model build is finished the next task is to subscribe for the
+workspace changes. This can be done by registering a simple listener object with
+the  \code{JavaCore.addElementChangedListener(IElementChangedListener);} static
+method. With this every event related to the java editing is available. The
+component only handles the events where the source files are changed; dealing
+with working copy events would be too frequent and would contain some incoherent
+data about the workspace. 
+	
+After the component is set up it waits for the modifications. If it happens, an
+incremental model update fires, maps the related Java Model element to the EMF
+model and modifies it properly. 
 
-Note: filter for save modifications, don't want to handle the incoherent working copy states. 
+The change notifications comes in a form of a hierarchical delta holder object.
+It refers to an object, states if it was added, deleted, or changed and provides
+the list of the affected children. For example if a Java class definition has
+been deleted, the generated event contains a changed project down to the
+container changed compilation unit which has a child delta pointing to the
+deleted class.
 
- 
+The use-case when an element was added or deleted the model update is
+straightforward. The event contains the reference of the modified item. It is
+identified via the \code{handler} property. The result of the event is a
+creation of a new element or removing an existing one along with all his
+children and their dependencies.
+
+If a modification happens in the source file it is alsoincrementallyy modified
+but treated slightly differently. This is necessary because the delta
+information doesn't provide usable information about what has changed below the
+compilation unit.
+\pic{sourceupdate.pdf}{Updating EMF workspace model when source code is modified}
+This process is shown in \autoref{fig:sourceupdate.pdf}. The updater checks
+which source file is modified and re-generates its EMF representation. The
+generated small model is compared with the source of the model. If a new method
+is added than it is merged into the old model. If an element is missing, it gets
+deleted from the original model too. Dependencies are the same: any differences
+are immediately pushed back to the original model. With this approach the EMF
+representation of the workspace stays consistent and only local modifications
+happen on the elements.
+
+When Eclipse closes, the model is stored on the disk in order not to regenerate
+the entire model when on the next start-up. If no external modifications happen
+than the model is loaded one-by-one which is faster than gathering all
+structural and dependency information.
 
 \section{Model queries}
 
-%Through the explicit queries interface only the
-%elements which are in the SVN repository can be queried. If something is changed,
-%the tool won't have any information about it.  plus super fase
+Not it is possible match the modifications of the owrkspace and do an impact
+analysis: upon cvs commit what is added, removed, how big the impact of the
+change is.
 
-% super fast.
+Through the explicit queries interface only the
+elements which are in the SVN repository can be queried. If something is changed,
+the tool won't have any information about it.  plus super fase
+
+	 super fast.
 
 USing incquery to load models. To find dependencies. execute a set of matches.
 Every time a workspace changes the result is updated.
@@ -457,6 +525,7 @@ Incoming queries.
 Impact analysis.
 
 
+Prefixes for the code elements: makes sense in this part.
 
 \section{UI Components}
 How the user accesses to the  plugin
