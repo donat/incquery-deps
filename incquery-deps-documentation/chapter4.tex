@@ -28,9 +28,9 @@ documentation and release the softwares. This tool was developed before the
 first version of complex build systems such as Apache Maven was published so 
 Common Build remained as an in-house build tool. 
 
-% Common build intergration with source and binary repositories
+% Common build integration with source and binary repositories
 Common build is tightly coupled both to the SVN server and to the binary release
-repository as it automates the not just the building but the the release of the
+repository as it automates the not just the building but the release of the
 Java products too.
 
 % Development workflow
@@ -136,7 +136,7 @@ transforms it into \code{println(java.lang.String):void}.
 
 % Somewhere it should be described that we don't deal with reflection, just
 % static dependencies.
-The final step is to cleanup the gathered information. At this step have to
+The final step is to clean up the gathered information. At this step we have to
 consider that if we mapped all information then the gathered data would have a
 comparable size with the binary repositories which is unacceptable when we have
 to deal with thousands of jars. To resolve this, the implementation does
@@ -248,12 +248,12 @@ specific code could be changed.
  
  
 \section{Storage engine} 
-The dependency processing requires requires some database functionality to 
+The dependency processing requires some database functionality to 
 properly work. This is defined in the storage engine component.
 
 Although this component is defined by a single Java interface it comes with
 important and complex responsibilities. First it is an abstraction layer over
-the concrete database implementation. Second it provides transactional behaviour
+the concrete database implementation. Second it provides transactional behavior
 automatically to the database. 
 
 The interface defines operations for two purposes: i) Store and retrieve the
@@ -306,7 +306,7 @@ entire dependency model or it can query the incoming dependencies for just one
 single code element. 
 
 The single element query is the use-case where the user of the \ptool  executes
-direct queries by asking the incoming incoming dependencies of one element in
+direct queries by asking the incoming dependencies of one element in
 the workspace. In this case a simple RMI interface method is called where the
 argument is the queried object (as an instance of a ApiClass, a Method or a
 Field types from \autoref{fig:domainmodelsimp.pdf}. This argument is passed to
@@ -337,7 +337,7 @@ clients may end up false conclusions as they for example see an empty incoming
 dependency set where should be some. 
 
 Sure this compacting process introduces some false-positive results, but in 
-return lets the model queries component to do super fast model queries which
+return lets the model queries component to do super-fast model queries which
 are automatically updated every time the source code has changed. 
 
 The structure of the compacted EMF model is shown on \autoref{fig:cp3model.pdf}.
@@ -355,7 +355,7 @@ relationships became many-to-many. The third compacting change is to drop the
 signature of the methods, only the name has left. The merging process is the
 same as described.
 
-% TODO: this shoulcd be replaced with true slicing
+% TODO: this should be replaced with true slicing
 This compacted repository model is loaded at start-up time and used till Eclipse
 is closed. This is reasonable because the repository is not a rapidly changing
 entity. Only a few elements are modified each day. Apart from that it wouldn't
@@ -375,7 +375,7 @@ around 70 MiB which is considered small enough to work with.
 % what
 To make the repository model comparable with the state of the workspace the
 source code model synchronizer generates an EMF model describing the elements
-int the workspace and keeps it synchronized along every workspace modification.
+in the workspace and keeps it synchronized along every workspace modification.
 Maintaining an EMF model lets the model queries component dynamically examine
 the current state of the workspace without accessing the JDT API.
 
@@ -485,7 +485,7 @@ identified via the \code{handler} property. The result of the event is a
 creation of a new element or removing an existing one along with all his
 children and their dependencies.
 
-If a modification happens in the source file it is alsoincrementallyy modified
+If a modification happens in the source file it is also incrementally modified
 but treated slightly differently. This is necessary because the delta
 information doesn't provide usable information about what has changed below the
 compilation unit.
@@ -505,27 +505,112 @@ than the model is loaded one-by-one which is faster than gathering all
 structural and dependency information.
 
 \section{Model queries}
+The model queries components executes complex queries on the loaded models and
+gives and exposes the result for  visualization. 
 
-Not it is possible match the modifications of the owrkspace and do an impact
-analysis: upon cvs commit what is added, removed, how big the impact of the
-change is.
+Both the result of the explicit queries and the EMF-IncQuery-based use-case is
+handled inside this component. As it was discussed previously not much has
+happening here with the result of the explicit queries: it is passed to the UI
+components as is.
 
-Through the explicit queries interface only the
-elements which are in the SVN repository can be queried. If something is changed,
-the tool won't have any information about it.  plus super fase
+The more interesting part of the module is the queries based on EMF-IncQuery.
+The main reason why it was implemented is that normally, if the analysis is done
+only on the server side, than all the dependency information will be based on
+the released source code. So if a developer changes something and after tries to
+figure out what are the dependencies of the changes elements, he won't get any
+results. This is why we want to compare the repository with the current state of
+the workspace.
 
-	 super fast.
+Applying this approach will not only give the developers precise information
+about the impact a possible release would cause but it gives immediate feedback
+about the change every time the source code is saved. Also important that
+all results of all queries is available upon usage, no manual query is required.
 
-USing incquery to load models. To find dependencies. execute a set of matches.
-Every time a workspace changes the result is updated.
-Show the queries. What are they doing.
-Join patterns.
+To achieve this, the component first loads the model of the repository and the 
+model of the current workspace, loads them into the EMF-IncQuery engine, 
+and initiates the queries and exposes the results on an API which also updates
+the dependency information dynamically. 
+ 
+The queries are developed with EMF-IncQuery's own query language. This language
+is used to express certain patterns over EMF models. You can think about it as 
+a regular expression over an object-model. To highlight this, let's see an example
+of a pattern expressed with this language which matches on all Java files and
+all defined types in it from the workspace model (see \autoref{fig:wsmodel.pdf}). 
+\begin{lstlisting}
+package example
 
-Incoming queries. 
-Impact analysis.
+import "http://inf.mit.bme.hu/donat/incquery-deps/wsmodel"
 
+pattern typesInJavaFiles(cu : WCompilationUnit, t : WType) = {
+	WCompilationUnit(cu);
+	WType(t);
+	WCompilationUnit.types(cu, t);
+}
+\end{lstlisting}
 
-Prefixes for the code elements: makes sense in this part.
+The import declaration loads the schema of the EMF moel. The pattern signature
+contains a name and a parameter list. Here the parameters define the result as
+the found/matched items from the input model. 
+
+The body of the pattern starts with two type constraints. This can be translated
+as ''match only on the elements which have the \code{WCompilationUnit} type for
+the \code{cu} variable and match the \code{WType} object for \code{t}
+variable''. Alone this would list all compilation units and all types as a
+result in all possible combinations, just like in SQL when one select data from
+two different tables at once without joining them. The third statements is the
+connects the result items together. It can be translated as ''match only the on
+the objects  where the \code{cu} variable references the \code{t} as a contained
+type''. Expression power of the pattern language is much bigger; for complete
+reference check the documentation site \cite{EMFIncQuery}.
+
+The usage of the queries takes multiple steps shown on \autoref{fig:incquerydev.pdf}.
+\picr{incquerydev.pdf}{Development of EMF-IncQuery queries} 
+First the queries are defined with the query language. The tooling takes the queries 
+and automatically generates source code from the queries. With this there is no need 
+for manually using the pattern definition part of the EMF-IncQuery engine. The generated
+source code along with the engine exposes a simple interface for registering the
+queries and getting back the results when needed. The only manual coding takes place
+at the last part on load-time, when it has to be specified manually which queries 
+should be evaluated. 
+  
+The generated code contains a factory service which registers the query in the
+engine. The query is represented as a \code{Matcher} object in the generated
+code which gives back the results through the \code{Matcher.getAllMatches()}
+method. The result is represented by \code{Match} instances which hold the result 
+and all the necessary information to make it usable.
+
+The following list enumerates all the  queries developed for the dependency
+analysis.
+\begin{description}	
+\item[Join queries]
+In order to compare the workspace with the repository it is necessary to find 
+the correspondent element in the two model. The join queries are basic patterns 
+which joins the projects, classes, fields and methods in the models. The result
+of the queries are all the found elements which are the input for the queries 
+below. 
+\item[Workspace changes] These queries discover the differences between the 
+workspace and the repository. The results are the projects, classes, methods
+and fields added or removed from the source code.   
+\item[Incoming dependencies] For every source code loaded in the Eclipse these
+queries shows all elements depending  on them. All incoming dependencies for 
+all classes methods and fields are the result of these queries. Also the type
+of the dependency is available. 
+\item[Outgoing dependencies] The queries in this category can be highlighted 
+with the following: If a dependency exists in the workspace it should
+exist in the repository too. If the workspace changes and the dependencies change
+it can be source of the problem.  By checking the changed outgoing dependencies
+which start form the selected items the developer can analyze it.
+\item[Commit impact] This list contains queries which are the combination of 
+the workspace changes and incoming dependencies category. They show the incoming
+dependencies of items which have changed in the workspace. The result is the
+impact which a possible release would cause.  One use-case is to show the
+incoming dependencies of the deleted elements. Another can be inheritance on
+the classes where a method is added.
+\end{description}
+
+On start-up these queries are registered and accessible outside via a simple API.
+The UI components use this API to access the dependency information and show the
+current state in different views.
 
 \section{UI Components}
 How the user accesses to the  plugin
@@ -538,4 +623,4 @@ Result in JFace viewers.
 
 Input: user saves the data > jdt propagates event to the source code moodel synchronizer.
 
-
+EMF tight integration with Eclipse Ui.
