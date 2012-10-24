@@ -613,14 +613,30 @@ The UI components use this API to access the dependency information and show the
 current state in different views.
 
 \section{UI Components}
-How the user accesses to the  plugin
+Eclipse UI contributions provide the way to access to the input and the output of \ptool . 
+These elements are grouped into in this component. 
 
-Input: user contributions.
+UI for direct queries
+First: contributions to the source code editor. 
+Context menu gets new item: show incoming dependencies.
+Finds selected element and executes dependency query. 
+The query contains a fully qualification, then sends the actual request and waits for the result.
+When it is sent, the result is provided in an Eclipse view.
 
-Fully qualification of the source code.
+Alse Eclipse views are used to display the result  from the EMF-IncQuery engine.
+Using JFace has two advangage: the style of display is not bound to the data EMF
+technology has out of the box integration with jface.
 
-Result in JFace viewers. 
+insert picture from diagram-source.
+Query result is restructured into an own tree-like structure.
+An adapter object is created. It makes JFace understand how to interpet
+the obtained data.
 
-Input: user saves the data > jdt propagates event to the source code moodel synchronizer.
+The explicit queries does not require any change listener because it alwasy show
+one query information.
+However the EMF-IncQuery shows dinamic data so the view is updated dinamically
+View registers itself to the Eclipse platform selection service and updates the
+relevant information automatically as the selection changes. 
 
-EMF tight integration with Eclipse Ui.
+
+
