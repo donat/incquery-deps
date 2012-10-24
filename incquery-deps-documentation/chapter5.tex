@@ -8,45 +8,56 @@ Show how the tool solves the problem. Go through all components, show all
 results one by one, what is the input and the output.
 focus on the process again; show how each components work and put there the results, what would be seen.
 
-\subsection{Dependency analysis}
+What is happening
 
-Use: case binary repository filled with three jars
+
+
+repository in this usecase contains only three projects binary repository filled with three jars
 service
 client
 impl
 
-Bytecode analysis. found statistics.
-3  projects
-8  classes
-19 methods: 
-   12 defined
-   6 constructor (from non-interface class)
-   1 static initializer(<clinit>)
-2  fields
+what happens in in the bytecode analysis. The structure and textual dependencies
+found.
+Statistics: 3 projects, 8 classes, 2 fields, 19 methods (12 defined, 6
+constructor from all non-intersface class 1 static initializer) 
+The entire strucute is saved into the database.
 
-Dependency processing:
-CLASSUSAGE hu.bme.incquery.deps.example.consumer.Main ----> hu.bme.incquery.deps.example.client.BasicImplUtil
-CLASSUSAGE hu.bme.incquery.deps.example.consumer.Main ----> hu.bme.incquery.deps.example.service.Services
-CLASSUSAGE hu.bme.incquery.deps.example.consumer.Main ----> hu.bme.incquery.deps.example.service.Service
-METHODCALL hu.bme.incquery.deps.example.consumer.Main#main(java.lang.String[]):void ----> hu.bme.incquery.deps.example.client.BasicImplUtil#registerImplementationAsDefault():void
-METHODCALL hu.bme.incquery.deps.example.consumer.Main#main(java.lang.String[]):void ----> hu.bme.incquery.deps.example.service.Services#newInstance(java.lang.String):hu.bme.incquery.deps.example.service.Service
-METHODCALL hu.bme.incquery.deps.example.consumer.Main#main(java.lang.String[]):void ----> hu.bme.incquery.deps.example.service.Service#serviceB():void
-CLASSINHER hu.bme.incquery.deps.example.client.BasicProvider ----> hu.bme.incquery.deps.example.service.Provider
-CLASSUSAGE hu.bme.incquery.deps.example.client.BasicProvider ----> hu.bme.incquery.deps.example.service.Provider
-CLASSUSAGE hu.bme.incquery.deps.example.client.BasicImplUtil ----> hu.bme.incquery.deps.example.service.Services
-METHODCALL hu.bme.incquery.deps.example.client.BasicImplUtil#registerImplementation():void ----> hu.bme.incquery.deps.example.service.Services#registerProvider(java.lang.String,hu.bme.incquery.deps.example.service.Provider):void
-METHODCALL hu.bme.incquery.deps.example.client.BasicImplUtil#registerImplementationAsDefault():void ----> hu.bme.incquery.deps.example.service.Services#registerProvider(java.lang.String,hu.bme.incquery.deps.example.service.Provider):void
-FIELDREFER hu.bme.incquery.deps.example.client.BasicImplUtil#registerImplementationAsDefault():void ----> hu.bme.incquery.deps.example.service.Services.DEFAULT\_PROVIDER\_NAME
-FIELDREFER hu.bme.incquery.deps.example.client.BasicImplUtil#registerImplementationAsDefault():void ----> hu.bme.incquery.deps.example.service.Services.DEFAULT\_PROVIDER\_NAME
-CLASSINHER hu.bme.incquery.deps.example.client.BasicService ----> hu.bme.incquery.deps.example.service.AbstractService
-CLASSUSAGE hu.bme.incquery.deps.example.client.BasicService ----> hu.bme.incquery.deps.example.service.AbstractService
-METHODCALL hu.bme.incquery.deps.example.client.BasicService#BasicService():void ----> hu.bme.incquery.deps.example.service.AbstractService#AbstractService():void
-METHODOVER hu.bme.incquery.deps.example.client.BasicService#serviceB():void ----> hu.bme.incquery.deps.example.service.AbstractService#serviceB():void
- 
-direct queries
-compact  model
-pattern matcher mechanism
-results
+What happens during the dependenccy processing.
+Bytecode ananlysis gives back the textual representation of the dependencies.
+main method  in the consumer class has a method call reference to the serviceB()
+method and the but the services.newIstnaecn does not have a reference  to the
+provier.newInstance class, because it is an internal class.
+the processor searches for rhe reference in the database and and discovers that
+there is a serviceB() method defined in one of the held producst. It is returned
+to the the processor, which initiates the save of the dependencies.
+
+Storage engine.
+Mention oracle db Same data in tables.
+EMF database. The database contains the structure and contains the dependencies
+directly. It can be traversed and navigated.
+
+Source model synchronizer.
+View of the service deveoper. as he opens the project the following emf model is
+built from the state of eclipse.
+\pic{wsmodel.png}{Workspace model containing Service package from the example}.
+\autoref{fig:wsmodel.png} shows a readable view of the extracted model. It has
+both contains all the packages classes, etc. And all internal references
+\emph{including} the internal dependencies.
+
+Workspace model synchronizer.
+For the service project the entire workspace is loaded. 
+
+Direct queries
+Picture how it was queried.
+Picture: result of a direct query for a field and for the method.
+
+
+Model queries.
+Result of the emf query.
+Show the view as i
+FOr example incoming dependencies.
+
 
 \section{Performance evaluation}
 Pure measurement. What can we measure:
