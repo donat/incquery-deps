@@ -8,19 +8,45 @@ Show how the tool solves the problem. Go through all components, show all
 results one by one, what is the input and the output.
 focus on the process again; show how each components work and put there the results, what would be seen.
 
-problem again
+\subsection{Dependency analysis}
 
-dependency analysis, the result
+Use: case binary repository filled with three jars
+service
+client
+impl
 
+Bytecode analysis. found statistics.
+3  projects
+8  classes
+19 methods: 
+   12 defined
+   6 constructor (from non-interface class)
+   1 static initializer(<clinit>)
+2  fields
+
+Dependency processing:
+CLASSUSAGE hu.bme.incquery.deps.example.consumer.Main ----> hu.bme.incquery.deps.example.client.BasicImplUtil
+CLASSUSAGE hu.bme.incquery.deps.example.consumer.Main ----> hu.bme.incquery.deps.example.service.Services
+CLASSUSAGE hu.bme.incquery.deps.example.consumer.Main ----> hu.bme.incquery.deps.example.service.Service
+METHODCALL hu.bme.incquery.deps.example.consumer.Main#main(java.lang.String[]):void ----> hu.bme.incquery.deps.example.client.BasicImplUtil#registerImplementationAsDefault():void
+METHODCALL hu.bme.incquery.deps.example.consumer.Main#main(java.lang.String[]):void ----> hu.bme.incquery.deps.example.service.Services#newInstance(java.lang.String):hu.bme.incquery.deps.example.service.Service
+METHODCALL hu.bme.incquery.deps.example.consumer.Main#main(java.lang.String[]):void ----> hu.bme.incquery.deps.example.service.Service#serviceB():void
+CLASSINHER hu.bme.incquery.deps.example.client.BasicProvider ----> hu.bme.incquery.deps.example.service.Provider
+CLASSUSAGE hu.bme.incquery.deps.example.client.BasicProvider ----> hu.bme.incquery.deps.example.service.Provider
+CLASSUSAGE hu.bme.incquery.deps.example.client.BasicImplUtil ----> hu.bme.incquery.deps.example.service.Services
+METHODCALL hu.bme.incquery.deps.example.client.BasicImplUtil#registerImplementation():void ----> hu.bme.incquery.deps.example.service.Services#registerProvider(java.lang.String,hu.bme.incquery.deps.example.service.Provider):void
+METHODCALL hu.bme.incquery.deps.example.client.BasicImplUtil#registerImplementationAsDefault():void ----> hu.bme.incquery.deps.example.service.Services#registerProvider(java.lang.String,hu.bme.incquery.deps.example.service.Provider):void
+FIELDREFER hu.bme.incquery.deps.example.client.BasicImplUtil#registerImplementationAsDefault():void ----> hu.bme.incquery.deps.example.service.Services.DEFAULT\_PROVIDER\_NAME
+FIELDREFER hu.bme.incquery.deps.example.client.BasicImplUtil#registerImplementationAsDefault():void ----> hu.bme.incquery.deps.example.service.Services.DEFAULT\_PROVIDER\_NAME
+CLASSINHER hu.bme.incquery.deps.example.client.BasicService ----> hu.bme.incquery.deps.example.service.AbstractService
+CLASSUSAGE hu.bme.incquery.deps.example.client.BasicService ----> hu.bme.incquery.deps.example.service.AbstractService
+METHODCALL hu.bme.incquery.deps.example.client.BasicService#BasicService():void ----> hu.bme.incquery.deps.example.service.AbstractService#AbstractService():void
+METHODOVER hu.bme.incquery.deps.example.client.BasicService#serviceB():void ----> hu.bme.incquery.deps.example.service.AbstractService#serviceB():void
+ 
 direct queries
-
-compact model
-
+compact  model
 pattern matcher mechanism
-
 results
-
-
 
 \section{Performance evaluation}
 Pure measurement. What can we measure:
