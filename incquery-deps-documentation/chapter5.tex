@@ -4,38 +4,67 @@
 %------------------------------------------------------------------------------
 
 \section{Example revisited}
-Show how the tool solves the problem. Go through all components, show all
-results one by one, what is the input and the output.
-focus on the process again; show how each components work and put there the results, what would be seen.
 
-What is happening
+After showing the details of the implementation, let's see it in action.
+We will use the tool to solve the problem described in \autoref{sect:spf}. We
+will go though on every component and check what is happening there with the
+example. 
+
+Let's start with the repositories. In our example the source and the binary
+repository contains three projects, each of them holds one package from the
+example. the name of the projects are service, client and impl, the name of 
+the jars files respectively service.jar, client.jar and impl.jar. For the sake
+of simplicity we have only one version from each project. 
+
+\subsection{On the server side}
 
 
+Now let's move forward to the server process and the dependency analysis. As 
+the binary projects appear in the repository, they get discovered by the 
+server process. 
 
-repository in this usecase contains only three projects binary repository filled with three jars
-service
-client
-impl
+The first step in the process is the bytecode analysis. In this phase the
+structure and the reference of the dependencies are discovered from the
+binaries. As of the structure the analyzer finds 3 projects, 8 classes 2 fields
+and 19 methods which get stored in the database.
+The methods are composed of the 12 defined methods, 6 constructor (from all
+non-interface classes) and 1 static initializer (which comes from the Services
+class as it gives a default value to a static field). 
 
-what happens in in the bytecode analysis. The structure and textual dependencies
-found.
-Statistics: 3 projects, 8 classes, 2 fields, 19 methods (12 defined, 6
-constructor from all non-intersface class 1 static initializer) 
-The entire strucute is saved into the database.
+The discovered dependencies are formatted and filtered in order not to have
+internal or platform defined elements (dependencies pointing inside the
+\code{java.*} package). For example let's see the \code{BasicImplUtil} class'
+\code{registerImplementation()} method.
+\begin{tabl}{External references of the BasicImplUtil.registerImplementation() method}{extrefs}{|p{.37\linewidth}|p{.37\linewidth}|p{.2\linewidth}|}
+\hline
+\textbf{Original format}	&  \textbf{Source format} & \textbf{Type} \\
+\hline
+impl/BasicProvider  & impl.BasicProvider &  ConstClass \\
+\hline
+service/Services/registerProvider \mbox{(Ljava/lang/String;} \mbox{Lservice/Provider;)V} 
+&  \mbox{service.Services.registerProvider} \mbox{(java.lang.String,} \mbox{service.Provider):void} & \mbox{Constant} \mbox{MethodRef} \\
+\hline
+\end{tabl}
+The first one is a 
+\code{ConstantMethodRef} type reference. During the analysis they are first converted
+The first one is a class reference the second one is a method reference.
+The references are formatted to source format as it is shown in the second column.
+Now the first references is eliminated from the list, because it points inside the 
+\code{impl} project. However the second one does not, so it remains at its place.  
 
-What happens during the dependenccy processing.
-Bytecode ananlysis gives back the textual representation of the dependencies.
-main method  in the consumer class has a method call reference to the serviceB()
-method and the but the services.newIstnaecn does not have a reference  to the
-provier.newInstance class, because it is an internal class.
-the processor searches for rhe reference in the database and and discovers that
-there is a serviceB() method defined in one of the held producst. It is returned
-to the the processor, which initiates the save of the dependencies.
+The dependency processor takes the remaining dependencies from the elements and 
+searches the database if there is one. In case of our method reference, the processor
+finds that there is a \code{registerProvider()} method defined with the same exact 
+signature signature in the database. Because the reference was stored on the called 
+method list, the processor creates a new method call dependency starting from 
+\code{impl.BasicImplUtil} targeting \code{Services.registerProvider()}.
 
-Storage engine.
-Mention oracle db Same data in tables.
-EMF database. The database contains the structure and contains the dependencies
-directly. It can be traversed and navigated.
+At this point the storage engine stores all the structure and the dependencies 
+of the three products. The schema of the Oracle database implementation and the EMF
+database was described in details previously. Now let's check how this data can be used 
+on the client side.
+
+\subsection{On the client side}
 
 Source model synchronizer.
 View of the service deveoper. as he opens the project the following emf model is

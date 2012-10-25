@@ -90,6 +90,22 @@
 \end{figure}
 }
 
+% insert tables
+% 1. paraméter: caption
+% 2. paraméter: label
+% 3. paraméter: oszlopok definiálása
+\newenvironment*{tabl}[3]{
+   \begin{table}[htb]
+   
+   \caption{#1}
+   \label{tab:#2}
+   \centering
+   \begin{tabular}{#3}
+}{
+   \end{tabular}
+   \end{table}
+}
+
 
 \newcommand{\figref}[1]{Figure~\autoref{fig:#1}}                      
 \newcommand{\secref}[1]{Section~\ref{#1}}                        % section reference
