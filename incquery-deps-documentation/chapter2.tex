@@ -33,13 +33,12 @@ class or interface, including details such as byte ordering that might be taken
 for granted in a platform-specific object file format.
 
 % Compile source code
-\pic{compilation.pdf}{Compilation and execution of Java classes}
+\picr{compilation.pdf}{Compilation and execution of Java classes}
 Figure \autoref{fig:compilation.pdf} illustrates the procedure of compiling and
 executing a Java class: The source file is compiled into a Java class file,
 loaded by the byte code interpreter and executed. In order to implement
 additional features, researchers may want to transform class files (drawn with
 bold lines) before they get actually executed.
-This application area is one of the main issues of this article.
 
 \subsubsection{Internals of a class file}
 
@@ -106,9 +105,8 @@ given class: methods, fields and byte code instructions, in particular.
 
 % static part of the api
 The BCEL API abstracts from the concrete circumstances of the Java Virtual
-Machine and how to read and write binary Java class files. The package which is
-responsible for reading the class files called the ''Static'' part.
-
+Machine and how to read and write binary Java class files. The package 
+responsible for reading the class files is called the ''static'' part.
 It contains a set of classes reflecting the class file format not intended for
 byte code modifications. The classes may be used to read and write class files
 from or to a file. This is useful especially for analyzing Java classes without
@@ -116,10 +114,10 @@ having the source files at hand. The main data structure is called
 \code{JavaClass} which contains methods, fields, etc..
 
 % what are the benefits of using this
-By using the BCEL library we can extract internals of the java binaries without
-ending up doing parsing binary data by hand. With this Libra it fairly easy to
+By using the BCEL library we can extract all static information from the Java binaries without
+ending up doing parsing binary data by hand. With this library it fairly easy to
 i) gather any structural information such as class name, superclass, signature
-of the defined methods, etc. and ii) process external references used in the 
+of the defined methods, etc. and ii) process all external references defined in the 
 bytecode.
 
 
@@ -159,9 +157,9 @@ projects: Annotation Processing (APT), Core, Debug, Text, and User Interface
 (UI).
 
 The most important part -- in the context of this paper -- is the Core project
-which implements all the necessary non-UI infrastructure for developing Java
-applications on the Eclipse platform. It contains an incremental Java builder,
-support for code assist, a searching facility and a \emph{Java Model}, that
+which implements all the necessary non-UI infrastructure for Java application
+development on the Eclipse platform. It contains an incremental Java builder,
+support for code assist, a searching facility and a \emph{Java Model}, which
 provides API for navigating the Java element tree. This lets the contributors
 access the structure and the changes of the java applications loaded into the
 workspace.
@@ -196,9 +194,9 @@ model-manipulating tools can easily be constructed.
 
 \subsection{EMF-IncQuery} 
 % Problem to solve.
-Working with models it is quite a to query the model for checking and
+Working with models it is quite common task to query the model for checking it and
 validating certain properties. The EMF-IncQuery \cite{EMFIncQuery} tool provides
-one solution for this problem: it is a framework to execute fast model queries
+one solution for this problem: It is a framework to execute fast model queries
 over EMF models. It is actively developed at Budapest University of Technology
 and Economics. Although it is still in development status (the current version
 is 0.6.0) it already proved its usability through industrial use-cases and
@@ -213,7 +211,7 @@ graph-like models. In a nutshell RETE maintains a hierarchical query data
 structure on top of the model which stores the result of sub-queries. On model
 change, the event propagates through this data structure leaving the unmodified
 part of the model untouched. This results in fast, near zero response time and
-size-independence on small model change. In return the model and the query
+size-independence on small model changes. In return the model and the query
 structure has to be loaded into the memory which can be a significant resource
 expense.
 
@@ -228,7 +226,7 @@ Along the API, a complete query language is defined. It provides a declarative
 way to express the queries over the EMF model in a form of patterns. With the
 language the user can express combined queries, negative patterns, checking
 property conditions, simple calculations, calculate disjunctions and transitive
-closures, etc.
+closures, etc.~on top of the models.
 
 % Tooling.
 The framework comes with a rich UI tooling which helps the users to effectively
@@ -257,7 +255,8 @@ the Enterprise JavaBean (EJB) model.
 
 %
 The main advantage of using Spring framework is a configurability through
-dependency injection. 
+dependency injection. Using its features it is a solid platform for creating
+clear, well-tested and maintainable applications.
 
 
 \subsection{Maven}
@@ -274,12 +273,12 @@ maven be able to do its job.
 
 Through the POM file almost everything related to the project is configurable,
 yet the most important feature is the dependency management. One can define
-certain dependencies in this file, and during the build Maven will download
-them automatically from the Maven repositories.
+certain dependencies in this file, which will be download automatically from 
+the Maven repositories.
 
 Also POM is the place to define almost every relevant information about the project:
-source and binary folders, package format, deployment location, etc. These information
-are used during the build process.
+source and binary folders, package format, deployment location, etc. These settings
+get applied during the build process.
 
 Maven is also extendable through plugin mechanism. One can develop extensions for it
 for achieve various non-standard goals such as integration testing or building 

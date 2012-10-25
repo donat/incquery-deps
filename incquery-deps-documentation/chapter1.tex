@@ -17,11 +17,10 @@ Hadron Collider) and all the necessary infrastructure.
 % The Controls group.
 Obviously not only physicists work az CERN: numerous scientist and engineers are
 working on the design and the maintenance of the software and hardware
-equipments in a well-defined structure. One member of this community is the
-Controls Group which is responsible for -- amongst the others -- the design and
-implementation of both software and hardware used in the controls systems. This
-involves providing software frameworks, alarm systems, communication middleware
-and numerous related tasks.
+equipments in a well-defined structure. One of its members is the Controls Group
+which is responsible for the design and implementation of both software and
+hardware used in the controls systems. This involves providing software
+frameworks, alarm systems, communication middleware and numerous related tasks.
 
 % Main goal for Controls group.
 After the LHC became operational the  primary objective for the Controls Group
@@ -41,13 +40,13 @@ the availability of the systems.
 \section{Smooth upgrades}
 % What is a smooth upgrade.
 One of the main goals is to achieve \emph{smooth upgrades}. Smooth upgrade means
-when a software is being updated than all the other softwares which depend in
-the upgraded one will remain operational. A basic example of braking this
-principle, when the newer version is binary incompatible with dependant
-softwares and cause load-time error.
+when a software is being updated than all the other softwares which depend on it
+will remain operational. A straightforward example of braking this principle,
+when the newer version is binary incompatible with dependant softwares and cause
+load-time error.
 
 % How to achieve smooth upgrades.
-There are a variety of tools and methods how to achieve smooth upgrades. For
+There are a variety of tools and methods to achieve smooth upgrades. For
 instance one can introduce manual procedures and protocols to the development
 lifecycle. Another possibility to enforce some code metrics to achieve this
 goal.
@@ -60,30 +59,30 @@ clients. Now let's say there is an error in the bug which requires a change in
 the library's API for the resolution. Our developer wants to check who is using
 the API, which parts are used and should remain unattached and which are the
 unused parts. The users (as in code parts) are considered as incoming
-dependencies.
+dependencies. The following chapters describe an implementation for querying these 
+incoming dependencies. 
  
-% My solution.
-The solution I present in this paper is a possible implementation for querying
-incoming dependencies. The first valid question is: why didn't we just reuse an
-existing implementation? The answer is: because there is no one.
+The first valid question is: why didn't we just reuse an existing
+implementation? The answer is: because there is no one.
 There are specialities about the situation my tool has to solve.
 \begin{description}
 \item[Size limitation] If we are able to load every single jars into an IDE the
 problem would be solved: we could use the internal navigation features to navigate 
-through the dependency graph. But because we have thousands of jars (and tens of 
-thousands if we count the possible versions) it is evidently impossible.   
+through the dependency graph. In normal case seems possibe. 
+But if we look at he CERN Control Systems, where we have thousands of jars (and tens of 
+thousands if we count the possible versions) this approach is -- evidently -- impossible.   
 \item[Fine-graininess of dependencies] The existing tools usually cannot determine
 the desired dependency resolution level. For example JDepend \cite{JDepend} and
 JBoss Tattletale \cite{Tattletale} does dependency analysis on the class level,
 but we want to see method-level and fields level dependencies as well.
-% TODO: insert link to tattletale.
 \item[No source code analysis] We don't want to do a source code analysis because 
 it would imply a dependency resolution for concerned projects every time a new version 
-of a product comes out. This requirement eliminates a number of possible tools. 
+of a product comes out. This requirement also eliminates a number of possible tools. 
 \end{description}
 
-After considering these arguments we decided to implement our own solution
-internally called \ptool{}. In the following chapters I will present the design
-and the implementation of this tool and how is it currently applied az CERN
-Controls Group.
+After considering these arguments we at CERN decided to implement our own
+solution internally called \ptool{}. In the following chapters I will present
+the design and the implementation of this tool, how is it currently applied az
+CERN Controls Group and how it was extended at Budapest University of
+Technology.
 

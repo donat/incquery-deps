@@ -613,30 +613,41 @@ The UI components use this API to access the dependency information and show the
 current state in different views.
 
 \section{UI Components}
-Eclipse UI contributions provide the way to access to the input and the output of \ptool . 
-These elements are grouped into in this component. 
+The UI components extends the Eclipse platform's user interface to provide
+access to the dependency information and to show the results in an integrated
+way. 
+ 
+The first part is the UI extension for explicit queries. The Java source code
+editor gets an new element in the context menu with the label ''Show Incoming
+Dependencies''. The developer selects any code element in the source code (he
+can point to a class, a field or a method) right clicks on it and chooses this
+menu element. The initiated action first resolves the selected element and tries
+to get a fully qualified name of it. If it is successful the query is sent to
+the server side for evaluation. After the result of the query is obtained, the 
+result is pushed into an Eclipse view.
 
-UI for direct queries
-First: contributions to the source code editor. 
-Context menu gets new item: show incoming dependencies.
-Finds selected element and executes dependency query. 
-The query contains a fully qualification, then sends the actual request and waits for the result.
-When it is sent, the result is provided in an Eclipse view.
+EMF-IncQuery also shows the result data in an Eclipse view but it does not 
+need an explicit call to update the visuals. A change listener registered in order
+to to update the the result. Every time the source code changes or when a different
+project or class is in the focus the result is updated accordingly.  
 
-Alse Eclipse views are used to display the result  from the EMF-IncQuery engine.
-Using JFace has two advangage: the style of display is not bound to the data EMF
-technology has out of the box integration with jface.
+The Eclipse views utilize JFace, more precisely JFace tree viewers to present
+the information. Using JFace has two advantages: displaying the data is not
+bound to the original structure of the input and EMF has tight integration to
+JFace out of the box.
 
-insert picture from diagram-source.
-Query result is restructured into an own tree-like structure.
-An adapter object is created. It makes JFace understand how to interpet
-the obtained data.
+\picfifty{jface.pdf}{Displaying data with JFace}
 
-The explicit queries does not require any change listener because it alwasy show
-one query information.
-However the EMF-IncQuery shows dinamic data so the view is updated dinamically
-View registers itself to the Eclipse platform selection service and updates the
-relevant information automatically as the selection changes. 
+\autoref{fig:jface.pdf} shows a simplified view how the data is presented in
+JFace viewers. Originally the results are a simple net of objects. In the first
+step it is restructured into a into an internal tree structure. This tree is the
+input content for the display. To make JFace understand  the structure of this
+data, a data adapter is loaded (through Eclipse platform service registration).
+With both the content and the description how the data should be displayed JFace
+automatically shows the results and provides convenience functions such as tree
+folding, selection service, etc. 
+
+
 
 
 
