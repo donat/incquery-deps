@@ -35,14 +35,25 @@ The discovered dependencies are formatted and filtered in order not to have
 internal or platform defined elements (dependencies pointing inside the
 \code{java.*} package). For example let's see the \code{BasicImplUtil} class'
 \code{registerImplementation()} method.
-\begin{tabl}{External references of the BasicImplUtil.registerImplementation() method}{extrefs}{|p{.37\linewidth}|p{.37\linewidth}|p{.2\linewidth}|}
+\begin{tabl}
+{External references of the BasicImplUtil.registerImplementation() method}
+{extrefs}{|p{.37\linewidth}|p{.37\linewidth}|p{.2\linewidth}|}
 \hline
-\textbf{Original format}	&  \textbf{Source format} & \textbf{Type} \\
+	\textbf{Binary format}						&  
+	\textbf{Source format} 						& 
+	\textbf{Type} 								\\
 \hline
-impl/BasicProvider  & impl.BasicProvider &  ConstClass \\
+	impl/BasicProvider  						&
+	impl.BasicProvider 							&
+	ConstClass 									\\
 \hline
-service/Services/registerProvider \mbox{(Ljava/lang/String;} \mbox{Lservice/Provider;)V} 
-&  \mbox{service.Services.registerProvider} \mbox{(java.lang.String,} \mbox{service.Provider):void} & \mbox{Constant} \mbox{MethodRef} \\
+	service/Services/registerProvider 
+	\mbox{(Ljava/lang/String;}
+	\mbox{Lservice/Provider;)V} 				& 
+	\mbox{service.Services.registerProvider}
+	\mbox{(java.lang.String,}
+	\mbox{service.Provider):void} 				&
+	\mbox{Constant} \mbox{MethodRef} 			\\
 \hline
 \end{tabl}
 The first one is a 
@@ -66,26 +77,48 @@ on the client side.
 
 \subsection{On the client side}
 
-Source model synchronizer.
-View of the service deveoper. as he opens the project the following emf model is
-built from the state of eclipse.
-\pic{wsmodel.png}{Workspace model containing Service package from the example}.
-\autoref{fig:wsmodel.png} shows a readable view of the extracted model. It has
-both contains all the packages classes, etc. And all internal references
-\emph{including} the internal dependencies.
-
-Workspace model synchronizer.
-For the service project the entire workspace is loaded. 
-
-Direct queries
-Picture how it was queried.
-Picture: result of a direct query for a field and for the method.
+To continue our example, we will examine the view of the developer who knows
+only about his own \code{service} project. If the \ptool{} is  installed in his
+Eclipse, the EMF model -- shown on \autoref{fig:wsmodel.png}
+\picr{wsmodel.png}{Workspace model containing Service package from the example}
+-- is built and synchronized automatically. On the figure we can see, that the
+structure of the project (left) corresponds to the content of the EMF model
+(right). In the model view, you can also see that the in-project dependency
+relationships are also registered.
 
 
-Model queries.
-Result of the emf query.
-Show the view as i
-FOr example incoming dependencies.
+Because the \code{client} and the \code{impl} projects have references to the
+\code{service} project, both of them are loaded to the repository model. It has all the
+element but with the compacted version, so no fully qualified names. But because
+there is no overlapping names between the classes and method than the compacted
+model does not introduce false-positive results.
+
+Let's see how the developer checks the incoming dependencies through the
+explicit queries.
+\pic{incdeps.png}{Execute explicit queries from the source code editor}
+\autoref{fig:incdeps.png} shows the context menu contribution for initiating an
+explicit query. The query takes a few seconds to respond. The results are shown
+in the viewer like on \autoref{fig:results.png}.
+\picr{results.png}{Result of explicit queries}
+ 
+The same result can be retrieved using model queries, but without any
+interaction: all result for the selected project is automatically showed. Plus,
+if something is changed, for example the \code{serviceB()} method is deleted, it
+i) is compared against the repository model and marked as deleted method and all
+the incoming dependencies is listed as a possible impact if the modified code
+gets committed. 
+
+%% TODO: put image of the result of the model queries
+
+Back to example. The developer checks the incoming dependencies of the
+\mbox{\code{Services.}} \mbox{\code{DEFAULT\_PROVIDER\_NAME}} field and the \code{Service.serviceA()}
+method. In the first case there are some incoming dependencies which can be
+examined.
+In our example there are two external users of the field, so the developer can
+either contact them and coordinate the smooth upgrades by simultaneously
+releasing a new versions of all projects. On the other side, the
+\code{serviceA()} method has no incoming dependencies, as nobody uses it. In
+this case the developer has the righ to change the signature however he wants.
 
 
 \section{Performance evaluation}
