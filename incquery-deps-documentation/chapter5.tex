@@ -107,8 +107,7 @@ if something is changed, for example the \code{serviceB()} method is deleted, it
 i) is compared against the repository model and marked as deleted method and all
 the incoming dependencies is listed as a possible impact if the modified code
 gets committed. 
-
-%% TODO: put image of the result of the model queries
+\todo[inline]{put image of the result of the model queries}
 
 Back to example. The developer checks the incoming dependencies of the
 \mbox{\code{Services.}} \mbox{\code{DEFAULT\_PROVIDER\_NAME}} field and the \code{Service.serviceA()}
@@ -122,8 +121,40 @@ this case the developer has the righ to change the signature however he wants.
 
 
 \section{Performance evaluation}
-Pure measurement. What can we measure:
-the size of the database.
-Speed of dependency discovery.
-Size size of the compacted model. 
-Memory size
+
+
+ definiálod, hogy milyen tesztadatokkal vizsgáltad a rendszert 
+ (mekkora sw adatbázis, 
+ hány elem, 
+ hány kapcsolat, 
+ mekkora a workspace mérete, 
+ ebből mekkora emf modell keletkezik stb, ami lényeges)
+
+
+ bemutatod, hogy mely usecase-ekre kell megvizsgálni a rendszer teljesítményét,
+ és leírod emlékeztetőként, hogy ezeknél mi fut a háttérben
+ 
+ végül bemutatsz mérési eredményeket, melyek demonstrálják, hogy jó a cucc,
+ valamint értékeled is ezeket olyan szemmel, hogy mennyire látszik skálázhatónak
+  a rendszer (az a cél, hogy a bíráló képet kapjon arról, hogy játékot
+  építettél, vagy valódi eszközt). Nyilván a skálázhatóság precízebb
+  vizsgálatához több tesztadatkészlet is kellene - na ez az, ami most
+  kihagyható. (Később, ha majd cikket írunk, oda fogjuk majd betenni - most
+  nincs rá időd.) 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
