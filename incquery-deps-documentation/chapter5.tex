@@ -29,7 +29,7 @@ binaries. As of the structure the analyzer finds 3 projects, 8 classes 2 fields
 and 19 methods which get stored in the database.
 The methods are composed of the 12 defined methods, 6 constructor (from all
 non-interface classes) and 1 static initializer (which comes from the Services
-class as it gives a default value to a static field). 
+class as it gives a default value to a static field).
 
 The discovered dependencies are formatted and filtered in order not to have
 internal or platform defined elements (dependencies pointing inside the
@@ -120,32 +120,85 @@ releasing a new versions of all projects. On the other side, the
 this case the developer has the right to change the signature however he wants.
 
 
-\section{Performance evaluation}
-Check performance of the system we have to check the following use-cases.
- * the dependency discovery is fast enough to process large number of jars
- * can it scale well with the size of the input
- * explicit queries: what is the response time of the queries. 
- * model queries: how big model can fit into memory. bottleneck to  
- 
-Data input is real word
- * Not generated.
- * CERN softwares.
- * Operationonal 
- 
-Server side:
- * Question: How efficient the dependency discovery.
- * Specification of the test machine: cern hyperv vm. win 7 enterprise 32 bit, 4gig ram. Typical machine sw dev.
- * Circumstances 
- * Input data: subset of the binaries (1300 jars). Check many elements, and how big model is saved.
-%\todonotes{Insert picture and analyse the values. The measurement is running right now.}
- * Verdict: scale well to huge database. manageable model size.
- 
-Explicit queries:
- * server process is on the same machine, client separately.
- * 100 random c-m-f selected randomly from the database. 
- * client checks how fast the server reacts. Peak, minimum, average.
- * Verdict: reasonable response time, reliable.
- \pic{expqmeasure.pdf}{Explicit queries measurement result}
+\section{Performance}
+After the functionality was presented, let's check the overall performance of
+the system. We have to check the individual components  that they can complete
+their requirement as the input or usage scales up to a level of the production
+applications. First we have to verify whether the dependency fast enough and can
+process large number of Java binaries. The next one is to see if the explicit
+queries are reasonably fast. The last yet the most important is to test to
+performance of the EMF-IncQuery engine how big instance models can be loaded
+into the EMF-IncQuery engine.
+
+The jar files used as the sample data come from real-life applications; they are
+operational softwares from the CERN controls systems. By using them we can
+eliminate the problems of having badly generated homogeneous sample data.
+
+\subsection{Dependency processing}
+The first element to measure is how the server process perform.
+A measurement has to check how efficiency the bytecode analysis and the
+dependency processing together works. Minimal preliminary requirement is that is
+should be much faster then the source code of the software in  the repository
+changes, because otherwise the dependency database will contain constantly
+outdated information.
+
+As a test I took all of the import binaries, started the server process as a
+standalone Java application, initiated the dependency discovery on the subset of
+the binaries and measured the statistics of the database and the speed of the
+discovery. After the test has finished I erased the database and repeated the
+test with a bigger and bigger subset of the jar files until the entire set was
+analyzed. For the test I used a desktop computer with the following
+specifications:
+\begin{itemize}
+  \item Processor: Intel Core i3-2120, 3,3 GHz,
+  \item RAM: 8GB DDR3,
+  \item OS: Windows 7 Enterprise, 64 bit, Service Pack 1,
+  \item JVM: Oracle JDK 1.6.0\_27-b07.
+\end{itemize}
+The tests showed that on average one project contains 80 classes, 513 methods, 304 fields and 778 dependencies. 
+The result of the test are shown on \autoref{fig:resanal.pdf}
+\picr{resanal.pdf}{Result of dependency processing measurement}
+The left chart shows how big generated EMF instance model depending on the
+input jar size. It is clearly visible that the size linearly increases
+as the input grows. Also the execution time (right chart) shows 
+steady growth as the input size increases. Looking at the analysis
+ of all (1300) jars, the average processing takes roughly $0,43$ seconds.
+Knowing that even in large software repositories usually a few, maybe a few 
+dozen releases happen, then having a system which analyses the differences within
+a second is more than enough.
+
+\subsection{Explicit queries}
+Next question is how fast are the explicit queries. We want to see that the
+results of a dependency query returns the data and visualizes the information
+within reasonable time even when the result set bigger than usual. 
+
+I set up the server process on the same machine, what I used for 
+testing the dependency processing. I filled the database with with all the
+dependency information. For measuring the speed of the queries used an average
+virtual machine which from the CERN ecosystem which has similar specification
+what is usually used for development:
+\begin{itemize}
+  \item Processor: Intel Xenon E5645, 2,4 GHz,
+  \item RAM: 4GB DDR3,
+  \item OS: Windows 7 Enterprise, 32 bit, Service Pack 1,
+  \item JVM: Oracle JDK 1.6.0\_35-b10.
+\end{itemize}
+Because this machine runs on a virtualized infrastructure it can't be
+considered as a steady platform; performance could change as the usage changes,
+but it is strong enough for comfortable Java development. 
+
+For the tests I chose a specific project which happens to be a widely-used
+library by the other jars. During the measurement a query is initiated for 
+the incoming dependencies for every single element of this project. 
+I dropped the result where there was no dependencies and made a statistics, how 
+the size of the result set affects on the response time.
+The results are shown on \autoref{fig:expqmeasure.pdf}.
+ \picfifty{expqmeasure.pdf}{Explicit queries measurement result}
+As it turned out, that the response time does not depend on the size of the result,
+it was returned roughly 200ms on every sample. This result means that utilizing 
+dependency queries return the result in reasonable time. 
+
+
  
 Model queries:
  * Eclipse involved: hard to query the performance of individual plugins.
