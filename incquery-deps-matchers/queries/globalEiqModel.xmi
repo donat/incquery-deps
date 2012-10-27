@@ -3,7 +3,7 @@
   <patterns name="cern.devtools.deps.query.cp1.projectsWithSameName" fileName="platform:/resource/incquery-deps-matchers/src/cp1.eiq">
     <parameters name="repoProject">
       <type xsi:type="eMFPatternLanguage:ClassType">
-        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Project"/>
+        <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.0.3.0.1::1::/2"/>
       </type>
     </parameters>
     <parameters name="wsProject">
@@ -15,11 +15,11 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Project"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.0.4.0.1.0.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Project/name"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.0.4.0.1.0.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="repoProject"/>
@@ -270,23 +270,23 @@
   <patterns name="cern.devtools.deps.query.cp1.removedClassesFromProject" fileName="platform:/resource/incquery-deps-matchers/src/cp1.eiq">
     <parameters name="repoClass">
       <type xsi:type="eMFPatternLanguage:ClassType">
-        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class"/>
+        <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.5.3.0.1::1::/2"/>
       </type>
     </parameters>
     <parameters name="repoProject">
       <type xsi:type="eMFPatternLanguage:ClassType">
-        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Project"/>
+        <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.5.3.1.1::1::/2"/>
       </type>
     </parameters>
     <bodies>
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.5.4.0.1.0.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class/simpleName"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.5.4.0.1.0.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="repoClass"/>
@@ -298,11 +298,11 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.5.4.0.1.1.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class/packageName"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.5.4.0.1.1.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="repoClass"/>
@@ -314,11 +314,11 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Project"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.5.4.0.1.2.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Project/classes"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.5.4.0.1.2.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="repoProject"/>
@@ -355,7 +355,7 @@
   <patterns name="cern.devtools.deps.query.cp1.classesWithSameFQNAndSameProject" fileName="platform:/resource/incquery-deps-matchers/src/cp1.eiq">
     <parameters name="repoClass">
       <type xsi:type="eMFPatternLanguage:ClassType">
-        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class"/>
+        <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.6.3.0.1::1::/2"/>
       </type>
     </parameters>
     <parameters name="wsClass">
@@ -367,11 +367,11 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Project"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.6.4.0.1.0.0.0::1::/4"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Project/classes"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.6.4.0.1.0.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="repoProject"/>
@@ -424,11 +424,11 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.6.4.0.1.3.0.0::1::/4"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class/simpleName"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.6.4.0.1.3.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="repoClass"/>
@@ -456,11 +456,11 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.6.4.0.1.5.0.0::1::/4"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class/packageName"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.6.4.0.1.5.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="repoClass"/>
@@ -511,7 +511,7 @@
   <patterns name="cern.devtools.deps.query.cp1.methodsWithSameSignatureAndSameProject" fileName="platform:/resource/incquery-deps-matchers/src/cp1.eiq">
     <parameters name="repoMethod">
       <type xsi:type="eMFPatternLanguage:ClassType">
-        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Method"/>
+        <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.7.3.0.1::1::/2"/>
       </type>
     </parameters>
     <parameters name="wsMethod">
@@ -523,15 +523,15 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Project"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.7.4.0.1.0.0.0::1::/4"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Project/classes"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.7.4.0.1.0.0.1.0::1::/1"/>
             </type>
             <tail>
               <type xsi:type="eMFPatternLanguage:ReferenceType">
-                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class/methods"/>
+                <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.7.4.0.1.0.0.1.1.0::1::/1"/>
               </type>
             </tail>
           </tail>
@@ -590,11 +590,11 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Method"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.7.4.0.1.3.0.0::1::/4"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Method/signature"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.7.4.0.1.3.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="repoMethod"/>
@@ -624,7 +624,7 @@
   <patterns name="cern.devtools.deps.query.cp1.fieldsWithSameSignatureAndSameProject" fileName="platform:/resource/incquery-deps-matchers/src/cp1.eiq">
     <parameters name="repoField">
       <type xsi:type="eMFPatternLanguage:ClassType">
-        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Field"/>
+        <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.8.3.0.1::1::/2"/>
       </type>
     </parameters>
     <parameters name="wsField">
@@ -636,15 +636,15 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Project"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.8.4.0.1.0.0.0::1::/4"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Project/classes"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.8.4.0.1.0.0.1.0::1::/1"/>
             </type>
             <tail>
               <type xsi:type="eMFPatternLanguage:ReferenceType">
-                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class/fields"/>
+                <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.8.4.0.1.0.0.1.1.0::1::/1"/>
               </type>
             </tail>
           </tail>
@@ -703,11 +703,11 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Field"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.8.4.0.1.3.0.0::1::/4"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Field/signature"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.8.4.0.1.3.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="repoField"/>
@@ -737,7 +737,7 @@
   <patterns name="cern.devtools.deps.query.cp1.incomingInheritances" fileName="platform:/resource/incquery-deps-matchers/src/cp1.eiq">
     <parameters name="repoSource">
       <type xsi:type="eMFPatternLanguage:ClassType">
-        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class"/>
+        <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.9.3.0.1::1::/2"/>
       </type>
     </parameters>
     <parameters name="wsTarget">
@@ -758,18 +758,18 @@
       </constraints>
       <constraints xsi:type="eMFPatternLanguage:EClassifierConstraint">
         <type xsi:type="eMFPatternLanguage:ClassType">
-          <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+          <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.9.4.0.1.1.0::1::/4"/>
         </type>
         <var var="dependency"/>
       </constraints>
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.9.4.0.1.2.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/from"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.9.4.0.1.2.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="dependency"/>
@@ -781,11 +781,11 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.9.4.0.1.3.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/to"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.9.4.0.1.3.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="dependency"/>
@@ -797,17 +797,17 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.9.4.0.1.4.0.0::1::/4"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/type"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.9.4.0.1.4.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="dependency"/>
           <dst xsi:type="eMFPatternLanguage:EnumValue">
-            <enumeration href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1DependencyType"/>
-            <literal href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1DependencyType/INHERITANCE"/>
+            <enumeration href="../src/cp1.eiq#xtextLink_::0.1.9.4.0.1.4.0.3::0::/1"/>
+            <literal href="../src/cp1.eiq#xtextLink_::0.1.9.4.0.1.4.0.3::1::/3"/>
           </dst>
         </head>
       </constraints>
@@ -816,7 +816,7 @@
   <patterns name="cern.devtools.deps.query.cp1.incomingClassUsages" fileName="platform:/resource/incquery-deps-matchers/src/cp1.eiq">
     <parameters name="repoSource">
       <type xsi:type="eMFPatternLanguage:ClassType">
-        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class"/>
+        <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.10.3.0.1::1::/2"/>
       </type>
     </parameters>
     <parameters name="wsTarget">
@@ -837,18 +837,18 @@
       </constraints>
       <constraints xsi:type="eMFPatternLanguage:EClassifierConstraint">
         <type xsi:type="eMFPatternLanguage:ClassType">
-          <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+          <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.10.4.0.1.1.0::1::/4"/>
         </type>
         <var var="dependency"/>
       </constraints>
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.10.4.0.1.2.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/from"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.10.4.0.1.2.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="dependency"/>
@@ -860,11 +860,11 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.10.4.0.1.3.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/to"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.10.4.0.1.3.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="dependency"/>
@@ -876,17 +876,17 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.10.4.0.1.4.0.0::1::/4"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/type"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.10.4.0.1.4.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="dependency"/>
           <dst xsi:type="eMFPatternLanguage:EnumValue">
-            <enumeration href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1DependencyType"/>
-            <literal href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1DependencyType/CLASS_USAGE"/>
+            <enumeration href="../src/cp1.eiq#xtextLink_::0.1.10.4.0.1.4.0.3::0::/1"/>
+            <literal href="../src/cp1.eiq#xtextLink_::0.1.10.4.0.1.4.0.3::1::/3"/>
           </dst>
         </head>
       </constraints>
@@ -895,7 +895,7 @@
   <patterns name="cern.devtools.deps.query.cp1.incomingMethodCalls" fileName="platform:/resource/incquery-deps-matchers/src/cp1.eiq">
     <parameters name="repoSource">
       <type xsi:type="eMFPatternLanguage:ClassType">
-        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Method"/>
+        <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.11.3.0.1::1::/2"/>
       </type>
     </parameters>
     <parameters name="wsTarget">
@@ -916,18 +916,18 @@
       </constraints>
       <constraints xsi:type="eMFPatternLanguage:EClassifierConstraint">
         <type xsi:type="eMFPatternLanguage:ClassType">
-          <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+          <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.11.4.0.1.1.0::1::/4"/>
         </type>
         <var var="dependency"/>
       </constraints>
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.11.4.0.1.2.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/from"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.11.4.0.1.2.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="dependency"/>
@@ -939,11 +939,11 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.11.4.0.1.3.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/to"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.11.4.0.1.3.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="dependency"/>
@@ -955,17 +955,17 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.11.4.0.1.4.0.0::1::/4"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/type"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.11.4.0.1.4.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="dependency"/>
           <dst xsi:type="eMFPatternLanguage:EnumValue">
-            <enumeration href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1DependencyType"/>
-            <literal href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1DependencyType/METHOD_CALL"/>
+            <enumeration href="../src/cp1.eiq#xtextLink_::0.1.11.4.0.1.4.0.3::0::/1"/>
+            <literal href="../src/cp1.eiq#xtextLink_::0.1.11.4.0.1.4.0.3::1::/3"/>
           </dst>
         </head>
       </constraints>
@@ -974,7 +974,7 @@
   <patterns name="cern.devtools.deps.query.cp1.incomingMethodOverrides" fileName="platform:/resource/incquery-deps-matchers/src/cp1.eiq">
     <parameters name="repoSource">
       <type xsi:type="eMFPatternLanguage:ClassType">
-        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Method"/>
+        <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.12.3.0.1::1::/2"/>
       </type>
     </parameters>
     <parameters name="wsTarget">
@@ -995,18 +995,18 @@
       </constraints>
       <constraints xsi:type="eMFPatternLanguage:EClassifierConstraint">
         <type xsi:type="eMFPatternLanguage:ClassType">
-          <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+          <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.12.4.0.1.1.0::1::/4"/>
         </type>
         <var var="dependency"/>
       </constraints>
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.12.4.0.1.2.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/from"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.12.4.0.1.2.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="dependency"/>
@@ -1018,11 +1018,11 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.12.4.0.1.3.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/to"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.12.4.0.1.3.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="dependency"/>
@@ -1034,17 +1034,17 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.12.4.0.1.4.0.0::1::/4"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/type"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.12.4.0.1.4.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="dependency"/>
           <dst xsi:type="eMFPatternLanguage:EnumValue">
-            <enumeration href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1DependencyType"/>
-            <literal href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1DependencyType/METHOD_OVERRIDE"/>
+            <enumeration href="../src/cp1.eiq#xtextLink_::0.1.12.4.0.1.4.0.3::0::/1"/>
+            <literal href="../src/cp1.eiq#xtextLink_::0.1.12.4.0.1.4.0.3::1::/3"/>
           </dst>
         </head>
       </constraints>
@@ -1053,7 +1053,7 @@
   <patterns name="cern.devtools.deps.query.cp1.incomingFieldAccesses" fileName="platform:/resource/incquery-deps-matchers/src/cp1.eiq">
     <parameters name="repoSource">
       <type xsi:type="eMFPatternLanguage:ClassType">
-        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Method"/>
+        <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.13.3.0.1::1::/2"/>
       </type>
     </parameters>
     <parameters name="wsTarget">
@@ -1074,18 +1074,18 @@
       </constraints>
       <constraints xsi:type="eMFPatternLanguage:EClassifierConstraint">
         <type xsi:type="eMFPatternLanguage:ClassType">
-          <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+          <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.13.4.0.1.1.0::1::/4"/>
         </type>
         <var var="dependency"/>
       </constraints>
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.13.4.0.1.2.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/from"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.13.4.0.1.2.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="dependency"/>
@@ -1097,11 +1097,11 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.13.4.0.1.3.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/to"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.13.4.0.1.3.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="dependency"/>
@@ -1113,17 +1113,17 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.13.4.0.1.4.0.0::1::/4"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/type"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.13.4.0.1.4.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="dependency"/>
           <dst xsi:type="eMFPatternLanguage:EnumValue">
-            <enumeration href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1DependencyType"/>
-            <literal href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1DependencyType/FIELD_REFERENCE"/>
+            <enumeration href="../src/cp1.eiq#xtextLink_::0.1.13.4.0.1.4.0.3::0::/1"/>
+            <literal href="../src/cp1.eiq#xtextLink_::0.1.13.4.0.1.4.0.3::1::/3"/>
           </dst>
         </head>
       </constraints>
@@ -1137,18 +1137,18 @@
     <bodies>
       <constraints xsi:type="eMFPatternLanguage:EClassifierConstraint">
         <type xsi:type="eMFPatternLanguage:ClassType">
-          <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Project"/>
+          <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.14.4.0.1.0.0::1::/2"/>
         </type>
         <var var="repoProject"/>
       </constraints>
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Project"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.14.4.0.1.1.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Project/classes"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.14.4.0.1.1.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="repoProject"/>
@@ -1160,11 +1160,11 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.14.4.0.1.2.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class/packageName"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.14.4.0.1.2.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="repoClass"/>
@@ -1176,11 +1176,11 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.14.4.0.1.3.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class/simpleName"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.14.4.0.1.3.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="repoClass"/>
@@ -1194,18 +1194,18 @@
   <patterns name="cern.devtools.deps.query.cp1.removedClasses" fileName="platform:/resource/incquery-deps-matchers/src/cp1.eiq">
     <parameters name="wsClass">
       <type xsi:type="eMFPatternLanguage:ClassType">
-        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class"/>
+        <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.15.3.0.1::1::/2"/>
       </type>
     </parameters>
     <bodies>
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.15.4.0.1.0.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class/simpleName"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.15.4.0.1.0.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="wsClass"/>
@@ -1217,11 +1217,11 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.15.4.0.1.1.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class/packageName"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.15.4.0.1.1.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="wsClass"/>
@@ -1233,11 +1233,11 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Project"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.15.4.0.1.2.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Project/classes"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.15.4.0.1.2.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="repoProject"/>
@@ -1478,26 +1478,26 @@
     <bodies>
       <constraints xsi:type="eMFPatternLanguage:EClassifierConstraint">
         <type xsi:type="eMFPatternLanguage:ClassType">
-          <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Project"/>
+          <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.18.4.0.1.0.0::1::/2"/>
         </type>
         <var var="repoProject"/>
       </constraints>
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Project"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.18.4.0.1.1.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Project/classes"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.18.4.0.1.1.0.1.0::1::/1"/>
             </type>
             <tail>
               <type xsi:type="eMFPatternLanguage:ReferenceType">
-                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class/methods"/>
+                <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.18.4.0.1.1.0.1.1.0::1::/1"/>
               </type>
               <tail>
                 <type xsi:type="eMFPatternLanguage:ReferenceType">
-                  <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Method/signature"/>
+                  <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.18.4.0.1.1.0.1.1.1.0::1::/1"/>
                 </type>
               </tail>
             </tail>
@@ -1513,18 +1513,18 @@
   <patterns name="cern.devtools.deps.query.cp1.removedMethod" fileName="platform:/resource/incquery-deps-matchers/src/cp1.eiq">
     <parameters name="repoMethod">
       <type xsi:type="eMFPatternLanguage:ClassType">
-        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Method"/>
+        <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.19.3.0.1::1::/2"/>
       </type>
     </parameters>
     <bodies>
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Method"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.19.4.0.1.0.0.0::1::/4"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Method/signature"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.19.4.0.1.0.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="repoMethod"/>
@@ -1536,15 +1536,15 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Project"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.19.4.0.1.1.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Project/classes"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.19.4.0.1.1.0.1.0::1::/1"/>
             </type>
             <tail>
               <type xsi:type="eMFPatternLanguage:ReferenceType">
-                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class/methods"/>
+                <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.19.4.0.1.1.0.1.1.0::1::/1"/>
               </type>
             </tail>
           </tail>
@@ -1576,10 +1576,10 @@
       </constraints>
       <constraints xsi:type="patternLanguage:CheckConstraint">
         <expression xsi:type="xbase:XUnaryOperation">
-          <feature xsi:type="types:JvmOperation" href="java:/Objects/org.eclipse.xtext.xbase.lib.BooleanExtensions#org.eclipse.xtext.xbase.lib.BooleanExtensions.operator_not(boolean)"/>
+          <feature xsi:type="types:JvmVoid" href="../src/cp1.eiq#xtextLink_::0.1.19.4.0.1.4.0::0::/1"/>
           <operand xsi:type="xbase:XMemberFeatureCall" explicitOperationCall="true">
-            <feature xsi:type="types:JvmOperation" href="java:/Objects/java.lang.String#java.lang.String.contains(java.lang.CharSequence)"/>
-            <memberCallTarget xsi:type="xbase:XFeatureCall" feature="//@patterns.19/@bodies.0/@variables.2"/>
+            <feature xsi:type="types:JvmVoid" href="../src/cp1.eiq#xtextLink_::0.1.19.4.0.1.4.0.7::0::/2"/>
+            <memberCallTarget xsi:type="xbase:XFeatureCall" feature="//@patterns.19/@bodies.0/@variables.1"/>
             <memberCallArguments xsi:type="xbase:XStringLiteral" value="&lt;clinit>"/>
           </operand>
         </expression>
@@ -1728,26 +1728,26 @@
     <bodies>
       <constraints xsi:type="eMFPatternLanguage:EClassifierConstraint">
         <type xsi:type="eMFPatternLanguage:ClassType">
-          <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Project"/>
+          <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.22.4.0.1.0.0::1::/2"/>
         </type>
         <var var="repoProject"/>
       </constraints>
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Project"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.22.4.0.1.1.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Project/classes"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.22.4.0.1.1.0.1.0::1::/1"/>
             </type>
             <tail>
               <type xsi:type="eMFPatternLanguage:ReferenceType">
-                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class/fields"/>
+                <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.22.4.0.1.1.0.1.1.0::1::/1"/>
               </type>
               <tail>
                 <type xsi:type="eMFPatternLanguage:ReferenceType">
-                  <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Field/signature"/>
+                  <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.22.4.0.1.1.0.1.1.1.0::1::/1"/>
                 </type>
               </tail>
             </tail>
@@ -1763,18 +1763,18 @@
   <patterns name="cern.devtools.deps.query.cp1.removedFields" fileName="platform:/resource/incquery-deps-matchers/src/cp1.eiq">
     <parameters name="repoField">
       <type xsi:type="eMFPatternLanguage:ClassType">
-        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Field"/>
+        <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.23.3.0.1::1::/2"/>
       </type>
     </parameters>
     <bodies>
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Field"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.23.4.0.1.0.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Field/signature"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.23.4.0.1.0.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="repoField"/>
@@ -1786,15 +1786,15 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Project"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.23.4.0.1.1.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Project/classes"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.23.4.0.1.1.0.1.0::1::/1"/>
             </type>
             <tail>
               <type xsi:type="eMFPatternLanguage:ReferenceType">
-                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class/fields"/>
+                <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.23.4.0.1.1.0.1.1.0::1::/1"/>
               </type>
             </tail>
           </tail>
@@ -1883,17 +1883,17 @@
   <patterns name="cern.devtools.deps.query.cp1.impactCausedByRemovedFields" fileName="platform:/resource/incquery-deps-matchers/src/cp1.eiq">
     <parameters name="repoFrom">
       <type xsi:type="eMFPatternLanguage:ClassType">
-        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Method"/>
+        <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.25.3.0.1::1::/2"/>
       </type>
     </parameters>
     <parameters name="repoTo">
       <type xsi:type="eMFPatternLanguage:ClassType">
-        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Field"/>
+        <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.25.3.1.1::1::/2"/>
       </type>
     </parameters>
     <parameters name="type">
       <type xsi:type="eMFPatternLanguage:ClassType">
-        <classname xsi:type="ecore:EEnum" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1DependencyType"/>
+        <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.25.3.2.1::1::/2"/>
       </type>
     </parameters>
     <bodies>
@@ -1907,11 +1907,11 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.25.4.0.1.1.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/from"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.25.4.0.1.1.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="d"/>
@@ -1923,11 +1923,11 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.25.4.0.1.2.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/to"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.25.4.0.1.2.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="d"/>
@@ -1939,27 +1939,27 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.25.4.0.1.3.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/type"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.25.4.0.1.3.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="d"/>
           <dst xsi:type="eMFPatternLanguage:EnumValue">
-            <literal href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1DependencyType/FIELD_REFERENCE"/>
+            <literal href="../src/cp1.eiq#xtextLink_::0.1.25.4.0.1.3.0.3::1::/2"/>
           </dst>
         </head>
       </constraints>
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.25.4.0.1.4.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/type"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.25.4.0.1.4.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="d"/>
@@ -1973,17 +1973,17 @@
   <patterns name="cern.devtools.deps.query.cp1.impactCausedByRemovedMethods" fileName="platform:/resource/incquery-deps-matchers/src/cp1.eiq">
     <parameters name="repoFrom">
       <type xsi:type="eMFPatternLanguage:ClassType">
-        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Method"/>
+        <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.26.3.0.1::1::/2"/>
       </type>
     </parameters>
     <parameters name="repoTo">
       <type xsi:type="eMFPatternLanguage:ClassType">
-        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Method"/>
+        <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.26.3.1.1::1::/2"/>
       </type>
     </parameters>
     <parameters name="type">
       <type xsi:type="eMFPatternLanguage:ClassType">
-        <classname xsi:type="ecore:EEnum" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1DependencyType"/>
+        <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.26.3.2.1::1::/2"/>
       </type>
     </parameters>
     <bodies>
@@ -1997,11 +1997,11 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.26.4.0.1.1.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/from"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.26.4.0.1.1.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="d"/>
@@ -2013,11 +2013,11 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.26.4.0.1.2.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/to"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.26.4.0.1.2.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="d"/>
@@ -2029,27 +2029,27 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.26.4.0.1.3.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/type"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.26.4.0.1.3.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="d"/>
           <dst xsi:type="eMFPatternLanguage:EnumValue">
-            <literal href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1DependencyType/METHOD_CALL"/>
+            <literal href="../src/cp1.eiq#xtextLink_::0.1.26.4.0.1.3.0.3::1::/2"/>
           </dst>
         </head>
       </constraints>
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.26.4.0.1.4.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/type"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.26.4.0.1.4.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="d"/>
@@ -2070,11 +2070,11 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.26.4.1.1.1.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/from"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.26.4.1.1.1.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="d"/>
@@ -2086,11 +2086,11 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.26.4.1.1.2.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/to"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.26.4.1.1.2.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="d"/>
@@ -2102,27 +2102,27 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.26.4.1.1.3.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/type"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.26.4.1.1.3.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="d"/>
           <dst xsi:type="eMFPatternLanguage:EnumValue">
-            <literal href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1DependencyType/METHOD_OVERRIDE"/>
+            <literal href="../src/cp1.eiq#xtextLink_::0.1.26.4.1.1.3.0.3::1::/2"/>
           </dst>
         </head>
       </constraints>
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.26.4.1.1.4.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/type"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.26.4.1.1.4.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="d"/>
@@ -2136,17 +2136,17 @@
   <patterns name="cern.devtools.deps.query.cp1.impactCausedByRemovedClasses" fileName="platform:/resource/incquery-deps-matchers/src/cp1.eiq">
     <parameters name="repoFrom">
       <type xsi:type="eMFPatternLanguage:ClassType">
-        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class"/>
+        <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.27.3.0.1::1::/2"/>
       </type>
     </parameters>
     <parameters name="repoTo">
       <type xsi:type="eMFPatternLanguage:ClassType">
-        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Class"/>
+        <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.27.3.1.1::1::/2"/>
       </type>
     </parameters>
     <parameters name="type">
       <type xsi:type="eMFPatternLanguage:ClassType">
-        <classname xsi:type="ecore:EEnum" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1DependencyType"/>
+        <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.27.3.2.1::1::/2"/>
       </type>
     </parameters>
     <bodies>
@@ -2160,11 +2160,11 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.27.4.0.1.1.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/from"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.27.4.0.1.1.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="d"/>
@@ -2176,11 +2176,11 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.27.4.0.1.2.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/to"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.27.4.0.1.2.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="d"/>
@@ -2192,27 +2192,27 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.27.4.0.1.3.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/type"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.27.4.0.1.3.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="d"/>
           <dst xsi:type="eMFPatternLanguage:EnumValue">
-            <literal href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1DependencyType/CLASS_USAGE"/>
+            <literal href="../src/cp1.eiq#xtextLink_::0.1.27.4.0.1.3.0.3::1::/2"/>
           </dst>
         </head>
       </constraints>
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.27.4.0.1.4.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/type"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.27.4.0.1.4.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="d"/>
@@ -2233,11 +2233,11 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.27.4.1.1.1.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/from"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.27.4.1.1.1.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="d"/>
@@ -2249,11 +2249,11 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.27.4.1.1.2.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/to"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.27.4.1.1.2.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="d"/>
@@ -2265,27 +2265,27 @@
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.27.4.1.1.3.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/type"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.27.4.1.1.3.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="d"/>
           <dst xsi:type="eMFPatternLanguage:EnumValue">
-            <literal href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1DependencyType/INHERITANCE"/>
+            <literal href="../src/cp1.eiq#xtextLink_::0.1.27.4.1.1.3.0.3::1::/2"/>
           </dst>
         </head>
       </constraints>
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>
           <type xsi:type="eMFPatternLanguage:ClassType">
-            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency"/>
+            <classname xsi:type="ecore:EClass" href="../src/cp1.eiq#xtextLink_::0.1.27.4.1.1.4.0.0::1::/2"/>
           </type>
           <tail>
             <type xsi:type="eMFPatternLanguage:ReferenceType">
-              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#//CP1Dependency/type"/>
+              <refname xsi:type="ecore:EAttribute" href="../src/cp1.eiq#xtextLink_::0.1.27.4.1.1.4.0.1.0::1::/1"/>
             </type>
           </tail>
           <src var="d"/>
@@ -2297,12 +2297,12 @@
     </bodies>
   </patterns>
   <importPackages>
-    <ePackage href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#/"/>
-  </importPackages>
-  <importPackages>
-    <ePackage href="http://inf.mit.bme.hu/donat/incquery-deps/cp1model#/"/>
-  </importPackages>
-  <importPackages>
     <ePackage href="http://www.eclipse.org/emf/2002/Ecore#/"/>
+  </importPackages>
+  <importPackages>
+    <ePackage href="../src/cp1.eiq#xtextLink_::0.2.1::0::/3"/>
+  </importPackages>
+  <importPackages>
+    <ePackage href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#/"/>
   </importPackages>
 </eMFPatternLanguage:PatternModel>

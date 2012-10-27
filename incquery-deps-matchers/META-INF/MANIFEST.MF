@@ -3,28 +3,6 @@ Bundle-ManifestVersion: 2
 Bundle-Name: incquery-deps-matchers
 Bundle-SymbolicName: incquery-deps-matchers;singleton:=true
 Bundle-Version: 0.0.1.qualifier
-Export-Package: cern.devtools.deps.query.cp1.addedclasses,
- cern.devtools.deps.query.cp1.addedfields,
- cern.devtools.deps.query.cp1.addedmethods,
- cern.devtools.deps.query.cp1.classeswithsamefqnandsameproject,
- cern.devtools.deps.query.cp1.fieldsinwstype,
- cern.devtools.deps.query.cp1.fieldswithsamesignatureandsameproject,
- cern.devtools.deps.query.cp1.impactcausedbyremovedclasses,
- cern.devtools.deps.query.cp1.impactcausedbyremovedfields,
- cern.devtools.deps.query.cp1.impactcausedbyremovedmethods,
- cern.devtools.deps.query.cp1.incomingclassusages,
- cern.devtools.deps.query.cp1.incomingfieldaccesses,
- cern.devtools.deps.query.cp1.incominginheritances,
- cern.devtools.deps.query.cp1.incomingmethodcalls,
- cern.devtools.deps.query.cp1.incomingmethodoverrides,
- cern.devtools.deps.query.cp1.methodsinwstype,
- cern.devtools.deps.query.cp1.methodswithsamesignatureandsameproject,
- cern.devtools.deps.query.cp1.projectswithsamename,
- cern.devtools.deps.query.cp1.removedclasses,
- cern.devtools.deps.query.cp1.removedclassesfromproject,
- cern.devtools.deps.query.cp1.removedfields,
- cern.devtools.deps.query.cp1.removedmethod,
- cern.devtools.deps.query.cp1.typesinwsproject
 Require-Bundle: org.eclipse.pde.core,
  org.eclipse.emf.ecore,
  org.eclipse.emf.transaction,
