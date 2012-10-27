@@ -135,6 +135,7 @@ operational softwares from the CERN controls systems. By using them we can
 eliminate the problems of having badly generated homogeneous sample data.
 
 \subsection{Dependency processing}
+\label{sect:depproc}
 The first element to measure is how the server process perform.
 A measurement has to check how efficiency the bytecode analysis and the
 dependency processing together works. Minimal preliminary requirement is that is
@@ -168,6 +169,7 @@ dozen releases happen, then having a system which analyses the differences withi
 a second is more than enough.
 
 \subsection{Explicit queries}
+\label{sect:explqueries}
 Next question is how fast are the explicit queries. We want to see that the
 results of a dependency query returns the data and visualizes the information
 within reasonable time even when the result set bigger than usual. 
@@ -199,16 +201,50 @@ it was returned roughly 200ms on every sample. This result means that utilizing
 dependency queries return the result in reasonable time. 
 
 
+\subsection{Model queries}
+Using EMF-IncQuery the question is always about the memory. Does my model fit into
+the memory? If it does, and the engine is able to build the data structure on top
+of it then we are in good position because afterward the update mechanism requires 
+minimal resources. 
+
+So, to test model queries I reused the sub-models from the previous tests (see
+\autoref{sect:depproc}), and generated the correspondent compacted models from
+them.
+The description of the compacted model is at \autoref{sect:depdbsynch}. Normally
+this a sub-instance model would load automatically from the server side, but now
+we want to see how big model could be loaded at once to decide the applicability
+of the component.
+
+The used machine is the same virtual pc introduced in
+\autoref{sect:explqueries}. Because this is a typical development machine, it is
+also considered as a reference for the usability. In the measurement I opened an
+Eclipse instance, loaded the patterns and made some modifications in the
+workspace. I checked how fast the EMF-IncQuery initializes (including loading
+the model), how much memory the entire Eclipse distribution consumes and
+afterwards how fast can it react to the workspace modifications.
+\picr{modelqueries.pdf}{Model queries measurement result}
+
+The result of the measurement is shown on \autoref{fig:modelqueries.pdf}.
+The query engine initialized relatively fast, even the model which holds 400
+projects could load within a minute. Considering that this has to be done once
+per session it is acceptable. Also with the memory allocation was linear with 
+the model size, it didn't explode, grew linearly with the input size. 
+
+No models bigger than 400 elements could fit into the memory (with 500 Eclipse
+exited with \code{OutOfMemoryError}, even with the maximum allowed 1.5GiB heap size)
+because of the 32 bit platform limitation. Applying 64 bit systems could extend
+the range, but we have calibrate the solution to the target machines which
+happens in this case.
+
+Nevertheless, the target machine could load and hold an instance mode holding
+structural and dependency information for 400 projects. It means that the number
+of projects depending on the ones loaded into Eclipse lower than this number,
+than the tool can work effectively. In the sample that is the case, the most
+frequently used project has less than a hundred project-level users. For other
+ software repositories it is presumably true as there should be no
+ ''super-projects'' which are referenced from all other projects in the
+ repository.
  
-Model queries:
- * Eclipse involved: hard to query the performance of individual plugins.
- * Simple use-case: how big model can fit into the memory without having
- performance penalties.
- * Practical, the overall memory consumption counts anyway.
- * input:repository model transformed into the compacted model.
- * measure:
-   * original size. compacted size. load model size. initialization time. heap
-   size. reaction time.
- * Verdict: Loading huge model but if  software repository does not contain
- super projects, reasonable to load a subset which is small enough to  hold it
- in the db. In return extra fast. 
+In conclusion we saw that all components have the desired effectiveness factor.
+The system itself is usable, scalable with the input and a feasible solution for
+achieving smooth upgrades.

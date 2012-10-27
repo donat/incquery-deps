@@ -16,7 +16,6 @@ plugins installed.
 % SVN, JIRA, Bamboo
 To maintain concurrent versions of the source code an SVN server is used. Also
 there are a variety of tools used for typical developments tasks: issue
-tracking, continuous integration, source code browsing, static code analysis,
 etc. 
 
 % Common Build
@@ -293,13 +292,13 @@ structure as the domain model (see \autoref{fig:domainmodelsimp.pdf} and
 % MODULE: Dependeney processor
 % ------------------------------------------------------------------------------
 \section{Dependency database synchronizer}
+\label{sect:depdbsynch}
 % what
 The Dependency database component is responsible for querying the server for
 dependency information related to a selected element or elements. It loads the
 sub-part of the dependency data stored by the storage engine module through a
 simple RMI interface and pushes it to the model queries components where the
 result is evaluated.
-% why: TODO
 
 The component has to inputs: either it can load a compacted representation of the 
 entire dependency model or it can query the incoming dependencies for just one 
