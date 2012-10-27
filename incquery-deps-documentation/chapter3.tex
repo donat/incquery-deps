@@ -23,21 +23,33 @@ created an extension which utilizes EMF-IncQuery to run faster, information-rich
 and more extensive queries. Let's examine the elements of the figure one-by-one.
 
 
+\subsection{System boundaries}
+The system allows the users to examine the inter-project dependencies from the
+development environment. It exposes two access points to access this
+information. First the developer can initiate queries explicitly by selection
+the target element from  he source code editor. The other option to check result
+of the model queries (described later). This information is updated
+automatically, every change in the development environment is reflected to the
+result set. Both versions give visual representation of the result which the
+developer can analyse and he can use it to make decisions what to and what not
+to change in the source code.
+
+
 \subsection{Repository management}
 % Central repository management.
 The first elements on the figure to discuss are the ''Source repository'' and
 the 'Binary component repository' . They contain both the source code and the
-build binary version of the internally developed softwares\footnote{Or
-\textit{products} as they are referred at CERN}. These elements are centrally
-managed and have a well-defined structure. The developers work on the source 
-code and if they finish one milestone they publish their improvements by putting
-the compiled version into the binary repository through an automated process.
+build binary version of the internally developed softwares. These elements are
+centrally managed and have a well-defined structure. The developers work on the
+source code and if they finish one milestone they publish their improvements by
+putting the compiled version into the binary repository through an automated
+process.
 The binary repository is the input for the dependency analysis.
 
 \subsection{The server side}
 The server side is a standalone Java application which runs on a Linux server.
 It has two functionality: 1) it discovers and stores the structure of the
-products and 2) provides an interface for serving dependency queries. 
+products and 2) provides an interface for serving dependency queries.
 
 For discovering, the process listens if a new release happens in the repository.
 If it happens the freshly added binaries (jar files) are passed to the byte code
@@ -45,7 +57,7 @@ analysis module which parses the file and discovers the contained structure and
 the dependencies utilizing the Apache BCEL library.  The structure and the
 dependencies are passed to the storage engine to store it. The storage engine
 itself defines a set of operations to find, store and retrieve certain subset of
-the model. The remote query interface also use this module to get the necessary 
+the model. The remote query interface also use this module to get the necessary
 dependency information for the clients.
 
 
