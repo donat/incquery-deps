@@ -3,17 +3,27 @@
 %1 page. Evident content.
 %------------------------------------------------------------------------------
 
-I created a tool.
-It can be useful for a library developer working at large, software-oriented
-organization where lots of inter-depending software are developed and
-maintained.
-Becomes extremely useful when the concept of smooth upgrades is essential.
+% what was achieved
+The \ptool{} is now a complete solution both with the explicit queries and its
+EMF-IncQuery-based extension. Without the extension the tool is used in
+production at CERN and it is fairly possible that extension will become the part
+of that tool.
 
-Implemented a precise, source-based  query solution along with a not entirely
-precise but fast and reactive display of dependency data.
+The tool can be useful for a Java library developer who works at a large,
+software-oriented organization where lots of inter-depending softwares are
+developed and maintained and where binary compatibility and smooth upgrades are
+mission-critical requirements.
 
-As for the future there are plenty of directions to go:
-Slicing the repository model to load just the required part of it.
-Notification about the repository change.
-Define and extract more detailed dependencies from the binaries.
-Extend the dependency resolution to c++ software.
+Both parts proved useful, fast and scalable enough for adaptation. EMF-IncQuery 
+showed that it can be applied to a specific domain and can be a useful core
+for fast model queries. 
+
+As of the future plans, there are plenty of directions to go.
+First it is interesting what kind of dependencies can be extracted.
+It is possible to extract more detailed dependencies from the binaries by
+constructing symbolic execution traces based on the bytecode. With this, a
+variety of new dependencies can be discovered. The second plan can be an
+extension for analysing not just Java, but C++ softwares too. The third plan is
+to reuse the model gathered from the project and from the workspace and then to
+define certain metrics over the models. With this a source code could be
+checked against certain requirements about the code quality.

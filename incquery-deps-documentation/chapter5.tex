@@ -117,44 +117,45 @@ In our example there are two external users of the field, so the developer can
 either contact them and coordinate the smooth upgrades by simultaneously
 releasing a new versions of all projects. On the other side, the
 \code{serviceA()} method has no incoming dependencies, as nobody uses it. In
-this case the developer has the righ to change the signature however he wants.
+this case the developer has the right to change the signature however he wants.
 
 
 \section{Performance evaluation}
-
-
- definiálod, hogy milyen tesztadatokkal vizsgáltad a rendszert 
- (mekkora sw adatbázis, 
- hány elem, 
- hány kapcsolat, 
- mekkora a workspace mérete, 
- ebből mekkora emf modell keletkezik stb, ami lényeges)
-
-
- bemutatod, hogy mely usecase-ekre kell megvizsgálni a rendszer teljesítményét,
- és leírod emlékeztetőként, hogy ezeknél mi fut a háttérben
+Check performance of the system we have to check the following use-cases.
+ * the dependency discovery is fast enough to process large number of jars
+ * can it scale well with the size of the input
+ * explicit queries: what is the response time of the queries. 
+ * model queries: how big model can fit into memory. bottleneck to  
  
- végül bemutatsz mérési eredményeket, melyek demonstrálják, hogy jó a cucc,
- valamint értékeled is ezeket olyan szemmel, hogy mennyire látszik skálázhatónak
-  a rendszer (az a cél, hogy a bíráló képet kapjon arról, hogy játékot
-  építettél, vagy valódi eszközt). Nyilván a skálázhatóság precízebb
-  vizsgálatához több tesztadatkészlet is kellene - na ez az, ami most
-  kihagyható. (Később, ha majd cikket írunk, oda fogjuk majd betenni - most
-  nincs rá időd.) 
+Data input is real word
+ * Not generated.
+ * CERN softwares.
+ * Operationonal 
  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Server side:
+ * Question: How efficient the dependency discovery.
+ * Specification of the test machine: cern hyperv vm. win 7 enterprise 32 bit, 4gig ram. Typical machine sw dev.
+ * Circumstances 
+ * Input data: subset of the binaries (1300 jars). Check many elements, and how big model is saved.
+%\todonotes{Insert picture and analyse the values. The measurement is running right now.}
+ * Verdict: scale well to huge database. manageable model size.
+ 
+Explicit queries:
+ * server process is on the same machine, client separately.
+ * 100 random c-m-f selected randomly from the database. 
+ * client checks how fast the server reacts. Peak, minimum, average.
+ * Verdict: reasonable response time, reliable.
+ \pic{expqmeasure.pdf}{Explicit queries measurement result}
+ 
+Model queries:
+ * Eclipse involved: hard to query the performance of individual plugins.
+ * Simple use-case: how big model can fit into the memory without having
+ performance penalties.
+ * Practical, the overall memory consumption counts anyway.
+ * input:repository model transformed into the compacted model.
+ * measure:
+   * original size. compacted size. load model size. initialization time. heap
+   size. reaction time.
+ * Verdict: Loading huge model but if  software repository does not contain
+ super projects, reasonable to load a subset which is small enough to  hold it
+ in the db. In return extra fast. 
