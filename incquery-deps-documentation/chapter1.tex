@@ -8,18 +8,34 @@
 
 \todo[inline]{context}: complex software development
 
+In today's software development practice
+complex projects
+many components
+large and distributed development teams
+
+aim is to reduce inconsistency issues that arise due to 
+conflicting development steps. 
+
 
 \subsection{Challenge: Smooth upgrades}
 % What is a smooth upgrade.
-The main challenge addressed in this work is to achieve \emph{smooth upgrades}. Smooth upgrade means
-when a software is being updated than all the other softwares which depend on it
-will remain operational. A straightforward example of braking this principle,
+
+Component-oriented context
+
+A straightforward example of braking this principle,
 when the newer version is binary incompatible with dependant softwares and cause
 load-time error.
 
+Java: linking errors either at compile time or at runtime
+
 \todo[inline]{preciz smooth upgrade definicio}
 
-% How to achieve smooth upgrades.
+The main challenge addressed in this work is to achieve \emph{smooth upgrades}. Smooth upgrade means
+when a software is being updated than all the other softwares which depend on it
+will remain operational. 
+
+
+\subsection{Achieving smooth upgrades by dependency analysis}
 There are a variety of tools and methods to achieve smooth upgrades. For
 instance one can introduce manual procedures and protocols to the development
 lifecycle. Another possibility to enforce some code metrics to achieve this
@@ -39,7 +55,10 @@ dependencies. The following chapters describe an implementation for querying the
 incoming dependencies. 
  
 
-\subsection{Control systems at CERN}
+
+\subsection{Requirements}
+
+\subsubsection{The context of this work: Control Systems at CERN}
 
 \todo[inline]{shorten}
 
@@ -74,9 +93,7 @@ set of special approaches in order to provide desired quality and to maximize
 the availability of the systems.
 
 
-\subsection{Requirements}
-
-\todo[inline]{CERN-specific requirements}
+\subsubsection{CERN-specific requirements}
 
 
 The first valid question is: why didn't we just reuse an existing
@@ -116,8 +133,9 @@ client - server approach
 
 \todo[inline]{itemize}
 
-\section{Structure of the paper}
+\section{Structure of the report}
+The rest of this report is structured as follows. Chapter 2 gives a brief overview of technologies that have been used in the design and implementation. Chapter 3 provides a high-level overview of the software system architecture (Section 3.1) and introduces a running example that is used in explanations (Section 3.2). Chapter 4 elaborates the design and implementation details, by discussing components both on the server side (Section 4.2) and client side (Section 4.3). Chapter 5 presents experimental results on the performance evaluation of the system, and Chapter 6 concludes the report with discussing on future work.
 
-\todo[inline]{write me}
+\todo[inline]{change for proper refs}
 
 
