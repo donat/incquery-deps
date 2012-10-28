@@ -74,7 +74,7 @@ target for code manipulation issues. The byte code instructions themselves just
 make up 12\%. 
 
 The right upper box shows a "zoomed" excerpt of the constant pool, while the
-rounded box below depicts some instructions that are contained within a method
+the box on the lower right depicts some instructions that are contained within a method
 of the example class. These instructions represent the straightforward
 translation of the well-known \code{System.out.println("Hello, world");} statement.
 
@@ -126,6 +126,7 @@ clear, well-tested and maintainable applications.
 
 
 \subsubsection{Oracle database}
+\todo[inline]{Cite oracle documentation}
 The Oracle Database (also known as Oracle DB, Oracle RDBMS or just Oracle) is a
 relational database management system (RDBMS) from the Oracle Corporation.
 Originally developed in 1977 by Lawrence Ellison and other developers, Oracle DB
@@ -137,6 +138,8 @@ structured query language (SQL). Oracle is a fully scalable relational database
 architecture and is often used by global enterprises, which manage and process
 data across wide and local area networks. The Oracle database has its own
 network component to allow communications across networks.
+
+
 \subsection{Build system}
 
 \subsubsection{Maven}
@@ -161,13 +164,13 @@ source and binary folders, package format, deployment location, etc. These setti
 get applied during the build process.
 
 Maven is also extendable through plugin mechanism. One can develop extensions for it
-for achieve various non-standard goals such as integration testing or building 
+to achieve various non-standard goals such as integration testing or building 
 non-standalone Java applications.
 
 \subsubsection{Tycho}
 Tycho is a set of Maven plugins and extensions for building Eclipse plugins and
 OSGi bundles with Maven. It exists because Eclipse plugins have their own way of
-describing metadata such as version numbers and dependencies which normally
+describing metadata such as version numbers and dependencies, which normally
 would be placed in the Maven POM. Tycho reuses this native metadata 
 and uses the POM to configure and drive the build. Tycho also knows
 how to run JUnit test plugins using OSGi runtime and there is also support for
@@ -179,7 +182,7 @@ Although Tycho is useful for building Eclipse plugins in a headless way but it
 still has not reached the production quality (the current version number is
 0.16) and it is still under heavy development. The current modifications and
 enchantments can be found on the project's website.
-
+\todo[inline]{Cite tycho website}
 
 \subsubsection{Apache Commons Byte Code Engineering Library} 
 % what is apache bcel
@@ -246,10 +249,14 @@ which implements all the necessary non-UI infrastructure for Java application
 development on the Eclipse platform. It contains an incremental Java builder,
 support for code assist, a searching facility and a \emph{Java Model}, which
 provides API for navigating the Java element tree. This lets the contributors
-access the structure and the changes of the java applications loaded into the
+access the structure and the changes of the Java applications loaded into the
 workspace.
 
+\todo[inline]{ECore overview comes here}
+
 \subsection{Eclipse Modeling Framework}
+
+\todo[inline]{Cite Istvan's TDK}
 The Eclipse Modeling Framework (EMF) \cite{EMF} is a Java framework and code
 generation facility for building tools and other applications based on a
 structured model. EMF is also maintained by the Eclipse Foundation within the
@@ -282,26 +289,27 @@ model-manipulating tools can easily be constructed.
 
 
 \subsubsection{EMF-IncQuery} 
-% Problem to solve.
-Working with models it is quite common task to query the model for checking it and
-validating certain properties. The EMF-IncQuery \cite{EMFIncQuery} tool provides
-one solution for this problem: It is a framework to execute fast model queries
-over EMF models. It is actively developed at Budapest University of Technology
-and Economics. Although it is still in development status (the current version
-is 0.6.8) it already proved its usability through industrial use-cases and
-university researches. % TODO: reference results for these use-cases.
 
+
+% Problem to solve.
+When working with models, it is quite common task to query the model for
+validating certain properties or searching for interesting parts. EMF-IncQuery
+\cite{EMFIncQuery} provides a solution for this problem: It is a framework to
+execute fast model queries over EMF models. It is actively developed at Budapest
+University of Technology and Economics. The current stable version  (the current
+version is 0.6.8)  proved its usability through industrial use-cases
+and university researches.\todo[inline]{KTM2011}
 
 % Core.
 The core of the framework is a query evaluator engine built on top of graph
 pattern matching engine using RETE \cite{RETE} algorithm adapted from expert
 systems to facilitate the efficient storage and retrieval of partial views of
-graph-like models. In a nutshell RETE maintains a hierarchical query data
+graph-like models. In a nutshell, RETE maintains a hierarchical query data
 structure on top of the model which stores the result of sub-queries. On model
 change, the event propagates through this data structure leaving the unmodified
 part of the model untouched. This results in fast, near zero response time and
-size-independence on small model changes. In return the model and the query
-structure has to be loaded into the memory which can be a significant resource
+size-independence on small model changes. In return, the model and the query
+structure has to be loaded into the memory, which can be a significant resource
 expense.
 
 % API.
@@ -312,18 +320,18 @@ framework -- can be attached.
 
 % Query lanuage.
 Along the API, a complete query language is defined. It provides a declarative
-way to express the queries over the EMF model in a form of patterns. With the
-language the user can express combined queries, negative patterns, checking
-property conditions, simple calculations, calculate disjunctions and transitive
-closures, etc.~on top of the models.
+way to express the queries over the EMF model in the form of graph patterns.
+With the language the user can express combined queries, negative patterns,
+checking property conditions, simple calculations, calculate disjunctions and
+transitive closures, etc.~on top of the models.
 
 % Tooling.
-The framework comes with a rich UI tooling which helps the users to effectively
-develop test and integrate queries into their solution. The first element of the
-tooling is the rich XText based editor for the query language which aids writing
-well formed queries providing content assist, error markings and such. The next
-part of the tooling is the ability to load EMF models and execute the queries on
-them as the user writes them giving rich visual feedback about the result.
+The framework contains UI tooling which helps the users to effectively develop
+test and integrate queries into their solution. The first element of the tooling
+is the rich XText based editor for the query language which aids writing well
+formed queries providing content assist, error markings and such. The next part
+of the tooling is the ability to load EMF models and execute the queries on them
+as the user writes them giving rich visual feedback about the result.
 The last important part is the code generation. The tooling dynamically
 generates the source code which contains the programmatic equivalent of the
 model queries. The users can integrate this code out of the box in Eclipse

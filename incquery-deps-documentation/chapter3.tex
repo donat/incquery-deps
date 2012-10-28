@@ -6,21 +6,25 @@
 % ------------------------------------------------------------------------------
 \chapter{Overview}
 
+% My implementation.
+As it was previously discussed, one of the most effective  way of achieving
+smooth upgrades is to discover incoming dependencies. To achieve this, we
+designed and implemented the \ptool{}. The the first part of the current chapter
+gives an overview on the \ptool{} approach by describing the objectives of the
+contained components. In the second part an example is introduced to make the
+solution more understandable. 
+
 
 \section{System Architecture}
-% My implementation.
-As it was discussed previously one of the most effective  way of achieving
-smooth upgrades is to discover incoming dependencies. For this I designed and
-implemented a solution called \ptool{}. \picr{superfigure.pdf}{Overview of the
-implemented system} \autoref{fig:superfigure.pdf} shows the overview of
-it.
 
-% Two implementation
-This systems was implemented in two separate steps. My work at CERN covered an
-implementation of a system which gives the ability to the users to query certain
-parts of the source code for incoming dependencies. After my job was done I
-created an extension which utilizes EMF-IncQuery to run faster, information-rich
-and more extensive queries. Let's examine the elements of the figure one-by-one.
+\autoref{fig:superfigure.pdf}  shows the architecture of the \ptool{}.
+\picr{superfigure.pdf}{Overview of the implemented system}
+shows the overview of it. The system applies the standard server-client
+architecture. The server side discovers the Java binaries, processes and stores
+their structure and stores them in a database. The client side is an Eclipse
+plugin, which gives the ability to the users to obtain and analyse the
+dependency information about the softwares loaded into the workspace. The followings
+detail the details of the individual components.
 
 
 \subsection{System boundaries}
