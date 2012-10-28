@@ -16,56 +16,54 @@
 Before the system performs dependency analysis, it needs to extract the
 necessary information from the source code.
 % What
-The Bytecode analyzer module takes the input java binaries (in the form of jar
+The bytecode analyzer module takes the input java binaries (in the form of jar
 files) parses the contained class files with the help of Apache BCEL and maps it
 into an object graph which can be effectively used during the dependency
 processing.
 
-
+% REDUNDANT,
 % How
-\subsubsection{Anatomy of a Java binary}
-The Bytecode analyzer module takes a set of jars as an input. A jar file is
-essentially a zip file containing Java-related resources: resource files, binary
-class files and meta-information. Because the system has to discover
-dependencies between pure Java applications then no meta-information is used;
-the bytecode analyzer gets the information from the class files contained in the
-jars.
- 
-
-% Describe the ConstantMethodRef/FieldRef/Class/String in more details?
-\autoref{fig:classfile.pdf} shows a simplified view how a single class
-file is built. This structure is precisely defined in Java Runtime
-Specification. The class begins with a marker header followed by the part called
-\textit{constant pool} which contains the textual part of the code. It contains
-the i) constant strings ii) referenced methods and fields and iii) the names of
-the external classes. The Java virtual machine is only able to load a class file
-if all the referenced external classes are loaded.
-%\pic{classfile.pdf}{Internal structure of a class file}
-After the constant pool the access flags, the implemented interfaces and the
-field list are located in separate places.
-
-% Describe the bytecode instructions?
-Afterwards comes the definition of the methods. It contains all the necessary
-information for the virtual machine to execute the methods: the resources to 
-allocate for the execution, the exception handlers and the bytecode itself. 
-
-The big question is what information can be extracted from the jar/class files
-for the dependency analysis? The short answer is everything. The structure of a
-class file can be obtained one-by-one. The external references what we are
-looking for are also fairly easily to extract, because they are defined in the
-constant pool. The only challenging part to solve is to match, where exactly are
-the external resources are used in the bytecode itself.
+% \subsubsection{Anatomy of a Java binary}
+% The Bytecode analyzer module takes a set of jars as an input. A jar file is
+% essentially a zip file containing Java-related resources: resource files, binary
+% class files and meta-information. Because the system has to discover
+% dependencies between pure Java applications then no meta-information is used;
+% the bytecode analyzer gets the information from the class files contained in the
+% jars.
+%  
+% 
+% % Describe the ConstantMethodRef/FieldRef/Class/String in more details?
+% \autoref{fig:classfile.pdf} shows a simplified view how a single class
+% file is built. This structure is precisely defined in the Java Runtime
+% Specification. The class begins with a marker header followed by the part called
+% \textit{constant pool} which contains the textual part of the code. It contains
+% the i) constant strings ii) referenced methods and fields and iii) the names of
+% the external classes. The Java virtual machine is only able to load a class file
+% if all the referenced external classes are loaded.
+% %\pic{classfile.pdf}{Internal structure of a class file}
+% After the constant pool the access flags, the implemented interfaces and the
+% field list are located in separate places.
+% 
+% % Describe the bytecode instructions?
+% Afterwards comes the definition of the methods. It contains all the necessary
+% information for the virtual machine to execute the methods: the resources to 
+% allocate for the execution, the exception handlers and the bytecode itself. 
+% 
+% The big question is what information can be extracted from the jar/class files
+% for the dependency analysis? The short answer is everything. The structure of a
+% class file can be obtained one-by-one. The external references what we are
+% looking for are also fairly easily to extract, because they are defined in the
+% constant pool. The only challenging part to solve is to match, where exactly are
+% the external resources are used in the bytecode itself.
 
 
 \subsubsection{The analysis process}
-The module extracts all necessary information from the class files for processing
-them. This could be done by brute-force parsing binary files, but it would be an
-tedious and error-prone task. Instead of this the implementation reuses Apache
-BCEL to effectively parse the class files and and to obtain the necessary
-information via simple API calls.
+The module extracts all necessary information from the class files by processing
+them. The analysis is done via Apache BCEL to effectively parse the class file
+and to obtain the necessary information via simple API calls.
 \pic{bytecodeanal.pdf}{Steps of the bytecode analysis process}
-\autoref{fig:bytecodeanal.pdf} shows the steps of the analysis process and the
-related information in the class files for each step. 
+\autoref{fig:bytecodeanal.pdf} shows the workflow of the analysis process and the
+used information from the class files for each step.
 
 \paragraph{Initialization}
 The analysis starts with gathering the basic structure. This involves acquiring
@@ -92,7 +90,7 @@ transforms it into \code{println(java.lang.String):void}.
 % Somewhere it should be described that we don't deal with reflection, just
 % static dependencies.
 \paragraph{Filtering}
-The final step is to clean up the gathered information. At this step we have to
+The final step is to filter  the gathered information. At this step we have to
 consider that if we mapped all information then the gathered data would have a
 comparable size with the binary repositories which is unacceptable when we have
 to deal with thousands of jars. To resolve this, the implementation does
@@ -107,11 +105,11 @@ parsed in a jar file.
 
 
 \subsubsection{Extracted domain model}
-The output of the analyzer is a java domain model.
-\picr{domainmodelsimp.pdf}{Classes of the domain model used by the bytecode analyzer}
-\autoref{fig:domainmodelsimp.pdf} shows the elements of this model. Because this
-model is used for the dependency processing too the model has additional
-elements which is now not important.
+The output of the analyzer is a Java domain model shown on
+\autoref{fig:domainmodelsimp.pdf}\picr{domainmodelsimp.pdf}{Classes of the
+domain model used by the bytecode analyzer}. Because this model is used for the
+dependency processing too the model has additional elements holding the
+dependency references.
 
 All element inherits from abstract \code{CodeElement} class which is a top-level
 interface for handing the items of the model. The processed jar files are named
@@ -141,19 +139,19 @@ component is responsible.
 % What
 To achieve this the processor takes the models of the jar files, compares the
 contained references with the structure of the external jars. When a match is
-found it means that there is a dependency between a two elements and as a result
-a dependency is stored.
+found it means that there is a dependency between two elements and as a result
+a dependency link is stored.
 
 % How
 \subsubsection{Discovered dependencies}
-During the work at CERN we decided to narrow down the search for basic
+At CERN we decided to narrow down the search for basic
 dependencies which could be extracted from the binary code without interpreting
 what does a class really do. By this we could exactly define what information
 will be accessible for the users. The following list contains the discovered
 dependencies:
 \begin{description}
 \item[Class import] When a class uses \emph{any} part of an external class. 
-Practically this is a relationship between two classes when one class requires
+Practically, this is a relationship between two classes when one class requires
 the other to get loaded in the Java virtual machine. On a binary level it is 
 expressed as a \code{ConstantClass} entry in the constant pool.  
 \item[Inheritance] When a class inherits from another. This dependency type 
@@ -169,39 +167,38 @@ in an external class.
 
 
 \subsubsection{Two-pass Discovery process}
-After defining the searched dependencies let's see how exactly the dependency
-discovery process work. The main objective here is to do the analysis on a large
-set of Java binaries without having memory problems. Obviously if one loads all
-jars at the same to the memory and searches for all references it will need an
-enormous size of memory which will go up if the input number of the binaries
-increasing.
+The main objective here is to do the analysis on a large set of Java binaries
+without having memory problems. If one loads all jars to the memory at the same
+time, it will need an enormous size of memory which will go up if the input
+number of the binaries increasing.
 
 \picr{analization.pdf}{Sequence of the dependency discovery process}
 
 \paragraph{Binary update processing}
 \autoref{fig:analization.pdf} shows how the tool solves this issue. The process
-starts with an update in the binary repository. The new, not analyzed binaries
-are passed to the bytecode analyzer components which produces a model for each
-jar files. These models passed for the dependency processor which stores the jar
-structure in the database. By doing this the implementation holds only one model
-in the memory which implies that the memory requirement is independent from the
-number of input binaries. Also only the structure is pushed into the database,
-the references are considered as transient data. This is necessary because the
-references need huge space to store: on average they took 60\% of the size of a
-class file and leaving them out is a big saving in the storage.
+starts with an update in the binary repository. The new, not yet analyzed
+binaries are passed to the bytecode analyzer components which produces a model
+for each jar files. These models are passed for the dependency processor which
+stores the jar structure in the database. By doing this, the implementation
+holds only one model in the memory, which implies that the memory requirement is
+independent from the number of input binaries. Additionally only the structure
+is pushed into the database, the references are considered as transient data.
+This is necessary because the references may require a large amount of memory:
+on average they took 60\% of the size of a class file and leaving them out
+significantly reduces the required storage space.
 
 \paragraph{Dependency reprocessing} 
 After all jar's  structure is saved in the database, the process re-initiates
-the bytecode analysis on every jars one-by one and passes the models again to
+the bytecode analysis on every jars one-by-one and passes the models again to
 the dependency processor. The processor now tries to execute certain queries on
-the database for searching dependencies. For external references it tries to
-find the elements with the same fully qualified, for inheritance searches for
+the database for searching dependencies. For external references, it tries to
+find the elements with the same fully qualified name, for inheritance searches for
 superclass in the database and for method override it looks for methods with
-the same signature in the superclass. Every found element from the database 
-result in a dependency entry at the end of the analysis of the current jar. 
+the same signature in the superclass. For every found element  a separate dependency
+entry is saved at the end of the analysis of the active jar.
 
-The result of the analysis is a database containing all the structure
-and the dependency information. The clients execute queries on it to analyze the
+The result of the analysis is a database containing all  structural
+and dependency information. The clients can execute queries on it to analyze the
 relationships between certain elements in order to decide whether or not a
 specific code could be changed.
  
@@ -210,25 +207,28 @@ specific code could be changed.
 The dependency processing requires some database functionality to 
 properly work. This is defined in the storage engine component.
 
-Although this component is defined by a single Java interface it comes with
-important and complex responsibilities. First it is an abstraction layer over
-the concrete database implementation. Second it provides transactional behavior
+Although, this component is defined by a single Java interface it comes with
+important and complex responsibilities. First, it is an abstraction layer over
+the concrete database implementation. Second, it provides transactional behavior
 automatically to the database. 
 
 \subsubsection{Interface}
-The interface defines operations for two purposes: i) Store and retrieve the
-structure of a jar and the dependencies ii) search for items based on their
-names and iii) query incoming dependencies of an element.
+The interface defines operations for two purposes: 
+\begin{enumerate}
+  \item store and retrieve the structure of a jar and the dependencies,
+  \item search for items based on their names, and
+  \item query incoming dependencies of an element.
+\end{enumerate}
 
 The usage of the first is easy the understand: if the analyze process starts it
 has to be checked if the a jar is in the database and if not, it has to be
 stored. The second in the list is part of the dependency processing. It is the
-responsibility of the database component how to represent the data and thus
+responsibility of the database component how to represent the data and thus,
 finding references also belongs here. The last part covers the queries which are
 initiated by the clients and the result is also provided by this module.
 
 To make the domain model usable to store dependencies and make it work with the
-same jar products with multiple versions some additions were added (see
+same jar products with multiple versions the domain model was extended (see
 \autoref{fig:domainmodelext.pdf}). \pic{domainmodelext.pdf}{Additions to the
 domain model} Every element has a list of version numbers where they are
 present. Also a \code{Dependency} class is added to effectively handle
@@ -250,10 +250,10 @@ structure as the domain model (see \autoref{fig:domainmodelsimp.pdf} and
 
 
 \subsection{Elaboration of the example}\label{sect:elabex1}
-After showing the details of the implementation, let's see it in action.
-We will use the tool to solve the problem described in \autoref{sect:spf}. We
-will go though on every component and check what is happening there with the
-example. 
+After showing the details of the implementation, the current section highlights
+certain parts through our running example described in \autoref{sect:spf}.
+We will check how the individual components evaluate the example as an input and
+how the users can utilize the provided information.
 
 \paragraph{Repositories}
 In our example the source and the binary
@@ -263,10 +263,9 @@ the jars files respectively service.jar, client.jar and impl.jar. For the sake
 of simplicity we have only one version from each project. 
 
 \paragraph{Bytecode processing}
-Now let's move forward to the server process and the dependency analysis. As 
+As 
 the binary projects appear in the repository, they get discovered by the 
 server process. 
-
 The first step in the process is the bytecode analysis. In this phase the
 structure and the reference of the dependencies are discovered from the
 binaries. As of the structure the analyzer finds 3 projects, 8 classes 2 fields
@@ -278,7 +277,7 @@ class as it gives a default value to a static field).
 \paragraph{Dependency extraction}
 The discovered dependencies are formatted and filtered in order not to have
 internal or platform defined elements (dependencies pointing inside the
-\code{java.*} package). For example let's see the \code{BasicImplUtil} class'
+\code{java.*} package). For example, let's see the \code{BasicImplUtil} class'
 \code{registerImplementation()} method.
 \begin{tabl}
 {External references of the BasicImplUtil.registerImplementation() method}
@@ -302,7 +301,7 @@ internal or platform defined elements (dependencies pointing inside the
 \hline
 \end{tabl}
 The first one is a 
-\code{ConstantMethodRef} type reference. During the analysis they are first converted
+\code{ConstantMethodRef} type reference. During the analysis they are first converted into source format.
 The first one is a class reference the second one is a method reference.
 The references are formatted to source format as it is shown in the second column.
 Now the first references is eliminated from the list, because it points inside the 
@@ -316,7 +315,7 @@ method list, the processor creates a new method call dependency starting from
 \code{impl.BasicImplUtil} targeting \code{Services.registerProvider()}.
 
 \paragraph{Persistence}
-At this point the storage engine stores all the structure and the dependencies 
+At this point, the storage engine stores all the structure and the dependencies 
 of the three products. The schema of the Oracle database implementation and the EMF
 database was described in details previously.
 
@@ -337,16 +336,16 @@ database was described in details previously.
 The Dependency database component is responsible for querying the server for
 dependency information related to a selected element or elements. It loads the
 sub-part of the dependency data stored by the storage engine module through a
-simple RMI interface and pushes it to the model queries components where the
+simple RMI interface and pushes it to the model queries component where the
 result is evaluated.
 
 The component has to inputs: either it can load a compacted representation of the 
 entire dependency model or it can query the incoming dependencies for just one 
 single code element. 
 
-The single element query is the use-case where the user of the \ptool  executes
+The single element query is the use-case where the user of the \ptool{} executes
 direct queries by asking the incoming dependencies of one element in
-the workspace. In this case a simple RMI interface method is called where the
+the workspace. In this case, a simple RMI interface method is called where the
 argument is the queried object (as an instance of a ApiClass, a Method or a
 Field types from \autoref{fig:domainmodelsimp.pdf}. This argument is passed to
 the server, which turns it into an SQL query or a search on the EMF model
@@ -376,7 +375,7 @@ clients may end up false conclusions as they for example see an empty incoming
 dependency set where should be some. 
 
 Sure this compacting process introduces some false-positive results, but in 
-return lets the model queries component to do super-fast model queries which
+return lets the model queries component to do fast model queries which
 are automatically updated every time the source code has changed. 
 
 The structure of the compacted EMF metamodel is shown on \autoref{fig:cp3model.pdf}.
@@ -387,8 +386,8 @@ reasonable because the dependency discovery is done on the server and we
 navigate only on the dependency edges. The second thing is not explicitly
 visible on the figure. The fully qualified name was merged down into simple
 names. It means that there is only one \code{Service} class for all products in
-the repository and one \code{newService()} function. If there are more than one
-exist, they are merged into one and also all dependencies becomes common. This
+the repository and one \code{newService()} function. If there are more, than one
+exists, then they are merged into one and also all dependencies becomes common. This
 also comes with the change that the original one-to-many containment
 relationships became many-to-many. The third compacting change is to drop the
 signature of the methods, only the name has left. The merging process is the
@@ -396,14 +395,10 @@ same as described.
 
 % TODO: this should be replaced with true slicing
 This compacted repository model is loaded at start-up time and used till Eclipse
-is closed. This is reasonable because the repository is not a rapidly changing
-entity. Only a few elements are modified each day. Apart from that it wouldn't
-be hard to implement a model eviction mechanism, where a new repository model is
-loaded every time when somebody does a change in the repository. Luckily this 
-wouldn't change anything in the results of this paper.  
+is closed. This is reasonable because the repository chages are considered as rare events: 
+In the environment described in \autoref{sect:cerninf} only a few releases happen a day.
 
-\paragraph{}
-The described compact model sadly contains some simplification but small enough to
+The described compact model contains some simplification but small enough to
 load it into the memory: the serialized representation of the entire workspace is
 around 70 MiB which is considered small enough to work with. 
 
@@ -510,7 +505,7 @@ data about the workspace.
 	
 After the component is set up it waits for the modifications. If it happens, an
 incremental model update fires, maps the related Java Model element to the EMF
-model and modifies it properly. 
+model and modifies it accordingly. 
 
 \paragraph{Processing local workspace changes}
 \todo[inline]{itemize tomorebbre}
@@ -614,8 +609,8 @@ the workspace.
 
 Applying this approach will not only give the developers precise information
 about the impact a possible release would cause but it gives immediate feedback
-about the change every time the source code is saved. Also important that
-all results of all queries is available upon usage, no manual query is required.
+about the change every time the source code is saved. Additionally all 
+results of all queries are available upon usage, no manual query is required.
 \textbf{cut end}
 
 To achieve this, the component first loads the model of the repository and the 
@@ -642,25 +637,25 @@ pattern typesInJavaFiles(cu : WCompilationUnit, t : WType) = {
 }
 \end{lstlisting}
 
-The import declaration loads the schema of the EMF moel. The pattern signature
+The import declaration loads the EMF metamodel. The pattern signature
 contains a name and a parameter list. Here the parameters define the result as
 the found/matched items from the input model. 
 
 The body of the pattern starts with two type constraints. This can be translated
 as ''match only on the elements which have the \code{WCompilationUnit} type for
-the \code{cu} variable and match the \code{WType} object for \code{t}
+the \code{cu} variable and match the \code{WType} object for the \code{t}
 variable''. Alone this would list all compilation units and all types as a
 result in all possible combinations, just like in SQL when one select data from
 two different tables at once without joining them. The third statements is the
 connects the result items together. It can be translated as ''match only the on
-the objects  where the \code{cu} variable references the \code{t} as a contained
+the objects  where the \code{cu} variable refers the \code{t} as a contained
 type''. Expression power of the pattern language is much bigger; for complete
 reference check the documentation site \cite{EMFIncQuery}.
 
 \paragraph{Developing model queries}
-The usage of the queries takes multiple steps shown on \autoref{fig:incquerydev.pdf}.
+The usage of the queries takes multiple steps as shown in \autoref{fig:incquerydev.pdf}.
 \picr{incquerydev.pdf}{Development of EMF-IncQuery queries} 
-First the queries are defined with the query language. The tooling takes the queries 
+First, the queries are defined with the query language. The tooling takes the queries 
 and automatically generates source code from the queries. With this there is no need 
 for manually using the pattern definition part of the EMF-IncQuery engine. The generated
 source code along with the engine exposes a simple interface for registering the
