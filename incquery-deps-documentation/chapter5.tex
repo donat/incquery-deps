@@ -1,188 +1,8 @@
-\chapter{Evaluation}
+\chapter{Performance Evaluation}
 %------------------------------------------------------------------------------
 %3-4 pages. Functional evaluation. Performance evaluation. 
 %------------------------------------------------------------------------------
 
-\section{Example revisited}
-
-After showing the details of the implementation, let's see it in action.
-We will use the tool to solve the problem described in \autoref{sect:spf}. We
-will go though on every component and check what is happening there with the
-example. 
-
-Let's start with the repositories. In our example the source and the binary
-repository contains three projects, each of them holds one package from the
-example. the name of the projects are service, client and impl, the name of 
-the jars files respectively service.jar, client.jar and impl.jar. For the sake
-of simplicity we have only one version from each project. 
-
-\subsection{On the server side}
-
-
-Now let's move forward to the server process and the dependency analysis. As 
-the binary projects appear in the repository, they get discovered by the 
-server process. 
-
-The first step in the process is the bytecode analysis. In this phase the
-structure and the reference of the dependencies are discovered from the
-binaries. As of the structure the analyzer finds 3 projects, 8 classes 2 fields
-and 19 methods which get stored in the database.
-The methods are composed of the 12 defined methods, 6 constructor (from all
-non-interface classes) and 1 static initializer (which comes from the Services
-class as it gives a default value to a static field).
-
-The discovered dependencies are formatted and filtered in order not to have
-internal or platform defined elements (dependencies pointing inside the
-\code{java.*} package). For example let's see the \code{BasicImplUtil} class'
-\code{registerImplementation()} method.
-\begin{tabl}
-{External references of the BasicImplUtil.registerImplementation() method}
-{extrefs}{|p{.37\linewidth}|p{.37\linewidth}|p{.2\linewidth}|}
-\hline
-	\textbf{Binary format}						&  
-	\textbf{Source format} 						& 
-	\textbf{Type} 								\\
-\hline
-	impl/BasicProvider  						&
-	impl.BasicProvider 							&
-	ConstClass 									\\
-\hline
-	service/Services/registerProvider 
-	\mbox{(Ljava/lang/String;}
-	\mbox{Lservice/Provider;)V} 				& 
-	\mbox{service.Services.registerProvider}
-	\mbox{(java.lang.String,}
-	\mbox{service.Provider):void} 				&
-	\mbox{Constant} \mbox{MethodRef} 			\\
-\hline
-\end{tabl}
-The first one is a 
-\code{ConstantMethodRef} type reference. During the analysis they are first converted
-The first one is a class reference the second one is a method reference.
-The references are formatted to source format as it is shown in the second column.
-Now the first references is eliminated from the list, because it points inside the 
-\code{impl} project. However the second one does not, so it remains at its place.  
-
-The dependency processor takes the remaining dependencies from the elements and 
-searches the database if there is one. In case of our method reference, the processor
-finds that there is a \code{registerProvider()} method defined with the same exact 
-signature signature in the database. Because the reference was stored on the called 
-method list, the processor creates a new method call dependency starting from 
-\code{impl.BasicImplUtil} targeting \code{Services.registerProvider()}.
-
-At this point the storage engine stores all the structure and the dependencies 
-of the three products. The schema of the Oracle database implementation and the EMF
-database was described in details previously. Now let's check how this data can be used 
-on the client side.
-
-\subsection{On the client side}
-
-To continue our example, we will examine the view of the developer who knows
-only about his own \code{service} project. If the \ptool{} is  installed in his
-Eclipse, the EMF model -- shown on \autoref{fig:wsmodel.png}
-\picr{wsmodel.png}{Workspace model containing Service package from the example}
--- is built and synchronized automatically. On the figure we can see, that the
-structure of the project (left) corresponds to the content of the EMF model
-(right). In the model view, you can also see that the in-project dependency
-relationships are also registered.
-
-
-Because the \code{client} and the \code{impl} projects have references to the
-\code{service} project, both of them are loaded to the repository model. It has all the
-element but with the compacted version, so no fully qualified names. But because
-there is no overlapping names between the classes and method than the compacted
-model does not introduce false-positive results.
-
-Let's see how the developer checks the incoming dependencies through the
-explicit queries.
-\pic{incdeps.png}{Execute explicit queries from the source code editor}
-\autoref{fig:incdeps.png} shows the context menu contribution for initiating an
-explicit query. The query takes a few seconds to respond. The results are shown
-in the viewer like on \autoref{fig:results.png}.
-\picr{results.png}{Result of explicit queries}
- 
-\subsubsection{Model queries}
-
-\paragraph{The compacted model}
-The compacted version of the repository instance model (produced by the
-dependency database synchronizer) contains all the three projects from the
-repository. Part of the model is shown on
-\autoref{fig:cp3modelinstance.pdf}\picr{cp3modelinstance.pdf}{Elements of the
-compacted instance model} The structure contains the same projects and the same
-classes as the original model, however the following information is eliminated.
-\begin{itemize}
-  \item The class objects has only their simple name left, the fully qualified name is left out.
-There is no overlapping classes but they would have merged together if
-there was any. Here the \code{client.Service} instance has only the name \code{Service}.
-  \item The method signature was trimmed down int their names. All methods have only their 
-name section of the signature, the parameter list, and the return value are dumped.    
-The object representing the \code{service.Service.serviceB()} method contains only the \code{serviceB}
-formation and has the reference on its container. 
-  \item The only visible dependency on the figure points to the same elements as before.
-  It defines a method call dependency which starts from the object representing the \code{client.Main.main()} method.
-\end{itemize}
-
-\paragraph{Query definitions}
-One of the implemented queries is the one which retrieves the incoming method call 
-dependencies from the model. The entire definition of this query is the following. 
-\begin{lstlisting}[caption=Elements of the incoming method call dependency query]
-private pattern joinProjects(repoProject : CP3Project, wsProject : WProject) = {
-	CP3Project.name(repoProject, commonName);
-	WProject.name(wsProject, commonName);
-}
-
-private pattern joinMethods(repoMethod : CP3Method, wsMethod : WMethod) = {
-	CP3Project.classes.methods(repoProject, repoMethod);
-	WProject.packageFragmentRoots.packageFragments.compilationUnits.types.
-		methods(wsProject, wsMethod);
-	find joinProjects(repoProject, wsProject);
-	CP3Method.name(repoMethod, commonName);
-	WMethod.name(wsMethod, commonName);
-}
-
-pattern incomingMethodCalls(wsTarget : WMethod, repoSource : CP3Method) = {
-	find joinMethods(repoTarget, wsTarget);
-	CP3Dep.from(dependency, repoSource);
-	CP3Dep.to(dependency, repoTarget);
-	CP3Dep.type(dependency, 1);
-}
-\end{lstlisting}
-
-The first \code{joinProjects} query takes the projects from the workspace
-instance model and connects them to the equivalent element in the compacted
-repository instance model This join operation is based on the common \code{name}
-property.
-
-The \code{joinMethods} query does a similar thing, but in this case the methods
-are joined together. The firs two instructions gathers the container projects'
-reference. The third instruction calls the \code{joinProjects} query, so the 
-results are filtered to only to the elements which exist both in the workspace
-and in the repository instance model. The methods itself also joined by 
-checking the common \code{name} property.
-
-The last \code{incomingMethodCalls} query returns the required results. It lists
-the methods present in the compacted workspace instance model and its incoming
-dependency elements in pairs. To find them, first the \code{joinMethods} query
-is executed. Then it filters to all the elements which are pointed by a
-dependency instance. Note that \code{repoSource} argument is bound to the
-repository dependency object.
-
-
-\paragraph{Results of the query}
-The result of the query is shown on \autoref{fig:modelqueryresult.png}.
-\picr{modelqueryresult.png}{Result of the incoming method call dependency query}
-The EMF-IncQuery engine found the desired dependency. It points to the compacted
-repository element having a method call dependency to the workspace model's
-equivalent.
-
-In this example a dependency was found. In this case the developer 
-has to decide whether he will maintain backward compatibility or he notifies the
-maintainer of the \code{client} project that the API will break soon. If he tried
-to modify the \code{serviceA()} method, we would have seen that there are no incoming
-dependencies. It means that the developer can break the signature of the method as
-he wishes. 
-
-\section{Performance}
 After the functionality was presented, let's check the overall performance of
 the system. We have to check the individual components  that they can complete
 their requirement as the input or usage scales up to a level of the production
@@ -196,7 +16,7 @@ The jar files used as the sample data come from real-life applications; they are
 operational softwares from the CERN controls systems. By using them we can
 eliminate the problems of having badly generated homogeneous sample data.
 
-\subsection{Dependency processing}
+\section{Dependency processing}
 \label{sect:depproc}
 The first element to measure is how the server process perform.
 A measurement has to check how efficiency the bytecode analysis and the
@@ -230,7 +50,7 @@ Knowing that even in large software repositories usually a few, maybe a few
 dozen releases happen, then having a system which analyses the differences within
 a second is more than enough.
 
-\subsection{Explicit queries}
+\section{Explicit queries}
 \label{sect:explqueries}
 Next question is how fast are the explicit queries. We want to see that the
 results of a dependency query returns the data and visualizes the information
@@ -263,7 +83,7 @@ it was returned roughly 200ms on every sample. This result means that utilizing
 dependency queries return the result in reasonable time. 
 
 
-\subsection{Model queries}
+\section{Model queries}
 Using EMF-IncQuery the question is always about the memory. Does my model fit into
 the memory? If it does, and the engine is able to build the data structure on top
 of it then we are in good position because afterward the update mechanism requires 
@@ -307,6 +127,10 @@ frequently used project has less than a hundred project-level users. For other
  ''super-projects'' which are referenced from all other projects in the
  repository.
  
+
+\section{Performance evaluation conclusions}
+\todo[inline]{attekinto osszesites arrol, hogy az egyes funkciok hogyan egeszitik ki egymast teljesitmeny szempontjabol}
+
 In conclusion we saw that all components have the desired effectiveness factor.
 The system itself is usable, scalable with the input and a feasible solution for
 achieving smooth upgrades. 

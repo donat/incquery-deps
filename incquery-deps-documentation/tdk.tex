@@ -188,19 +188,50 @@
 %--------------------------------------------------------------------------------------
 % Set up listings
 %--------------------------------------------------------------------------------------
-\lstset{
-	basicstyle=\scriptsize\ttfamily,              % print whole listing small
-	keywordstyle=\color{black}\bfseries\underbar, % underlined bold black keywords
-	identifierstyle=, 					          % nothing happens
-	commentstyle=\color{white},                   % white comments
-	stringstyle=\scriptsize\sffamily, 			  % typewriter type for strings
-	showstringspaces=false,                       % no special string spaces
-	aboveskip=3pt,
-	belowskip=3pt,
-	columns=fixed,
-	backgroundcolor=\color{lightgray},
-} 		
+% \lstset{
+% 	basicstyle=\scriptsize\ttfamily,              % print whole listing small
+% 	keywordstyle=\color{black}\bfseries\underbar, % underlined bold black keywords
+% 	identifierstyle=, 					          % nothing happens
+% 	commentstyle=\color{white},                   % white comments
+% 	stringstyle=\scriptsize\sffamily, 			  % typewriter type for strings
+% 	showstringspaces=false,                       % no special string spaces
+% 	aboveskip=3pt,
+% 	belowskip=3pt,
+% 	columns=fixed,
+% 	backgroundcolor=\color{lightgray},
+% } 		
 %\def\lstlistingname{lista}	
+
+% standard IncQuery stuff
+\usepackage{color}
+\definecolor{listinggray}{rgb}{0.9,0.9,0.9}
+\definecolor{keywordcolor}{rgb}{0.5,0,0.1}
+\definecolor{commentcolor}{rgb}{0,0.3,0.1}
+\definecolor{stringcolor}{rgb}{0,0,1}
+\usepackage{listings}
+\lstdefinelanguage{viatra}
+{morekeywords={@Interpretation,@Trigger,package,private,count,sum,max,min,avg,shareable,trigger,guard,eval,
+asmfunction,rule,gtrule,if,do,choose,forall,iterate,print,println,log,apply,
+    entity,relation,supertypeOf,subtypeOf,typeOf,instanceOf,try,else,pattern,
+    precondition,postcondition,action,neg,find,import,namespace,in,below,out,
+    inout,let,multiplicity,many_to_one,many_to_many,one_to_many,one_to_one,
+    isAggregation,inverse,seq,update,ref,true,false,call,machine,or,
+    undef,rename,new,del,delete,move,copy,value,setValue,setFrom,setTo,with,when,check,change,appear,disappear,cdrule,transformation,common,from,to,toInteger},
+ sensitive=true, morecomment=[l]{//}, morecomment=[s]{/*}{*/},
+ morestring=[b]{"},
+}
+\lstset{backgroundcolor=\color{listinggray}}
+\lstset{basicstyle=\scriptsize\ttfamily}
+\lstset{commentstyle=\itshape\color{commentcolor}\ttfamily}
+\lstset{stringstyle=\color{stringcolor}\ttfamily}
+\lstset{frameround=tttt}
+\lstset{captionpos=b}
+\lstset{keywordstyle=\color{keywordcolor}\bfseries\ttfamily}
+\lstset{showstringspaces=false}
+\lstset{tabsize=2}
+\lstset{numbers=left,numberstyle=\scriptsize\ttfamily,stepnumber=1,numbersep=5pt}
+\lstset{language=viatra}
+\lstset{escapeinside={(*@}{@*)}}
 
 
 %--------------------------------------------------------------------------------------
