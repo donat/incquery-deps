@@ -1,81 +1,3 @@
-\appendix
-\chapter{Service Provider Framework source}
-\label{examplesource}
-
-\begin{lstlisting}[caption=Classes of the \code{service} package]
-public interface Service {
-	void serviceA();
-	void serviceB();
-}
-
-public abstract class AbstractService implements Service {
-	public void serviceB() {System.out.println("Default serviceB()."); }
-}
-
-public interface Provider {
-	Service newService();
-}
-
-public class Services {
-	private static final Map<String, Provider> providers = 
-		new ConcurrentHashMap<String, Provider>();
-	public static final String DEFAULT_PROVIDER_NAME = "<default_provider>";
-	
-	private Services() {
-	}
-	public static void registerDefaultProvider(Provider p) { 
-		providers.put(DEFAULT_PROVIDER_NAME, p); 
-	}
-	public static void registerProvider(String name, Provider p) { 
-		providers.put(name, p); 
-	}
-	public static Service newInstance(String name) {
-		Provider p = providers.get(name);
-		if (p == null) 
-			throw new IllegalArgumentException("Provider does not exist.");
-		return p.newService();
-	}
-}
-\end{lstlisting}
-
-\begin{lstlisting}[caption=Classes of the \code{impl} package]
-public class BasicService extends AbstractService {
-	public void serviceA() { System.out.println("Executed basic service"); }
-	public void serviceB() { System.out.println("Overriden basic service"); }
-} 
-
-public class BasicProvider implements Provider {
-	public Service newService() { return new BasicService(); }
-}
-
-public class BasicImplUtil {
-	public static void registerImplementation() { 
-		Services.registerProvider("basic", new BasicProvider()); 
-	}
-	public static void registerImplementationAsDefault() { 
-		Services.registerProvider(Services.DEFAULT_PROVIDER_NAME, 
-			new BasicProvider()); 
-	}
-}
-\end{lstlisting}
-
-\begin{lstlisting}[caption=Classes of the \code{client} package]
-public class Main {
-	public static void main(String[] args) {
-		BasicImplUtil.registerImplementationAsDefault();
-		Service service = Services.newInstance(Services.DEFAULT_PROVIDER_NAME);
-		service.serviceB();
-	}
-}
-\end{lstlisting}
-
-\chapter{Model queries source code}
-\label{examplequeries}
-
-
-%\scriptsize
-
-\begin{lstlisting}
 package cern.devtools.deps.query.cp3
 
 import "http://inf.mit.bme.hu/donat/incquery-deps/wsmodel"
@@ -225,6 +147,8 @@ pattern removedMethod(repoMethod : CP3Method) = {
 	// The workspace project is missing.
 	neg find methodNamesInWorkspaceProjects(wsProject, name);
 
+	// Bugfix: remove static initialiser methods.
+	//check(! name.contains("<clinit>"));
 }
 
 pattern addedFields(wsField: WField, wsClass: WType) = {
@@ -314,6 +238,7 @@ pattern incomingMethodOverride(repoSource : CP3Method, wsTarget : WMethod) = {
 	// Select only the classes usage dependencies.
 	CP3Dep.type(dependency, type);
 	
+	// TODO: nem tudom a method override kódját
 	check (type == 1);
 }
 
@@ -327,6 +252,8 @@ pattern incomingFieldAccesses(repoSource : CP3Method, wsTarget : WField) = {
 
 	// Select only the classes usage dependencies.
 	CP3Dep.type(dependency, type);
+	
+	// TODO nem tudom a field access kódját
 	check (type == 3);
 }
 
@@ -335,6 +262,8 @@ pattern impactCausedByRemovedFields(repoFrom : CP3Method, repoTo : CP3Field, typ
 	CP3Dep.from(d, repoFrom);
 	CP3Dep.to(d, repoTo);
 	CP3Dep.type(d, type);
+	
+	// TODO nem tudom a field access kódját
 	check(type == 4);
 }
 
@@ -351,6 +280,7 @@ pattern impactCausedByRemovedMethods(repoFrom : CP3Method, repoTo : CP3Method, t
 	CP3Dep.from(d, repoFrom);
 	CP3Dep.to(d, repoTo);
 	CP3Dep.type(d, type);
+	// TODO mi a method override kódja
 	check (type == 3);
 }
 
@@ -360,6 +290,7 @@ pattern impactCausedByRemovedClasses(repoFrom : CP3Class, repoTo : CP3Class, typ
 	CP3Dep.from(d, repoFrom);
 	CP3Dep.to(d, repoTo);
 	CP3Dep.type(d, type);
+	//TODO
 	check (type == 3);
 } or {
 	// or inheritance
@@ -367,6 +298,7 @@ pattern impactCausedByRemovedClasses(repoFrom : CP3Class, repoTo : CP3Class, typ
 	CP3Dep.from(d, repoFrom);
 	CP3Dep.to(d, repoTo);
 	CP3Dep.type(d, type);
+	//TODO
 	check (type == 3);
 }
 
@@ -397,4 +329,73 @@ private pattern repoDependency(ceFrom: CP3AbstractItem, ceTo: CP3AbstractItem, d
 	CP3Dep.to(d, ceTo);
 }
 
-\end{lstlisting}
+///**
+// * Matches all methods in the workspace which does not exist in the repository.
+// */
+//pattern addedMethodsToProject(wsMethod : WMethod, wsClass: WType, wsProject: WProject) = {
+//	// Find the method's project.
+//	WMethod.name(wsMethod, name);
+//	WProject.packageFragmentRoots.packageFragments.compilationUnits.types.methods(wsProject, wsMethod);
+//
+//	//Assign the type to the class.
+//	WType.methods(wsClass, wsMethod);
+//
+//	// Find the project in the repository.
+//	find projectsWithSameName(repoProject, wsProject);
+//
+//	// Ensure that the method does not exist in the selected repository project.
+//	neg find methodNamesInRepoProjects(repoProject, name);
+//}
+//
+///**
+// * Matches all fields in the workspace which does not exist in the repository.
+// */
+//pattern addedFieldsToProject(wsField : WField, wsClass: WType, wsProject: WProject) = {
+//	// Find the field's project
+//	WField.name(wsField, name);
+//	WProject.packageFragmentRoots.packageFragments.compilationUnits.types(wsProject, wsClass);
+//	WType.fields(wsClass,wsField);
+//
+//	// Find the project in the repository.
+//	find projectsWithSameName(repoProject, wsProject);
+//
+//	// Ensure that the field does not exist in the selected repository project.
+//	neg find  turesInRepoProjects(repoProject, name);
+//}
+//
+//
+///**
+// * Matches all the classes in the repository which has been deleted from the workspace.
+// */
+//pattern removedClassesFromProject(repoClass : CP3Class, repoProject : CP3Project) = {
+//	CP3Class.name(repoClass, name);
+//	CP3Project.classes(repoProject, repoClass);
+//
+//	// Find the project in the workspace.
+//	find projectsWithSameName(repoProject, wsProject);
+//
+//	// Check that the workspace does not contain a class with the same name.
+//	neg find classNamesInWorkspaceProjects(wsProject, name);
+//}
+//
+///**
+// * Matches all methods in the repository which has been deleted from the workspace.
+// */
+//pattern removedMethod(repoMethod : CP3Method) = {
+//	
+//	// Find the method's project
+//	CP3Method.name(repoMethod, name);
+//	CP3Project.classes.methods(repoProject, repoMethod);
+//
+//	// Find the project in the workspace.
+//	find projectsWithSameName(repoProject, wsProject);
+//
+//	// The workspace project is missing.
+//	neg find methodNamesInWorkspaceProjects(wsProject, name);
+//
+//	// Bugfix: remove constructor
+//
+//	// Bugfix: remove static initialiser methods.
+//	check(!name.contains("<clinit>"));
+//}
+

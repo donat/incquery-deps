@@ -166,7 +166,7 @@ in an external class.
 \end{description}
 
 
-\subsubsection{Two-pass Discovery process}
+\subsubsection{Two-pass discovery process}
 The main objective here is to do the analysis on a large set of Java binaries
 without having memory problems. If one loads all jars to the memory at the same
 time, it will need an enormous size of memory which will go up if the input
@@ -325,27 +325,22 @@ database was described in details previously.
 % MODULE: Dependeney processor
 % ------------------------------------------------------------------------------
 \section{Client side}
-
-
 \subsection{Dependency database synchronizer}
 \label{sect:depdbsynch}
 
-\todo[inline]{atdolgozni erthetobbre}
-
-% what
+\subsubsection{Overview}
 The Dependency database component is responsible for querying the server for
 dependency information related to a selected element or elements. It loads the
-sub-part of the dependency data stored by the storage engine module through a
+part of the dependency data stored by the storage engine module through a
 simple RMI interface and pushes it to the model queries component where the
 result is evaluated.
 
-The component has to inputs: either it can load a compacted representation of the 
-entire dependency model or it can query the incoming dependencies for just one 
-single code element. 
-
+The database synchronizer has two modes of operation: either it can load a compacted
+representation of the entire dependency model or it can query the incoming
+dependencies for just one single code element.
 The single element query is the use-case where the user of the \ptool{} executes
-direct queries by asking the incoming dependencies of one element in
-the workspace. In this case, a simple RMI interface method is called where the
+direct queries by asking the incoming dependencies of one element in the
+workspace. In this case, a simple RMI interface method is called where the
 argument is the queried object (as an instance of a ApiClass, a Method or a
 Field types from \autoref{fig:domainmodelsimp.pdf}. This argument is passed to
 the server, which turns it into an SQL query or a search on the EMF model
@@ -353,33 +348,39 @@ the server, which turns it into an SQL query or a search on the EMF model
 of \code{Dependency} instances. The result model is unattached by the model
 queries component and gets instantly visualized in the UI component.
 
+\subsubsection{Compacting models to balance resource usage with analysis precision}
+The resource constraints of virtualized developer PCs at CERN implied that the
+repository model has to be compacted. 
 For letting the model queries component run real queries, this model has to load
 a representation of the data stored by the database engine component. If it was
 loaded one-by-one into an EMF model and passed to the client, then it would be
 simply too big to load. The binary repository holds more than a thousand jars
 just as latest production versions. The serialized EMF model equivalent is more
-than 400 MiB in size. To load an EMF model this size, more than one GiB  of
+than 400 MiB in size. To load an EMF model this size, more than one GiB of
 RAM is needed.
 
-Important details about the environment at CERN is that the developers usually
-do the development on dedicated virtual machines which have more privileges to
-access internal resources. The drawback is that usually a virtual machine has
-1-2 GiB RAM total, so we cannot make an Eclipse plugin which consumes all
-remaining resources at once. Also EMF-IncQuery has a practical limitation as it
-can easily handle EMF instance models up to 100 MiB.
+% Important details about the environment at CERN is that the developers usually
+% do the development on dedicated virtual machines which have more privileges to
+% access internal resources. The drawback is that usually a virtual machine has
+% 1-2 GiB RAM total, so we cannot make an Eclipse plugin which consumes all
+% remaining resources at once. Also EMF-IncQuery has a practical limitation as it
+% can easily handle EMF instance models up to 100 MiB.
 
-These facts implied that the repository model has to be compacted. We can drop
-the unnecessary information or merge certain data and structure to spare some
-space without introducing false negative results. If we leave information the
-clients may end up false conclusions as they for example see an empty incoming
-dependency set where should be some. 
+We can drop the unnecessary information or
+merge certain data and structure to spare some space without introducing false
+negative results. If we leave information the clients may end up false
+conclusions as they for example see an empty incoming dependency set where
+should be some.
+While this compacting process results in result over-approximation (potentially
+false-positive results), but in return lets the model queries component to do
+fast model queries which are automatically updated every time the source code
+has changed.
 
-Sure this compacting process introduces some false-positive results, but in 
-return lets the model queries component to do fast model queries which
-are automatically updated every time the source code has changed. 
-
-The structure of the compacted EMF metamodel is shown on \autoref{fig:cp3model.pdf}.
 \picseventy{cp3model.pdf}{Compacted repository model}
+
+\paragraph{Metamodel for compacted repository models}
+The structure of the compacted EMF metamodel is shown on
+\autoref{fig:cp3model.pdf}.
 The first thing which was left out are most of the fields of the classes; only a
 \code{name} field stores the textual representation of the code element. This is
 reasonable because the dependency discovery is done on the server and we
@@ -387,20 +388,20 @@ navigate only on the dependency edges. The second thing is not explicitly
 visible on the figure. The fully qualified name was merged down into simple
 names. It means that there is only one \code{Service} class for all products in
 the repository and one \code{newService()} function. If there are more, than one
-exists, then they are merged into one and also all dependencies becomes common. This
-also comes with the change that the original one-to-many containment
+exists, then they are merged into one and also all dependencies becomes common.
+This also comes with the change that the original one-to-many containment
 relationships became many-to-many. The third compacting change is to drop the
 signature of the methods, only the name has left. The merging process is the
 same as described.
 
-% TODO: this should be replaced with true slicing
+\paragraph{Managing repository models on the client side}
 This compacted repository model is loaded at start-up time and used till Eclipse
 is closed. This is reasonable because the repository changes are considered as rare events: 
 In the environment described in \autoref{sect:cerninf} only a few releases happen a day.
 
-The described compact model contains some simplification but small enough to
-load it into the memory: the serialized representation of the entire workspace is
-around 70 MiB which is considered small enough to work with. 
+The compact model is small enough to load it into the memory: the serialized
+representation of the entire CERN software infrastructure is around 70 MiB which
+is considered small enough to work with.
 
 % ------------------------------------------------------------------------------
 % MODULE: Source code model synchronizer
@@ -414,13 +415,13 @@ Maintaining an EMF model lets the model queries component dynamically examine
 the current state of the workspace without accessing the JDT API.
 
 \subsubsection{Eclipse Java Model}
-Eclipse Java Development Tools main objective is to give feature-rich,
-integrated and extendable environment for editing Java source code. It comes
-with incremental builder and rich and extensive tooling for Java editing.
-Contributors can get all the necessary information about the state of the
+The objective of the Eclipse Java Development Tools \cite{JDT} is to provide a
+feature-rich, integrated and extendable environment for editing Java source
+code. It comes with incremental builder and rich and extensive tooling for Java
+editing. Contributors can get all the necessary information about the state of the
 workspace.
 
-The state of the Java projects are exposed through an API called \emph{Java
+The state of the Java projects are exposed through an API called the \emph{Java
 Model}. It is a complex yet intuitive set of Java interfaces which can be
 traversed easily. Instead explaining what classes and interfaces are present in
 this API, let's examine which API elements represents which Eclipse- and
@@ -451,7 +452,7 @@ the Java projects. To add dependency information to this model, the JDT's search
 feature comes into picture. With this the component is able to query the dependencies
 for every structural element. 
 
-\subsubsection{The generated EMF model}
+\subsubsection{Generating EMF models from the Java model}
 % structure and JDT
 \picr{wsmodel.pdf}{EMF model storing the structure of the Java projects}
 \autoref{fig:wsmodel.pdf} shows the EMF model which is extracted and maintained
@@ -508,7 +509,6 @@ incremental model update fires, maps the related Java Model element to the EMF
 model and modifies it accordingly. 
 
 \paragraph{Processing local workspace changes}
-\todo[inline]{itemize tomorebbre}
 The change notifications comes in a form of a hierarchical delta holder object.
 It refers to an object, states if it was added, deleted, or changed and provides
 the list of the affected children. For example if a Java class definition has
@@ -516,12 +516,14 @@ been deleted, the generated event contains a changed project down to the
 container changed compilation unit which has a child delta pointing to the
 deleted class.
 
+\paragraph{Workspace content modifications}
 The use-case when an element was added or deleted the model update is
 straightforward. The event contains the reference of the modified item. It is
 identified via the \code{handler} property. The result of the event is a
 creation of a new element or removing an existing one along with all his
 children and their dependencies.
 
+\paragraph{Source file modifications}
 If a modification happens in the source file it is also incrementally modified
 but treated slightly differently. This is necessary because the delta
 information doesn't provide usable information about what has changed below the
@@ -538,6 +540,7 @@ are immediately pushed back to the original model. With this approach the EMF
 representation of the workspace stays consistent and only local modifications
 happen on the elements.
 
+\paragraph{Generated model lifecycle}
 When Eclipse closes, the model is stored on the disk in order not to regenerate
 the entire model when on the next start-up. If no external modifications happen
 than the model is loaded one-by-one which is faster than gathering all
@@ -548,20 +551,12 @@ structural and dependency information.
 The model queries components executes complex queries on the loaded models and
 gives and exposes the result for  visualization. 
 
-% \subsubsection{Explicit queries}
-% Both the result of the explicit queries and the EMF-IncQuery-based use-case is
-% handled inside this component. As it was discussed previously not much has
-% happening here with the result of the explicit queries: it is passed to the UI
-% components as is.
-
-
 The UI components extends the Eclipse platform's user interface to provide
 access to the dependency information and to show the results in an integrated
-way. The Eclipse views utilize JFace, more precisely JFace tree viewers to present
-the information. Using JFace has two advantages: displaying the data is not
-bound to the original structure of the input and EMF has tight integration to
-JFace out of the box.
-\todo[inline]{jface hianyzo hivatkozas!}
+way. The Eclipse views utilize JFace~\cite{JFace}, more precisely JFace tree
+viewers to present the information. Using JFace has two advantages: displaying
+the data is not bound to the original structure of the input and EMF has tight
+integration to JFace out of the box.
 
 \picfifty{jface.pdf}{Displaying data with JFace}
 
@@ -573,8 +568,6 @@ data, a data adapter is loaded (through Eclipse platform service registration).
 With both the content and the description how the data should be displayed JFace
 automatically shows the results and provides convenience functions such as tree
 folding, selection service, etc. 
-
-\todo[inline]{databinding?}
 
 \paragraph{UI integration for explicit query results} 
 The first part is the UI extension for explicit queries. The Java source code
@@ -597,34 +590,25 @@ in the viewer like on \autoref{fig:results.png}.
 
 \subsection{On-the-fly model queries}
 
-\todo[inline]{ez a gondolatkor korabbra valo, ch1 vagy ch3}
-\textbf{cut begin}
-The more interesting part of the module is the queries based on EMF-IncQuery.
-The main reason why it was implemented is that normally, if the analysis is done
-only on the server side, than all the dependency information will be based on
-the released source code. So if a developer changes something and after tries to
-figure out what are the dependencies of the changes elements, he won't get any
-results. This is why we want to compare the repository with the current state of
-the workspace.
+The main functional motivation for implementing client-side queries is to
+support pre-release comparison between the local source projects in the
+workspace and the last released state contained in the server-side database.
+Additionally, the goal is to provide on-the-fly query evaluation so that the
+feedback from dependency analysis can instantly be displayed to developers as
+they are making changes to the source code, to speed up the development work.
 
-Applying this approach will not only give the developers precise information
-about the impact a possible release would cause but it gives immediate feedback
-about the change every time the source code is saved. Additionally all 
-results of all queries are available upon usage, no manual query is required.
-\textbf{cut end}
-
-To achieve this, the component first loads the model of the repository and the 
+To achieve this, the system first loads the model of the repository and the 
 model of the current workspace, loads them into the EMF-IncQuery engine, 
 and initiates the queries and exposes the results on an API which also updates
 the dependency information dynamically.
  
 \subsubsection{Query specifications based on graph patterns}
-\todo[inline]{hivatkozas az icmt2011 cikkunkre a query language kapcsan}
-The queries are developed with EMF-IncQuery's own query language. This language
-is used to express certain patterns over EMF models. You can think about it as 
-a regular expression over an object-model. To highlight this, let's see an example
-of a pattern expressed with this language which matches on all Java files and
-all defined types in it from the workspace model (see \autoref{fig:wsmodel.pdf}). 
+The queries are developed with EMF-IncQuery's own query
+language~\cite{icmt2011}. This language is used to express certain patterns over
+EMF models. You can think about it as a regular expression over an object-model.
+To highlight this, let's see an example of a pattern expressed with this
+language which matches on all Java files and all defined types in it from the
+workspace model (see \autoref{fig:wsmodel.pdf}).
 \begin{lstlisting}
 package example
 
@@ -669,7 +653,6 @@ engine. The query is represented as a \code{Matcher} object in the generated
 code which gives back the results through the \code{Matcher.getAllMatches()}
 method. The result is represented by \code{Match} instances which hold the result 
 and all the necessary information to make it usable.
-
 
 \subsubsection{Query definitions}
 The following list enumerates all the  queries developed for the dependency
@@ -747,11 +730,11 @@ is executed. Then it filters to all the elements which are pointed by a
 dependency instance. Note that \code{repoSource} argument is bound to the
 repository dependency object.
 
-\todo[inline]{osszes query kodja keruljon appendixbe}
-
 On start-up these queries are registered and accessible outside via a simple API.
 The UI components use this API to access the dependency information and show the
 current state in different views.
+
+The complete source code for all the queries is available in \autoref{examplequeries}.
 
 
 \subsection{Elaboration of the example - continued}\label{sect:elabex2}
@@ -778,8 +761,6 @@ repository. Part of the model is shown on
 \autoref{fig:cp3modelinstance.pdf}\picr{cp3modelinstance.pdf}{Elements of the
 compacted instance model} 
 
-\todo[inline]{FONTOS: az abra meg hianyos, latszodjon rajta a workspace modell, es hogy hogyan kapcsolja ossze az incquery lekerdezes!}
-
 The structure contains the same projects and the same
 classes as the original model, however the following information is eliminated.
 \begin{itemize}
@@ -795,27 +776,28 @@ formation and has the reference on its container.
 \end{itemize}
 
 
+\picr{patternresult.pdf}{Pattern matching on the example}
 
 \subsubsection{On-the-fly model query results}
 After the compacted  model and the workspace model is loaded the model and the
 EMF-IncQuery is initialized, the results of the pattern queries can retrieved
-any time.
-The pattern matching strategy for the query described in \autoref{patternex} is
+any time. The pattern matching strategy for the query described in \autoref{patternex} is
 shown on \autoref{fig:patternresult.pdf}.
-\picr{patternresult.pdf}{Pattern matching on the example}.
-The pattern finds, that the \code{serviceB} method object from the workspace has 
-a counterpart in the repository: They have the same name and their container project
-have also the same name (the project object are not shown). Then the query finds, 
-that there is a dependency which point on the \code{serviceB} object at the repository
-as the target of a method call dependency. Because these requirements are satisfied, 
-The source of the dependency (the \code{main} method) from the repository model and the
-\code{serviceB} method object from the workspace are returned (elements with the red border).
+
+The pattern finds, that the \code{serviceB} method object from the workspace has
+a counterpart in the repository: They have the same name and their container
+project have also the same name (the project object are not shown). Then the
+query finds, that there is a dependency which point on the \code{serviceB}
+object at the repository as the target of a method call dependency. Because
+these requirements are satisfied, The source of the dependency (the \code{main}
+method) from the repository model and the \code{serviceB} method object from the
+workspace are returned (elements with the red border).
  
-The query was evaluated with the sample data in EMF-IncQuery's UI tooling. The 
+The query was evaluated with the sample data in EMF-IncQuery's UI tooling. The
 results are on \autoref{fig:modelqueryresult.png}.
 \picr{modelqueryresult.png}{Result of the incoming method call dependency query}
-This figure shows that the evaluation gave back the same exact results as it was described
-on   \autoref{fig:patternresult.pdf}
+This figure shows that the evaluation gave back the same exact results as it was
+described on \autoref{fig:patternresult.pdf}.
 
 In this example a dependency was found. In this case the developer 
 has to decide whether he will maintain backward compatibility or he notifies the
