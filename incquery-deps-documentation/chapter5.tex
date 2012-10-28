@@ -79,8 +79,11 @@ the size of the result set affects on the response time.
 The results are shown on \autoref{fig:expqmeasure.pdf}.
  \picfifty{expqmeasure.pdf}{Explicit queries measurement result}
 As it turned out, that the response time does not depend on the size of the result,
-it was returned roughly 200ms on every sample. This result means that utilizing 
-dependency queries return the result in reasonable time. 
+it was returned roughly 200ms on every sample. 
+
+Important, that  the measurement does not include the network delay. Also the 
+returned  returned results contain dependency information for one single element. 
+It is acceptable time for retrieving dependency information. 
 
 
 \section{Model queries}
