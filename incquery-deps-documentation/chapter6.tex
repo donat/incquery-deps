@@ -3,60 +3,78 @@
 %1 page. Evident content.
 %------------------------------------------------------------------------------
 
-\todo[inline]{mident bovebben kifejteni}
 
-
-% what was achieved
 \section{Results of the report}
 
+In this paper we proposed an effective dependency analysis approach for
+supporting smooth upgrades in large Java software infrastructure consisting of
+tens of thousands of classes. It is based on a two-tiered approach, where the
+server side is responsible for accumulating, storing and processing the incoming
+dependency relations between the different API elements of the complete software
+infrastructure, while the client side supports the developer by providing
+instantaneous feedback on the dependency relations between the software modules
+currently under development and the overall software infrastructure.
 
-\todo[inline]{sajat eredmenyek}
+As a summary, my results in this work are the following:
 \begin{itemize}
-  \item I designed\ldots
-  \item I implemented\ldots
-  \item I evaluated / experimented with\ldots
+\item I designed a \emph{client-server based architecture for incoming
+dependency analysis} of large Java software infrastructures.
+\item I developed a \emph{binary dependency discovery module} for finding
+dependencies between API elements within JARs.
+\item I implemented a \emph{storage system} for the dependency relations and an
+access layer for querying the dependency information.
+\item I proposed a \emph{model-based dependency representation} based on EMF for
+capturing local and remote dependencies.
+\item I defined an \emph{incremental AST processing module} for discovering
+source dependencies in the local workspace.
+\item I implemented an \emph{on-the-fly dependency query engine} using
+EMF-IncQuery for instantaneous dependency analysis feedback.
+\item Finally, I evaluated the approach on the \emph{complete Java software
+infrastructure at CERN} consisting of more than 1500 separate JARs.
 \end{itemize}
 
-The \ptool{} is now a complete solution both with the explicit queries and its
-EMF-IncQuery-based extension. 
+%The \ptool{} is now a complete solution both with the explicit queries and its
+%EMF-IncQuery-based extension. 
 
-The tool can be useful for a Java library developer who works at a large,
-software-oriented organization where lots of inter-depending softwares are
-developed and maintained and where binary compatibility and smooth upgrades are
-mission-critical requirements.
-
-Both parts proved useful, fast and scalable enough for adaptation. EMF-IncQuery 
-showed that it can be applied to a specific domain and can be a useful core
-for fast model queries. 
-
+%The tool can be useful for a Java library developer who works at a large,
+%software-oriented organization where lots of inter-depending softwares are
+% developed and maintained and where binary compatibility and smooth upgrades are
+% mission-critical requirements.
+% 
+% Both parts proved useful, fast and scalable enough for adaptation. EMF-IncQuery 
+% showed that it can be applied to a specific domain and can be a useful core
+% for fast model queries. 
 
 \paragraph*{Application of the results}
-Without the extension the tool is used in
-production at CERN and it is fairly possible that extension will become the part
-of that tool.
+As a major achievement, the server side modules of the porposed approach are
+already used in production at CERN and its client side extension is also being
+considered to be included in the upcoming release of the \ptool.
 
 \section{Future work}
-As of the future plans, there are plenty of directions to go.
-
-\paragraph*{User interface possibilities on the client side}
+As of the future plans, there are plenty of directions to extend the
+capabilities of the approach:
 \begin{itemize}
-  \item dedicated UI for local dependency analysis, on-the-fly synchronization
-  \item Workspace/project/infrastructure-level Reference search with on-the-fly evaluation
-  \item on-the-fly evaluated validation rules for instantaneous ``smooth upgrade" policy violation feedback
+\item In order to provide a better user notification on the client side we plan
+to create a dedicated UI for highlighting the result of the local dependency
+analysis. As Eclipse already provides a facility for searching for cross
+compilation unit references, it is a straightforward task to integrate the model
+queries there. Additionally, due to the instantaneous evaluation performance,
+dependency analysis results could be displayed to the user as warnings or even
+errors (supported by inline markers in Eclipse's source code editors) that
+appear on-the-fly as the user is making a change that potentially violates
+smooth upgrade policies.
+
+%\item on-the-fly evaluated validation rules for instantaneous ``smooth upgrade" policy violation feedback
+
+\item The second plan can be an extension for source-analysing not just Java,
+but C++ programs too. We could make use of the capabilities of the Eclipse CDT
+to provide AST support.
+
+\item As a future improvement, we plan to support the definition of query-based
+software metrics and use our on-the-fly query evaluation engine to enforce these
+policies directly on the AST models.
+
+\item Finally, an additional step forward would be the use of dynamic dependency
+analysis techniques such as symbolic execution traces that would provide more
+detailed dependecy information between the methods of the various modules.
 \end{itemize}
-
-\paragraph*{Support for other programming languages}
-The second plan can be an extension for analysing not just Java, but C++ softwares too. 
-\todo[inline]{make use of Eclipse's capabilities, e.g. CDT provides an AST}
-
-\paragraph*{Query-based software metric policy enforcement}
-The third plan is
-to reuse the model gathered from the project and from the workspace and then to
-define certain metrics over the models. With this a source code could be
-checked against certain requirements about the code quality.
-
-\paragraph*{Dynamic dependency analysis}
-First it is interesting what kind of dependencies can be extracted.
-It is possible to extract more detailed dependencies from the binaries by
-constructing symbolic execution traces based on the bytecode. With this, a
-variety of new dependencies can be discovered.
