@@ -101,24 +101,83 @@ explicit query. The query takes a few seconds to respond. The results are shown
 in the viewer like on \autoref{fig:results.png}.
 \picr{results.png}{Result of explicit queries}
  
-The same result can be retrieved using model queries, but without any
-interaction: all result for the selected project is automatically showed. Plus,
-if something is changed, for example the \code{serviceB()} method is deleted, it
-i) is compared against the repository model and marked as deleted method and all
-the incoming dependencies is listed as a possible impact if the modified code
-gets committed. 
-\todo[inline]{put image of the result of the model queries}
+\subsubsection{Model queries}
 
-Back to example. The developer checks the incoming dependencies of the
-\mbox{\code{Services.}} \mbox{\code{DEFAULT\_PROVIDER\_NAME}} field and the \code{Service.serviceA()}
-method. In the first case there are some incoming dependencies which can be
-examined.
-In our example there are two external users of the field, so the developer can
-either contact them and coordinate the smooth upgrades by simultaneously
-releasing a new versions of all projects. On the other side, the
-\code{serviceA()} method has no incoming dependencies, as nobody uses it. In
-this case the developer has the right to change the signature however he wants.
+\paragraph{The compacted model}
+The compacted version of the repository instance model (produced by the
+dependency database synchronizer) contains all the three projects from the
+repository. Part of the model is shown on
+\autoref{fig:cp3modelinstance.pdf}\picr{cp3modelinstance.pdf}{Elements of the
+compacted instance model} The structure contains the same projects and the same
+classes as the original model, however the following information is eliminated.
+\begin{itemize}
+  \item The class objects has only their simple name left, the fully qualified name is left out.
+There is no overlapping classes but they would have merged together if
+there was any. Here the \code{client.Service} instance has only the name \code{Service}.
+  \item The method signature was trimmed down int their names. All methods have only their 
+name section of the signature, the parameter list, and the return value are dumped.    
+The object representing the \code{service.Service.serviceB()} method contains only the \code{serviceB}
+formation and has the reference on its container. 
+  \item The only visible dependency on the figure points to the same elements as before.
+  It defines a method call dependency which starts from the object representing the \code{client.Main.main()} method.
+\end{itemize}
 
+\paragraph{Query definitions}
+One of the implemented queries is the one which retrieves the incoming method call 
+dependencies from the model. The entire definition of this query is the following. 
+\begin{lstlisting}[caption=Elements of the incoming method call dependency query]
+private pattern joinProjects(repoProject : CP3Project, wsProject : WProject) = {
+	CP3Project.name(repoProject, commonName);
+	WProject.name(wsProject, commonName);
+}
+
+private pattern joinMethods(repoMethod : CP3Method, wsMethod : WMethod) = {
+	CP3Project.classes.methods(repoProject, repoMethod);
+	WProject.packageFragmentRoots.packageFragments.compilationUnits.types.
+		methods(wsProject, wsMethod);
+	find joinProjects(repoProject, wsProject);
+	CP3Method.name(repoMethod, commonName);
+	WMethod.name(wsMethod, commonName);
+}
+
+pattern incomingMethodCalls(wsTarget : WMethod, repoSource : CP3Method) = {
+	find joinMethods(repoTarget, wsTarget);
+	CP3Dep.from(dependency, repoSource);
+	CP3Dep.to(dependency, repoTarget);
+	CP3Dep.type(dependency, 1);
+}
+\end{lstlisting}
+
+The first \code{joinProjects} query takes the projects from the workspace
+instance model and connects them to the equivalent element in the compacted
+repository instance model This join operation is based on the common \code{name}
+property.
+
+The \code{joinMethods} query does a similar thing, but in this case the methods
+are joined together. The firs two instructions gathers the container projects'
+reference. The third instruction calls the \code{joinProjects} query, so the 
+results are filtered to only to the elements which exist both in the workspace
+and in the repository instance model. The methods itself also joined by 
+checking the common \code{name} property.
+
+The last \code{incomingMethodCalls} query returns the required results. It lists
+the methods present in the compacted workspace instance model and its incoming
+dependency elements in pairs. To find them, first the \code{joinMethods} query
+is executed. Then it filters to all the elements which are pointed by a
+dependency instance. Note that \code{repoSource} argument is bound to the
+repository dependency object.
+
+
+\paragraph{Results of the query}
+The result of the query is shown on \autoref{fimodelqueryresult.png}
+\picr{modelqueryresult.png}{Result of the incoming method call dependency query}
+The EMF-IncQuery engine found the desired dependency. It points to the compacted
+repository element having a method call dependency to the workspace model's
+equivalent
+
+In this example there there is a found dependency. In this case the developer 
+has to decide whether he will maintain backward compatibility or he notifies the
+maintainer of the \code{client} project that the API will break soon.
 
 \section{Performance}
 After the functionality was presented, let's check the overall performance of
