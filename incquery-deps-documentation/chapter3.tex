@@ -132,21 +132,20 @@ information are stored in this database, which serves the client queries too.
 
 \subsection{The client side}
 % Plugin
-The client-side of the solution is an Eclipse plugin (or more precisely a set of
-plugins) which gives the developer a convenient way to access to the dependency
-information.
+The client-side of the solution is a set of  Eclipse plugins, which give the
+developer a convenient way to access to the dependency information. 
 
-\subsubsection{Model load and direct queries}
-The base of the plugin is the repository model loader. It provides a simple API
-for accessing and querying the dependency information from the server. The
-simple use-case for this, when the user directly asks the dependency information
-from the Java source editor through UI contribution (marked as direct queries on
-the figure).
+\subsubsection{Model load and direct queries}\label{sect:directqueries}
+The base component of the client side is the repository model loader. It
+provides a simple API for accessing and querying the dependency information from
+the server. The simple use-case for this, when the user directly asks the
+dependency information from the Java source editor through UI contribution
+(marked as direct queries on the figure).
 
-\subsubsection{Workspace model creator}
-The workspace model creator is module generating an EMF model describing the
+\subsubsection{Workspace model creator}\label{sect:wsmodelcreator}
+The workspace model creator generate an EMF instance model describing the
 state of the workspace. The generated model contains the loaded projects, the
-contained packages, classes, methods, etc. The model also contains the
+contained packages, classes, methods, etc. This instance model also contains the
 dependency structure between the elements (e.g. method calls, field accesses and
 such). The information is gathered through the Eclipse Java Development Tools'
 API. After the model is created it is incrementally maintained even through 
@@ -154,62 +153,70 @@ restarts.
 
 \subsubsection{On-the-fly queries}
 The pattern matcher module executes complex model queries on top of the acquired
-models to provide dependency information. First it loads an EMF model from the
-server describing the structure of all projects in the central repository.
-Afterward the workspace model is loaded from the module described above. Both of
-the models are loaded to the EMF-IncQuery engine. Through complex queries the two
-models are joined and queried for the dependency information. With this more 
-accurate and extensive dependency analysis can be achieved because this approach
-takes into account the changes which were done in the workspace. The workspace 
-model is updated upon every change of the workspace giving up-to-date feedback 
-for the users while they are working on the development. 
+instance models to provide dependency information. First, it loads an EMF
+instance model from the server describing the structure of all projects in the
+central repository. Afterward the workspace instance model is loaded from the
+module (see \autoref{sect:wsmodelcreator}). Both of the models are loaded to the
+EMF-IncQuery engine. Through complex queries the two models are joined and
+queried for the dependency information. The result of the queries are maintained
+live and automatically as the workspace instance model changes. Because the
+state of the workspace is followed, more information can be queried than just
+comparing the source code with the state of the repositories
+(\autoref{sect:directqueries}): The source code changes and their effects
+are also queried.
 
 \subsubsection{User Interface}
-Both direct queries and the pattern matching module return the result in Eclipse 
-views. After the result is evaluated, the user's responsibility to evaluate their
-results and act accordingly.
-\todo[inline]{UI szolgaltatasokat reszletesebben kifejteni, itemize}
+Both direct- and on-the-fly queries return their result in Eclipse views. After
+the result is displayed, it is the user's responsibility to evaluate their
+results and act accordingly. The user interface consist of the following.
+\begin{itemize}
+  \item Menu contributions: The Java source code editor gets a new elements for 
+initiating dependency discovery.
+  \item Result viewers: The result is displayed in Eclipse views.
+\end{itemize}
+The details of the user interface are in \autoref{sect:elabexplicit}.
 
 \subsubsection{Implementation-specific requirements}
 Using direct queries brings no limitations. The queries are simple remote method
 calls and the result set is a relatively small data set which easy to store and
-present on the Eclipse UI. On the other hand, the pattern matching solution is
-far from being that easy, because in order to load make EMF-IncQuery work, the
-entire repository has to be loaded. By default this model is a few hundred
-megabytes sized in a serialized form. This implies that the implementation has to 
-optimize this model without dropping useful information to make it loadable to 
-the memory.
+present on the Eclipse UI. On the other hand, the graph-pattern matching
+solution is somewhat limited, because in order to load make EMF-IncQuery work,
+the entire repository has to be loaded. By default the repository instance model
+is a few hundred megabytes sized in a serialized form. This implies that the
+implementation has to optimize this model without dropping useful information.
 
 \section{Running Example: Service Provider Framework}\label{sect:spf}
 
 To make the following chapters easier to understand, I am going to introduce a
 simple use-case example. It is a design pattern called Service Provider
 Framework. It is a practical application of the original Adapter pattern and it
-was described in the famous book \emph{Effective Java} \cite{Bloch08}. This pattern
+was described in the book \emph{Effective Java} \cite{Bloch08}. This pattern
 is the simplified version how the Java Database Connectivity (JDBC) works.
 
-\subsection{Description}
+
+\subsection{Description}\label{sect:spfdesc}
+
 
 \picr{exampleclasses.pdf}{Structure of Service Provider Framework design pattern}
 
-You can see the structure of the pattern on
-\autoref{fig:exampleclasses.pdf}. As of the packages it contains 3 major parts.
+\autoref{fig:exampleclasses.pdf} shows the structure of the design pattern. As of
+the packages it contains 3 major parts.
 The \code{service} package contains the core pattern classes. The \code{impl}
 and the \code{impl} packages are external users of the pattern and therefore
 they are considered depending client libraries.
 
-First let's discuss the pattern itself. The main goal for the patter is to
-provide a registry of implementations for a desired service. This service is
-described in the \code{Service} interface. The \code{Provider} interface is
-serves as a factory instance; it has a single function to instantiate a new
-Service object. The \code{Services} class has the role of the registry.
+The main goal for the design pattern is to provide a registry of implementations
+for a desired service. This service is described in the \code{Service}
+interface. The \code{Provider} interface serves as a factory instance; it has
+a single function to instantiate a new Service object. The \code{Services} class
+has the role of the registry.
 The service implementers register their implementation using the static
 \code{registerProvider()} and \code{registerDefaultProvider()} methods. The
-parameters the identifier string for the registered service and Provider
-instance which will instantiate the Service instances. The clients will
-instantiate the Service instance with the \code{newInstance()} function.
-Depending the passed identifier string, the method will look up if a Provider
-was registered with the same name, and if the answer is yes then it calls the
+parameters are an identifier string for the registered service and a \code{Provider}
+object which will instantiate the \code{Service} instances. The clients will
+instantiate the \code{Service} instance with the \code{newInstance()} function.
+Depending on the passed identifier string, the method will look up whether a Provider
+was registered with the same name, and if the answer is yes, then it calls the
 \code{Provider.newInstance()} and return its result.
 
 The \code{DEFAULT\_PROVIDER\_NAME} is a static public field which can be used to
@@ -217,7 +224,7 @@ obtain the default Service implementation. The \code{AbstractService} is a
 utility class which implements one of the function of the Service interface.
 
 The \code{impl} package contains one possible implementation to use the
-described pattern. The \code{BasicService} contains the implementation and the
+described pattern. The \code{BasicService} contains the implementation while the
 \code{BasicProvider} is responsible for properly initializing and returning a
 new instance of this version. The \code{BasicImplUtil} -- as its name implies --
 holds utility classes which register the implementation in the Services class.
@@ -227,38 +234,28 @@ simple evaluation. It invokes the \code{Services.newInstance()} function passing
 the default provider's name as an argument and invokes the \code{serviceA()} and
 \code{serviceB()} function.
 
-Although the example is fairly simple, the related source code can be found in
+Although, the example is simple, the related source code can be found in
 \autoref{examplesource}.
 
 \subsection{Smooth upgrade challenges}
-\todo[inline]{itemize-zal kiemelni a megoldando feldatokat, amelyeket majd megoldassz kesobb}
-As it was described in the introduction we would like give the developers the
-ability to check who is using the certain parts of the API. To present this this
-pattern will be our use-case.
+As our main goal we would like give the developers the ability to check who is
+using the certain parts of the API. To highlight this, imagine that the three
+packages described in \autoref{sect:spfdesc} are distributed into three
+different software which have their individual developers. If the developer
+responsible for the \code{service} package wants to change some parts of the
+code without precisely knowing who is using which part of the code, he won't
+know how many dependant projects will be broken afterwards. 
 
-Imagine that the three packages are distributed into three different software
-which have their individual developers. If somebody wants to change some parts
-of the service without precisely knowing who is using which part of the code he
-won't know how many dependant projects will be broken afterwards.
-
-Let's see two examples. The responsible for the service package wants to modify
-two parts of the classes: he wants to add a string parameter to the
-\code{Service.serviceA()} method, and he wants to change the name of the
-\code{Services.DEFAULT\_PROVIDER\_NAME} field. 
-
-By using \ptool{} the developers are able to execute queries on any part of the
-API. The result will be the primary starting point for considering what to do.
-Three different outcome can happen: the selected part of the API doesn't have
-dependencies, it has a few dependencies or it has got a lot and the developer's
-decision depends on it. 
-
-If there is no incoming dependency than any modifications can be done without
-causing any compatibility issues. The developer can do whatever he wants.
-If there is a lot of incoming dependency, than it means that the queried code
-element is used by a lot of clients and any modifications would cause a build
-error therefore backward compatibility has to be maintained. The third option is
-that there are several dependencies. In this case the developer has to negotiate
-with the clients how to proceed: he has to provide backward compatibility or the
-clients has to align their code to the modifications.
-
-\todo[inline]{eloreutalas a kesobbi fejezetekre, ahol a problemak megoldasa ki lesz fejtve}
+By using \ptool{} the developer is able to execute queries on any part of the
+API. as a result three outcome can happen.
+\begin{description}
+  \item[No incoming dependencies] If there is no incoming dependency than any modifications can be done without
+causing compatibility issues. The developer can do whatever he wants.
+  \item[A few incoming dependencies] In this case the developer has to negotiate
+with the clients how to proceed: either he has to provide backward compatibility or the
+clients has to adapt align their code to the modifications.
+  \item[A lot of incoming dependencies] In this case the queried code
+element is used by a lot of external clients and any modifications would cause a build
+error, therefore backward compatibility has to be maintained.
+\end{description}
+The elaboration of this example is in \autoref{sect:elabex1} and in \autoref{sect:elabex2}

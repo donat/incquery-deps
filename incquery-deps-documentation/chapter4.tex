@@ -249,7 +249,7 @@ structure as the domain model (see \autoref{fig:domainmodelsimp.pdf} and
 % show here
 
 
-\subsection{Elaboration of the example}
+\subsection{Elaboration of the example}\label{sect:elabex1}
 After showing the details of the implementation, let's see it in action.
 We will use the tool to solve the problem described in \autoref{sect:spf}. We
 will go though on every component and check what is happening there with the
@@ -549,6 +549,7 @@ than the model is loaded one-by-one which is faster than gathering all
 structural and dependency information.
 
 \subsection{Explicit queries}
+\label{sect:elabexplicit}
 The model queries components executes complex queries on the loaded models and
 gives and exposes the result for  visualization. 
 
@@ -758,7 +759,7 @@ The UI components use this API to access the dependency information and show the
 current state in different views.
 
 
-\subsection{Elaboration of the example - continued}
+\subsection{Elaboration of the example - continued}\label{sect:elabex2}
 To continue our example, we will examine the view of the developer who knows
 only about his own \code{service} project. If the \ptool{} is  installed in his
 Eclipse, the EMF model -- shown on \autoref{fig:wsmodel.png}
