@@ -252,11 +252,7 @@ provides API for navigating the Java element tree. This lets the contributors
 access the structure and the changes of the Java applications loaded into the
 workspace.
 
-\todo[inline]{ECore overview comes here}
-
 \subsection{Eclipse Modeling Framework}
-
-\todo[inline]{Cite Istvan's TDK}
 The Eclipse Modeling Framework (EMF) \cite{EMF} is a Java framework and code
 generation facility for building tools and other applications based on a
 structured model. EMF is also maintained by the Eclipse Foundation within the
@@ -264,32 +260,40 @@ scope of Eclipse Tools Project. EMF started out as an implementation of the OMG
 Meta Object Facility (MOF) specification, and evolved into a highly efficient
 product for model-based software design.
 
-\subsubsection{Metamodeling and Ecore}
-\todo[inline]{metamodeling}
+EMF provides automated code generation and tooling (e.g.~notification,
+persistence, editor) for Java representation of models. EMF models consist of an
+(acyclic) containment hierarchy of model elements (\emph{EObjects}) with
+crossreferences -- some of which may only be traversed by programs in one
+direction (unidirectional references). Additionally, each object has a number of
+attributes (primitive data values). Models are stored in \emph{EResources} (e.g.
+files), and interrelated resources are grouped into \emph{EResourceSets}.
 
-\subsubsection{EMF technical details}
-EMF requires a metamodel as an input; it can import metamodels from different
-sources, such as Rational Rose, XMI or XML Schema documents, or a special syntax
-can be used to annotate existing Java source files with EMF model properties.
-Once an EMF model is specified, the built-in code generator can create a
-corresponding set of Java implementation classes.
-These generated classes can be edited to add methods and instance variables;
-additions will be preserved during code-regeneration. In addition to simply
-increasing productivity, building an application using EMF provides several
-other benefits like model change notification, persistence support including
-default XMI and schema-based XML serialization, a framework for model
-validation, and a very efficient reflective API for manipulating EMF objects
-generically. Most important of all, EMF provides the foundation for
-interoperability with other EMF-based tools and applications.
-
-EMF has a built-in serialization facility, which enables the developer to save
+EMF provides the foundation for interoperability with other EMF-based tools and
+applications. EMF has a built-in serialization facility, which enables the developer to save
 (and load) in-stances of the model into industry-standard XMI format. EMF also
 provides a notational and persistence mechanism, on top of which
 model-manipulating tools can easily be constructed.
 
+\subsubsection{Ecore Metamodeling}
+EMF uses \emph{Ecore} metamodels to describe the abstract syntax of a modeling
+language. The main elements of Ecore are the following: \emph{EClass}
+(represented graphically by a rectangle on \autoref{fig:cp3model.pdf}),
+\emph{EAttribute} (entries in the rectangle) and \emph{EReference} (depicted as
+edges). EClasses define the types of EObjects, enumerating EAttributes to
+specify attribute types of class instances and EReferences to define association
+types to other EObjects. Some EReferences additionally imply containment
+(graphically represented by a diamond).
+Unidirectional references are represented by arrows. Both ends of an association
+may have a multiplicity constraint attached to them, which declares the number
+of objects that, at run-time, may participate in an association. The most
+typical multiplicity constraints are i) the at-most-one (0..1), and (ii) the
+arbitrary (denoted by *). Inheritance may be defined between classes (depicted
+by a hollow arrow), which means that the inherited class has all the properties
+its parent has, and its instances are also instances of the ancestor class, but
+it may further define some extra features.
+
 
 \subsubsection{EMF-IncQuery} 
-
 
 % Problem to solve.
 When working with models, it is quite common task to query the model for
