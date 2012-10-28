@@ -121,17 +121,24 @@ instantaneous (regardless of query or model size), which is consistent with
 literature results reported in~\cite{MODELS10}.
 
 \section{Performance evaluation conclusions}
-\todo[inline]{attekinto osszesites arrol, hogy az egyes funkciok hogyan egeszitik ki egymast teljesitmeny szempontjabol}
+In summary, the performance evaluation of the system has concluded with the following findings:
+\begin{description}
+\item[On the server side] the system provides fast analysis, persistence and
+queries for the global (binary) network of dependencies with full granularity.
+\item[On the client side] the system is able to support on-the-fly dependency
+analysis, with full granularity on the local (source) scope and limited
+granularity on the union of the local and global scopes (which is an acceptable
+tradeoff for performance and resource utilization).
+\end{description}
 
 It is also important to note that the 400 project workload is an
 over-approximation of what is actually needed in practice. The reason for this
 is that in each session, a developer actually only needs a small subset of the
 400 projects to work with as the high-level dependency network between CERN
 projects is relatively sparse (this assumption presumably holds for other
-typical organizations as well). Overall, as all requirements could be fulfilled
+typical organizations as well). Overall, all requirements could be fulfilled
 deeming the approach suitable for deployment.
 
-
-In conclusion we saw that all components have the desired effectiveness factor.
-The system itself is usable, scalable with the input and a feasible solution for
-achieving smooth upgrades. 
+% In conclusion we saw that all components have the desired effectiveness factor.
+% The system itself is usable, scalable with the input and a feasible solution for
+% achieving smooth upgrades. 
