@@ -58,83 +58,102 @@ incoming dependencies.
 
 \subsection{Requirements}
 
-\subsubsection{The context of this work: Control Systems at CERN}
+\subsubsection{The context of this work: Controls Systems at CERN}
+The context of this work is the author's internship at the Controls Group of
+CERN, the European Organization for Nuclear Research. CERN runs the the world's
+biggest particle physics laboratory with the main goal to operate particle
+accelerators (such as the Large Hadron Collider) and all the necessary
+infrastructure. At CERN, numerous scientist and engineers are working on the
+design and the maintenance of the software and hardware equipment in a
+well-defined structure. One of its members is the \emph{Controls Group} which is
+responsible for the design and implementation of both software and hardware used
+in the controls systems.
 
-\todo[inline]{shorten}
-
-% What is CERN.
-The European Organization for Nuclear Research known as CERN is an international
-organization which runs the the world's biggest particle physics laboratory.
-Established at 1954 and situated on the Swiss-French border next to Geneva. The
-organization's main goal to operate particle accelerators (such as the Large
-Hadron Collider) and all the necessary infrastructure.
-
-% The Controls group.
-Obviously not only physicists work az CERN: numerous scientist and engineers are
-working on the design and the maintenance of the software and hardware
-equipments in a well-defined structure. One of its members is the Controls Group
-which is responsible for the design and implementation of both software and
-hardware used in the controls systems. This involves providing software
-frameworks, alarm systems, communication middleware and numerous related tasks.
-
-% Main goal for Controls group.
-After the LHC became operational the  primary objective for the Controls Group
-is to maintain uninterrupted operation without any downtime. This implies that a
-upgrading certain parts of the systems should not interfere with arbitrary
-components.
-
-% Controls systems.
-The controls systems itself is a complex, distributed and highly modular system
+The controls system itself is a complex, distributed and highly modular system
 which has three tiers. On the top there are the GUI applications which are
 written in Java. The middle or business layer is also consists of Java
 applications. On the lowest or hardware level there are C/C++ applications
 running on real-time systems. Maintaining a complex system like this requires a
 set of special approaches in order to provide desired quality and to maximize
-the availability of the systems.
+the availability of the systems. The primary objective for the Controls Group is
+to maintain uninterrupted operation without any downtime. During the internship,
+the author was tasked with designing and implementing a developer tool that
+should aid the software developers at CERN in minimizing software component
+upgrade problems.
 
+\subsubsection{Requirements specific to the deployment environment}
+There are certain requirements specific to the software infrastructure at CERN
+that needed to be taken into consideration while designing the system.
 
-\subsubsection{CERN-specific requirements}
-
-
-The first valid question is: why didn't we just reuse an existing
-implementation? The answer is: because there is no one.
-There are specialities about the situation my tool has to solve.
 \begin{description}
-\item[Size limitation] If we are able to load every single jars into an IDE the
-problem would be solved: we could use the internal navigation features to navigate 
-through the dependency graph. In normal case seems possibe. 
-But if we look at he CERN Control Systems, where we have thousands of jars (and tens of 
-thousands if we count the possible versions) this approach is -- evidently -- impossible.   
-\item[Fine-graininess of dependencies] The existing tools usually cannot determine
-the desired dependency resolution level. For example JDepend \cite{JDepend} and
-JBoss Tattletale \cite{Tattletale} does dependency analysis on the class level,
-but we want to see method-level and fields level dependencies as well.
-\item[No source code analysis] We don't want to do a source code analysis because 
-it would imply a dependency resolution for concerned projects every time a new version 
-of a product comes out. This requirement also eliminates a number of possible tools. 
+\item[Technological environment] The software components to be managed by the
+new tool are all plain Java programs that do not make use of any framework (such
+as e.g. OSGi) for dependency and lifecycle management, but rely on basic
+features of the Java Compiler and the Java Virtual Machine to link to each
+other.
+ 
+\item[Complexity of a large software infrastructure] In a simple case,
+dependency analysis could be supported by a development environment such as
+Eclipse based on integrated source/binary code analysis. However, CERN Controls
+Systems deals with an infrastructure that consists of several thousands
+components (JARs) and even more if versioning information is taken into
+consideration. The resources available for development environments at developer
+PCs are not enough for supporting standard IDE features over a system of this
+size.
+ 
+\item[Granularity of dependencies] Existing dedicated dependency analysis
+tools offer a rather limited feature set for defining dependency relationships.
+For example JDepend \cite{JDepend} and JBoss Tattletale \cite{Tattletale} does
+dependency analysis on the class level, but CERN's requirement is to see
+method-level and fields level dependencies as well.
+
+\item[Source code analysis alone not feasible] Due to legacy reasons at CERN,
+the (up-to-date) source code is not available for some software components. In
+other cases, the source code is very large in size because it is automatically
+generated. Therefore, tools that rely solely on source code analysis cannot be
+used.
+
 \end{description}
 
-% After considering these arguments we at CERN decided to implement our own
-% solution internally called \ptool{}. In the following chapters I will present
-% the design and the implementation of this tool, how is it currently applied az
-% CERN Controls Group and how it was extended at Budapest University of
-% Technology.
-
-
 \section{Overview of the proposed solution}
+After analysing available off-the-shelf solutions, it became clear that the
+unique requirements called for a custom solution. The result of the work, called
+\ptool{}, implements hybrid dependency analysis based on both source and binary
+software components, and relies on a client-server architecture where end-user
+features are specifically aligned with the computing resources of the host
+environment. The tool uses a state-of-the-art incremental model query evaluation
+engine called EMF-IncQuery (developed at the Department of Measurement and
+Information Systems of the Budapest University of Technology and Economics), to
+provide on-the-fly dependency analysis results that can be refined on demand,
+integrated into the Eclipse development tool.
 
-client - server approach
+\subsection{Server features}
 
-\subsection{server features}
+\begin{itemize}
+  \item binary dependency discovery based on byte code analysis
+  \item dependency database (supported by an RDBMS)
+  \item dependency data access layer based on Java RMI
+\end{itemize}
 
-\todo[inline]{itemize}
+\subsection{Client features}
 
-\subsection{client features}
-
-\todo[inline]{itemize}
+\begin{itemize}
+  \item source dependency discovery based on incremental AST processing
+  \item model-based dependency representation for both local (source) and remote (binary) dependencies
+  \item on-the-fly dependency queries based on the joined local and remote dependency model 
+  \item UI integration components for both client-side and server-side queries
+\end{itemize}
 
 \section{Structure of the report}
-The rest of this report is structured as follows. Chapter 2 gives a brief overview of technologies that have been used in the design and implementation. Chapter 3 provides a high-level overview of the software system architecture (Section 3.1) and introduces a running example that is used in explanations (Section 3.2). Chapter 4 elaborates the design and implementation details, by discussing components both on the server side (Section 4.2) and client side (Section 4.3). Chapter 5 presents experimental results on the performance evaluation of the system, and Chapter 6 concludes the report with discussing on future work.
+The rest of this report is structured as follows. Chapter 2 gives a brief
+overview of technologies that have been used in the design and implementation.
+Chapter 3 discusses the role of the tool in development workflow (Section 3.1),
+provides a high-level overview of the software system architecture (Section 3.2)
+and introduces a running example that is used in explanations later on (Section
+3.3). Chapter 4 elaborates the design and implementation details, by discussing
+components both on the server side (Section 4.1) and client side (Section 4.2).
+Chapter 5 presents experimental results on the performance evaluation of the
+system, and Chapter 6 concludes the report with discussing on future work.
 
 \todo[inline]{change for proper refs}
 
