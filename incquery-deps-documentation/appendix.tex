@@ -91,10 +91,12 @@ private pattern projectsWithSameName(repoProject : CP3Project, wsProject : WProj
 	WProject.name(wsProject, commonName);
 }
 
-private pattern methodsWithSameNameAndSameProject(repoMethod : CP3Method, wsMethod : WMethod) = {
+private pattern methodsWithSameNameAndSameProject(repoMethod : CP3Method, 
+ wsMethod : WMethod) = {
 	// Find the items contained by the same named projects.
 	CP3Project.classes.methods(repoProject, repoMethod);
-	WProject.packageFragmentRoots.packageFragments.compilationUnits.types.methods(wsProject, wsMethod);
+	WProject.packageFragmentRoots.packageFragments
+	   .compilationUnits.types.methods(wsProject, wsMethod);
 	find projectsWithSameName(repoProject, wsProject);
 
 	// Join the methods by signature.
@@ -103,7 +105,8 @@ private pattern methodsWithSameNameAndSameProject(repoMethod : CP3Method, wsMeth
 }
 
 private pattern typesInWsProject(wsType : WType, wsProject: WProject) = {
-	WProject.packageFragmentRoots.packageFragments.compilationUnits.types(wsProject, wsType);
+	WProject.packageFragmentRoots.packageFragments
+	   .compilationUnits.types(wsProject, wsType);
 }
 
 private pattern methodsInWsType(wsMethod : WMethod, wsType : WType) = {
@@ -120,7 +123,8 @@ private pattern classNamesInRepoProjects(repoProject, repoClassName) = {
 }
 
 private pattern classNamesInWorkspaceProjects(wsProject, simpleName) = {
-	WProject.packageFragmentRoots.packageFragments.compilationUnits.types.name(wsProject, simpleName);
+	WProject.packageFragmentRoots.packageFragments
+	    .compilationUnits.types.name(wsProject, simpleName);
 }
 
 private pattern methodNamesInRepoProjects(repoProject, name) = {
@@ -130,12 +134,14 @@ private pattern methodNamesInRepoProjects(repoProject, name) = {
 
 private pattern methodNamesInWorkspaceProjects(wsProject, name) = {
 	WProject(wsProject);
-	WProject.packageFragmentRoots.packageFragments.compilationUnits.types.methods.name(wsProject, name);
+	WProject.packageFragmentRoots.packageFragments
+	   .compilationUnits.types.methods.name(wsProject, name);
 }
 
 private pattern fieldNamesInWorkspaceProjects(wsProject, name) = {
 	WProject(wsProject);
-	WProject.packageFragmentRoots.packageFragments.compilationUnits.types.fields.name(wsProject, name);
+	WProject.packageFragmentRoots.packageFragments
+	   .compilationUnits.types.fields.name(wsProject, name);
 }
 
 private pattern fieldNamesInRepoProjects(repoProject, name) = {
@@ -143,18 +149,22 @@ private pattern fieldNamesInRepoProjects(repoProject, name) = {
 	CP3Project.classes.fields.name(repoProject, name);
 }
 
-private pattern classesWithSameNameAndSameProject(repoClass : CP3Class, wsClass : WType) = {
+private pattern classesWithSameNameAndSameProject(repoClass : CP3Class, 
+  wsClass : WType) = {
 	CP3Project.classes(repoProject, repoClass);
-	WProject.packageFragmentRoots.packageFragments.compilationUnits.types(wsProject, wsClass);
+	WProject.packageFragmentRoots.packageFragments
+	    .compilationUnits.types(wsProject, wsClass);
 	find projectsWithSameName(repoProject, wsProject);
 	CP3Class.name(repoClass, name);
 	WType.name(wsClass, name);
 }
 
-private pattern fieldsWithSameNameAndSameProject(repoField : CP3Field, wsField : WField) = {
+private pattern fieldsWithSameNameAndSameProject(repoField : CP3Field, 
+  wsField : WField) = {
 	// Find the items contained by the same named projects.
 	CP3Project.classes.fields(repoProject, repoField);
-	WProject.packageFragmentRoots.packageFragments.compilationUnits.types.fields(wsProject, wsField);
+	WProject.packageFragmentRoots.packageFragments
+	    .compilationUnits.types.fields(wsProject, wsField);
 	find projectsWithSameName(repoProject, wsProject);
 
 	// Join the methods by signature.
@@ -163,10 +173,12 @@ private pattern fieldsWithSameNameAndSameProject(repoField : CP3Field, wsField :
 }
 
 
-private pattern classesWithSameFQNAndSameProject(repoClass : CP3Class, wsClass : WType) = {
+private pattern classesWithSameFQNAndSameProject(repoClass : CP3Class, 
+  wsClass : WType) = {
 	// Pattern applies only classes within a project with the same name.
 	CP3Project.classes(repoProject, repoClass);
-	WProject.packageFragmentRoots.packageFragments.compilationUnits.types(wsProject, wsClass);
+	WProject.packageFragmentRoots.packageFragments
+	   .compilationUnits.types(wsProject, wsClass);
 	find projectsWithSameName(repoProject, wsProject);
 
 	// Classes must have the same name...
@@ -177,9 +189,11 @@ private pattern classesWithSameFQNAndSameProject(repoClass : CP3Class, wsClass :
 // ----------------------------------------------------------------------------
 
 pattern addedClasses(wsClass: WType) = {
-	// Find the following attributes for the selected type: package name, simple name, project.
+	// Find the following attributes for the selected type: 
+	//  package name, simple name, project.
 	WType.name(wsClass, simpleName);
-	WProject.packageFragmentRoots.packageFragments.compilationUnits.types(wsProject, wsClass);
+	WProject.packageFragmentRoots.packageFragments
+	   .compilationUnits.types(wsProject, wsClass);
 
 	// Find the project in the repository.
 	find projectsWithSameName(repoProject, wsProject);
@@ -202,7 +216,8 @@ pattern removedClasses(repoClass: CP3Class) = {
 pattern addedMethods(wsMethod: WMethod, wsClass: WType) = {
 	// Find the method's project.
 	WMethod.name(wsMethod, name);
-	WProject.packageFragmentRoots.packageFragments.compilationUnits.types.methods(wsProject, wsMethod);
+	WProject.packageFragmentRoots.packageFragments
+	   .compilationUnits.types.methods(wsProject, wsMethod);
 
 	//Assign the type to the class.
 	WType.methods(wsClass, wsMethod);
@@ -230,7 +245,8 @@ pattern removedMethod(repoMethod : CP3Method) = {
 pattern addedFields(wsField: WField, wsClass: WType) = {
 	// Find the method's project.
 	WField.name(wsField, name);
-	WProject.packageFragmentRoots.packageFragments.compilationUnits.types.fields(wsProject, wsField);
+	WProject.packageFragmentRoots.packageFragments
+	   .compilationUnits.types.fields(wsProject, wsField);
 
 	//Assign the type to the class.
 	WType.fields(wsClass, wsField);
@@ -330,7 +346,8 @@ pattern incomingFieldAccesses(repoSource : CP3Method, wsTarget : WField) = {
 	check (type == 3);
 }
 
-pattern impactCausedByRemovedFields(repoFrom : CP3Method, repoTo : CP3Field, type : EShort) = {
+pattern impactCausedByRemovedFields(repoFrom : CP3Method, 
+  repoTo : CP3Field, type : EShort) = {
 	find removedFields(repoTo);
 	CP3Dep.from(d, repoFrom);
 	CP3Dep.to(d, repoTo);
@@ -338,7 +355,8 @@ pattern impactCausedByRemovedFields(repoFrom : CP3Method, repoTo : CP3Field, typ
 	check(type == 4);
 }
 
-pattern impactCausedByRemovedMethods(repoFrom : CP3Method, repoTo : CP3Method, type : EShort) = {
+pattern impactCausedByRemovedMethods(repoFrom : CP3Method, 
+  repoTo : CP3Method, type : EShort) = {
 	// method call
 	find removedMethod(repoTo);
 	CP3Dep.from(d, repoFrom);
@@ -354,7 +372,8 @@ pattern impactCausedByRemovedMethods(repoFrom : CP3Method, repoTo : CP3Method, t
 	check (type == 3);
 }
 
-pattern impactCausedByRemovedClasses(repoFrom : CP3Class, repoTo : CP3Class, type : EShort) = {
+pattern impactCausedByRemovedClasses(repoFrom : CP3Class, 
+  repoTo : CP3Class, type : EShort) = {
 	// class usage.
 	find removedClasses(repoTo);
 	CP3Dep.from(d, repoFrom);
@@ -370,13 +389,16 @@ pattern impactCausedByRemovedClasses(repoFrom : CP3Class, repoTo : CP3Class, typ
 	check (type == 3);
 }
 
-pattern outgoingMethodCallDependencyAdded(wsMethodFrom: WMethod, wsMethodTo: WMethod) = {	
+pattern outgoingMethodCallDependencyAdded(wsMethodFrom: WMethod, 
+  wsMethodTo: WMethod) = {	
 	// Finds method call dependencies between projects.
 	WDependency.from(d,wsMethodFrom);
 	WDependency.to(d, wsMethodTo);
 	WDependency.type(d,::METHOD_CALL);
-	WProject.packageFragmentRoots.packageFragments.compilationUnits.types.methods(wsP1, wsMethodFrom);
-	WProject.packageFragmentRoots.packageFragments.compilationUnits.types.methods(wsP2, wsMethodFrom);
+	WProject.packageFragmentRoots.packageFragments
+	  .compilationUnits.types.methods(wsP1, wsMethodFrom);
+	WProject.packageFragmentRoots.packageFragments
+	  .compilationUnits.types.methods(wsP2, wsMethodFrom);
 	check (!wsP1.equals(wsP2));
 	
 	// The elements exist in the repository
@@ -385,14 +407,14 @@ pattern outgoingMethodCallDependencyAdded(wsMethodFrom: WMethod, wsMethodTo: WMe
 	
 	// But the dependency does not exist in the workspace
 	CP3Dep.type(repoD, type);
-	// TODO
 	check(type == 3);
 	neg find repoDependency(repoMethodFrom, repoMethodTo, repoD);
 	
 }
 
 
-private pattern repoDependency(ceFrom: CP3AbstractItem, ceTo: CP3AbstractItem, d : CP3Dep) = {
+private pattern repoDependency(ceFrom: CP3AbstractItem, 
+  ceTo: CP3AbstractItem, d : CP3Dep) = {
 	CP3Dep.from(d, ceFrom);
 	CP3Dep.to(d, ceTo);
 }
