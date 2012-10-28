@@ -259,8 +259,8 @@ how the users can utilize the provided information.
 In our example the source and the binary
 repository contains three projects, each of them holds one package from the
 example. the name of the projects are service, client and impl, the name of 
-the jars files respectively service.jar, client.jar and impl.jar. For the sake
-of simplicity we have only one version from each project. 
+the jars files respectively \code{service.jar}, \code{client.jar} and \code{impl.jar}. 
+This will be the input for the bytecode processing.
 
 \paragraph{Bytecode processing}
 As 
@@ -395,7 +395,7 @@ same as described.
 
 % TODO: this should be replaced with true slicing
 This compacted repository model is loaded at start-up time and used till Eclipse
-is closed. This is reasonable because the repository chages are considered as rare events: 
+is closed. This is reasonable because the repository changes are considered as rare events: 
 In the environment described in \autoref{sect:cerninf} only a few releases happen a day.
 
 The described compact model contains some simplification but small enough to
@@ -705,7 +705,7 @@ the classes where a method is added.
 \paragraph{Detailed elaboration}
 One of the implemented queries is the one which retrieves the incoming method call 
 dependencies from the model. The entire definition of this query is the following. 
-\begin{lstlisting}[caption=Elements of the incoming method call dependency query]
+\begin{lstlisting}[caption=Elements of the incoming method call dependency query,label=patternex]
 private pattern joinProjects(repoProject : CP3Project, wsProject : WProject) = {
 	CP3Project.name(repoProject, commonName);
 	WProject.name(wsProject, commonName);
@@ -795,12 +795,27 @@ formation and has the reference on its container.
 \end{itemize}
 
 
+
 \subsubsection{On-the-fly model query results}
-The result of the query is shown on \autoref{fig:modelqueryresult.png}.
+After the compacted  model and the workspace model is loaded the model and the
+EMF-IncQuery is initialized, the results of the pattern queries can retrieved
+any time.
+The pattern matching strategy for the query described in \autoref{patternex} is
+shown on \autoref{fig:patternresult.pdf}.
+\picr{patternresult.pdf}{Pattern matching on the example}.
+The pattern finds, that the \code{serviceB} method object from the workspace has 
+a counterpart in the repository: They have the same name and their container project
+have also the same name (the project object are not shown). Then the query finds, 
+that there is a dependency which point on the \code{serviceB} object at the repository
+as the target of a method call dependency. Because these requirements are satisfied, 
+The source of the dependency (the \code{main} method) from the repository model and the
+\code{serviceB} method object from the workspace are returned (elements with the red border).
+ 
+The query was evaluated with the sample data in EMF-IncQuery's UI tooling. The 
+results are on \autoref{fig:modelqueryresult.png}.
 \picr{modelqueryresult.png}{Result of the incoming method call dependency query}
-The EMF-IncQuery engine found the desired dependency. It points to the compacted
-repository element having a method call dependency to the workspace model's
-equivalent.
+This figure shows that the evaluation gave back the same exact results as it was described
+on   \autoref{fig:patternresult.pdf}
 
 In this example a dependency was found. In this case the developer 
 has to decide whether he will maintain backward compatibility or he notifies the
@@ -809,12 +824,6 @@ to modify the \code{serviceA()} method, we would have seen that there are no inc
 dependencies. It means that the developer can break the signature of the method as
 he wishes. 
 
-\paragraph{UI prototype for model query results}
-\todo[inline]{kell ez a szoveg?}
-EMF-IncQuery also shows the result data in an Eclipse view but it does not 
-need an explicit call to update the visuals. A change listener registered in order
-to to update the the result. Every time the source code changes or when a different
-project or class is in the focus the result is updated accordingly.  
 
 
 
