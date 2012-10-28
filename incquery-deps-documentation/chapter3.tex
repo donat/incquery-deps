@@ -7,7 +7,7 @@
 \chapter{Overview of the approach}
 
 % My implementation.
-One of the most effective  way of achieving
+One of the most effective  way of doing
 smooth upgrades is to discover incoming dependencies. To achieve this, we
 designed and implemented the \ptool{}. The the first part of the current chapter
 introduces the environment where the tool is deployed and used. The second part
@@ -21,7 +21,7 @@ the solution more understandable.
 \subsection{Software infrastructure}
 
 % Eclipse
-At CERN Controls group has a definite set of tools used for development. Because
+The CERN Controls group has a definite set of tools used for development. Because
 C/C++ and Java applications are developed, the used Integrated Development
 Environment is an internally maintained Eclipse distribution with correct
 plugins installed.
@@ -58,7 +58,7 @@ options for Eclipse development.
 
 \subsubsection{Build process}
 When the source code is ready, the developer executes the Common Build client to
-build it. The client itself is a customized Ant distribution and acts in the
+build it. The client itself is a customized Ant distribution and works in the
 same way. It resolves the dependencies from the dedicated binary repository,
 which contains all previously released products and all used third party
 libraries. The content is also defined in a XML file.
@@ -66,7 +66,7 @@ libraries. The content is also defined in a XML file.
 \subsubsection{Release process}
 If all source code is ready the developer can hit release. This first initiates
 the same build process, but it is extended by two things. First the source code
-is tagged in the SVN repository using the version numbers as tag names. Then, the
+is tagged in the SVN repository using the version numbers as tag names, then, the
 compiled jar file is put into the binary repository. 
 
 \subsubsection{Smooth upgrades and the development workflow}
@@ -97,14 +97,13 @@ not break existing software components already released.
  
 %ki, mikor, mire, hogyan hasznalja az altalad elkeszitett toolt?}
 
-
-
+ 
 
 \section{System architecture}
 
-\autoref{fig:superfigure.pdf}  shows the architecture of the \ptool{}.
+\autoref{fig:superfigure.pdf} shows the architecture of the \ptool{}.
 \picr{superfigure.pdf}{Overview of the implemented system}
-shows the overview of it. The system applies the standard server-client
+The system applies the standard server-client
 architecture. The server side discovers the Java binaries, processes and stores
 their structure and stores them in a database. The client side is an Eclipse
 plugin, which gives the ability to the users to obtain and analyse the
@@ -126,7 +125,7 @@ to change in the source code.
 \subsection{Repository management}
 % Central repository management.
 This component consists of the ''Source repository'' and the 'Binary component
-repository'. They contain both the source code and the build binary version of
+repository'. They contain the source code and the built binary version of
 the internally developed softwares. These elements are centrally managed and
 have a well-defined structure. The developers work on the source code and if
 they finish one milestone they publish their improvements by putting the
@@ -155,7 +154,7 @@ information are stored in this database, which serves the client queries too.
 
 \subsection{The client side}
 % Plugin
-The client-side of the solution is a set of  Eclipse plugins, which give the
+The client side of the solution is a set of  Eclipse plugins, which give the
 developer a convenient way to access to the dependency information. 
 
 \subsubsection{Model load and direct queries}\label{sect:directqueries}
@@ -168,7 +167,7 @@ dependency information from the Java source editor through UI contribution
 \subsubsection{Workspace model creator}\label{sect:wsmodelcreator}
 The workspace model creator generate an EMF instance model describing the
 state of the workspace. The generated model contains the loaded projects, the
-contained packages, classes, methods, etc. This instance model also contains the
+declared packages, classes, methods, etc. This instance model also contains the
 dependency structure between the elements (e.g. method calls, field accesses and
 such). The information is gathered through the Eclipse Java Development Tools'
 API. After the model is created it is incrementally maintained even through 
@@ -178,7 +177,7 @@ restarts.
 The pattern matcher module executes complex model queries on top of the acquired
 instance models to provide dependency information. First, it loads an EMF
 instance model from the server describing the structure of all projects in the
-central repository. Afterward the workspace instance model is loaded from the
+central repository. Afterwards the workspace instance model is loaded from the
 module (see \autoref{sect:wsmodelcreator}). Both of the models are loaded to the
 EMF-IncQuery engine. Through complex queries the two models are joined and
 queried for the dependency information. The result of the queries are maintained
@@ -203,14 +202,14 @@ The details of the user interface are in \autoref{sect:elabexplicit}.
 Using direct queries brings no limitations. The queries are simple remote method
 calls and the result set is a relatively small data set which easy to store and
 present on the Eclipse UI. On the other hand, the graph-pattern matching
-solution is somewhat limited, because in order to load make EMF-IncQuery work,
+solution is somewhat limited, because in order to make EMF-IncQuery work,
 the entire repository has to be loaded. By default the repository instance model
 is a few hundred megabytes sized in a serialized form. This implies that the
 implementation has to optimize this model without dropping useful information.
 
 \section{Running example: Service Provider Framework}\label{sect:spf}
 
-To make the following chapters easier to understand, I am going to introduce a
+To make the following chapters easier to understand, we are going to introduce a
 simple use-case example. It is a design pattern called Service Provider
 Framework. It is a practical application of the original Adapter pattern and it
 was described in the book \emph{Effective Java} \cite{Bloch08}. This pattern
@@ -224,7 +223,7 @@ is the simplified version how the Java Database Connectivity (JDBC) works.
 
 \autoref{fig:exampleclasses.pdf} shows the structure of the design pattern. As of
 the packages it contains 3 major parts.
-The \code{service} package contains the core pattern classes. The \code{impl}
+The \code{service} package contains the core pattern classes. The \code{client}
 and the \code{impl} packages are external users of the pattern and therefore
 they are considered depending client libraries.
 
@@ -244,7 +243,7 @@ was registered with the same name, and if the answer is yes, then it calls the
 
 The \code{DEFAULT\_PROVIDER\_NAME} is a static public field which can be used to
 obtain the default Service implementation. The \code{AbstractService} is a
-utility class which implements one of the function of the Service interface.
+utility class which implements one of the function of the \code{Service} interface.
 
 The \code{impl} package contains one possible implementation to use the
 described pattern. The \code{BasicService} contains the implementation while the
@@ -262,7 +261,7 @@ Although, the example is simple, the related source code can be found in
 
 \subsection{Smooth upgrade challenges}
 As our main goal we would like give the developers the ability to check who is
-using the certain parts of the API. To highlight this, imagine that the three
+using certain parts of the API. To highlight this, imagine that the three
 packages described in \autoref{sect:spfdesc} are distributed into three
 different software which have their individual developers. If the developer
 responsible for the \code{service} package wants to change some parts of the
@@ -276,7 +275,7 @@ API. as a result three outcome can happen.
 causing compatibility issues. The developer can do whatever he wants.
   \item[A few incoming dependencies] In this case the developer has to negotiate
 with the clients how to proceed: either he has to provide backward compatibility or the
-clients has to adapt align their code to the modifications.
+clients has to adapt their code to the modifications.
   \item[A lot of incoming dependencies] In this case the queried code
 element is used by a lot of external clients and any modifications would cause a build
 error, therefore backward compatibility has to be maintained.
