@@ -1,11 +1,13 @@
-\chapter{Details}
+\chapter{Elaboration of the design and implementation}
 % ------------------------------------------------------------------------------
 % Elaboration 20 pages. Details of the Dependency Analysis Plugin (DAP. Describe
 % the DAP-DB and %DAP-INCQUERY solution too.
 % ------------------------------------------------------------------------------
 
 
-\section{Infrastructure at CERN controls systems}
+\section{CERN software infrastructure and processes}
+
+\subsection{Infrastructure at CERN controls systems}
 
 % Eclipse
 At CERN Controls group has a definite set of tools used for development. Because
@@ -32,7 +34,7 @@ Common build is tightly coupled both to the SVN server and to the binary release
 repository as it automates the not just the building but the release of the
 Java products too.
 
-% Development workflow
+\subsection{Development workflow}
 \picseventy{commonbuild.pdf}{Build workflow using Common Build}
 \autoref{fig:commonbuild.pdf} highlights this relationship by showing a typical
 workflow of the development process. The developer first checks out the source
@@ -42,23 +44,31 @@ Common Build (such as name and version of the product and the required
 dependencies). Also Common Build is capable to setup build path and the related
 options for Eclipse development. 
 
-% building
+\subsubsection{Build process}
 When the source code is ready, the developer executes the Common Build client to
 build it. The client itself is a customized Ant distribution and acts in the
 same way. It resolves the dependencies from the dedicated binary repository
 which contains all previously released products and all used third party
 libraries. The content is also defined in a XML file.
 
-% release
+\subsubsection{Release process}
 If all source code is ready the developer can hit release. This fist initiates
 the same build process, but it is extended by two things. First the source code
 is tagged in the SVN repository which the version number as tag name. Second the
 compiled jar file is put into the binary repository. 
 
+\subsubsection{Smooth upgrades and the development workflow}
+\todo[inline]{kifejteni, hogy hogyan kapcsolodik pontosan a smooth upgrade a fejlesztesi folyamatba}
+\todo[inline]{ki, mikor, mire, hogyan hasznalja az altalad elkeszitett toolt?}
+
+
 % ------------------------------------------------------------------------------
 % MODULE: Bytecode analysis
 % ------------------------------------------------------------------------------
-\section{Bytecode analyzer}
+\section{Server side}
+
+
+\subsection{Bytecode analyzer}
 % Why
 Before the system performs dependency analysis, it needs to extract the
 necessary information from the source code.
@@ -70,7 +80,7 @@ processing.
 
 
 % How
-\subsection{Anatomy of a Java binary}
+\subsubsection{Anatomy of a Java binary}
 The Bytecode analyzer module takes a set of jars as an input. A jar file is
 essentially a zip file containing Java-related resources: resource files, binary
 class files and meta-information. Because the system has to discover
@@ -104,8 +114,8 @@ constant pool. The only challenging part to solve is to match, where exactly are
 the external resources are used in the bytecode itself.
 
 
-\subsection{The analysis process}
-The module extract all necessary information from the class files for processing
+\subsubsection{The analysis process}
+The module extracts all necessary information from the class files for processing
 them. This could be done by brute-force parsing binary files, but it would be an
 tedious and error-prone task. Instead of this the implementation reuses Apache
 BCEL to effectively parse the class files and and to obtain the necessary
@@ -114,11 +124,13 @@ information via simple API calls.
 \autoref{fig:bytecodeanal.pdf} shows the steps of the analysis process and the
 related information in the class files for each step. 
 
+\paragraph{Initialization}
 The analysis starts with gathering the basic structure. This involves acquiring
 the class' name, the name of the extended class and the implemented interfaces,
 the defined fields and methods. This information is accessible out of the box
 through the BCEL API.  
 
+\paragraph{Gathering external references}
 The second step is to acquire all external reference pointing outside of the
 class files. For imported classes it is easy because this is what the
 \code{ConstantClass} entries cover in the constant pool. For field and method
@@ -126,6 +138,7 @@ references, the implementations searches \code{ConstantFieldRef} and
 \code{ConstantMethodRef} occurrences in the bytecode and saves all methods 
 which uses them.
 
+\paragraph{Conversion}
 The next step is to convert the information into source format. This is
 necessary because both the structure and the external references are presented
 in a format which not readable nor could be easily queried by the users of the
@@ -135,6 +148,7 @@ transforms it into \code{println(java.lang.String):void}.
 
 % Somewhere it should be described that we don't deal with reflection, just
 % static dependencies.
+\paragraph{Filtering}
 The final step is to clean up the gathered information. At this step we have to
 consider that if we mapped all information then the gathered data would have a
 comparable size with the binary repositories which is unacceptable when we have
@@ -149,7 +163,7 @@ capabilities. Of course this cleanup needs do be done after all class files are
 parsed in a jar file. 
 
 
-\subsection{Extracted domain model}
+\subsubsection{Extracted domain model}
 The output of the analyzer is a java domain model.
 \picr{domainmodelsimp.pdf}{Classes of the domain model used by the bytecode analyzer}
 \autoref{fig:domainmodelsimp.pdf} shows the elements of this model. Because this
@@ -175,7 +189,7 @@ dependency.
 % ------------------------------------------------------------------------------
 % MODULE: Dependeney processor
 % ------------------------------------------------------------------------------
-\section{Dependency processor}
+\subsubsection{Dependency processor}
 % Why
 The bytecode analyzer gathers all structural elements and the textual references
 of the dependencies. For resolving the references the dependency processor
@@ -188,7 +202,7 @@ found it means that there is a dependency between a two elements and as a result
 a dependency is stored.
 
 % How
-\subsection{Discovered dependencies}
+\subsubsection{Discovered dependencies}
 During the work at CERN we decided to narrow down the search for basic
 dependencies which could be extracted from the binary code without interpreting
 what does a class really do. By this we could exactly define what information
@@ -211,7 +225,7 @@ in an external class.
 \end{description}
 
 
-\subsection{Discovery process}
+\subsubsection{Two-pass Discovery process}
 After defining the searched dependencies let's see how exactly the dependency
 discovery process work. The main objective here is to do the analysis on a large
 set of Java binaries without having memory problems. Obviously if one loads all
@@ -220,6 +234,8 @@ enormous size of memory which will go up if the input number of the binaries
 increasing.
 
 \picr{analization.pdf}{Sequence of the dependency discovery process}
+
+\paragraph{Binary update processing}
 \autoref{fig:analization.pdf} shows how the tool solves this issue. The process
 starts with an update in the binary repository. The new, not analyzed binaries
 are passed to the bytecode analyzer components which produces a model for each
@@ -230,7 +246,8 @@ number of input binaries. Also only the structure is pushed into the database,
 the references are considered as transient data. This is necessary because the
 references need huge space to store: on average they took 60\% of the size of a
 class file and leaving them out is a big saving in the storage.
- 
+
+\paragraph{Dependency reprocessing} 
 After all jar's  structure is saved in the database, the process re-initiates
 the bytecode analysis on every jars one-by one and passes the models again to
 the dependency processor. The processor now tries to execute certain queries on
@@ -246,7 +263,7 @@ relationships between certain elements in order to decide whether or not a
 specific code could be changed.
  
  
-\section{Storage engine} 
+\subsection{Storage engine} 
 The dependency processing requires some database functionality to 
 properly work. This is defined in the storage engine component.
 
@@ -255,6 +272,7 @@ important and complex responsibilities. First it is an abstraction layer over
 the concrete database implementation. Second it provides transactional behavior
 automatically to the database. 
 
+\subsubsection{Interface}
 The interface defines operations for two purposes: i) Store and retrieve the
 structure of a jar and the dependencies ii) search for items based on their
 names and iii) query incoming dependencies of an element.
@@ -273,7 +291,7 @@ domain model} Every element has a list of version numbers where they are
 present. Also a \code{Dependency} class is added to effectively handle
 dependencies between them.
 
-% emf and oracle implementation.
+\subsubsection{Implementations}
 This database engine is just a specification how it should work. It has two
 practical implementation: one which uses Oracle database and one which stores
 the data in an EMF model. The Oracle database maps the entities into tables and
@@ -291,8 +309,14 @@ structure as the domain model (see \autoref{fig:domainmodelsimp.pdf} and
 % ------------------------------------------------------------------------------
 % MODULE: Dependeney processor
 % ------------------------------------------------------------------------------
-\section{Dependency database synchronizer}
+\section{Client side}
+
+
+\subsection{Dependency database synchronizer}
 \label{sect:depdbsynch}
+
+\todo[inline]{atdolgozni erthetobbre}
+
 % what
 The Dependency database component is responsible for querying the server for
 dependency information related to a selected element or elements. It loads the
@@ -370,7 +394,7 @@ around 70 MiB which is considered small enough to work with.
 % ------------------------------------------------------------------------------
 % MODULE: Source code model synchronizer
 % ------------------------------------------------------------------------------
-\section{Source code model synchronizer}
+\subsection{Source code model synchronizer}
 % what
 To make the repository model comparable with the state of the workspace the
 source code model synchronizer generates an EMF model describing the elements
@@ -378,7 +402,7 @@ in the workspace and keeps it synchronized along every workspace modification.
 Maintaining an EMF model lets the model queries component dynamically examine
 the current state of the workspace without accessing the JDT API.
 
-\subsection{Eclipse Java Model}
+\subsubsection{Eclipse Java Model}
 Eclipse Java Development Tools main objective is to give feature-rich,
 integrated and extendable environment for editing Java source code. It comes
 with incremental builder and rich and extensive tooling for Java editing.
@@ -416,7 +440,7 @@ the Java projects. To add dependency information to this model, the JDT's search
 feature comes into picture. With this the component is able to query the dependencies
 for every structural element. 
 
-\subsection{The generated EMF model}
+\subsubsection{The generated EMF model}
 % structure and JDT
 \picr{wsmodel.pdf}{EMF model storing the structure of the Java projects}
 \autoref{fig:wsmodel.pdf} shows the EMF model which is extracted and maintained
@@ -427,7 +451,7 @@ which uniquely identifies the represented Java Model object. To gain access to
 the correspondent Java Model object, only the \code{JavaCore.create(String)} is
 required.
 
-% structural hierarchy.
+\paragraph{Structural hierarchy}
 The containment hierarchy starts form the lower right corner of the figure with
 the \code{WProject} class which represents a Java project loaded into the
 workspace. It contains \code{WPackageFragmentRoot} elements which represent the
@@ -438,7 +462,7 @@ define some java types (\code{WType}). On the lowest level in the containment
 hierarchy lie the methods and fields (\code{WMethod} and \code{WField}
 instances).
 
-% dependency hierarchy.
+\paragraph{Dependency hierarchy}
 Just like in the repository model here also the dependencies are defined upon
 the common supertype, but here a \code{WDependency} has a two-way relationships
 for both the source and the target part of the dependency relation. For one
@@ -449,7 +473,7 @@ accessible. Again, the same dependency types are defined as before.
 The model has one common root, a \code{WWorkspace} instance which contains both
 the structural elements and the dependencies.
 
-\subsection{The model synchronization process}
+\subsubsection{The model synchronization process}
 % describe the process itself
 \picr{sourcesync.pdf}{The maintenance process of the source code model}
 \autoref{fig:sourcesync.pdf} shows how the process  of model building works. It
@@ -459,6 +483,7 @@ done the components executes a dependency search for each relevant element
 utilizing JDT's integrated search engine. The found dependencies are associated 
 with the proper model element.
 
+\paragraph{Capturing local workspace changes}
 When the initial model build is finished the next task is to subscribe for the
 workspace changes. This can be done by registering a simple listener object with
 the  \code{JavaCore.addElementChangedListener(IElementChangedListener);} static
@@ -471,6 +496,8 @@ After the component is set up it waits for the modifications. If it happens, an
 incremental model update fires, maps the related Java Model element to the EMF
 model and modifies it properly. 
 
+\paragraph{Processing local workspace changes}
+\todo[inline]{itemize tomorebbre}
 The change notifications comes in a form of a hierarchical delta holder object.
 It refers to an object, states if it was added, deleted, or changed and provides
 the list of the affected children. For example if a Java class definition has
@@ -488,7 +515,9 @@ If a modification happens in the source file it is also incrementally modified
 but treated slightly differently. This is necessary because the delta
 information doesn't provide usable information about what has changed below the
 compilation unit.
+
 \pic{sourceupdate.pdf}{Updating EMF workspace model when source code is modified}
+
 This process is shown in \autoref{fig:sourceupdate.pdf}. The updater checks
 which source file is modified and re-generates its EMF representation. The
 generated small model is compared with the source of the model. If a new method
@@ -503,15 +532,19 @@ the entire model when on the next start-up. If no external modifications happen
 than the model is loaded one-by-one which is faster than gathering all
 structural and dependency information.
 
-\section{Model queries}
+\subsection{Model queries}
 The model queries components executes complex queries on the loaded models and
 gives and exposes the result for  visualization. 
 
+\subsubsection{Explicit queries}
 Both the result of the explicit queries and the EMF-IncQuery-based use-case is
 handled inside this component. As it was discussed previously not much has
 happening here with the result of the explicit queries: it is passed to the UI
 components as is.
 
+\todo[inline]{hianyzik: lekerdezesek eredmenyeinek kliens oldali feldolgozasa, megjelenitese, kepernyokepek}
+
+\todo[inline]{ez a gondolatkor korabbra valo}
 The more interesting part of the module is the queries based on EMF-IncQuery.
 The main reason why it was implemented is that normally, if the analysis is done
 only on the server side, than all the dependency information will be based on
@@ -525,11 +558,13 @@ about the impact a possible release would cause but it gives immediate feedback
 about the change every time the source code is saved. Also important that
 all results of all queries is available upon usage, no manual query is required.
 
+\subsubsection{On-the-fly queries}
 To achieve this, the component first loads the model of the repository and the 
 model of the current workspace, loads them into the EMF-IncQuery engine, 
 and initiates the queries and exposes the results on an API which also updates
 the dependency information dynamically. 
  
+\paragraph{Query specifications based on graph patterns}
 The queries are developed with EMF-IncQuery's own query language. This language
 is used to express certain patterns over EMF models. You can think about it as 
 a regular expression over an object-model. To highlight this, let's see an example
@@ -562,6 +597,7 @@ the objects  where the \code{cu} variable references the \code{t} as a contained
 type''. Expression power of the pattern language is much bigger; for complete
 reference check the documentation site \cite{EMFIncQuery}.
 
+\paragraph{Developing queries}
 The usage of the queries takes multiple steps shown on \autoref{fig:incquerydev.pdf}.
 \picr{incquerydev.pdf}{Development of EMF-IncQuery queries} 
 First the queries are defined with the query language. The tooling takes the queries 
@@ -571,7 +607,8 @@ source code along with the engine exposes a simple interface for registering the
 queries and getting back the results when needed. The only manual coding takes place
 at the last part on load-time, when it has to be specified manually which queries 
 should be evaluated. 
-  
+
+\paragraph{Integrating queries at runtime}  
 The generated code contains a factory service which registers the query in the
 engine. The query is represented as a \code{Matcher} object in the generated
 code which gives back the results through the \code{Matcher.getAllMatches()}
@@ -607,11 +644,13 @@ incoming dependencies of the deleted elements. Another can be inheritance on
 the classes where a method is added.
 \end{description}
 
+\todo[inline]{query-ket reszletesebben bemutatni, abra!}
+
 On start-up these queries are registered and accessible outside via a simple API.
 The UI components use this API to access the dependency information and show the
 current state in different views.
 
-\section{UI Components}
+\subsection{UI Components}
 The UI components extends the Eclipse platform's user interface to provide
 access to the dependency information and to show the results in an integrated
 way. 
@@ -634,6 +673,7 @@ The Eclipse views utilize JFace, more precisely JFace tree viewers to present
 the information. Using JFace has two advantages: displaying the data is not
 bound to the original structure of the input and EMF has tight integration to
 JFace out of the box.
+\todo[inline]{jface hianyzo hivatkozas!}
 
 \picfifty{jface.pdf}{Displaying data with JFace}
 
@@ -645,6 +685,8 @@ data, a data adapter is loaded (through Eclipse platform service registration).
 With both the content and the description how the data should be displayed JFace
 automatically shows the results and provides convenience functions such as tree
 folding, selection service, etc. 
+
+\todo[inline]{databinding?}
 
 
 
