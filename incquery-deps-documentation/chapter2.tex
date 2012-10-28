@@ -3,7 +3,9 @@
 %10 pages. For motivation: Design pattern figure. (Service registration pattern).
 %------------------------------------------------------------------------------
 
-\section{Java Runtime}
+\todo{kotoszoveg}
+
+\section{Java basics}
 
 \subsection{Java byte code specification}
 % Java platform
@@ -40,7 +42,7 @@ loaded by the byte code interpreter and executed. In order to implement
 additional features, researchers may want to transform class files (drawn with
 bold lines) before they get actually executed.
 
-\subsubsection{Internals of a class file}
+\subsection{Internals of a Java class file}
 
 % Internals of the class file
 \pic{classfile.pdf}{Simplified structure of a class file}
@@ -96,7 +98,83 @@ The constant pool basically holds the following types of constants: References
 to methods, fields and classes, strings, integers, floats, longs, and doubles.
 
 
-\subsection{Apache Commons Byte Code Engineering Library} 
+\section{Server side}
+
+\subsection{Application platform}
+
+\subsubsection{Spring Framework}
+%
+The Spring Framework is an open source application framework and Inversion of
+Control container for the Java platform. The core features of the Spring
+Framework can be used by any Java application, but there are extensions for
+building web applications on top of the Java EE platform. Although the Spring
+Framework does not impose any specific programming model, it has become popular
+in the Java community as an alternative to, replacement for, or even addition to
+the Enterprise JavaBean (EJB) model.
+
+%
+The main advantage of using Spring framework is a configurability through
+dependency injection. Using its features it is a solid platform for creating
+clear, well-tested and maintainable applications.
+
+
+\subsubsection{Oracle database}
+The Oracle Database (also known as Oracle DB, Oracle RDBMS or just Oracle) is a
+relational database management system (RDBMS) from the Oracle Corporation.
+Originally developed in 1977 by Lawrence Ellison and other developers, Oracle DB
+is one of the most trusted and widely-used relational database engines.
+
+The system is built around a relational database framework in which data objects
+may be directly accessed by users (or an application front end) through
+structured query language (SQL). Oracle is a fully scalable relational database
+architecture and is often used by global enterprises, which manage and process
+data across wide and local area networks. The Oracle database has its own
+network component to allow communications across networks.
+\subsection{Build system}
+
+\subsubsection{Maven}
+In three words Apache Maven is a project management framework. The main goal is 
+similar to Ant but Maven offers an integrated approach to make Java development
+manageable. 
+
+Maven standardizes the entire development process by defining explicit lifecycle
+steps for dependency management, building, packaging, deploying and so on.
+Although the lifecycle elements are set, they can be configurable through the 
+key element of Maven: the Project Object Model (POM). POM is an XML document in 
+the project's folder describing every necessary information about it to make 
+maven be able to do its job. 
+
+Through the POM file almost everything related to the project is configurable,
+yet the most important feature is the dependency management. One can define
+certain dependencies in this file, which will be download automatically from 
+the Maven repositories.
+
+Also POM is the place to define almost every relevant information about the project:
+source and binary folders, package format, deployment location, etc. These settings
+get applied during the build process.
+
+Maven is also extendable through plugin mechanism. One can develop extensions for it
+for achieve various non-standard goals such as integration testing or building 
+non-standalone Java applications.
+
+\subsubsection{Tycho}
+Tycho is a set of Maven plugins and extensions for building Eclipse plugins and
+OSGi bundles with Maven. It exists because Eclipse plugins have their own way of
+describing metadata such as version numbers and dependencies which normally
+would be placed in the Maven POM. Tycho reuses this native metadata 
+and uses the POM to configure and drive the build. Tycho also knows
+how to run JUnit test plugins using OSGi runtime and there is also support for
+sharing build results using Maven artifact repositories. Tycho introduces
+new packaging types and the corresponding lifecycle bindings that allow Maven to
+use OSGi and Eclipse metadata during a Maven build.
+
+Although Tycho is useful for building Eclipse plugins in a headless way but it
+still has not reached the production quality (the current version number is
+0.16) and it is still under heavy development. The current modifications and
+enchantments can be found on the project's website.
+
+
+\subsubsection{Apache Commons Byte Code Engineering Library} 
 % what is apache bcel
 The Byte Code Engineering Library (BCEL) \cite{BCEL} is intended to give users a
 convenient way to analyze, create, and manipulate (binary) Java files. Classes
@@ -121,7 +199,7 @@ of the defined methods, etc. and ii) process all external references defined in 
 bytecode.
 
 
-\section{Eclipse}
+\section{Client side}
 
 \subsection{Eclipse Integrated Development Environment}
 The Eclipse Project \cite{Eclipseproject} is an open source software development
@@ -172,6 +250,10 @@ scope of Eclipse Tools Project. EMF started out as an implementation of the OMG
 Meta Object Facility (MOF) specification, and evolved into a highly efficient
 product for model-based software design.
 
+\subsubsection{Metamodeling and Ecore}
+\todo{metamodeling}
+
+\subsubsection{EMF technical details}
 EMF requires a metamodel as an input; it can import metamodels from different
 sources, such as Rational Rose, XMI or XML Schema documents, or a special syntax
 can be used to annotate existing Java source files with EMF model properties.
@@ -192,14 +274,14 @@ provides a notational and persistence mechanism, on top of which
 model-manipulating tools can easily be constructed.
 
 
-\subsection{EMF-IncQuery} 
+\subsubsection{EMF-IncQuery} 
 % Problem to solve.
 Working with models it is quite common task to query the model for checking it and
 validating certain properties. The EMF-IncQuery \cite{EMFIncQuery} tool provides
 one solution for this problem: It is a framework to execute fast model queries
 over EMF models. It is actively developed at Budapest University of Technology
 and Economics. Although it is still in development status (the current version
-is 0.6.0) it already proved its usability through industrial use-cases and
+is 0.6.8) it already proved its usability through industrial use-cases and
 university researches. % TODO: reference results for these use-cases.
 
 
@@ -241,77 +323,7 @@ model queries. The users can integrate this code out of the box in Eclipse
 plugins as well as headless applications to execute queries and get back the
 results from the source code level.
 
-\section{Other related technologies}
+\todo{Xtext: hianyzik a hivatkozas!}
 
-\subsection{Spring Framework}
-%
-The Spring Framework is an open source application framework and Inversion of
-Control container for the Java platform. The core features of the Spring
-Framework can be used by any Java application, but there are extensions for
-building web applications on top of the Java EE platform. Although the Spring
-Framework does not impose any specific programming model, it has become popular
-in the Java community as an alternative to, replacement for, or even addition to
-the Enterprise JavaBean (EJB) model.
-
-%
-The main advantage of using Spring framework is a configurability through
-dependency injection. Using its features it is a solid platform for creating
-clear, well-tested and maintainable applications.
-
-
-\subsection{Maven}
-In three words Apache Maven is a project management framework. The main goal is 
-similar to Ant but Maven offers an integrated approach to make Java development
-manageable. 
-
-Maven standardizes the entire development process by defining explicit lifecycle
-steps for dependency management, building, packaging, deploying and so on.
-Although the lifecycle elements are set, they can be configurable through the 
-key element of Maven: the Project Object Model (POM). POM is an XML document in 
-the project's folder describing every necessary information about it to make 
-maven be able to do its job. 
-
-Through the POM file almost everything related to the project is configurable,
-yet the most important feature is the dependency management. One can define
-certain dependencies in this file, which will be download automatically from 
-the Maven repositories.
-
-Also POM is the place to define almost every relevant information about the project:
-source and binary folders, package format, deployment location, etc. These settings
-get applied during the build process.
-
-Maven is also extendable through plugin mechanism. One can develop extensions for it
-for achieve various non-standard goals such as integration testing or building 
-non-standalone Java applications.
-
-\subsection{Tycho}
-Tycho is a set of Maven plugins and extensions for building Eclipse plugins and
-OSGi bundles with Maven. It exists because Eclipse plugins have their own way of
-describing metadata such as version numbers and dependencies which normally
-would be placed in the Maven POM. Tycho reuses this native metadata 
-and uses the POM to configure and drive the build. Tycho also knows
-how to run JUnit test plugins using OSGi runtime and there is also support for
-sharing build results using Maven artifact repositories. Tycho introduces
-new packaging types and the corresponding lifecycle bindings that allow Maven to
-use OSGi and Eclipse metadata during a Maven build.
-
-Although Tycho is useful for building Eclipse plugins in a headless way but it
-still has not reached the production quality (the current version number is
-0.16) and it is still under heavy development. The current modifications and
-enchantments can be found on the project's website.
-
-
-\subsection{Oracle database}
-The Oracle Database (also known as Oracle DB, Oracle RDBMS or just Oracle) is a
-relational database management system (RDBMS) from the Oracle Corporation.
-Originally developed in 1977 by Lawrence Ellison and other developers, Oracle DB
-is one of the most trusted and widely-used relational database engines.
-
-The system is built around a relational database framework in which data objects
-may be directly accessed by users (or an application front end) through
-structured query language (SQL). Oracle is a fully scalable relational database
-architecture and is often used by global enterprises, which manage and process
-data across wide and local area networks. The Oracle database has its own
-network component to allow communications across networks.
 
 
