@@ -70,21 +70,27 @@ is tagged in the SVN repository using the version numbers as tag names. Then, th
 compiled jar file is put into the binary repository. 
 
 \subsubsection{Smooth upgrades and the development workflow}
-The developers at the controls group work on a variety of Java softwares, which
-have complex relationships. Mostly these softwares has to stay operational 24/7.
-In addition an upgrade or a bugfix is inevitable, sometimes instantly. But if a
-software changes and it breaks the API, a dependant deployed software may stop
-working and in worst case the controls systems stop. Because of this, the
-developers have to perform their upgrade carefully without causing damage to the
-dependant systems.
+In \autoref{fig:commonbuild.pdf}, smooth upgrades should be supported during working
+with the Eclipse IDE (``2. modification''), in the pre-release phase when the
+developer is making local changes with the aim to ensure that these changes will
+not break existing software components already released.
 
-The initial solution for a developer was to search the source repository for specific
-texts, which is ineffective and can miss certain use-cases. This is why my project
-was started.
 
-Right now the tool is distributed with an internal eclipse packaging, so it is available 
-for every developer who needs it. Usually library developers take advantage of it 
-especially during technical stops, where the scheduled upgrades take place. 
+% The developers at the controls group work on a variety of Java softwares, which
+% have complex relationships. Mostly these softwares has to stay operational 24/7.
+% In addition an upgrade or a bugfix is inevitable, sometimes instantly. But if a
+% software changes and it breaks the API, a dependant deployed software may stop
+% working and in worst case the controls systems stop. Because of this, the
+% developers have to perform their upgrade carefully without causing damage to the
+% dependant systems.
+% 
+% The initial solution for a developer was to search the source repository for specific
+% texts, which is ineffective and can miss certain use-cases. This is why my project
+% was started.
+% 
+% Right now the tool is distributed with an internal eclipse packaging, so it is available 
+% for every developer who needs it. Usually library developers take advantage of it 
+% especially during technical stops, where the scheduled upgrades take place. 
 
 
 %kifejteni, hogy hogyan kapcsolodik pontosan a smooth upgrade a fejlesztesi folyamatba}
