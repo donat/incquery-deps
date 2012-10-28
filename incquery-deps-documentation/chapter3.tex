@@ -14,6 +14,67 @@ gives an overview on the \ptool{} approach by describing the objectives of the
 contained components. In the second part an example is introduced to make the
 solution more understandable. 
 
+\todo[inline]{kicsit hozzaigazitani ezt a szoveget az ide mozgatott CERN processes reszhez}
+
+
+\section{CERN software infrastructure and processes}
+
+\subsection{Infrastructure at CERN controls systems}
+
+% Eclipse
+At CERN Controls group has a definite set of tools used for development. Because
+C/C++ and Java applications are developed, the used Integrated Development
+Environment is an internally maintained Eclipse distribution with correct
+plugins installed.
+
+% SVN, JIRA, Bamboo
+To maintain concurrent versions of the source code an SVN server is used. Also
+there are a variety of tools used for typical developments tasks: issue
+etc. 
+
+% Common Build
+The central element for the development is a tool called \tool{Common Build}
+\cite{CommonBuild}. It is a build and release tool for Java softwares. Common
+Build is an Apache Ant based software similar to Maven. It provides
+functionality to describe and resolve dependencies, build, generate
+documentation and release the softwares. This tool was developed before the
+first version of complex build systems such as Apache Maven was published so 
+Common Build remained as an in-house build tool. 
+
+% Common build integration with source and binary repositories
+Common build is tightly coupled both to the SVN server and to the binary release
+repository as it automates the not just the building but the release of the
+Java products too.
+
+\subsection{Development workflow}
+\picseventy{commonbuild.pdf}{Build workflow using Common Build}
+\autoref{fig:commonbuild.pdf} highlights this relationship by showing a typical
+workflow of the development process. The developer first checks out the source
+code from the SVN repository and starts working on it. Along source code
+modification there is an XML descriptor containing the information required by
+Common Build (such as name and version of the product and the required
+dependencies). Also Common Build is capable to setup build path and the related
+options for Eclipse development. 
+
+\subsubsection{Build process}
+When the source code is ready, the developer executes the Common Build client to
+build it. The client itself is a customized Ant distribution and acts in the
+same way. It resolves the dependencies from the dedicated binary repository
+which contains all previously released products and all used third party
+libraries. The content is also defined in a XML file.
+
+\subsubsection{Release process}
+If all source code is ready the developer can hit release. This fist initiates
+the same build process, but it is extended by two things. First the source code
+is tagged in the SVN repository which the version number as tag name. Second the
+compiled jar file is put into the binary repository. 
+
+\subsubsection{Smooth upgrades and the development workflow}
+\todo[inline]{kifejteni, hogy hogyan kapcsolodik pontosan a smooth upgrade a fejlesztesi folyamatba}
+\todo[inline]{ki, mikor, mire, hogyan hasznalja az altalad elkeszitett toolt?}
+
+
+
 
 \section{System Architecture}
 
