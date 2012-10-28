@@ -7,7 +7,7 @@
 \chapter{Overview}
 
 
-\section{Architecture}
+\section{System Architecture}
 % My implementation.
 As it was discussed previously one of the most effective  way of achieving
 smooth upgrades is to discover incoming dependencies. For this I designed and
@@ -67,14 +67,14 @@ The client-side of the solution is an Eclipse plugin (or more precisely a set of
 plugins) which gives the developer a convenient way to access to the dependency
 information.
 
-% Model load and direct queries
+\subsubsection{Model load and direct queries}
 The base of the plugin is the repository model loader. It provides a simple API
 for accessing and querying the dependency information from the server. The
 simple use-case for this, when the user directly asks the dependency information
 from the Java source editor through UI contribution (marked as direct queries on
 the figure).
 
-% ws model creator
+\subsubsection{Workspace model creator}
 The workspace model creator is module generating an EMF model describing the
 state of the workspace. The generated model contains the loaded projects, the
 contained packages, classes, methods, etc. The model also contains the
@@ -83,7 +83,7 @@ such). The information is gathered through the Eclipse Java Development Tools'
 API. After the model is created it is incrementally maintained even through 
 restarts.
 
-% pattern maching over.
+\subsubsection{On-the-fly queries}
 The pattern matcher module executes complex model queries on top of the acquired
 models to provide dependency information. First it loads an EMF model from the
 server describing the structure of all projects in the central repository.
@@ -95,12 +95,13 @@ takes into account the changes which were done in the workspace. The workspace
 model is updated upon every change of the workspace giving up-to-date feedback 
 for the users while they are working on the development. 
 
-% Interface.
+\subsubsection{User Interface}
 Both direct queries and the pattern matching module return the result in Eclipse 
 views. After the result is evaluated, the user's responsibility to evaluate their
 results and act accordingly.
+\todo[inline]{UI szolgaltatasokat reszletesebben kifejteni, itemize}
 
-% limitation.
+\subsubsection{Implementation-specific requirements}
 Using direct queries brings no limitations. The queries are simple remote method
 calls and the result set is a relatively small data set which easy to store and
 present on the Eclipse UI. On the other hand, the pattern matching solution is
@@ -110,17 +111,17 @@ megabytes sized in a serialized form. This implies that the implementation has t
 optimize this model without dropping useful information to make it loadable to 
 the memory.
 
-\section{Service Provider Framework}\label{sect:spf}
-
-\subsection{Description of the pattern}
+\section{Running Example: Service Provider Framework}\label{sect:spf}
 
 To make the following chapters easier to understand, I am going to introduce a
 simple use-case example. It is a design pattern called Service Provider
 Framework. It is a practical application of the original Adapter pattern and it
-was described in the famous book ,,Effective Java'' \cite{Bloch08}. This pattern
+was described in the famous book \emph{Effective Java} \cite{Bloch08}. This pattern
 is the simplified version how the Java Database Connectivity (JDBC) works.
 
-\picr{exampleclasses.pdf}{Structure of Service Provider Framework pattern}
+\subsection{Description}
+
+\picr{exampleclasses.pdf}{Structure of Service Provider Framework design pattern}
 
 You can see the structure of the pattern on
 \autoref{fig:exampleclasses.pdf}. As of the packages it contains 3 major parts.
@@ -160,7 +161,8 @@ the default provider's name as an argument and invokes the \code{serviceA()} and
 Although the example is fairly simple, the related source code can be found in
 \autoref{examplesource}.
 
-\subsection{Description of the problem}
+\subsection{Smooth upgrade challenges}
+\todo[inline]{itemize-zal kiemelni a megoldando feldatokat, amelyeket majd megoldassz kesobb}
 As it was described in the introduction we would like give the developers the
 ability to check who is using the certain parts of the API. To present this this
 pattern will be our use-case.
@@ -190,4 +192,4 @@ that there are several dependencies. In this case the developer has to negotiate
 with the clients how to proceed: he has to provide backward compatibility or the
 clients has to align their code to the modifications.
 
-
+\todo[inline]{eloreutalas a kesobbi fejezetekre, ahol a problemak megoldasa ki lesz fejtve}
