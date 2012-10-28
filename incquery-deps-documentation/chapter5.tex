@@ -169,15 +169,18 @@ repository dependency object.
 
 
 \paragraph{Results of the query}
-The result of the query is shown on \autoref{fimodelqueryresult.png}
+The result of the query is shown on \autoref{fig:modelqueryresult.png}.
 \picr{modelqueryresult.png}{Result of the incoming method call dependency query}
 The EMF-IncQuery engine found the desired dependency. It points to the compacted
 repository element having a method call dependency to the workspace model's
-equivalent
+equivalent.
 
-In this example there there is a found dependency. In this case the developer 
+In this example a dependency was found. In this case the developer 
 has to decide whether he will maintain backward compatibility or he notifies the
-maintainer of the \code{client} project that the API will break soon.
+maintainer of the \code{client} project that the API will break soon. If he tried
+to modify the \code{serviceA()} method, we would have seen that there are no incoming
+dependencies. It means that the developer can break the signature of the method as
+he wishes. 
 
 \section{Performance}
 After the functionality was presented, let's check the overall performance of
@@ -306,4 +309,4 @@ frequently used project has less than a hundred project-level users. For other
  
 In conclusion we saw that all components have the desired effectiveness factor.
 The system itself is usable, scalable with the input and a feasible solution for
-achieving smooth upgrades.
+achieving smooth upgrades. 
