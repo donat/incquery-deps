@@ -3,11 +3,22 @@
 %1 page. Evident content.
 %------------------------------------------------------------------------------
 
+\todo[inline]{mident bovebben kifejteni}
+
+
 % what was achieved
+\section{Results of the report}
+
+
+\todo[inline]{sajat eredmenyek}
+\begin{itemize}
+  \item I designed\ldots
+  \item I implemented\ldots
+  \item I evaluated / experimented with\ldots
+\end{itemize}
+
 The \ptool{} is now a complete solution both with the explicit queries and its
-EMF-IncQuery-based extension. Without the extension the tool is used in
-production at CERN and it is fairly possible that extension will become the part
-of that tool.
+EMF-IncQuery-based extension. 
 
 The tool can be useful for a Java library developer who works at a large,
 software-oriented organization where lots of inter-depending softwares are
@@ -18,12 +29,34 @@ Both parts proved useful, fast and scalable enough for adaptation. EMF-IncQuery
 showed that it can be applied to a specific domain and can be a useful core
 for fast model queries. 
 
+
+\paragraph*{Application of the results}
+Without the extension the tool is used in
+production at CERN and it is fairly possible that extension will become the part
+of that tool.
+
+\section{Future work}
 As of the future plans, there are plenty of directions to go.
-First it is interesting what kind of dependencies can be extracted.
-It is possible to extract more detailed dependencies from the binaries by
-constructing symbolic execution traces based on the bytecode. With this, a
-variety of new dependencies can be discovered. The second plan can be an
-extension for analysing not just Java, but C++ softwares too. The third plan is
+
+\paragraph*{User interface possibilities on the client side}
+\begin{itemize}
+  \item dedicated UI for local dependency analysis, on-the-fly synchronization
+  \item Workspace/project/infrastructure-level Reference search with on-the-fly evaluation
+  \item on-the-fly evaluated validation rules for instantaneous ``smooth upgrade" policy violation feedback
+\end{itemize}
+
+\paragraph*{Support for other programming languages}
+The second plan can be an extension for analysing not just Java, but C++ softwares too. 
+\todo[inline]{make use of Eclipse's capabilities, e.g. CDT provides an AST}
+
+\paragraph*{Query-based software metric policy enforcement}
+The third plan is
 to reuse the model gathered from the project and from the workspace and then to
 define certain metrics over the models. With this a source code could be
 checked against certain requirements about the code quality.
+
+\paragraph*{Dynamic dependency analysis}
+First it is interesting what kind of dependencies can be extracted.
+It is possible to extract more detailed dependencies from the binaries by
+constructing symbolic execution traces based on the bytecode. With this, a
+variety of new dependencies can be discovered.
