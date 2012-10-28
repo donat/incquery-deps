@@ -124,24 +124,38 @@ features are specifically aligned with the computing resources of the host
 environment. The tool uses a state-of-the-art incremental model query evaluation
 engine called EMF-IncQuery (developed at the Department of Measurement and
 Information Systems of the Budapest University of Technology and Economics), to
-provide on-the-fly dependency analysis results that can be refined on demand,
-integrated into the Eclipse development tool.
+provide on-the-fly dependency analysis results integrated into the Eclipse
+development tool.
 
 \subsection{Server features}
-
+On the server side, the \ptool{} provides the following features:
 \begin{itemize}
-  \item binary dependency discovery based on byte code analysis
-  \item dependency database (supported by an RDBMS)
-  \item dependency data access layer based on Java RMI
+  \item \emph{Binary dependency discovery based on byte code analysis} ensures
+  that all (including legacy) software components can be taken into
+  consideration for smooth upgrades, at the desired level of granularity.
+  \item A \emph{scalable relational dependency database} backend ensures that
+  the entire, large software infrastructure can be supported.
+  \item A \emph{data access layer based on Java RMI} allows accessing dependency
+  data by Java-based clients in an efficient way.
 \end{itemize}
 
 \subsection{Client features}
-
+On the client side, the \ptool{} provides the following features:
 \begin{itemize}
-  \item source dependency discovery based on incremental AST processing
-  \item model-based dependency representation for both local (source) and remote (binary) dependencies
-  \item on-the-fly dependency queries based on the joined local and remote dependency model 
-  \item UI integration components for both client-side and server-side queries
+  \item Efficient \emph{source dependency discovery based on incremental AST
+  processing}, supported by the Eclipse Java Development Tools.
+  \item A \emph{model-based dependency representation for both local (source)
+  and remote (binary) dependencies} based on the Eclipse Modeling Framework. The
+  industry standard modeling format allows the processing of dependency data by
+  third party modeling tools.
+  \item \emph{On-the-fly dependency queries based on the joined local and remote
+  dependency model} supported by EMF-IncQuery. As the dependency queries are
+  evaluated very efficiently, the system is able to provide instantaneous
+  dependency analysis feedback (relevant to both local and server-side
+  information) as the source code is being changed by the developer.
+  \item \emph{User interface integration components for both client-side and
+  server-side queries} that allow ease of use for developers accustomed to the
+  Eclipse environment.
 \end{itemize}
 
 \section{Structure of the report}
