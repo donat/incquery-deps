@@ -41,28 +41,32 @@ to change in the source code.
 
 \subsection{Repository management}
 % Central repository management.
-The first elements on the figure to discuss are the ''Source repository'' and
-the 'Binary component repository' . They contain both the source code and the
-build binary version of the internally developed softwares. These elements are
-centrally managed and have a well-defined structure. The developers work on the
-source code and if they finish one milestone they publish their improvements by
-putting the compiled version into the binary repository through an automated
-process.
-The binary repository is the input for the dependency analysis.
+This component consists of the ''Source repository'' and the 'Binary component
+repository'. They contain both the source code and the build binary version of
+the internally developed softwares. These elements are centrally managed and
+have a well-defined structure. The developers work on the source code and if
+they finish one milestone they publish their improvements by putting the
+compiled version into the binary repository through an automated process.
+The binary repository is the input for the dependency analysis approach.
 
 \subsection{The server side}
 The server side is a standalone Java application which runs on a Linux server.
 It has two functionality: 1) it discovers and stores the structure of the
-products and 2) provides an interface for serving dependency queries.
+products and 2) provides an interface for serving dependency queries. It has three
+elements, the bytecode analyser, the dependency processor, and the storage engine.
+The components of the server side are explained in detail in \autoref{sect:elabserver}.
 
-For discovering, the process listens if a new release happens in the repository.
-If it happens the freshly added binaries (jar files) are passed to the byte code
-analysis module which parses the file and discovers the contained structure and
-the dependencies utilizing the Apache BCEL library.  The structure and the
-dependencies are passed to the storage engine to store it. The storage engine
-itself defines a set of operations to find, store and retrieve certain subset of
-the model. The remote query interface also use this module to get the necessary
-dependency information for the clients.
+\subsubsection{Bytecode analyser}
+When a new binary jar file is discovered the bytecode analyzer  discovers the
+internal structure and the dependency references. The result of the bytecode
+analyser is an instance model representing the Java binary structure.
+
+\subsubsection{Dependency processing}
+The dependency processor takes the output of the bytecode analyzer, stores the 
+structure of the Java binaries and tries to resolve the external references.
+For both storing the structure and resolving the dependencies, this component
+executes several queries on the dependency database. As a result, all structural
+information are stored in this database, which serves the client queries too.
 
 
 \subsection{The client side}
