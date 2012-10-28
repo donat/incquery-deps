@@ -85,7 +85,8 @@ necessary because both the structure and the external references are presented
 in a format which not readable nor could be easily queried by the users of the
 data. For example the commonly used \code{println(String)} function has the
 following binary format: \code{println(Ljava/lang/String;)V}. The implementation
-transforms it into \code{println(java.lang.String):void}.
+transforms it into \\ 
+\code{println(java.lang.String):void}.
 
 % Somewhere it should be described that we don't deal with reflection, just
 % static dependencies.
@@ -105,7 +106,7 @@ parsed in a jar file.
 
 
 \subsubsection{Extracted domain model}
-The output of the analyzer is a Java domain model shown on
+The output of the analyzer is a Java domain metamodel shown on
 \autoref{fig:domainmodelsimp.pdf}\picr{domainmodelsimp.pdf}{Classes of the
 domain model used by the bytecode analyzer}. Because this model is used for the
 dependency processing too the model has additional elements holding the
@@ -192,7 +193,7 @@ After all jar's  structure is saved in the database, the process re-initiates
 the bytecode analysis on every jars one-by-one and passes the models again to
 the dependency processor. The processor now tries to execute certain queries on
 the database for searching dependencies. For external references, it tries to
-find the elements with the same fully qualified name, for inheritance searches for
+find the elements with the same fully qualified name, for inheritance it searches for
 superclass in the database and for method override it looks for methods with
 the same signature in the superclass. For every found element  a separate dependency
 entry is saved at the end of the analysis of the active jar.
@@ -259,7 +260,7 @@ how the users can utilize the provided information.
 In our example the source and the binary
 repository contains three projects, each of them holds one package from the
 example. the name of the projects are service, client and impl, the name of 
-the jars files respectively \code{service.jar}, \code{client.jar} and \code{impl.jar}. 
+the jars files respectively service.jar, client.jar and impl.jar. 
 This will be the input for the bytecode processing.
 
 \paragraph{Bytecode processing}
@@ -341,8 +342,8 @@ dependencies for just one single code element.
 The single element query is the use-case where the user of the \ptool{} executes
 direct queries by asking the incoming dependencies of one element in the
 workspace. In this case, a simple RMI interface method is called where the
-argument is the queried object (as an instance of a ApiClass, a Method or a
-Field types from \autoref{fig:domainmodelsimp.pdf}. This argument is passed to
+argument is the queried object (as an instance of an \code{ApiClass}, a \code{Method} or a
+\code{Field} types from \autoref{fig:domainmodelsimp.pdf}. This argument is passed to
 the server, which turns it into an SQL query or a search on the EMF model
 (depending which back-end is loaded). The result is passed back as a collection
 of \code{Dependency} instances. The result model is unattached by the model
@@ -385,14 +386,13 @@ The first thing which was left out are most of the fields of the classes; only a
 \code{name} field stores the textual representation of the code element. This is
 reasonable because the dependency discovery is done on the server and we
 navigate only on the dependency edges. The second thing is not explicitly
-visible on the figure. The fully qualified name was merged down into simple
+visible on the figure. The fully qualified name was trimmed into simple
 names. It means that there is only one \code{Service} class for all products in
 the repository and one \code{newService()} function. If there are more, than one
 exists, then they are merged into one and also all dependencies becomes common.
 This also comes with the change that the original one-to-many containment
 relationships became many-to-many. The third compacting change is to drop the
-signature of the methods, only the name has left. The merging process is the
-same as described.
+signature of the methods, only the name has left. Here the same merging process happens.
 
 \paragraph{Managing repository models on the client side}
 This compacted repository model is loaded at start-up time and used till Eclipse
@@ -475,7 +475,7 @@ hierarchy lie the methods and fields (\code{WMethod} and \code{WField}
 instances).
 
 \paragraph{Dependency hierarchy}
-Just like in the repository model here also the dependencies are defined upon
+Just like in the repository model, here also the dependencies are defined upon
 the common supertype, but here a \code{WDependency} has a two-way relationships
 for both the source and the target part of the dependency relation. For one
 \code{WNamedElement} the incoming and outgoing dependencies are directly
@@ -498,7 +498,7 @@ with the proper model element.
 \paragraph{Capturing local workspace changes}
 When the initial model build is finished the next task is to subscribe for the
 workspace changes. This can be done by registering a simple listener object with
-the  \code{JavaCore.addElementChangedListener(IElementChangedListener);} static
+the  \code{JavaCore.addElementChangedListener(IElementChangedListener)} static
 method. With this every event related to the java editing is available. The
 component only handles the events where the source files are changed; dealing
 with working copy events would be too frequent and would contain some incoherent
@@ -717,7 +717,7 @@ repository instance model This join operation is based on the common \code{name}
 property.
 
 The \code{joinMethods} query does a similar thing, but in this case the methods
-are joined together. The firs two instructions gathers the container projects'
+are joined together. The first two instructions gathers the container projects'
 reference. The third instruction calls the \code{joinProjects} query, so the 
 results are filtered to only to the elements which exist both in the workspace
 and in the repository instance model. The methods itself also joined by 
@@ -758,7 +758,7 @@ model does not introduce false-positive results.
 The compacted version of the repository instance model (produced by the
 dependency database synchronizer) contains all the three projects from the
 repository. Part of the model is shown on
-\autoref{fig:cp3modelinstance.pdf}\picr{cp3modelinstance.pdf}{Elements of the
+\autoref{fig:cp3modelinstance.pdf}.\picr{cp3modelinstance.pdf}{Elements of the
 compacted instance model} 
 
 The structure contains the same projects and the same
