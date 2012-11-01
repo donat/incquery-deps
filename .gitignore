@@ -13,6 +13,3 @@ incquery-deps-documentation/tmp/*.toc
 incquery-deps-documentation/tmp/*.bbl
 incquery-deps-documentation/tmp/*.blg
 incquery-deps-documentation/**/*.~vsd
-*.pdf
-
-*.pdf
