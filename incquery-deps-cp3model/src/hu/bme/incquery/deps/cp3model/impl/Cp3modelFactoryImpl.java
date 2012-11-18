@@ -5,7 +5,6 @@ package hu.bme.incquery.deps.cp3model.impl;
 import hu.bme.incquery.deps.cp3model.*;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -57,52 +56,15 @@ public class Cp3modelFactoryImpl extends EFactoryImpl implements Cp3modelFactory
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case Cp3modelPackage.CP3_ST_ELEM: return createCP3StElem();
 			case Cp3modelPackage.CP3_DEP: return createCP3Dep();
 			case Cp3modelPackage.CP3_REPO: return createCP3Repo();
+			case Cp3modelPackage.CP3_PROJECT: return createCP3Project();
+			case Cp3modelPackage.CP3_CLASS: return createCP3Class();
+			case Cp3modelPackage.CP3_METHOD: return createCP3Method();
+			case Cp3modelPackage.CP3_FIELD: return createCP3Field();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object createFromString(EDataType eDataType, String initialValue) {
-		switch (eDataType.getClassifierID()) {
-			case Cp3modelPackage.TYPES:
-				return createTypesFromString(eDataType, initialValue);
-			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
-		}
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String convertToString(EDataType eDataType, Object instanceValue) {
-		switch (eDataType.getClassifierID()) {
-			case Cp3modelPackage.TYPES:
-				return convertTypesToString(eDataType, instanceValue);
-			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
-		}
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public CP3StElem createCP3StElem() {
-		CP3StElemImpl cp3StElem = new CP3StElemImpl();
-		return cp3StElem;
 	}
 
 	/**
@@ -130,10 +92,9 @@ public class Cp3modelFactoryImpl extends EFactoryImpl implements Cp3modelFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Types createTypesFromString(EDataType eDataType, String initialValue) {
-		Types result = Types.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-		return result;
+	public CP3Project createCP3Project() {
+		CP3ProjectImpl cp3Project = new CP3ProjectImpl();
+		return cp3Project;
 	}
 
 	/**
@@ -141,8 +102,29 @@ public class Cp3modelFactoryImpl extends EFactoryImpl implements Cp3modelFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String convertTypesToString(EDataType eDataType, Object instanceValue) {
-		return instanceValue == null ? null : instanceValue.toString();
+	public CP3Class createCP3Class() {
+		CP3ClassImpl cp3Class = new CP3ClassImpl();
+		return cp3Class;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public CP3Method createCP3Method() {
+		CP3MethodImpl cp3Method = new CP3MethodImpl();
+		return cp3Method;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public CP3Field createCP3Field() {
+		CP3FieldImpl cp3Field = new CP3FieldImpl();
+		return cp3Field;
 	}
 
 	/**

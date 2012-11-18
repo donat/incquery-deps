@@ -1,17 +1,17 @@
 package hu.bme.incquery.deps.ui.result;
 
-import hu.bme.incquery.deps.cp1model.CP1Class;
-import hu.bme.incquery.deps.wsmodel.WMethod;
-import hu.bme.incquery.deps.wsmodel.WNamedElement;
-import hu.bme.incquery.deps.wsmodel.WPackageFragment;
-import hu.bme.incquery.deps.wsmodel.WType;
+//import hu.bme.incquery.deps.cp1model.CP1Class;
+//import hu.bme.incquery.deps.wsmodel.WMethod;
+//import hu.bme.incquery.deps.wsmodel.WNamedElement;
+//import hu.bme.incquery.deps.wsmodel.WPackageFragment;
+//import hu.bme.incquery.deps.wsmodel.WType;
 
 import org.eclipse.core.runtime.IAdapterFactory;
-import org.eclipse.jdt.core.IJavaProject;
+//import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 
-import cern.devtools.deps.query.cp1.projectswithsamename.ProjectsWithSameNameMatch;
+//import cern.devtools.deps.query.cp1.projectswithsamename.ProjectsWithSameNameMatch;
 
 public class ResultAdapterFactory implements IAdapterFactory {
 
@@ -28,12 +28,12 @@ public class ResultAdapterFactory implements IAdapterFactory {
 				throw new RuntimeException("Invalid type");
 			}
 			ResultItem item = (ResultItem) o;
-			Object obj = item.getObj();
+			//Object obj = item.getObj();
 
 			switch (item.getType()) {
 			case NULL:
 				return "Nothing to display";
-			case PROJECT_ROOT:
+			/*case PROJECT_ROOT:
 				if (obj instanceof ProjectsWithSameNameMatch) {
 					return String.format("Project %s (in repository)", ((ProjectsWithSameNameMatch) obj)
 							.getRepoProject().getName());
@@ -44,8 +44,15 @@ public class ResultAdapterFactory implements IAdapterFactory {
 				return ((WPackageFragment) ((WType) obj).getParent().getParent()).getName() + "."
 						+ ((WType) obj).getName() + "(+)";
 			case TYPE_SYNC:
-				return ((WPackageFragment) ((WType) obj).getParent().getParent()).getName() + "."
-						+ ((WType) obj).getName();
+				if (obj instanceof WType)  {
+					return ((WPackageFragment) ((WType) obj).getParent().getParent()).getName() + "."
+							+ ((WType) obj).getName();	
+				}
+				else if (obj instanceof CP1Class) {
+					return ((CP1Class) obj).getPackageName() + "." +  ((CP1Class) obj).getSimpleName();
+				}
+				else throw new RuntimeException("Class not defined " + obj.getClass());
+				
 			case TYPE_REMOVED:
 			case TYPE_REMOTE:
 				return ((CP1Class) obj).getPackageName() + "." + ((CP1Class) obj).getSimpleName() + "(-)";
@@ -78,7 +85,7 @@ public class ResultAdapterFactory implements IAdapterFactory {
 				// case JDT_TYPE:
 				// return ((IType)item.getObj()).getElementName();
 				// case INCOMING_DEPENDENCY_ROOT:
-				// return "Incoming dependencies";
+				// return "Incoming dependencies";*/
 			default:
 				return item.getType().toString();
 			}

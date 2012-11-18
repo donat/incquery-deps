@@ -3,11 +3,27 @@ Bundle-ManifestVersion: 2
 Bundle-Name: incquery-deps-matchers
 Bundle-SymbolicName: incquery-deps-matchers;singleton:=true
 Bundle-Version: 0.0.1.qualifier
+Export-Package: cern.devtools.deps.query.cp3.addedclasses,
+ cern.devtools.deps.query.cp3.addedfields,
+ cern.devtools.deps.query.cp3.addedmethods,
+ cern.devtools.deps.query.cp3.impactcausedbyremovedclasses,
+ cern.devtools.deps.query.cp3.impactcausedbyremovedfields,
+ cern.devtools.deps.query.cp3.impactcausedbyremovedmethods,
+ cern.devtools.deps.query.cp3.incomingclassusages,
+ cern.devtools.deps.query.cp3.incomingfieldaccesses,
+ cern.devtools.deps.query.cp3.incominginheritances,
+ cern.devtools.deps.query.cp3.incomingmethodcalls,
+ cern.devtools.deps.query.cp3.incomingmethodoverride,
+ cern.devtools.deps.query.cp3.outgoingmethodcalldependencyadded,
+ cern.devtools.deps.query.cp3.removedclasses,
+ cern.devtools.deps.query.cp3.removedfields,
+ cern.devtools.deps.query.cp3.removedmethod
 Require-Bundle: org.eclipse.pde.core,
  org.eclipse.emf.ecore,
  org.eclipse.emf.transaction,
  org.eclipse.viatra2.emf.incquery.runtime;visibility:=reexport,
  org.eclipse.xtext.xbase.lib,
  hu.bme.incquery.deps.wsmodel;visibility:=reexport,
- hu.bme.incquery.deps.cp1model;visibility:=reexport
+ hu.bme.incquery.deps.cp1model;visibility:=reexport,
+ hu.bme.incquery.deps.cp3model
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

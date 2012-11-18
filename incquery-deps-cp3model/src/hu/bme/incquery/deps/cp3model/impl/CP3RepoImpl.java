@@ -2,9 +2,9 @@
  */
 package hu.bme.incquery.deps.cp3model.impl;
 
+import hu.bme.incquery.deps.cp3model.CP3AbstractItem;
 import hu.bme.incquery.deps.cp3model.CP3Dep;
 import hu.bme.incquery.deps.cp3model.CP3Repo;
-import hu.bme.incquery.deps.cp3model.CP3StElem;
 import hu.bme.incquery.deps.cp3model.Cp3modelPackage;
 
 import java.util.Collection;
@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link hu.bme.incquery.deps.cp3model.impl.CP3RepoImpl#getDeps <em>Deps</em>}</li>
- *   <li>{@link hu.bme.incquery.deps.cp3model.impl.CP3RepoImpl#getElems <em>Elems</em>}</li>
+ *   <li>{@link hu.bme.incquery.deps.cp3model.impl.CP3RepoImpl#getItems <em>Items</em>}</li>
  * </ul>
  * </p>
  *
@@ -47,14 +47,14 @@ public class CP3RepoImpl extends EObjectImpl implements CP3Repo {
 	protected EList<CP3Dep> deps;
 
 	/**
-	 * The cached value of the '{@link #getElems() <em>Elems</em>}' containment reference list.
+	 * The cached value of the '{@link #getItems() <em>Items</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getElems()
+	 * @see #getItems()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<CP3StElem> elems;
+	protected EList<CP3AbstractItem> items;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -92,11 +92,11 @@ public class CP3RepoImpl extends EObjectImpl implements CP3Repo {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<CP3StElem> getElems() {
-		if (elems == null) {
-			elems = new EObjectContainmentEList<CP3StElem>(CP3StElem.class, this, Cp3modelPackage.CP3_REPO__ELEMS);
+	public EList<CP3AbstractItem> getItems() {
+		if (items == null) {
+			items = new EObjectContainmentEList<CP3AbstractItem>(CP3AbstractItem.class, this, Cp3modelPackage.CP3_REPO__ITEMS);
 		}
-		return elems;
+		return items;
 	}
 
 	/**
@@ -109,8 +109,8 @@ public class CP3RepoImpl extends EObjectImpl implements CP3Repo {
 		switch (featureID) {
 			case Cp3modelPackage.CP3_REPO__DEPS:
 				return ((InternalEList<?>)getDeps()).basicRemove(otherEnd, msgs);
-			case Cp3modelPackage.CP3_REPO__ELEMS:
-				return ((InternalEList<?>)getElems()).basicRemove(otherEnd, msgs);
+			case Cp3modelPackage.CP3_REPO__ITEMS:
+				return ((InternalEList<?>)getItems()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -125,8 +125,8 @@ public class CP3RepoImpl extends EObjectImpl implements CP3Repo {
 		switch (featureID) {
 			case Cp3modelPackage.CP3_REPO__DEPS:
 				return getDeps();
-			case Cp3modelPackage.CP3_REPO__ELEMS:
-				return getElems();
+			case Cp3modelPackage.CP3_REPO__ITEMS:
+				return getItems();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -144,9 +144,9 @@ public class CP3RepoImpl extends EObjectImpl implements CP3Repo {
 				getDeps().clear();
 				getDeps().addAll((Collection<? extends CP3Dep>)newValue);
 				return;
-			case Cp3modelPackage.CP3_REPO__ELEMS:
-				getElems().clear();
-				getElems().addAll((Collection<? extends CP3StElem>)newValue);
+			case Cp3modelPackage.CP3_REPO__ITEMS:
+				getItems().clear();
+				getItems().addAll((Collection<? extends CP3AbstractItem>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -163,8 +163,8 @@ public class CP3RepoImpl extends EObjectImpl implements CP3Repo {
 			case Cp3modelPackage.CP3_REPO__DEPS:
 				getDeps().clear();
 				return;
-			case Cp3modelPackage.CP3_REPO__ELEMS:
-				getElems().clear();
+			case Cp3modelPackage.CP3_REPO__ITEMS:
+				getItems().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -180,8 +180,8 @@ public class CP3RepoImpl extends EObjectImpl implements CP3Repo {
 		switch (featureID) {
 			case Cp3modelPackage.CP3_REPO__DEPS:
 				return deps != null && !deps.isEmpty();
-			case Cp3modelPackage.CP3_REPO__ELEMS:
-				return elems != null && !elems.isEmpty();
+			case Cp3modelPackage.CP3_REPO__ITEMS:
+				return items != null && !items.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

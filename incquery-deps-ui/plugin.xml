@@ -11,13 +11,6 @@
             name="Workspace model"
             restorable="true">
       </view>
-      <view
-            category="hu.bme.incquery.deps.viewer.category"
-            class="hu.bme.incquery.deps.ui.IncQueryDepsOutput"
-            id="hu.bme.incquery.deps.viewer.IncQueryDepsOutput"
-            name="IncQuery-Deps Output"
-            restorable="true">
-      </view>
       <category
             id="hu.bme.incquery.deps.viewer.category"
             name="IncQuery Deps">

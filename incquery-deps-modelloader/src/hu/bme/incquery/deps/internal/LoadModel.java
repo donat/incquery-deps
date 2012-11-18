@@ -1,8 +1,9 @@
 package hu.bme.incquery.deps.internal;
 
-import hu.bme.incquery.deps.cp1model.Cp1modelPackage;
+import hu.bme.incquery.deps.cp3model.Cp3modelPackage;
 import hu.bme.incquery.deps.modelloader.RepoModelLoadingService;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,8 +33,8 @@ public class LoadModel implements RepoModelLoadingService {
 		this.context = context;
 		resourceSet = new ResourceSetImpl();
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
-				.put("cp1model", new XMIResourceFactoryImpl());
-		EPackage.Registry.INSTANCE.put(Cp1modelPackage.eNS_URI, Cp1modelPackage.eINSTANCE);
+				.put("cp3model", new XMIResourceFactoryImpl());
+		EPackage.Registry.INSTANCE.put(Cp3modelPackage.eNS_URI, Cp3modelPackage.eINSTANCE);
 	}
 
 	public Job load() {
@@ -45,7 +46,8 @@ public class LoadModel implements RepoModelLoadingService {
 					long ms = System.currentTimeMillis();
 					doLoad();
 					context.registerService(RepoModelLoadingService.class.getName(), serviceInstance, null);
-					System.out.println(String.format("Model loaded. Execution took %s seconds.", ((System.currentTimeMillis() - ms) / 1000l)));
+//					System.out.println(String.format("Model loaded. Execution took %s seconds.",
+//							((System.currentTimeMillis() - ms) / 1000l)));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -56,11 +58,15 @@ public class LoadModel implements RepoModelLoadingService {
 		return job;
 	}
 
-	@SuppressWarnings("unchecked")
 	private void doLoad() throws Exception {
+		String file = "file://C:/opt/workspace/eclipse4/incquery-deps/incquery-deps-transformer/models/submodel_501.cp3model";
+		
 		resource = resourceSet.createResource(URI
-				.createURI("file://c:/wamp/www/incquery-deps/visitor.cp1model"));
-
+//				.createURI("file://C:/opt/workspace/eclipse4/incquery-deps/incquery-deps-transformer/models/commonbuild-full-pro.cp3model"));	
+				.createURI(file));
+		
+		System.err.println("Size of the cp3model (bytes): " + new File(file).length());
+		
 		Map loadOptions = ((XMLResourceImpl) resource).getDefaultLoadOptions();
 		loadOptions.put(XMLResource.OPTION_DEFER_ATTACHMENT, Boolean.TRUE);
 		loadOptions.put(XMLResource.OPTION_DEFER_IDREF_RESOLUTION, Boolean.TRUE);
@@ -72,7 +78,7 @@ public class LoadModel implements RepoModelLoadingService {
 
 		resource.load(loadOptions);
 	}
-	
+
 	@Override
 	public Resource getResource() {
 		return resource;

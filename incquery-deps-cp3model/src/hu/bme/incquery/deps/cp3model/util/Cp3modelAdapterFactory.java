@@ -68,16 +68,32 @@ public class Cp3modelAdapterFactory extends AdapterFactoryImpl {
 	protected Cp3modelSwitch<Adapter> modelSwitch =
 		new Cp3modelSwitch<Adapter>() {
 			@Override
-			public Adapter caseCP3StElem(CP3StElem object) {
-				return createCP3StElemAdapter();
-			}
-			@Override
 			public Adapter caseCP3Dep(CP3Dep object) {
 				return createCP3DepAdapter();
 			}
 			@Override
 			public Adapter caseCP3Repo(CP3Repo object) {
 				return createCP3RepoAdapter();
+			}
+			@Override
+			public Adapter caseCP3Project(CP3Project object) {
+				return createCP3ProjectAdapter();
+			}
+			@Override
+			public Adapter caseCP3Class(CP3Class object) {
+				return createCP3ClassAdapter();
+			}
+			@Override
+			public Adapter caseCP3AbstractItem(CP3AbstractItem object) {
+				return createCP3AbstractItemAdapter();
+			}
+			@Override
+			public Adapter caseCP3Method(CP3Method object) {
+				return createCP3MethodAdapter();
+			}
+			@Override
+			public Adapter caseCP3Field(CP3Field object) {
+				return createCP3FieldAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -98,20 +114,6 @@ public class Cp3modelAdapterFactory extends AdapterFactoryImpl {
 		return modelSwitch.doSwitch((EObject)target);
 	}
 
-
-	/**
-	 * Creates a new adapter for an object of class '{@link hu.bme.incquery.deps.cp3model.CP3StElem <em>CP3 St Elem</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see hu.bme.incquery.deps.cp3model.CP3StElem
-	 * @generated
-	 */
-	public Adapter createCP3StElemAdapter() {
-		return null;
-	}
 
 	/**
 	 * Creates a new adapter for an object of class '{@link hu.bme.incquery.deps.cp3model.CP3Dep <em>CP3 Dep</em>}'.
@@ -138,6 +140,76 @@ public class Cp3modelAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCP3RepoAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link hu.bme.incquery.deps.cp3model.CP3Project <em>CP3 Project</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see hu.bme.incquery.deps.cp3model.CP3Project
+	 * @generated
+	 */
+	public Adapter createCP3ProjectAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link hu.bme.incquery.deps.cp3model.CP3Class <em>CP3 Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see hu.bme.incquery.deps.cp3model.CP3Class
+	 * @generated
+	 */
+	public Adapter createCP3ClassAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link hu.bme.incquery.deps.cp3model.CP3AbstractItem <em>CP3 Abstract Item</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see hu.bme.incquery.deps.cp3model.CP3AbstractItem
+	 * @generated
+	 */
+	public Adapter createCP3AbstractItemAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link hu.bme.incquery.deps.cp3model.CP3Method <em>CP3 Method</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see hu.bme.incquery.deps.cp3model.CP3Method
+	 * @generated
+	 */
+	public Adapter createCP3MethodAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link hu.bme.incquery.deps.cp3model.CP3Field <em>CP3 Field</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see hu.bme.incquery.deps.cp3model.CP3Field
+	 * @generated
+	 */
+	public Adapter createCP3FieldAdapter() {
 		return null;
 	}
 

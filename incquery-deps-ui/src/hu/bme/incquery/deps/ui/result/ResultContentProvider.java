@@ -1,9 +1,9 @@
 package hu.bme.incquery.deps.ui.result;
 
 import hu.bme.incquery.deps.cp1model.CP1Class;
-import hu.bme.incquery.deps.cp1model.CP1Project;
+//import hu.bme.incquery.deps.cp1model.CP1PRoject;
 import hu.bme.incquery.deps.engine.IncQueryDepsChangeListener;
-import hu.bme.incquery.deps.wsmodel.WProject;
+//import hu.bme.incquery.deps.wsmodel.WProject;
 import hu.bme.incquery.deps.wsmodel.WType;
 
 import java.util.Collection;
@@ -11,57 +11,58 @@ import java.util.LinkedList;
 
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.IType;
+//import org.eclipse.jdt.core.IType;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.viatra2.emf.incquery.runtime.api.IncQueryMatcher;
 
-import cern.devtools.deps.query.cp1.addedclasses.AddedClassesMatcher;
-import cern.devtools.deps.query.cp1.fieldsinwstype.FieldsInWsTypeMatch;
-import cern.devtools.deps.query.cp1.fieldsinwstype.FieldsInWsTypeMatcher;
-import cern.devtools.deps.query.cp1.incomingclassusages.IncomingClassUsagesMatcher;
-import cern.devtools.deps.query.cp1.incominginheritances.IncomingInheritancesMatch;
-import cern.devtools.deps.query.cp1.incominginheritances.IncomingInheritancesMatcher;
-import cern.devtools.deps.query.cp1.methodsinwstype.MethodsInWsTypeMatch;
-import cern.devtools.deps.query.cp1.methodsinwstype.MethodsInWsTypeMatcher;
-import cern.devtools.deps.query.cp1.projectswithsamename.ProjectsWithSameNameMatch;
-import cern.devtools.deps.query.cp1.projectswithsamename.ProjectsWithSameNameMatcher;
-import cern.devtools.deps.query.cp1.removedclasses.RemovedClassesMatcher;
-import cern.devtools.deps.query.cp1.removedclassesfromproject.RemovedClassesFromProjectMatch;
-import cern.devtools.deps.query.cp1.removedclassesfromproject.RemovedClassesFromProjectMatcher;
-import cern.devtools.deps.query.cp1.typesinwsproject.TypesInWsProjectMatch;
-import cern.devtools.deps.query.cp1.typesinwsproject.TypesInWsProjectMatcher;
+//import cern.devtools.deps.query.cp1.addedclasses.AddedClassesMatcher;
+//import cern.devtools.deps.query.cp1.fieldsinwstype.FieldsInWsTypeMatch;
+//import cern.devtools.deps.query.cp1.fieldsinwstype.FieldsInWsTypeMatcher;
+//import cern.devtools.deps.query.cp1.incomingclassusages.IncomingClassUsagesMatcher;
+//import cern.devtools.deps.query.cp1.incominginheritances.IncomingInheritancesMatch;
+//import cern.devtools.deps.query.cp1.incominginheritances.IncomingInheritancesMatcher;
+//import cern.devtools.deps.query.cp1.methodsinwstype.MethodsInWsTypeMatch;
+//import cern.devtools.deps.query.cp1.methodsinwstype.MethodsInWsTypeMatcher;
+//import cern.devtools.deps.query.cp1.projectswithsamename.ProjectsWithSameNameMatch;
+//import cern.devtools.deps.query.cp1.projectswithsamename.ProjectsWithSameNameMatcher;
+//import cern.devtools.deps.query.cp1.removedclasses.RemovedClassesMatcher;
+//import cern.devtools.deps.query.cp1.removedclassesfromproject.RemovedClassesFromProjectMatch;
+//import cern.devtools.deps.query.cp1.removedclassesfromproject.RemovedClassesFromProjectMatcher;
+//import cern.devtools.deps.query.cp1.typesinwsproject.TypesInWsProjectMatch;
+//import cern.devtools.deps.query.cp1.typesinwsproject.TypesInWsProjectMatcher;
 
 /**
  * 
  * @author dcsikos
  * 
  */
+@SuppressWarnings("all")
 public class ResultContentProvider implements ITreeContentProvider, IncQueryDepsChangeListener {
 
 	private TreeViewer viewer;
 	private IJavaProject selectedProject;
 	private ICompilationUnit selectedCU;
-	private ProjectsWithSameNameMatcher projectsWithSameName;
-	private AddedClassesMatcher addedClassesMatcher;
-	private TypesInWsProjectMatcher typesInWsProjectMatcher;
-	private RemovedClassesFromProjectMatcher removedClassesFromProjectMatcher;
-	private MethodsInWsTypeMatcher methodsInWsTypeMatcher;
-	private FieldsInWsTypeMatcher fieldsInWsTypeMatcher;
-	private IncomingClassUsagesMatcher incomingClassUsagesMatcher;
-	private IncomingInheritancesMatcher incomingInheritancesMatcher;
+//	private ProjectsWithSameNameMatcher projectsWithSameName;
+//	private AddedClassesMatcher addedClassesMatcher;
+//	private TypesInWsProjectMatcher typesInWsProjectMatcher;
+//	private RemovedClassesFromProjectMatcher removedClassesFromProjectMatcher;
+//	private MethodsInWsTypeMatcher methodsInWsTypeMatcher;
+//	private FieldsInWsTypeMatcher fieldsInWsTypeMatcher;
+//	private IncomingClassUsagesMatcher incomingClassUsagesMatcher;
+//	private IncomingInheritancesMatcher incomingInheritancesMatcher;
 
 	public ResultContentProvider(TreeViewer viewer) {
 		this.viewer = viewer;
 		hu.bme.incquery.deps.engine.Activator
 				.getDefault()
 				.getIncQueryDepsEngine()
-				.registerChangeListener(this, ProjectsWithSameNameMatcher.class, AddedClassesMatcher.class,
+				.registerChangeListener(this/*,ProjectsWithSameNameMatcher.class, AddedClassesMatcher.class,
 						RemovedClassesMatcher.class, TypesInWsProjectMatcher.class,
 						RemovedClassesFromProjectMatcher.class, FieldsInWsTypeMatcher.class,
-						MethodsInWsTypeMatcher.class, IncomingClassUsagesMatcher.class, IncomingInheritancesMatcher.class);
+						MethodsInWsTypeMatcher.class, IncomingClassUsagesMatcher.class, IncomingInheritancesMatcher.class*/);
 	}
 
 	@Override
@@ -95,24 +96,24 @@ public class ResultContentProvider implements ITreeContentProvider, IncQueryDeps
 		ResultItem root = buildProjectRoot(selectedProject);
 
 		// Build only if it is a traced project.
-		if (root.getObj() instanceof ProjectsWithSameNameMatch) {
-
-			// Build classes
-			buildAllProjectTypes(root);
-		}
+//		if (root.getObj() instanceof ProjectsWithSameNameMatch) {
+//
+//			// Build classes
+//			buildAllProjectTypes(root);
+//		}
 
 		return new Object[] { root };
 	}
 
 	private ResultItem buildProjectRoot(IJavaProject project) {
-		if (projectsWithSameName != null) {
-			Collection<ProjectsWithSameNameMatch> tracedProjectsMatches = projectsWithSameName.getAllMatches();
-			for (ProjectsWithSameNameMatch match : tracedProjectsMatches) {
-				if (match.getWsProject().getHandler().equals(project.getHandleIdentifier())) {
-					return new ResultItem(null, ResultItemType.PROJECT_ROOT, match);
-				}
-			}
-		}
+//		if (projectsWithSameName != null) {
+//			Collection<ProjectsWithSameNameMatch> tracedProjectsMatches = projectsWithSameName.getAllMatches();
+//			for (ProjectsWithSameNameMatch match : tracedProjectsMatches) {
+//				if (match.getWsProject().getHandler().equals(project.getHandleIdentifier())) {
+//					return new ResultItem(null, ResultItemType.PROJECT_ROOT, match);
+//				}
+//			}
+//		}
 		return new ResultItem(null, ResultItemType.PROJECT_ROOT, project);
 	}
 
@@ -121,39 +122,39 @@ public class ResultContentProvider implements ITreeContentProvider, IncQueryDeps
 		Collection<WType> addedOrSyncTypes = new LinkedList<WType>();
 
 		// add sync and added types
-		if (typesInWsProjectMatcher != null) {
-			ProjectsWithSameNameMatch projectMatch = (ProjectsWithSameNameMatch) root.getObj();
-			CP1Project repoProject = projectMatch.getRepoProject();
-			WProject wsProject = projectMatch.getWsProject();
-			for (TypesInWsProjectMatch m : typesInWsProjectMatcher.getAllMatches(null, wsProject)) {
-				// check if a type is added
-				WType type = m.getWsType();
-				addedOrSyncTypes.add(type);
-			}
-
-			if (removedClassesFromProjectMatcher != null) {
-				for (RemovedClassesFromProjectMatch m : removedClassesFromProjectMatcher.getAllMatches(null,
-						repoProject)) {
-					removedTypes.add(m.getRepoClass());
-				}
-			}
-
-			buildTypes(root, removedTypes, addedOrSyncTypes);
-		}
-
+//		if (typesInWsProjectMatcher != null) {
+//			ProjectsWithSameNameMatch projectMatch = (ProjectsWithSameNameMatch) root.getObj();
+//			CP1Project repoProject = projectMatch.getRepoProject();
+//			WProject wsProject = projectMatch.getWsProject();
+//			for (TypesInWsProjectMatch m : typesInWsProjectMatcher.getAllMatches(null, wsProject)) {
+//				// check if a type is added
+//				WType type = m.getWsType();
+//				addedOrSyncTypes.add(type);
+//			}
+//
+//			if (removedClassesFromProjectMatcher != null) {
+//				for (RemovedClassesFromProjectMatch m : removedClassesFromProjectMatcher.getAllMatches(null,
+//						repoProject)) {
+//					removedTypes.add(m.getRepoClass());
+//				}
+//			}
+//
+//			buildTypes(root, removedTypes, addedOrSyncTypes);
+//		}
+//
 	}
 
 	private void buildTypes(ResultItem root, Collection<CP1Class> removedTypes, Collection<WType> addedOrSyncTypes) {
 		for (WType addedOrSyncType : addedOrSyncTypes) {
-			if (addedClassesMatcher.getAllMatches(addedOrSyncType).size() > 0) {
-				ResultItem node = new ResultItem(root, ResultItemType.TYPE_ADDED, addedOrSyncType);
-				// TODO: add dependencies.
-				buildClassSubTree(node);
-
-			} else {
-				ResultItem node = new ResultItem(root, ResultItemType.TYPE_SYNC, addedOrSyncType);
-				buildClassSubTree(node);
-			}
+//			if (addedClassesMatcher.getAllMatches(addedOrSyncType).size() > 0) {
+//				ResultItem node = new ResultItem(root, ResultItemType.TYPE_ADDED, addedOrSyncType);
+//				// TODO: add dependencies.
+//				buildClassSubTree(node);
+//
+//			} else {
+//				ResultItem node = new ResultItem(root, ResultItemType.TYPE_SYNC, addedOrSyncType);
+//				buildClassSubTree(node);
+//			}
 		}
 
 		for (CP1Class removedType : removedTypes) {
@@ -174,10 +175,10 @@ public class ResultContentProvider implements ITreeContentProvider, IncQueryDeps
 
 		if (node.getType() == ResultItemType.TYPE_SYNC) {
 			// Build incoming dependencies
-			for (IncomingInheritancesMatch m : incomingInheritancesMatcher.getAllMatches(null, (WType)node.getObj())) {
-				new ResultItem(depRoot, ResultItemType.TYPE_SYNC, m.getRepoSource());
-				
-			}
+//			for (IncomingInheritancesMatch m : incomingInheritancesMatcher.getAllMatches(null, (WType)node.getObj())) {
+//				new ResultItem(depRoot, ResultItemType.TYPE_SYNC, m.getRepoSource());
+//				
+//			}
 		} else if (node.getType() == ResultItemType.TYPE_REMOVED) {
 			// Build impact dependencies
 		}
@@ -189,9 +190,9 @@ public class ResultContentProvider implements ITreeContentProvider, IncQueryDeps
 		
 		if (classNode.getType() == ResultItemType.TYPE_ADDED || classNode.getType() == ResultItemType.TYPE_SYNC) {
 			// Add new and sync methods
-			for (MethodsInWsTypeMatch match : methodsInWsTypeMatcher.getAllMatches(null, (WType) classNode.getObj())) {
-				new ResultItem(methodsRoot, ResultItemType.METHOD_ADDED, match.getWsMethod());
-			}
+//			for (MethodsInWsTypeMatch match : methodsInWsTypeMatcher.getAllMatches(null, (WType) classNode.getObj())) {
+//				new ResultItem(methodsRoot, ResultItemType.METHOD_ADDED, match.getWsMethod());
+//			}
 
 			// Add removed methods
 		} else if (classNode.getType() == ResultItemType.TYPE_REMOVED) {
@@ -312,25 +313,25 @@ public class ResultContentProvider implements ITreeContentProvider, IncQueryDeps
 	@Override
 	@SuppressWarnings("rawtypes")
 	public void matchesChanged(IncQueryMatcher matcher) {
-		if (matcher instanceof ProjectsWithSameNameMatcher) {
-			projectsWithSameName = (ProjectsWithSameNameMatcher) matcher;
-		} else if (matcher instanceof AddedClassesMatcher) {
-			addedClassesMatcher = (AddedClassesMatcher) matcher;
-		} else if (matcher instanceof TypesInWsProjectMatcher) {
-			typesInWsProjectMatcher = (TypesInWsProjectMatcher) matcher;
-		} else if (matcher instanceof RemovedClassesFromProjectMatcher) {
-			removedClassesFromProjectMatcher = (RemovedClassesFromProjectMatcher) matcher;
-		} else if (matcher instanceof FieldsInWsTypeMatcher) {
-			fieldsInWsTypeMatcher = (FieldsInWsTypeMatcher) matcher;
-		} else if (matcher instanceof MethodsInWsTypeMatcher) {
-			methodsInWsTypeMatcher = (MethodsInWsTypeMatcher) matcher;
-		}
-		else if (matcher instanceof IncomingInheritancesMatcher) {
-			incomingInheritancesMatcher = (IncomingInheritancesMatcher) matcher;
-		}
-		else if (matcher instanceof IncomingClassUsagesMatcher) {
-			incomingClassUsagesMatcher = (IncomingClassUsagesMatcher) matcher;
-		}
+//		if (matcher instanceof ProjectsWithSameNameMatcher) {
+//			projectsWithSameName = (ProjectsWithSameNameMatcher) matcher;
+//		} else if (matcher instanceof AddedClassesMatcher) {
+//			addedClassesMatcher = (AddedClassesMatcher) matcher;
+//		} else if (matcher instanceof TypesInWsProjectMatcher) {
+//			typesInWsProjectMatcher = (TypesInWsProjectMatcher) matcher;
+//		} else if (matcher instanceof RemovedClassesFromProjectMatcher) {
+//			removedClassesFromProjectMatcher = (RemovedClassesFromProjectMatcher) matcher;
+//		} else if (matcher instanceof FieldsInWsTypeMatcher) {
+//			fieldsInWsTypeMatcher = (FieldsInWsTypeMatcher) matcher;
+//		} else if (matcher instanceof MethodsInWsTypeMatcher) {
+//			methodsInWsTypeMatcher = (MethodsInWsTypeMatcher) matcher;
+//		}
+//		else if (matcher instanceof IncomingInheritancesMatcher) {
+//			incomingInheritancesMatcher = (IncomingInheritancesMatcher) matcher;
+//		}
+//		else if (matcher instanceof IncomingClassUsagesMatcher) {
+//			incomingClassUsagesMatcher = (IncomingClassUsagesMatcher) matcher;
+//		}
 
 		if (!Display.getDefault().isDisposed()) {
 			Display.getDefault().syncExec(new Runnable() {

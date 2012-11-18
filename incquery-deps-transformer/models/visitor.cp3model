@@ -1,4 +1,58 @@
-<cp3:CP3Repo xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:cp3="http://inf.mit.bme.hu/donat/incquery-deps/cp3model">
-  <elems id="1" name="devtools-deps-example-service">
-  <elems id="2" name="devtools-deps-example-impl">
+<?xml version="1.0" encoding="UTF-8"?>
+<cp3:CP3Repo xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cp3="http://inf.mit.bme.hu/donat/incquery-deps/cp3model">
+<items xsi:type="cp3:CP3Project" id="31" name="devtools-deps-example-impl" classes="35 32 38"/>
+<items xsi:type="cp3:CP3Project" id="1" name="devtools-deps-example-service" classes="2 18 20 26 11 28"/>
+<items xsi:type="cp3:CP3Class" id="35" name="ServiceInitiator" projects="31" methods="36 37" fields=""/>
+<items xsi:type="cp3:CP3Class" id="32" name="SubSubVisitor" projects="31" methods="34 33" fields=""/>
+<items xsi:type="cp3:CP3Class" id="2" name="ComplexNumber" projects="1" methods="3 4 5 6 7 8" fields="9 10"/>
+<items xsi:type="cp3:CP3Class" id="18" name="VisitableNumber" projects="1" methods="19" fields=""/>
+<items xsi:type="cp3:CP3Class" id="38" name="SumRealNumbersVisitor" projects="31" methods="39 40 41" fields="42"/>
+<items xsi:type="cp3:CP3Class" id="20" name="RealNumber" projects="1" methods="21 23 22 24" fields="25"/>
+<items xsi:type="cp3:CP3Class" id="26" name="NumberVisitor" projects="1" methods="27" fields=""/>
+<items xsi:type="cp3:CP3Class" id="11" name="NumberCrunchingService" projects="1" methods="12 13 14 15" fields="17 16"/>
+<items xsi:type="cp3:CP3Class" id="28" name="AbstractVisitor" projects="1" methods="29 30" fields=""/>
+<items xsi:type="cp3:CP3Method" id="3" name="ComplexNumber" classes="2" />
+<items xsi:type="cp3:CP3Method" id="4" name="getIm" classes="2" />
+<items xsi:type="cp3:CP3Method" id="5" name="setIm" classes="2" />
+<items xsi:type="cp3:CP3Method" id="6" name="getRe" classes="2" />
+<items xsi:type="cp3:CP3Method" id="7" name="setRe" classes="2" />
+<items xsi:type="cp3:CP3Method" id="8" name="accept" classes="2" />
+<items xsi:type="cp3:CP3Method" id="12" name="&lt;clinit&gt;" classes="11" />
+<items xsi:type="cp3:CP3Method" id="13" name="NumberCrunchingService" classes="11" />
+<items xsi:type="cp3:CP3Method" id="14" name="registerVisitor" classes="11" />
+<items xsi:type="cp3:CP3Method" id="15" name="startService" classes="11" />
+<items xsi:type="cp3:CP3Method" id="19" name="accept" classes="18" />
+<items xsi:type="cp3:CP3Method" id="21" name="RealNumber" classes="20" />
+<items xsi:type="cp3:CP3Method" id="23" name="setValue" classes="20" />
+<items xsi:type="cp3:CP3Method" id="22" name="getValue" classes="20" />
+<items xsi:type="cp3:CP3Method" id="24" name="accept" classes="20" />
+<items xsi:type="cp3:CP3Method" id="27" name="visit" classes="26" />
+<items xsi:type="cp3:CP3Method" id="29" name="AbstractVisitor" classes="28" />
+<items xsi:type="cp3:CP3Method" id="30" name="visit" classes="28" />
+<items xsi:type="cp3:CP3Method" id="34" name="visit" classes="32" />
+<items xsi:type="cp3:CP3Method" id="33" name="SubSubVisitor" classes="32" />
+<items xsi:type="cp3:CP3Method" id="39" name="SumRealNumbersVisitor" classes="38" />
+<items xsi:type="cp3:CP3Method" id="36" name="ServiceInitiator" classes="35" />
+<items xsi:type="cp3:CP3Method" id="37" name="main" classes="35" />
+<items xsi:type="cp3:CP3Method" id="40" name="visit" classes="38" />
+<items xsi:type="cp3:CP3Method" id="41" name="getResult" classes="38" />
+<items xsi:type="cp3:CP3Field" id="17" name="visitors" classes="11" />
+<items xsi:type="cp3:CP3Field" id="16" name="INSTANCE" classes="11" />
+<items xsi:type="cp3:CP3Field" id="42" name="sum" classes="38" />
+<items xsi:type="cp3:CP3Field" id="25" name="value" classes="20" />
+<items xsi:type="cp3:CP3Field" id="9" name="im" classes="2" />
+<items xsi:type="cp3:CP3Field" id="10" name="re" classes="2" />
+<deps type="1" from="37" to="15"/>
+<deps type="4" from="35" to="11"/>
+<deps type="3" from="37" to="16"/>
+<deps type="4" from="38" to="20"/>
+<deps type="1" from="37" to="14"/>
+<deps type="4" from="38" to="26"/>
+<deps type="4" from="38" to="28"/>
+<deps type="5" from="38" to="28"/>
+<deps type="1" from="40" to="30"/>
+<deps type="2" from="40" to="30"/>
+<deps type="1" from="39" to="29"/>
+<deps type="5" from="38" to="26"/>
+<deps type="1" from="40" to="22"/>
 </cp3:CP3Repo>

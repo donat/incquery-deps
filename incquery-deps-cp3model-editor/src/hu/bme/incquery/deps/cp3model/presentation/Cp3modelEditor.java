@@ -691,6 +691,7 @@ public class Cp3modelEditor
 
 		adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new Cp3modelItemProviderAdapterFactory());
+		adapterFactory.addAdapterFactory(new Cp3modelItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
 
 		// Create the command stack that will notify this editor as commands are executed.

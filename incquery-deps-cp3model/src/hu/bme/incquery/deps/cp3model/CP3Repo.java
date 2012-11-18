@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link hu.bme.incquery.deps.cp3model.CP3Repo#getDeps <em>Deps</em>}</li>
- *   <li>{@link hu.bme.incquery.deps.cp3model.CP3Repo#getElems <em>Elems</em>}</li>
+ *   <li>{@link hu.bme.incquery.deps.cp3model.CP3Repo#getItems <em>Items</em>}</li>
  * </ul>
  * </p>
  *
@@ -41,19 +41,19 @@ public interface CP3Repo extends EObject {
 	EList<CP3Dep> getDeps();
 
 	/**
-	 * Returns the value of the '<em><b>Elems</b></em>' containment reference list.
-	 * The list contents are of type {@link hu.bme.incquery.deps.cp3model.CP3StElem}.
+	 * Returns the value of the '<em><b>Items</b></em>' containment reference list.
+	 * The list contents are of type {@link hu.bme.incquery.deps.cp3model.CP3AbstractItem}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Elems</em>' containment reference list isn't clear,
+	 * If the meaning of the '<em>Items</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Elems</em>' containment reference list.
-	 * @see hu.bme.incquery.deps.cp3model.Cp3modelPackage#getCP3Repo_Elems()
+	 * @return the value of the '<em>Items</em>' containment reference list.
+	 * @see hu.bme.incquery.deps.cp3model.Cp3modelPackage#getCP3Repo_Items()
 	 * @model containment="true"
 	 * @generated
 	 */
-	EList<CP3StElem> getElems();
+	EList<CP3AbstractItem> getItems();
 
 } // CP3Repo

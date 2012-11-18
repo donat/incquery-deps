@@ -22,15 +22,6 @@ public interface Cp3modelFactory extends EFactory {
 	Cp3modelFactory eINSTANCE = hu.bme.incquery.deps.cp3model.impl.Cp3modelFactoryImpl.init();
 
 	/**
-	 * Returns a new object of class '<em>CP3 St Elem</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>CP3 St Elem</em>'.
-	 * @generated
-	 */
-	CP3StElem createCP3StElem();
-
-	/**
 	 * Returns a new object of class '<em>CP3 Dep</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -47,6 +38,42 @@ public interface Cp3modelFactory extends EFactory {
 	 * @generated
 	 */
 	CP3Repo createCP3Repo();
+
+	/**
+	 * Returns a new object of class '<em>CP3 Project</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>CP3 Project</em>'.
+	 * @generated
+	 */
+	CP3Project createCP3Project();
+
+	/**
+	 * Returns a new object of class '<em>CP3 Class</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>CP3 Class</em>'.
+	 * @generated
+	 */
+	CP3Class createCP3Class();
+
+	/**
+	 * Returns a new object of class '<em>CP3 Method</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>CP3 Method</em>'.
+	 * @generated
+	 */
+	CP3Method createCP3Method();
+
+	/**
+	 * Returns a new object of class '<em>CP3 Field</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>CP3 Field</em>'.
+	 * @generated
+	 */
+	CP3Field createCP3Field();
 
 	/**
 	 * Returns the package supported by this factory.

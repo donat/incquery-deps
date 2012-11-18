@@ -72,29 +72,6 @@ public class Cp3modelItemProviderAdapterFactory extends Cp3modelAdapterFactory i
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link hu.bme.incquery.deps.cp3model.CP3StElem} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected CP3StElemItemProvider cp3StElemItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link hu.bme.incquery.deps.cp3model.CP3StElem}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createCP3StElemAdapter() {
-		if (cp3StElemItemProvider == null) {
-			cp3StElemItemProvider = new CP3StElemItemProvider(this);
-		}
-
-		return cp3StElemItemProvider;
-	}
-
-	/**
 	 * This keeps track of the one adapter used for all {@link hu.bme.incquery.deps.cp3model.CP3Dep} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -138,6 +115,98 @@ public class Cp3modelItemProviderAdapterFactory extends Cp3modelAdapterFactory i
 		}
 
 		return cp3RepoItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link hu.bme.incquery.deps.cp3model.CP3Project} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected CP3ProjectItemProvider cp3ProjectItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link hu.bme.incquery.deps.cp3model.CP3Project}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createCP3ProjectAdapter() {
+		if (cp3ProjectItemProvider == null) {
+			cp3ProjectItemProvider = new CP3ProjectItemProvider(this);
+		}
+
+		return cp3ProjectItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link hu.bme.incquery.deps.cp3model.CP3Class} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected CP3ClassItemProvider cp3ClassItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link hu.bme.incquery.deps.cp3model.CP3Class}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createCP3ClassAdapter() {
+		if (cp3ClassItemProvider == null) {
+			cp3ClassItemProvider = new CP3ClassItemProvider(this);
+		}
+
+		return cp3ClassItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link hu.bme.incquery.deps.cp3model.CP3Method} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected CP3MethodItemProvider cp3MethodItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link hu.bme.incquery.deps.cp3model.CP3Method}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createCP3MethodAdapter() {
+		if (cp3MethodItemProvider == null) {
+			cp3MethodItemProvider = new CP3MethodItemProvider(this);
+		}
+
+		return cp3MethodItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link hu.bme.incquery.deps.cp3model.CP3Field} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected CP3FieldItemProvider cp3FieldItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link hu.bme.incquery.deps.cp3model.CP3Field}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createCP3FieldAdapter() {
+		if (cp3FieldItemProvider == null) {
+			cp3FieldItemProvider = new CP3FieldItemProvider(this);
+		}
+
+		return cp3FieldItemProvider;
 	}
 
 	/**
@@ -239,9 +308,12 @@ public class Cp3modelItemProviderAdapterFactory extends Cp3modelAdapterFactory i
 	 * @generated
 	 */
 	public void dispose() {
-		if (cp3StElemItemProvider != null) cp3StElemItemProvider.dispose();
 		if (cp3DepItemProvider != null) cp3DepItemProvider.dispose();
 		if (cp3RepoItemProvider != null) cp3RepoItemProvider.dispose();
+		if (cp3ProjectItemProvider != null) cp3ProjectItemProvider.dispose();
+		if (cp3ClassItemProvider != null) cp3ClassItemProvider.dispose();
+		if (cp3MethodItemProvider != null) cp3MethodItemProvider.dispose();
+		if (cp3FieldItemProvider != null) cp3FieldItemProvider.dispose();
 	}
 
 }

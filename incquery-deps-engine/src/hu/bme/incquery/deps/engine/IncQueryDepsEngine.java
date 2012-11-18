@@ -2,12 +2,11 @@ package hu.bme.incquery.deps.engine;
 
 import hu.bme.incquery.deps.core.Activator;
 import hu.bme.incquery.deps.core.WsChangeEventListener;
-import hu.bme.incquery.deps.cp1model.Cp1modelPackage;
+import hu.bme.incquery.deps.cp3model.Cp3modelPackage;
 import hu.bme.incquery.deps.modelloader.RepoModelLoadingService;
 import hu.bme.incquery.deps.wsmodel.WWorkspace;
 import hu.bme.incquery.deps.wsmodel.WsmodelPackage;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -20,11 +19,9 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
@@ -36,8 +33,6 @@ import org.eclipse.viatra2.emf.incquery.runtime.api.IncQueryMatcher;
 import org.eclipse.viatra2.emf.incquery.runtime.exception.IncQueryException;
 import org.eclipse.viatra2.emf.incquery.runtime.extensibility.MatcherFactoryRegistry;
 import org.osgi.util.tracker.ServiceTracker;
-
-import cern.devtools.deps.query.cp1.projectswithsamename.ProjectsWithSameNameMatcher;
 
 public class IncQueryDepsEngine {
 
@@ -55,9 +50,9 @@ public class IncQueryDepsEngine {
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
 				.put("wsmodel", new XMIResourceFactoryImpl());
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
-				.put("cp1model", new XMIResourceFactoryImpl());
+				.put("cp3model", new XMIResourceFactoryImpl());
 		EPackage.Registry.INSTANCE.put(WsmodelPackage.eNS_URI, WsmodelPackage.eINSTANCE);
-		EPackage.Registry.INSTANCE.put(Cp1modelPackage.eNS_URI, Cp1modelPackage.eINSTANCE);
+		EPackage.Registry.INSTANCE.put(Cp3modelPackage.eNS_URI, Cp3modelPackage.eINSTANCE);
 		wsModelResource = resourceSet.createResource(URI.createFileURI("C:/tmp/visitor.wsmodel"));
 
 	}
@@ -71,12 +66,12 @@ public class IncQueryDepsEngine {
 	 */
 	@SuppressWarnings("unchecked")
 	public Job getInitJob() throws IncQueryException {
-		Job job = new Job("Downloading repository model") {
+		Job job = new Job("EMF IncQuery initialization") {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				try {
 					doInit(monitor);
-					return new Status(IStatus.OK, Activator.PLUGIN_ID, "Incquery initialized successfully.");
+					return new Status(IStatus.OK, Activator.PLUGIN_ID, "EMF IncQuery initialized successfully.");
 				} catch (Exception e) {
 					e.printStackTrace();
 					return new Status(IStatus.ERROR, Activator.PLUGIN_ID,
@@ -88,30 +83,38 @@ public class IncQueryDepsEngine {
 		return job;
 	}
 
+	@SuppressWarnings("all")
 	private void doInit(IProgressMonitor monitor) throws Exception {
 		// Start tasks.
-		monitor.beginTask("Setup Incquery deps engine", 3);
-		
+		monitor.beginTask("Setup Incquery deps engine", 4);
+
 		// Wait for the model to load.
 		monitor.subTask("Wait for the repository model to get loaded");
+		long loadStart = System.nanoTime();
 		ServiceTracker tracker = hu.bme.incquery.deps.engine.Activator.getDefault().getModelLoaderServiceTracker();
-		while(tracker.getService() == null) {
+		while (tracker.getService() == null) {
 			Thread.sleep(200);
 		}
-		RepoModelLoadingService repoModelService = ((RepoModelLoadingService)tracker.getService());
-		resourceSet.getResources().add(repoModelService.getResource());
+		RepoModelLoadingService repoModelService = ((RepoModelLoadingService) tracker.getService());
+		Resource repoResource = repoModelService.getResource();
+		resourceSet.getResources().add(repoResource);
 		monitor.worked(1);
-		
-		// Init and save the matcher objects 
+
+		// Init and save the matcher objects
 		monitor.subTask("Register pattern matchers in the registry");
-		Set<IMatcherFactory<?>> patternGroup = MatcherFactoryRegistry.getPatternGroup("cern.devtools.deps.query.cp1");
+		Set<IMatcherFactory<?>> patternGroup = MatcherFactoryRegistry.getPatternGroup("cern.devtools.deps.query.cp3");
 		for (IMatcherFactory factory : patternGroup) {
 			IncQueryMatcher matcher = factory.getMatcher(resourceSet);
+			Collection allMatches = matcher.getAllMatches();
+			System.out.println(">>>" + matcher.getPatternName());
+			for (Object o : allMatches) {
+				System.out.println(o);
+			}
 			matchers.add(matcher);
 		}
 		monitor.worked(1);
 
-		// Register the enclosing (Engine) object to get updates for the workspace changes. 
+		// Register the enclosing (Engine) object to get updates for the workspace changes.
 		monitor.subTask("Register listener for get updates about workspace changes.");
 		hu.bme.incquery.deps.core.Activator.getDefault().getWsService()
 				.registerWorkspaceListener(new WsChangeEventListener() {
@@ -134,11 +137,40 @@ public class IncQueryDepsEngine {
 								.setWorkspaceModel(resource);
 					}
 				});
-		
-		// Mark the engine as initialised.
+
+		// Mark the engine as initialized.
+		monitor.worked(1);
+
+		// Load repo model.
+		monitor.subTask("Load repository model.");
+		repoResource.load(getLoadOptions(repoResource));
+		long loadEnd = System.nanoTime();
+		System.err.println(" IncQuery init took " + (loadEnd - loadStart) / 1000000l + " miliseconds.");
+		Runtime runtime = Runtime.getRuntime();
+		System.out.println("Used Memory:" + ((runtime.totalMemory() - runtime.freeMemory()) / (1024 * 1024)) + "MiB");
+
+		// //
+		// IWorkspaceRoot workspace = ResourcesPlugin.getWorkspace().getRoot();
+		// IProject project = workspace.getProject("service");
+		// IJavaProject jp = JavaCore.create(project);c
+		// System.err.println(jp.getPackageFragmentRoots()[0]);
+		//
+		//
+		//
+		//
 		monitor.worked(1);
 		monitor.done();
 		init = true;
+	}
+
+	private Map getLoadOptions(Resource resource) {
+		Map loadOptions = ((XMLResourceImpl) resource).getDefaultLoadOptions();
+		loadOptions.put(XMLResource.OPTION_DEFER_ATTACHMENT, Boolean.TRUE);
+		loadOptions.put(XMLResource.OPTION_DEFER_IDREF_RESOLUTION, Boolean.TRUE);
+		loadOptions.put(XMLResource.OPTION_USE_DEPRECATED_METHODS, Boolean.TRUE);
+		loadOptions.put(XMLResource.OPTION_USE_PARSER_POOL, new XMLParserPoolImpl());
+		loadOptions.put(XMLResource.OPTION_USE_XML_NAME_TO_FEATURE_MAP, new HashMap());
+		return loadOptions;
 	}
 
 	public void setWorkspaceModel(WWorkspace resource) {
@@ -151,8 +183,9 @@ public class IncQueryDepsEngine {
 	}
 
 	public void update() {
+		long start = System.nanoTime();
 		for (IncQueryMatcher<IPatternMatch> matcher : matchers) {
-
+			matcher.getAllMatches();
 			Collection<IncQueryDepsChangeListener> listeners = listenerMap.get(matcher.getClass().getName());
 
 			if (matcher.getClass().getName().contains("ProjectsWithSameNameMatcher")) {
@@ -165,6 +198,8 @@ public class IncQueryDepsEngine {
 				}
 			}
 		}
+		long end = System.nanoTime();
+		System.err.println("IncQuery update finished in " + (end - start) / 1000l + " microseconds.");
 	}
 
 	public void registerChangeListener(IncQueryDepsChangeListener listener, Class... matcherClasses) {

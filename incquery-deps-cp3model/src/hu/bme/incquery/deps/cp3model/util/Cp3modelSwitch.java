@@ -66,12 +66,6 @@ public class Cp3modelSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case Cp3modelPackage.CP3_ST_ELEM: {
-				CP3StElem cp3StElem = (CP3StElem)theEObject;
-				T result = caseCP3StElem(cp3StElem);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case Cp3modelPackage.CP3_DEP: {
 				CP3Dep cp3Dep = (CP3Dep)theEObject;
 				T result = caseCP3Dep(cp3Dep);
@@ -84,23 +78,42 @@ public class Cp3modelSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case Cp3modelPackage.CP3_PROJECT: {
+				CP3Project cp3Project = (CP3Project)theEObject;
+				T result = caseCP3Project(cp3Project);
+				if (result == null) result = caseCP3AbstractItem(cp3Project);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case Cp3modelPackage.CP3_CLASS: {
+				CP3Class cp3Class = (CP3Class)theEObject;
+				T result = caseCP3Class(cp3Class);
+				if (result == null) result = caseCP3AbstractItem(cp3Class);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case Cp3modelPackage.CP3_ABSTRACT_ITEM: {
+				CP3AbstractItem cp3AbstractItem = (CP3AbstractItem)theEObject;
+				T result = caseCP3AbstractItem(cp3AbstractItem);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case Cp3modelPackage.CP3_METHOD: {
+				CP3Method cp3Method = (CP3Method)theEObject;
+				T result = caseCP3Method(cp3Method);
+				if (result == null) result = caseCP3AbstractItem(cp3Method);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case Cp3modelPackage.CP3_FIELD: {
+				CP3Field cp3Field = (CP3Field)theEObject;
+				T result = caseCP3Field(cp3Field);
+				if (result == null) result = caseCP3AbstractItem(cp3Field);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>CP3 St Elem</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>CP3 St Elem</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseCP3StElem(CP3StElem object) {
-		return null;
 	}
 
 	/**
@@ -130,6 +143,81 @@ public class Cp3modelSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseCP3Repo(CP3Repo object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>CP3 Project</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>CP3 Project</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCP3Project(CP3Project object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>CP3 Class</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>CP3 Class</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCP3Class(CP3Class object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>CP3 Abstract Item</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>CP3 Abstract Item</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCP3AbstractItem(CP3AbstractItem object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>CP3 Method</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>CP3 Method</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCP3Method(CP3Method object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>CP3 Field</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>CP3 Field</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCP3Field(CP3Field object) {
 		return null;
 	}
 

@@ -78,7 +78,7 @@ public class CP3RepoItemProvider
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(Cp3modelPackage.Literals.CP3_REPO__DEPS);
-			childrenFeatures.add(Cp3modelPackage.Literals.CP3_REPO__ELEMS);
+			childrenFeatures.add(Cp3modelPackage.Literals.CP3_REPO__ITEMS);
 		}
 		return childrenFeatures;
 	}
@@ -131,7 +131,7 @@ public class CP3RepoItemProvider
 
 		switch (notification.getFeatureID(CP3Repo.class)) {
 			case Cp3modelPackage.CP3_REPO__DEPS:
-			case Cp3modelPackage.CP3_REPO__ELEMS:
+			case Cp3modelPackage.CP3_REPO__ITEMS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -156,8 +156,48 @@ public class CP3RepoItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(Cp3modelPackage.Literals.CP3_REPO__ELEMS,
-				 Cp3modelFactory.eINSTANCE.createCP3StElem()));
+				(Cp3modelPackage.Literals.CP3_REPO__DEPS,
+				 Cp3modelFactory.eINSTANCE.createCP3Dep()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(Cp3modelPackage.Literals.CP3_REPO__ITEMS,
+				 Cp3modelFactory.eINSTANCE.createCP3Project()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(Cp3modelPackage.Literals.CP3_REPO__ITEMS,
+				 Cp3modelFactory.eINSTANCE.createCP3Class()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(Cp3modelPackage.Literals.CP3_REPO__ITEMS,
+				 Cp3modelFactory.eINSTANCE.createCP3Method()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(Cp3modelPackage.Literals.CP3_REPO__ITEMS,
+				 Cp3modelFactory.eINSTANCE.createCP3Field()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(Cp3modelPackage.Literals.CP3_REPO__ITEMS,
+				 Cp3modelFactory.eINSTANCE.createCP3Project()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(Cp3modelPackage.Literals.CP3_REPO__ITEMS,
+				 Cp3modelFactory.eINSTANCE.createCP3Class()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(Cp3modelPackage.Literals.CP3_REPO__ITEMS,
+				 Cp3modelFactory.eINSTANCE.createCP3Method()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(Cp3modelPackage.Literals.CP3_REPO__ITEMS,
+				 Cp3modelFactory.eINSTANCE.createCP3Field()));
 	}
 
 	/**
