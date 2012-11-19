@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cp3:CP3Repo xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cp3="http://inf.mit.bme.hu/donat/incquery-deps/cp3model">
+<items xsi:type="cp3:CP3Project" id="18" name="client" classes="19"/>
+<items xsi:type="cp3:CP3Project" id="22" name="impl" classes="23 26 30"/>
+<items xsi:type="cp3:CP3Project" id="1" name="service" classes="2 5 13 15"/>
+<items xsi:type="cp3:CP3Class" id="19" name="Main" projects="18" methods="21 20" fields=""/>
+<items xsi:type="cp3:CP3Class" id="2" name="AbstractService" projects="1" methods="3 4" fields=""/>
+<items xsi:type="cp3:CP3Class" id="5" name="Services" projects="1" methods="6 7 8 9 10" fields="11 12"/>
+<items xsi:type="cp3:CP3Class" id="23" name="BasicProvider" projects="22" methods="25 24" fields=""/>
+<items xsi:type="cp3:CP3Class" id="26" name="BasicImplUtil" projects="22" methods="27 29 28" fields=""/>
+<items xsi:type="cp3:CP3Class" id="13" name="Provider" projects="1" methods="14" fields=""/>
+<items xsi:type="cp3:CP3Class" id="30" name="BasicService" projects="22" methods="32 33 31" fields=""/>
+<items xsi:type="cp3:CP3Class" id="15" name="Service" projects="1" methods="17 16" fields=""/>
+<items xsi:type="cp3:CP3Method" id="32" name="serviceA" classes="30" />
+<items xsi:type="cp3:CP3Method" id="33" name="serviceB" classes="30" />
+<items xsi:type="cp3:CP3Method" id="3" name="AbstractService" classes="2" />
+<items xsi:type="cp3:CP3Method" id="4" name="serviceB" classes="2" />
+<items xsi:type="cp3:CP3Method" id="6" name="&lt;clinit&gt;" classes="5" />
+<items xsi:type="cp3:CP3Method" id="7" name="Services" classes="5" />
+<items xsi:type="cp3:CP3Method" id="8" name="registerDefaultProvider" classes="5" />
+<items xsi:type="cp3:CP3Method" id="9" name="registerProvider" classes="5" />
+<items xsi:type="cp3:CP3Method" id="10" name="newInstance" classes="5" />
+<items xsi:type="cp3:CP3Method" id="14" name="newService" classes="13" />
+<items xsi:type="cp3:CP3Method" id="17" name="serviceB" classes="15" />
+<items xsi:type="cp3:CP3Method" id="16" name="serviceA" classes="15" />
+<items xsi:type="cp3:CP3Method" id="21" name="main" classes="19" />
+<items xsi:type="cp3:CP3Method" id="20" name="Main" classes="19" />
+<items xsi:type="cp3:CP3Method" id="25" name="newService" classes="23" />
+<items xsi:type="cp3:CP3Method" id="24" name="BasicProvider" classes="23" />
+<items xsi:type="cp3:CP3Method" id="27" name="BasicImplUtil" classes="26" />
+<items xsi:type="cp3:CP3Method" id="29" name="registerImplementationAsDefault" classes="26" />
+<items xsi:type="cp3:CP3Method" id="28" name="registerImplementation" classes="26" />
+<items xsi:type="cp3:CP3Method" id="31" name="BasicService" classes="30" />
+<items xsi:type="cp3:CP3Field" id="11" name="providers" classes="5" />
+<items xsi:type="cp3:CP3Field" id="12" name="DEFAULT_PROVIDER_NAME" classes="5" />
+<deps type="5" from="30" to="2"/>
+<deps type="1" from="31" to="3"/>
+<deps type="4" from="26" to="5"/>
+<deps type="1" from="21" to="17"/>
+<deps type="3" from="29" to="12"/>
+<deps type="1" from="21" to="29"/>
+<deps type="1" from="29" to="9"/>
+<deps type="4" from="19" to="26"/>
+<deps type="5" from="23" to="13"/>
+<deps type="2" from="33" to="4"/>
+<deps type="4" from="23" to="13"/>
+<deps type="1" from="21" to="10"/>
+<deps type="4" from="19" to="5"/>
+<deps type="4" from="19" to="15"/>
+<deps type="4" from="30" to="2"/>
+<deps type="1" from="28" to="9"/>
+</cp3:CP3Repo>

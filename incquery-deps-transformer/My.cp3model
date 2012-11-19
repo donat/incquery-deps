@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cp3:CP3Repo xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cp3="http://inf.mit.bme.hu/donat/incquery-deps/cp3model">
+  <deps type="2" from="2" to="4"/>
+  <items xsi:type="cp3:CP3Project" id="1" name="p1" classes="2 3"/>
+  <items xsi:type="cp3:Cp3Class" id="2" name="MyClass" projects="1" methods="4" fields="5"/>
+  <items xsi:type="cp3:Cp3Class" id="3" name="AnotherClass" projects="1"/>
+  <items xsi:type="cp3:CP3Method" id="4" name="foo()" classes="2"/>
+  <items xsi:type="cp3:CP3Field" id="5" name="FIELD" classes="2"/>
+</cp3:CP3Repo>

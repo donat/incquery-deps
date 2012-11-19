@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ASCII"?>
+<wsm:WWorkspace xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:wsm="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel" elements="//@projects.0 //@projects.0/@packageFragmentRoots.0 //@projects.0/@packageFragmentRoots.0/@packageFragments.0 //@projects.0/@packageFragmentRoots.0/@packageFragments.1 //@projects.0/@packageFragmentRoots.0/@packageFragments.2 //@projects.0/@packageFragmentRoots.0/@packageFragments.3 //@projects.0/@packageFragmentRoots.0/@packageFragments.4 //@projects.0/@packageFragmentRoots.0/@packageFragments.5 //@projects.0/@packageFragmentRoots.0/@packageFragments.6 //@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.0 //@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.0/@types.0 //@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.0/@types.0/@methods.0 //@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.0/@types.0/@methods.1 //@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.1 //@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.1/@types.0 //@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.1/@types.0/@methods.0 //@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.1/@types.0/@methods.1 //@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.1/@types.0/@methods.2 //@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.1/@types.0/@methods.3 //@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.1/@types.0/@fields.0 //@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.1/@types.0/@fields.1 //@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.2 //@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.2/@types.0 //@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.2/@types.0/@methods.0 //@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.3 //@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.3/@types.0 //@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.3/@types.0/@methods.0">
+  <projects name="service" handler="=service">
+    <packageFragmentRoots name="src" handler="=service/src">
+      <packageFragments name="" handler="=service/src&lt;"/>
+      <packageFragments name="hu" handler="=service/src&lt;hu"/>
+      <packageFragments name="hu.bme" handler="=service/src&lt;hu.bme"/>
+      <packageFragments name="hu.bme.incquery" handler="=service/src&lt;hu.bme.incquery"/>
+      <packageFragments name="hu.bme.incquery.deps" handler="=service/src&lt;hu.bme.incquery.deps"/>
+      <packageFragments name="hu.bme.incquery.deps.example" handler="=service/src&lt;hu.bme.incquery.deps.example"/>
+      <packageFragments name="hu.bme.incquery.deps.example.service" handler="=service/src&lt;hu.bme.incquery.deps.example.service">
+        <compilationUnits name="Service.java" handler="=service/src&lt;hu.bme.incquery.deps.example.service{Service.java">
+          <types name="Service" handler="=service/src&lt;hu.bme.incquery.deps.example.service{Service.java[Service" incomingDependencies="//@dependencties.3 //@dependencties.5 //@dependencties.7">
+            <methods name="serviceA" handler="=service/src&lt;hu.bme.incquery.deps.example.service{Service.java[Service~serviceA" signature="hu.bme.incquery.deps.example.service.Service#serviceA():void"/>
+            <methods name="serviceB" handler="=service/src&lt;hu.bme.incquery.deps.example.service{Service.java[Service~serviceB" incomingDependencies="//@dependencties.6" signature="hu.bme.incquery.deps.example.service.Service#serviceB():void"/>
+          </types>
+        </compilationUnits>
+        <compilationUnits name="Services.java" handler="=service/src&lt;hu.bme.incquery.deps.example.service{Services.java">
+          <types name="Services" handler="=service/src&lt;hu.bme.incquery.deps.example.service{Services.java[Services">
+            <methods name="Services" handler="=service/src&lt;hu.bme.incquery.deps.example.service{Services.java[Services~Services" signature="hu.bme.incquery.deps.example.service.Services#Services():void"/>
+            <methods name="registerDefaultProvider" handler="=service/src&lt;hu.bme.incquery.deps.example.service{Services.java[Services~registerDefaultProvider~QProvider;" outgoingDependencies="//@dependencties.0 //@dependencties.1" signature="hu.bme.incquery.deps.example.service.Services#registerDefaultProvider(hu.bme.incquery.deps.example.service.Provider):void"/>
+            <methods name="registerProvider" handler="=service/src&lt;hu.bme.incquery.deps.example.service{Services.java[Services~registerProvider~QString;~QProvider;" outgoingDependencies="//@dependencties.2" signature="hu.bme.incquery.deps.example.service.Services#registerProvider(java.lang.String,hu.bme.incquery.deps.example.service.Provider):void"/>
+            <methods name="newInstance" handler="=service/src&lt;hu.bme.incquery.deps.example.service{Services.java[Services~newInstance~QString;" outgoingDependencies="//@dependencties.3 //@dependencties.4" signature="hu.bme.incquery.deps.example.service.Services#newInstance(java.lang.String):hu.bme.incquery.deps.example.service.Service"/>
+            <fields name="providers" handler="=service/src&lt;hu.bme.incquery.deps.example.service{Services.java[Services^providers" incomingDependencies="//@dependencties.0 //@dependencties.2 //@dependencties.4" signature="hu.bme.incquery.deps.example.service.Services.providers"/>
+            <fields name="DEFAULT_PROVIDER_NAME" handler="=service/src&lt;hu.bme.incquery.deps.example.service{Services.java[Services^DEFAULT_PROVIDER_NAME" incomingDependencies="//@dependencties.1" signature="hu.bme.incquery.deps.example.service.Services.DEFAULT_PROVIDER_NAME"/>
+          </types>
+        </compilationUnits>
+        <compilationUnits name="AbstractService.java" handler="=service/src&lt;hu.bme.incquery.deps.example.service{AbstractService.java">
+          <types name="AbstractService" handler="=service/src&lt;hu.bme.incquery.deps.example.service{AbstractService.java[AbstractService" outgoingDependencies="//@dependencties.5">
+            <methods name="serviceB" handler="=service/src&lt;hu.bme.incquery.deps.example.service{AbstractService.java[AbstractService~serviceB" outgoingDependencies="//@dependencties.6" signature="hu.bme.incquery.deps.example.service.AbstractService#serviceB():void"/>
+          </types>
+        </compilationUnits>
+        <compilationUnits name="Provider.java" handler="=service/src&lt;hu.bme.incquery.deps.example.service{Provider.java">
+          <types name="Provider" handler="=service/src&lt;hu.bme.incquery.deps.example.service{Provider.java[Provider">
+            <methods name="newService" handler="=service/src&lt;hu.bme.incquery.deps.example.service{Provider.java[Provider~newService" outgoingDependencies="//@dependencties.7" signature="hu.bme.incquery.deps.example.service.Provider#newService():hu.bme.incquery.deps.example.service.Service"/>
+          </types>
+        </compilationUnits>
+      </packageFragments>
+    </packageFragmentRoots>
+  </projects>
+  <dependencties from="//@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.1/@types.0/@methods.1" to="//@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.1/@types.0/@fields.0" type="FIELD_ACCESS"/>
+  <dependencties from="//@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.1/@types.0/@methods.1" to="//@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.1/@types.0/@fields.1" type="FIELD_ACCESS"/>
+  <dependencties from="//@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.1/@types.0/@methods.2" to="//@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.1/@types.0/@fields.0" type="FIELD_ACCESS"/>
+  <dependencties from="//@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.1/@types.0/@methods.3" to="//@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.0/@types.0"/>
+  <dependencties from="//@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.1/@types.0/@methods.3" to="//@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.1/@types.0/@fields.0" type="FIELD_ACCESS"/>
+  <dependencties from="//@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.2/@types.0" to="//@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.0/@types.0" type="INHERITANCE"/>
+  <dependencties from="//@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.2/@types.0/@methods.0" to="//@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.0/@types.0/@methods.1" type="METHOD_OVERRIDE"/>
+  <dependencties from="//@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.3/@types.0/@methods.0" to="//@projects.0/@packageFragmentRoots.0/@packageFragments.6/@compilationUnits.0/@types.0"/>
+</wsm:WWorkspace>

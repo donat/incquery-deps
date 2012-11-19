@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="ASCII"?>
+<rm:RRepository xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:rm="http://inf.mit.bme.hu/donat/incquery-deps/repomodel">
+  <rDependencies uuid="__eig2Br_EeKag-IprIYvaA" rFrom="__eZW4Rr_EeKag-IprIYvaA" rTo="__eZW7Br_EeKag-IprIYvaA" depType="4"/>
+  <rDependencies uuid="__eig2Rr_EeKag-IprIYvaA" rFrom="__eZW4Rr_EeKag-IprIYvaA" rTo="__eZW2hr_EeKag-IprIYvaA" depType="4"/>
+  <rDependencies uuid="__eig2hr_EeKag-IprIYvaA" rFrom="__eZW4Rr_EeKag-IprIYvaA" rTo="__eZW0Br_EeKag-IprIYvaA" depType="4"/>
+  <rDependencies uuid="__eig3hr_EeKag-IprIYvaA" rFrom="__eZW4Br_EeKag-IprIYvaA" rTo="__eZW6xr_EeKag-IprIYvaA" depType="1"/>
+  <rDependencies uuid="__eig3xr_EeKag-IprIYvaA" rFrom="__eZW4Br_EeKag-IprIYvaA" rTo="__eZW1xr_EeKag-IprIYvaA" depType="1"/>
+  <rDependencies uuid="__eig4Br_EeKag-IprIYvaA" rFrom="__eZW4Br_EeKag-IprIYvaA" rTo="__ePl0Rr_EeKag-IprIYvaA" depType="1"/>
+  <rDependencies uuid="__eig7hr_EeKag-IprIYvaA" rFrom="__eZW5Rr_EeKag-IprIYvaA" rTo="__eZW0hr_EeKag-IprIYvaA" depType="5"/>
+  <rDependencies uuid="__eig8Br_EeKag-IprIYvaA" rFrom="__eZW5Rr_EeKag-IprIYvaA" rTo="__eZW0hr_EeKag-IprIYvaA" depType="4"/>
+  <rDependencies uuid="__eig8hr_EeKag-IprIYvaA" rFrom="__eZW6Br_EeKag-IprIYvaA" rTo="__eZW3Rr_EeKag-IprIYvaA" depType="5"/>
+  <rDependencies uuid="__eig9Br_EeKag-IprIYvaA" rFrom="__eZW6Br_EeKag-IprIYvaA" rTo="__eZW3Rr_EeKag-IprIYvaA" depType="4"/>
+  <rDependencies uuid="__eig9hr_EeKag-IprIYvaA" rFrom="__eZW5hr_EeKag-IprIYvaA" rTo="__eZW2xr_EeKag-IprIYvaA" depType="1"/>
+  <rDependencies uuid="__eig-Rr_EeKag-IprIYvaA" rFrom="__eZW7Br_EeKag-IprIYvaA" rTo="__eZW2hr_EeKag-IprIYvaA" depType="4"/>
+  <rDependencies uuid="__eig-xr_EeKag-IprIYvaA" rFrom="__eZW6hr_EeKag-IprIYvaA" rTo="__eZW1hr_EeKag-IprIYvaA" depType="1"/>
+  <rDependencies uuid="__eig_Rr_EeKag-IprIYvaA" rFrom="__eZW6xr_EeKag-IprIYvaA" rTo="__eZW1hr_EeKag-IprIYvaA" depType="1"/>
+  <rProjects uuid="__dy54Br_EeKag-IprIYvaA" name="service" containingFolders="" productPath="C:/opt/workspace/eclipse4/service-provider-framework/service.jar">
+    <versions>1.0.0</versions>
+    <rClasses uuid="__eZW0Br_EeKag-IprIYvaA" rIncoming="__eig2hr_EeKag-IprIYvaA" simpleName="Service" packageName="hu.bme.incquery.deps.example.service" extends="" implements="" private="false" fqName="hu.bme.incquery.deps.example.service.Service">
+      <versions>1.0.0</versions>
+      <rMethods uuid="__ePl0Br_EeKag-IprIYvaA" signature="hu.bme.incquery.deps.example.service.Service#serviceA():void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="__ePl0Rr_EeKag-IprIYvaA" rIncoming="__eig4Br_EeKag-IprIYvaA" signature="hu.bme.incquery.deps.example.service.Service#serviceB():void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+    </rClasses>
+    <rClasses uuid="__eZW0hr_EeKag-IprIYvaA" rIncoming="__eig7hr_EeKag-IprIYvaA __eig8Br_EeKag-IprIYvaA" simpleName="Provider" packageName="hu.bme.incquery.deps.example.service" extends="" implements="" private="false" fqName="hu.bme.incquery.deps.example.service.Provider">
+      <versions>1.0.0</versions>
+      <rMethods uuid="__eZW0Rr_EeKag-IprIYvaA" signature="hu.bme.incquery.deps.example.service.Provider#newService():hu.bme.incquery.deps.example.service.Service" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+    </rClasses>
+    <rClasses uuid="__eZW2hr_EeKag-IprIYvaA" rIncoming="__eig2Rr_EeKag-IprIYvaA __eig-Rr_EeKag-IprIYvaA" simpleName="Services" packageName="hu.bme.incquery.deps.example.service" extends="" implements="" private="false" fqName="hu.bme.incquery.deps.example.service.Services">
+      <versions>1.0.0</versions>
+      <rMethods uuid="__eZW0xr_EeKag-IprIYvaA" signature="hu.bme.incquery.deps.example.service.Services#&lt;clinit>():void" private="true" static="true">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="__eZW1Br_EeKag-IprIYvaA" signature="hu.bme.incquery.deps.example.service.Services#Services():void" private="true">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="__eZW1Rr_EeKag-IprIYvaA" signature="hu.bme.incquery.deps.example.service.Services#registerDefaultProvider(hu.bme.incquery.deps.example.service.Provider):void" private="false" static="true">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="__eZW1hr_EeKag-IprIYvaA" rIncoming="__eig-xr_EeKag-IprIYvaA __eig_Rr_EeKag-IprIYvaA" signature="hu.bme.incquery.deps.example.service.Services#registerProvider(java.lang.String,hu.bme.incquery.deps.example.service.Provider):void" private="false" static="true">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="__eZW1xr_EeKag-IprIYvaA" rIncoming="__eig3xr_EeKag-IprIYvaA" signature="hu.bme.incquery.deps.example.service.Services#newInstance(java.lang.String):hu.bme.incquery.deps.example.service.Service" private="false" static="true">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rFields uuid="__eZW2Br_EeKag-IprIYvaA" signature="hu.bme.incquery.deps.example.service.Services.providers" private="true">
+        <versions>1.0.0</versions>
+      </rFields>
+      <rFields uuid="__eZW2Rr_EeKag-IprIYvaA" signature="hu.bme.incquery.deps.example.service.Services.DEFAULT_PROVIDER_NAME">
+        <versions>1.0.0</versions>
+      </rFields>
+    </rClasses>
+    <rClasses uuid="__eZW3Rr_EeKag-IprIYvaA" rIncoming="__eig8hr_EeKag-IprIYvaA __eig9Br_EeKag-IprIYvaA" simpleName="AbstractService" packageName="hu.bme.incquery.deps.example.service" extends="" implements="hu.bme.incquery.deps.example.service.Service" private="false" fqName="hu.bme.incquery.deps.example.service.AbstractService">
+      <versions>1.0.0</versions>
+      <rMethods uuid="__eZW2xr_EeKag-IprIYvaA" rIncoming="__eig9hr_EeKag-IprIYvaA" signature="hu.bme.incquery.deps.example.service.AbstractService#AbstractService():void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="__eZW3Br_EeKag-IprIYvaA" signature="hu.bme.incquery.deps.example.service.AbstractService#serviceB():void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+    </rClasses>
+  </rProjects>
+  <rProjects uuid="__eZW3hr_EeKag-IprIYvaA" name="client" containingFolders="" productPath="C:/opt/workspace/eclipse4/service-provider-framework/client.jar">
+    <versions>1.0.0</versions>
+    <rClasses uuid="__eZW4Rr_EeKag-IprIYvaA" rOutgoing="__eig2Br_EeKag-IprIYvaA __eig2Rr_EeKag-IprIYvaA __eig2hr_EeKag-IprIYvaA" simpleName="Main" packageName="hu.bme.incquery.deps.example.consumer" extends="" implements="" private="false" fqName="hu.bme.incquery.deps.example.consumer.Main">
+      <versions>1.0.0</versions>
+      <rMethods uuid="__eZW3xr_EeKag-IprIYvaA" signature="hu.bme.incquery.deps.example.consumer.Main#Main():void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="__eZW4Br_EeKag-IprIYvaA" rOutgoing="__eig3hr_EeKag-IprIYvaA __eig3xr_EeKag-IprIYvaA __eig4Br_EeKag-IprIYvaA" signature="hu.bme.incquery.deps.example.consumer.Main#main(java.lang.String[]):void" private="false" static="true">
+        <versions>1.0.0</versions>
+      </rMethods>
+    </rClasses>
+  </rProjects>
+  <rProjects uuid="__eZW4hr_EeKag-IprIYvaA" name="impl" containingFolders="" productPath="C:/opt/workspace/eclipse4/service-provider-framework/impl.jar">
+    <versions>1.0.0</versions>
+    <rClasses uuid="__eZW5Rr_EeKag-IprIYvaA" rOutgoing="__eig7hr_EeKag-IprIYvaA __eig8Br_EeKag-IprIYvaA" simpleName="BasicProvider" packageName="hu.bme.incquery.deps.example.client" extends="" implements="hu.bme.incquery.deps.example.service.Provider" private="false" fqName="hu.bme.incquery.deps.example.client.BasicProvider">
+      <versions>1.0.0</versions>
+      <rMethods uuid="__eZW4xr_EeKag-IprIYvaA" signature="hu.bme.incquery.deps.example.client.BasicProvider#BasicProvider():void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="__eZW5Br_EeKag-IprIYvaA" signature="hu.bme.incquery.deps.example.client.BasicProvider#newService():hu.bme.incquery.deps.example.service.Service" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+    </rClasses>
+    <rClasses uuid="__eZW6Br_EeKag-IprIYvaA" rOutgoing="__eig8hr_EeKag-IprIYvaA __eig9Br_EeKag-IprIYvaA" simpleName="BasicService" packageName="hu.bme.incquery.deps.example.client" extends="hu.bme.incquery.deps.example.service.AbstractService" implements="" private="false" fqName="hu.bme.incquery.deps.example.client.BasicService">
+      <versions>1.0.0</versions>
+      <rMethods uuid="__eZW5hr_EeKag-IprIYvaA" rOutgoing="__eig9hr_EeKag-IprIYvaA" signature="hu.bme.incquery.deps.example.client.BasicService#BasicService():void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="__eZW5xr_EeKag-IprIYvaA" signature="hu.bme.incquery.deps.example.client.BasicService#serviceA():void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+    </rClasses>
+    <rClasses uuid="__eZW7Br_EeKag-IprIYvaA" rIncoming="__eig2Br_EeKag-IprIYvaA" rOutgoing="__eig-Rr_EeKag-IprIYvaA" simpleName="BasicImplUtil" packageName="hu.bme.incquery.deps.example.client" extends="" implements="" private="false" fqName="hu.bme.incquery.deps.example.client.BasicImplUtil">
+      <versions>1.0.0</versions>
+      <rMethods uuid="__eZW6Rr_EeKag-IprIYvaA" signature="hu.bme.incquery.deps.example.client.BasicImplUtil#BasicImplUtil():void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="__eZW6hr_EeKag-IprIYvaA" rOutgoing="__eig-xr_EeKag-IprIYvaA" signature="hu.bme.incquery.deps.example.client.BasicImplUtil#registerImplementation():void" private="false" static="true">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="__eZW6xr_EeKag-IprIYvaA" rIncoming="__eig3hr_EeKag-IprIYvaA" rOutgoing="__eig_Rr_EeKag-IprIYvaA" signature="hu.bme.incquery.deps.example.client.BasicImplUtil#registerImplementationAsDefault():void" private="false" static="true">
+        <versions>1.0.0</versions>
+      </rMethods>
+    </rClasses>
+  </rProjects>
+</rm:RRepository>

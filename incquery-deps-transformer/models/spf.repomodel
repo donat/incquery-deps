@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="ASCII"?>
+<rm:RRepository xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:rm="http://inf.mit.bme.hu/donat/incquery-deps/repomodel">
+  <rDependencies uuid="_VOAdcB3rEeKfNJPeD9-tFQ" rFrom="_VN2sgB3rEeKfNJPeD9-tFQ" rTo="_VN2siB3rEeKfNJPeD9-tFQ" depType="4"/>
+  <rDependencies uuid="_VOAdcR3rEeKfNJPeD9-tFQ" rFrom="_VN2sgB3rEeKfNJPeD9-tFQ" rTo="_VN2sdx3rEeKfNJPeD9-tFQ" depType="4"/>
+  <rDependencies uuid="_VOAdch3rEeKfNJPeD9-tFQ" rFrom="_VN2sgB3rEeKfNJPeD9-tFQ" rTo="_VN2sfB3rEeKfNJPeD9-tFQ" depType="4"/>
+  <rDependencies uuid="_VOAddh3rEeKfNJPeD9-tFQ" rFrom="_VN2sfx3rEeKfNJPeD9-tFQ" rTo="_VN2shx3rEeKfNJPeD9-tFQ" depType="1"/>
+  <rDependencies uuid="_VOAddx3rEeKfNJPeD9-tFQ" rFrom="_VN2sfx3rEeKfNJPeD9-tFQ" rTo="_VN2sdB3rEeKfNJPeD9-tFQ" depType="1"/>
+  <rDependencies uuid="_VOAdeB3rEeKfNJPeD9-tFQ" rFrom="_VN2sfx3rEeKfNJPeD9-tFQ" rTo="_VN2sex3rEeKfNJPeD9-tFQ" depType="1"/>
+  <rDependencies uuid="_VOAdhx3rEeKfNJPeD9-tFQ" rFrom="_VN2shB3rEeKfNJPeD9-tFQ" rTo="_VN2seR3rEeKfNJPeD9-tFQ" depType="5"/>
+  <rDependencies uuid="_VOAdiR3rEeKfNJPeD9-tFQ" rFrom="_VN2shB3rEeKfNJPeD9-tFQ" rTo="_VN2seR3rEeKfNJPeD9-tFQ" depType="4"/>
+  <rDependencies uuid="_VOAdjB3rEeKfNJPeD9-tFQ" rFrom="_VN2siB3rEeKfNJPeD9-tFQ" rTo="_VN2sdx3rEeKfNJPeD9-tFQ" depType="4"/>
+  <rDependencies uuid="_VOAdjh3rEeKfNJPeD9-tFQ" rFrom="_VN2shh3rEeKfNJPeD9-tFQ" rTo="_VN2scx3rEeKfNJPeD9-tFQ" depType="1"/>
+  <rDependencies uuid="_VOAdkB3rEeKfNJPeD9-tFQ" rFrom="_VN2shx3rEeKfNJPeD9-tFQ" rTo="_VN2scx3rEeKfNJPeD9-tFQ" depType="1"/>
+  <rDependencies uuid="_VOAdkx3rEeKfNJPeD9-tFQ" rFrom="_VN2shx3rEeKfNJPeD9-tFQ" rTo="_VN2sdh3rEeKfNJPeD9-tFQ" depType="3"/>
+  <rDependencies uuid="_VOAdlB3rEeKfNJPeD9-tFQ" rFrom="_VN2shx3rEeKfNJPeD9-tFQ" rTo="_VN2sdh3rEeKfNJPeD9-tFQ" depType="3"/>
+  <rDependencies uuid="_VOAdlh3rEeKfNJPeD9-tFQ" rFrom="_VN2sjB3rEeKfNJPeD9-tFQ" rTo="_VNtigh3rEeKfNJPeD9-tFQ" depType="5"/>
+  <rDependencies uuid="_VOAdmB3rEeKfNJPeD9-tFQ" rFrom="_VN2sjB3rEeKfNJPeD9-tFQ" rTo="_VNtigh3rEeKfNJPeD9-tFQ" depType="4"/>
+  <rDependencies uuid="_VOAdmh3rEeKfNJPeD9-tFQ" rFrom="_VN2siR3rEeKfNJPeD9-tFQ" rTo="_VNtigB3rEeKfNJPeD9-tFQ" depType="1"/>
+  <rDependencies uuid="_VOAdmx3rEeKfNJPeD9-tFQ" rFrom="_VN2six3rEeKfNJPeD9-tFQ" rTo="_VNtigR3rEeKfNJPeD9-tFQ" depType="2"/>
+  <rProjects uuid="_VM9Ukh3rEeKfNJPeD9-tFQ" name="service" containingFolders="" productPath="C:/opt/workspace/eclipse4/service-provider-framework/service.jar">
+    <versions>1.0.0</versions>
+    <rClasses uuid="_VNtigh3rEeKfNJPeD9-tFQ" rIncoming="_VOAdlh3rEeKfNJPeD9-tFQ _VOAdmB3rEeKfNJPeD9-tFQ" simpleName="AbstractService" packageName="hu.bme.incquery.deps.example.service" extends="" implements="hu.bme.incquery.deps.example.service.Service" private="false" fqName="hu.bme.incquery.deps.example.service.AbstractService">
+      <versions>1.0.0</versions>
+      <rMethods uuid="_VNtigB3rEeKfNJPeD9-tFQ" rIncoming="_VOAdmh3rEeKfNJPeD9-tFQ" signature="hu.bme.incquery.deps.example.service.AbstractService#AbstractService():void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_VNtigR3rEeKfNJPeD9-tFQ" rIncoming="_VOAdmx3rEeKfNJPeD9-tFQ" signature="hu.bme.incquery.deps.example.service.AbstractService#serviceB():void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+    </rClasses>
+    <rClasses uuid="_VN2sdx3rEeKfNJPeD9-tFQ" rIncoming="_VOAdcR3rEeKfNJPeD9-tFQ _VOAdjB3rEeKfNJPeD9-tFQ" simpleName="Services" packageName="hu.bme.incquery.deps.example.service" extends="" implements="" private="false" fqName="hu.bme.incquery.deps.example.service.Services">
+      <versions>1.0.0</versions>
+      <rMethods uuid="_VN2scB3rEeKfNJPeD9-tFQ" signature="hu.bme.incquery.deps.example.service.Services#&lt;clinit>():void" private="true" static="true">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_VN2scR3rEeKfNJPeD9-tFQ" signature="hu.bme.incquery.deps.example.service.Services#Services():void" private="true">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_VN2sch3rEeKfNJPeD9-tFQ" signature="hu.bme.incquery.deps.example.service.Services#registerDefaultProvider(hu.bme.incquery.deps.example.service.Provider):void" private="false" static="true">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_VN2scx3rEeKfNJPeD9-tFQ" rIncoming="_VOAdjh3rEeKfNJPeD9-tFQ _VOAdkB3rEeKfNJPeD9-tFQ" signature="hu.bme.incquery.deps.example.service.Services#registerProvider(java.lang.String,hu.bme.incquery.deps.example.service.Provider):void" private="false" static="true">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_VN2sdB3rEeKfNJPeD9-tFQ" rIncoming="_VOAddx3rEeKfNJPeD9-tFQ" signature="hu.bme.incquery.deps.example.service.Services#newInstance(java.lang.String):hu.bme.incquery.deps.example.service.Service" private="false" static="true">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rFields uuid="_VN2sdR3rEeKfNJPeD9-tFQ" signature="hu.bme.incquery.deps.example.service.Services.providers" private="true">
+        <versions>1.0.0</versions>
+      </rFields>
+      <rFields uuid="_VN2sdh3rEeKfNJPeD9-tFQ" rIncoming="_VOAdkx3rEeKfNJPeD9-tFQ _VOAdlB3rEeKfNJPeD9-tFQ" signature="hu.bme.incquery.deps.example.service.Services.DEFAULT_PROVIDER_NAME">
+        <versions>1.0.0</versions>
+      </rFields>
+    </rClasses>
+    <rClasses uuid="_VN2seR3rEeKfNJPeD9-tFQ" rIncoming="_VOAdhx3rEeKfNJPeD9-tFQ _VOAdiR3rEeKfNJPeD9-tFQ" simpleName="Provider" packageName="hu.bme.incquery.deps.example.service" extends="" implements="" private="false" fqName="hu.bme.incquery.deps.example.service.Provider">
+      <versions>1.0.0</versions>
+      <rMethods uuid="_VN2seB3rEeKfNJPeD9-tFQ" signature="hu.bme.incquery.deps.example.service.Provider#newService():hu.bme.incquery.deps.example.service.Service" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+    </rClasses>
+    <rClasses uuid="_VN2sfB3rEeKfNJPeD9-tFQ" rIncoming="_VOAdch3rEeKfNJPeD9-tFQ" simpleName="Service" packageName="hu.bme.incquery.deps.example.service" extends="" implements="" private="false" fqName="hu.bme.incquery.deps.example.service.Service">
+      <versions>1.0.0</versions>
+      <rMethods uuid="_VN2seh3rEeKfNJPeD9-tFQ" signature="hu.bme.incquery.deps.example.service.Service#serviceA():void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_VN2sex3rEeKfNJPeD9-tFQ" rIncoming="_VOAdeB3rEeKfNJPeD9-tFQ" signature="hu.bme.incquery.deps.example.service.Service#serviceB():void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+    </rClasses>
+  </rProjects>
+  <rProjects uuid="_VN2sfR3rEeKfNJPeD9-tFQ" name="client" containingFolders="" productPath="C:/opt/workspace/eclipse4/service-provider-framework/client.jar">
+    <versions>1.0.0</versions>
+    <rClasses uuid="_VN2sgB3rEeKfNJPeD9-tFQ" rOutgoing="_VOAdcB3rEeKfNJPeD9-tFQ _VOAdcR3rEeKfNJPeD9-tFQ _VOAdch3rEeKfNJPeD9-tFQ" simpleName="Main" packageName="hu.bme.incquery.deps.example.consumer" extends="" implements="" private="false" fqName="hu.bme.incquery.deps.example.consumer.Main">
+      <versions>1.0.0</versions>
+      <rMethods uuid="_VN2sfh3rEeKfNJPeD9-tFQ" signature="hu.bme.incquery.deps.example.consumer.Main#Main():void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_VN2sfx3rEeKfNJPeD9-tFQ" rOutgoing="_VOAddh3rEeKfNJPeD9-tFQ _VOAddx3rEeKfNJPeD9-tFQ _VOAdeB3rEeKfNJPeD9-tFQ" signature="hu.bme.incquery.deps.example.consumer.Main#main(java.lang.String[]):void" private="false" static="true">
+        <versions>1.0.0</versions>
+      </rMethods>
+    </rClasses>
+  </rProjects>
+  <rProjects uuid="_VN2sgR3rEeKfNJPeD9-tFQ" name="impl" containingFolders="" productPath="C:/opt/workspace/eclipse4/service-provider-framework/impl.jar">
+    <versions>1.0.0</versions>
+    <rClasses uuid="_VN2shB3rEeKfNJPeD9-tFQ" rOutgoing="_VOAdhx3rEeKfNJPeD9-tFQ _VOAdiR3rEeKfNJPeD9-tFQ" simpleName="BasicProvider" packageName="hu.bme.incquery.deps.example.client" extends="" implements="hu.bme.incquery.deps.example.service.Provider" private="false" fqName="hu.bme.incquery.deps.example.client.BasicProvider">
+      <versions>1.0.0</versions>
+      <rMethods uuid="_VN2sgh3rEeKfNJPeD9-tFQ" signature="hu.bme.incquery.deps.example.client.BasicProvider#BasicProvider():void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_VN2sgx3rEeKfNJPeD9-tFQ" signature="hu.bme.incquery.deps.example.client.BasicProvider#newService():hu.bme.incquery.deps.example.service.Service" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+    </rClasses>
+    <rClasses uuid="_VN2siB3rEeKfNJPeD9-tFQ" rIncoming="_VOAdcB3rEeKfNJPeD9-tFQ" rOutgoing="_VOAdjB3rEeKfNJPeD9-tFQ" simpleName="BasicImplUtil" packageName="hu.bme.incquery.deps.example.client" extends="" implements="" private="false" fqName="hu.bme.incquery.deps.example.client.BasicImplUtil">
+      <versions>1.0.0</versions>
+      <rMethods uuid="_VN2shR3rEeKfNJPeD9-tFQ" signature="hu.bme.incquery.deps.example.client.BasicImplUtil#BasicImplUtil():void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_VN2shh3rEeKfNJPeD9-tFQ" rOutgoing="_VOAdjh3rEeKfNJPeD9-tFQ" signature="hu.bme.incquery.deps.example.client.BasicImplUtil#registerImplementation():void" private="false" static="true">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_VN2shx3rEeKfNJPeD9-tFQ" rIncoming="_VOAddh3rEeKfNJPeD9-tFQ" rOutgoing="_VOAdkB3rEeKfNJPeD9-tFQ _VOAdkx3rEeKfNJPeD9-tFQ _VOAdlB3rEeKfNJPeD9-tFQ" signature="hu.bme.incquery.deps.example.client.BasicImplUtil#registerImplementationAsDefault():void" private="false" static="true">
+        <versions>1.0.0</versions>
+      </rMethods>
+    </rClasses>
+    <rClasses uuid="_VN2sjB3rEeKfNJPeD9-tFQ" rOutgoing="_VOAdlh3rEeKfNJPeD9-tFQ _VOAdmB3rEeKfNJPeD9-tFQ" simpleName="BasicService" packageName="hu.bme.incquery.deps.example.client" extends="hu.bme.incquery.deps.example.service.AbstractService" implements="" private="false" fqName="hu.bme.incquery.deps.example.client.BasicService">
+      <versions>1.0.0</versions>
+      <rMethods uuid="_VN2siR3rEeKfNJPeD9-tFQ" rOutgoing="_VOAdmh3rEeKfNJPeD9-tFQ" signature="hu.bme.incquery.deps.example.client.BasicService#BasicService():void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_VN2sih3rEeKfNJPeD9-tFQ" signature="hu.bme.incquery.deps.example.client.BasicService#serviceA():void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+      <rMethods uuid="_VN2six3rEeKfNJPeD9-tFQ" rOutgoing="_VOAdmx3rEeKfNJPeD9-tFQ" signature="hu.bme.incquery.deps.example.client.BasicService#serviceB():void" private="false">
+        <versions>1.0.0</versions>
+      </rMethods>
+    </rClasses>
+  </rProjects>
+</rm:RRepository>

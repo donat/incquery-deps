@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="ASCII"?>
+<cp1:CP1Repository xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:cp1="http://inf.mit.bme.hu/donat/incquery-deps/cp1model">
+  <projects id="1" name="service">
+    <classes id="2" extends="" implements="hu.bme.incquery.deps.example.service.Service" simpleName="AbstractService" packageName="hu.bme.incquery.deps.example.service">
+      <methods id="3" signature="hu.bme.incquery.deps.example.service.AbstractService#AbstractService():void"/>
+      <methods id="4" signature="hu.bme.incquery.deps.example.service.AbstractService#serviceB():void"/>
+    </classes>
+    <classes id="5" extends="" implements="" simpleName="Services" packageName="hu.bme.incquery.deps.example.service">
+      <methods id="6" signature="hu.bme.incquery.deps.example.service.Services#&lt;clinit>():void"/>
+      <methods id="7" signature="hu.bme.incquery.deps.example.service.Services#Services():void"/>
+      <methods id="8" signature="hu.bme.incquery.deps.example.service.Services#registerDefaultProvider(hu.bme.incquery.deps.example.service.Provider):void"/>
+      <methods id="9" signature="hu.bme.incquery.deps.example.service.Services#registerProvider(java.lang.String,hu.bme.incquery.deps.example.service.Provider):void"/>
+      <methods id="10" signature="hu.bme.incquery.deps.example.service.Services#newInstance(java.lang.String):hu.bme.incquery.deps.example.service.Service"/>
+      <fields id="11" signature="hu.bme.incquery.deps.example.service.Services.providers"/>
+      <fields id="12" signature="hu.bme.incquery.deps.example.service.Services.DEFAULT_PROVIDER_NAME"/>
+    </classes>
+    <classes id="13" extends="" implements="" simpleName="Provider" packageName="hu.bme.incquery.deps.example.service">
+      <methods id="14" signature="hu.bme.incquery.deps.example.service.Provider#newService():hu.bme.incquery.deps.example.service.Service"/>
+    </classes>
+    <classes id="15" extends="" implements="" simpleName="Service" packageName="hu.bme.incquery.deps.example.service">
+      <methods id="16" signature="hu.bme.incquery.deps.example.service.Service#serviceA():void"/>
+      <methods id="17" signature="hu.bme.incquery.deps.example.service.Service#serviceB():void"/>
+    </classes>
+  </projects>
+  <projects id="18" name="client">
+    <classes id="19" extends="" implements="" simpleName="Main" packageName="hu.bme.incquery.deps.example.consumer">
+      <methods id="20" signature="hu.bme.incquery.deps.example.consumer.Main#Main():void"/>
+      <methods id="21" signature="hu.bme.incquery.deps.example.consumer.Main#main(java.lang.String[]):void"/>
+    </classes>
+  </projects>
+  <projects id="22" name="impl">
+    <classes id="23" extends="" implements="hu.bme.incquery.deps.example.service.Provider" simpleName="BasicProvider" packageName="hu.bme.incquery.deps.example.client">
+      <methods id="24" signature="hu.bme.incquery.deps.example.client.BasicProvider#BasicProvider():void"/>
+      <methods id="25" signature="hu.bme.incquery.deps.example.client.BasicProvider#newService():hu.bme.incquery.deps.example.service.Service"/>
+    </classes>
+    <classes id="26" extends="" implements="" simpleName="BasicImplUtil" packageName="hu.bme.incquery.deps.example.client">
+      <methods id="27" signature="hu.bme.incquery.deps.example.client.BasicImplUtil#BasicImplUtil():void"/>
+      <methods id="28" signature="hu.bme.incquery.deps.example.client.BasicImplUtil#registerImplementation():void"/>
+      <methods id="29" signature="hu.bme.incquery.deps.example.client.BasicImplUtil#registerImplementationAsDefault():void"/>
+    </classes>
+    <classes id="30" extends="hu.bme.incquery.deps.example.service.AbstractService" implements="" simpleName="BasicService" packageName="hu.bme.incquery.deps.example.client">
+      <methods id="31" signature="hu.bme.incquery.deps.example.client.BasicService#BasicService():void"/>
+      <methods id="32" signature="hu.bme.incquery.deps.example.client.BasicService#serviceA():void"/>
+      <methods id="33" signature="hu.bme.incquery.deps.example.client.BasicService#serviceB():void"/>
+    </classes>
+  </projects>
+  <dependencies from="19" to="26" type="4"/>
+  <dependencies from="19" to="5" type="4"/>
+  <dependencies from="19" to="15" type="4"/>
+  <dependencies from="21" to="29" type="1"/>
+  <dependencies from="21" to="10" type="1"/>
+  <dependencies from="21" to="17" type="1"/>
+  <dependencies from="23" to="13"/>
+  <dependencies from="23" to="13" type="4"/>
+  <dependencies from="26" to="5" type="4"/>
+  <dependencies from="28" to="9" type="1"/>
+  <dependencies from="29" to="9" type="1"/>
+  <dependencies from="29" to="12" type="3"/>
+  <dependencies from="29" to="12" type="3"/>
+  <dependencies from="30" to="2"/>
+  <dependencies from="30" to="2" type="4"/>
+  <dependencies from="31" to="3" type="1"/>
+  <dependencies from="33" to="4" type="2"/>
+</cp1:CP1Repository>
