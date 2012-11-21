@@ -5,6 +5,7 @@ incquery-deps-transformer/models/commonbuild-full-pro.cp1model
 incquery-deps-transformer/models/commonbuild-full-pro.repomodel
 incquery-deps-documentation/*.thm
 incquery-deps-documentation/pdf/*.gz
+incquery-deps-documentation/pdf/*.pdf
 incquery-deps-documentation/tmp/*.aux
 incquery-deps-documentation/tmp/*.log
 incquery-deps-documentation/tmp/*.out
