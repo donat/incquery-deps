@@ -7,51 +7,48 @@ public enum ResultItemType {
 	NULL,
 	
 	/**
-	 * Root for a project to display.
-	 */
-	PROJECT_ROOT,
-	
-	/**
 	 * Root for a compilation unit (active source code editor or selection in the project explorer) to display.
 	 */
 	CU_ROOT,
 	
 	/**
-	 * A type definition which exist only in the workspace.
+	 * Root for a project to display.
 	 */
-	TYPE_ADDED,
+	PROJECT_ROOT,
 	
-	TYPE_SYNC,
+	/**
+	 * Parent node for types.
+	 */
+	TYPE_ROOT,
+
+	/**
+	 * Parent node for the methods.
+	 */
+	METHOD_ROOT,
 	
-	TYPE_REMOVED,
+	/**
+	 * Parent node for the fields.
+	 */
+	FIELD_ROOT,
 	
-	TYPE_REMOTE,
+	/**
+	 * Node representing a type. Associated with an IType instance.
+	 */
+	JDT_TYPE,
 	
-	DEPENDENCIES,
+	/**
+	 * Node representing a method. Associated with an IMethod instance.
+	 */
+	JDT_METHOD,   
 	
-	METHODS,
-	
-	METHOD_ADDED,
-	
-	METHOD_SYNC,
-	
-	METHOD_REMOVED,
+	/**
+	 * Node representing a field. Associated with an IField instance.
+	 */
+	JDT_FIELD, 
 	
 	
-//	PROJECT_IN_REPO,
-//	ADDED_CLASSES_ROOT,
-//	REMOVED_CLASSES_ROOT,
-//	WS_CLASS,
-//	REPO_CLASS,
-//	CU_ROOT,
-//	JDT_TYPE, 
-//	NOT_DEFINED, 
-//	CLASS_ROOT,
-//	INCOMING_DEPENDENCY_ROOT, 
-//	INCDEP_INHERITANCE,
-//	INCDEP_CLASS_USAGE,
-//	METHODS_ROOT,
-//	FIELDS_ROOT,
-//	METHOD, 
-//	FIELD
+	
+	STRING,
+	
+	
 }

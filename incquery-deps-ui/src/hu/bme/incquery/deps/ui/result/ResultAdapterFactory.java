@@ -7,9 +7,13 @@ package hu.bme.incquery.deps.ui.result;
 //import hu.bme.incquery.deps.wsmodel.WType;
 
 import org.eclipse.core.runtime.IAdapterFactory;
-//import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IField;
+import org.eclipse.jdt.core.IMethod;
+import org.eclipse.jdt.core.IType;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.model.IWorkbenchAdapter;
+//import org.eclipse.jdt.core.IJavaProject;
 
 //import cern.devtools.deps.query.cp1.projectswithsamename.ProjectsWithSameNameMatch;
 
@@ -28,66 +32,32 @@ public class ResultAdapterFactory implements IAdapterFactory {
 				throw new RuntimeException("Invalid type");
 			}
 			ResultItem item = (ResultItem) o;
-			//Object obj = item.getObj();
+			Object obj = item.getObj();
 
 			switch (item.getType()) {
 			case NULL:
 				return "Nothing to display";
-			/*case PROJECT_ROOT:
-				if (obj instanceof ProjectsWithSameNameMatch) {
-					return String.format("Project %s (in repository)", ((ProjectsWithSameNameMatch) obj)
-							.getRepoProject().getName());
-				} else {
-					return String.format("Project %s (not synchronized)", ((IJavaProject) obj).getElementName());
-				}
-			case TYPE_ADDED:
-				return ((WPackageFragment) ((WType) obj).getParent().getParent()).getName() + "."
-						+ ((WType) obj).getName() + "(+)";
-			case TYPE_SYNC:
-				if (obj instanceof WType)  {
-					return ((WPackageFragment) ((WType) obj).getParent().getParent()).getName() + "."
-							+ ((WType) obj).getName();	
-				}
-				else if (obj instanceof CP1Class) {
-					return ((CP1Class) obj).getPackageName() + "." +  ((CP1Class) obj).getSimpleName();
-				}
-				else throw new RuntimeException("Class not defined " + obj.getClass());
-				
-			case TYPE_REMOVED:
-			case TYPE_REMOTE:
-				return ((CP1Class) obj).getPackageName() + "." + ((CP1Class) obj).getSimpleName() + "(-)";
-			case DEPENDENCIES:
-				return "Incoming dependencies";
-			case METHODS:
-				return "Methods";
-			case METHOD_ADDED: 
-				return ((WMethod)obj).getSignature() + "(+)";
-				
-				//
-				// return "Project informations";
-				// case PROJECT_IN_REPO:
-				// return String.format("Project %s", ((CP1Project) item.getObj()).getName());
-				// case ADDED_CLASSES_ROOT:
-				// return "Added classes";
-				// case REMOVED_CLASSES_ROOT:
-				// return "Removed classes";
-				// case WS_CLASS:
-				// WType c = (WType) item.getObj();
-				// return String.format("%s.%s", c.getCompilationUnit().getPackageFragment().getName(), c.getName());
-				// case REPO_CLASS:
-				// CP1Class c2 = (CP1Class) item.getObj();
-				// return String.format("%s.%s", c2.getPackageName(), c2.getSimpleName());
-				// case CU_ROOT:
-				// return String.format("Dependency information for %s",
-				// ((ICompilationUnit)item.getObj()).getElementName());
-				// case NOT_DEFINED:
-				// return "This item is not defined in the repository";
-				// case JDT_TYPE:
-				// return ((IType)item.getObj()).getElementName();
-				// case INCOMING_DEPENDENCY_ROOT:
-				// return "Incoming dependencies";*/
+			case CU_ROOT: 
+				ICompilationUnit cu = (ICompilationUnit) obj;
+				return cu.getElementName();
+			case TYPE_ROOT:
+				return "classes";
+			case METHOD_ROOT:
+				return "methods";
+			case FIELD_ROOT:
+				return "fields";
+			case JDT_FIELD:
+				return "field " + ((IField) obj).getElementName();
+			case JDT_TYPE:
+				return "class " + ((IType) obj).getElementName();
+			case JDT_METHOD: 
+				return ((IMethod)obj).getElementName() + "()";
 			default:
-				return item.getType().toString();
+				String result = item.getType().toString();
+				if (obj != null) {
+					result += " (" + obj.toString() + ")";
+				}
+				return result;
 			}
 		}
 

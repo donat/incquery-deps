@@ -46,8 +46,8 @@ public class LoadModel implements RepoModelLoadingService {
 					long ms = System.currentTimeMillis();
 					doLoad();
 					context.registerService(RepoModelLoadingService.class.getName(), serviceInstance, null);
-//					System.out.println(String.format("Model loaded. Execution took %s seconds.",
-//							((System.currentTimeMillis() - ms) / 1000l)));
+					System.out.println(String.format("Model loaded. Execution took %s seconds.",
+							((System.currentTimeMillis() - ms) / 1000l)));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -59,7 +59,7 @@ public class LoadModel implements RepoModelLoadingService {
 	}
 
 	private void doLoad() throws Exception {
-		String file = "file://C:/opt/workspace/eclipse4/incquery-deps/incquery-deps-transformer/models/submodel_501.cp3model";
+		String file = "file://C:/opt/workspace/eclipse/incquery-deps/incquery-deps-transformer/models/visitor.cp3model";
 		
 		resource = resourceSet.createResource(URI
 //				.createURI("file://C:/opt/workspace/eclipse4/incquery-deps/incquery-deps-transformer/models/commonbuild-full-pro.cp3model"));	
