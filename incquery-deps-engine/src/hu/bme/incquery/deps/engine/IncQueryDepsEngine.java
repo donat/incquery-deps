@@ -96,7 +96,7 @@ public class IncQueryDepsEngine {
 			Thread.sleep(200);
 		}
 		RepoModelLoadingService repoModelService = ((RepoModelLoadingService) tracker.getService());
-		Resource repoResource = repoModelService.getResource();
+		Resource repoResource = repoModelService.getUnloadedResource();
 		resourceSet.getResources().add(repoResource);
 		monitor.worked(1);
 
