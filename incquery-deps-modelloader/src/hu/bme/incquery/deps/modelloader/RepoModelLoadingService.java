@@ -7,7 +7,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 
 public interface RepoModelLoadingService {
 
-	Map<?, ?> loadOptions();
+	Map<?, ?> loadOptions(Resource resource);
 	
 	Resource getUnloadedResource(List<String> targetProjects);
 }

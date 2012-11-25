@@ -24,6 +24,8 @@ public class Activator extends AbstractUIPlugin {
 	
 	private ServiceTracker modelLoaderServiceTracker;
 	ServiceReference<RepoModelLoadingService> serviceReference;
+
+	private BundleContext context;
 	
 	
 	/**
@@ -38,13 +40,19 @@ public class Activator extends AbstractUIPlugin {
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
 	 */
 	public void start(BundleContext context) throws Exception {
+		this.context = context;
 		super.start(context);
+		
 		plugin = this;
 
 		modelLoaderServiceTracker = new ServiceTracker(context, RepoModelLoadingService.class.getName(), null);
 		modelLoaderServiceTracker.open();
 		
 		engine.getInitJob().schedule();
+	}
+
+	public BundleContext getContext() {
+		return context;
 	}
 
 	/*
@@ -54,6 +62,7 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
+		context = null;
 		super.stop(context);
 		modelLoaderServiceTracker.close();
 	}

@@ -3,11 +3,13 @@ package hu.bme.incquery.deps.internal;
 import hu.bme.incquery.deps.cp3model.Cp3modelPackage;
 import hu.bme.incquery.deps.modelloader.RepoModelLoadingService;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -31,8 +33,9 @@ public class ModelLoadingServiceImpl implements RepoModelLoadingService {
 	public Resource getUnloadedResource(List<String> targetProjects) {
 		Resource result = null;
 		try {
-			String file; file = obtainFile(targetProjects);
-			result = resourceSet.createResource(URI.createURI("file://" + file));
+			String file; 
+			file = obtainFile(targetProjects);
+			result = resourceSet.createResource(URI.createFileURI(file));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -42,28 +45,22 @@ public class ModelLoadingServiceImpl implements RepoModelLoadingService {
 
 	private String obtainFile(List<String> projects) throws Exception {
 		// Obtain remote URI
-		Object result = Activator.getDefault().getDependencyService().getCompactedServerModelFor(projects);
-		if (!(result instanceof java.net.URI)) {
-			throw new RuntimeException("DependencyService should return a resource URI");
+		Object resultObject = Activator.getDefault().getDependencyService().getCompactedServerModelFor(projects);
+		
+		if (!(resultObject instanceof String)) {
+			throw new RuntimeException("DependencyService should return a location string");
 		}
-		java.net.URI resultURI = (java.net.URI) result;
+		
+		String result = (String) resultObject;
 
-		// Check if the URI does not point to a local file
-		if (!resultURI.getScheme().equals("file")) {
-			throw new UnsupportedOperationException("Processing scheme " + resultURI.getScheme()
-					+ " is not supported yet");
-		}
-
-		// Retrieve file
-		return resultURI.getSchemeSpecificPart();
+		return result;
 	}
 
-	@Override
+
 	@SuppressWarnings("all")
-	public Map<?, ?> loadOptions() {
-		@SuppressWarnings("rawtypes")
-		Map loadOptions = //((XMLResourceImpl) resource).getDefaultLoadOptions();
-		new HashMap();
+	public Map loadOptions(Resource resource) {
+		Map loadOptions = ((XMLResourceImpl) resource).getDefaultLoadOptions();
+		((XMLResourceImpl) resource).setIntrinsicIDToEObjectMap(new HashMap<String, EObject>());
 		loadOptions.put(XMLResource.OPTION_DEFER_ATTACHMENT, Boolean.TRUE);
 		loadOptions.put(XMLResource.OPTION_DEFER_IDREF_RESOLUTION, Boolean.TRUE);
 		loadOptions.put(XMLResource.OPTION_USE_DEPRECATED_METHODS, Boolean.TRUE);

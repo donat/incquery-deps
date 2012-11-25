@@ -1,6 +1,6 @@
 package hu.bme.incquery.deps.ui.result;
 
-import hu.bme.incquery.deps.engine.IncQueryDepsChangeListener;
+import hu.bme.incquery.deps.pub.IncQueryDepsChangeListener;
 import hu.bme.incquery.deps.util.LoggingUtil;
 
 import java.util.Collection;

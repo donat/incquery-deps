@@ -1,4 +1,4 @@
-package hu.bme.incquery.deps.engine;
+package hu.bme.incquery.deps.pub;
 
 import org.eclipse.viatra2.emf.incquery.runtime.api.IncQueryMatcher;
 

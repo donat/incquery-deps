@@ -1,8 +1,14 @@
 package hu.bme.incquery.deps.internal;
 
+import hu.bme.incquery.deps.marker.IncQueryResultToMarkers;
+import hu.bme.incquery.deps.pub.IIncQueryDepsEngine;
+
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+import org.osgi.util.tracker.ServiceTracker;
+
+import cern.devtools.deps.query.cp3.addedmethods.AddedMethodsMatcher;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -14,6 +20,10 @@ public class Activator extends AbstractUIPlugin {
 
 	// The shared instance
 	private static Activator plugin;
+	
+	
+	private IncQueryResultToMarkers incQueryResultToMarkers = new IncQueryResultToMarkers();
+	private ServiceTracker serviceTracker;
 
 	/**
 	 * The constructor
@@ -29,6 +39,16 @@ public class Activator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
+		serviceTracker = new ServiceTracker(context, IIncQueryDepsEngine.class.getName(), null) {
+			public Object addingService(org.osgi.framework.ServiceReference reference) {
+				IIncQueryDepsEngine engine = context.getService(reference);
+				engine.registerChangeListener(incQueryResultToMarkers, AddedMethodsMatcher.class);
+				return engine;
+			};
+		};
+		
+		serviceTracker.open();
+		
 	}
 
 	/*
@@ -37,6 +57,7 @@ public class Activator extends AbstractUIPlugin {
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext context) throws Exception {
+		serviceTracker.close();
 		plugin = null;
 		super.stop(context);
 
