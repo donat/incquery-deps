@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.core.runtime.preferences.ConfigurationScope;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
@@ -32,7 +32,7 @@ public class PreferenceStore {
 	}
 
 	public List<String> tracedProjectNames() {
-		Preferences preferences = ConfigurationScope.INSTANCE.getNode(PLUGIN_ID);
+		Preferences preferences = InstanceScope.INSTANCE.getNode(PLUGIN_ID);
 		String mergedProjectNames = preferences.get(TRACED_PROJECTS, "");
 		if ("".equals(mergedProjectNames)) {
 			return Collections.emptyList();
@@ -56,7 +56,7 @@ public class PreferenceStore {
 			sep = ",";
 		}
 
-		Preferences preferences = ConfigurationScope.INSTANCE.getNode(PLUGIN_ID);
+		Preferences preferences = InstanceScope.INSTANCE.getNode(PLUGIN_ID);
 		preferences.put(TRACED_PROJECTS, prefToStore.toString());
 
 		try {
@@ -73,12 +73,12 @@ public class PreferenceStore {
 	}
 	
 	public long getCacheModTime() {
-		Preferences preferences = ConfigurationScope.INSTANCE.getNode(PLUGIN_ID);
+		Preferences preferences = InstanceScope.INSTANCE.getNode(PLUGIN_ID);
 		return preferences.getLong(CACHE_MODIFIED, -1l);
 	}
 	
 	public void setCacheModTime(long val) {
-		Preferences preferences = ConfigurationScope.INSTANCE.getNode(PLUGIN_ID);
+		Preferences preferences = InstanceScope.INSTANCE.getNode(PLUGIN_ID);
 		preferences.putLong(CACHE_MODIFIED, val);
 		try {
 			preferences.flush();

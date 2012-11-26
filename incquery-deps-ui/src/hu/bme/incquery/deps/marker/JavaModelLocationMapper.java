@@ -35,8 +35,16 @@ public class JavaModelLocationMapper {
 		@Override
 		public boolean visit(MethodDeclaration node) {
 			int start = node.getStartPosition();
-			int length = node.getLength();
+		
+			int bodyLength = 0;
+			if (node.getBody() != null) {
+				bodyLength = node.getBody().getLength();
+			}
+			
+			int length = node.getLength() - bodyLength;
 			IMethodBinding binding = node.resolveBinding();
+			
+			
 			
 			String key = binding.getJavaElement().getHandleIdentifier();
 			Position value = new Position(start, length);
@@ -75,7 +83,7 @@ public class JavaModelLocationMapper {
 		
  	};
 
-	Map<String, Position> positions = Collections.emptyMap();
+	private Map<String, Position> positions = Collections.emptyMap();
 
 	private final List<String> tracedProjects;
 
@@ -90,6 +98,10 @@ public class JavaModelLocationMapper {
 			refresh();
 			pos = positions.get(key);
 		}
+		if (pos == null) {
+			return new Position(0);
+		}
+		
 		return pos;
 	}
 	
@@ -111,7 +123,7 @@ public class JavaModelLocationMapper {
 		// reset the store.
 		positions = new HashMap<String, Position>();
 
-		// Find all projects which should be trced.
+		// Find all projects which should be traced.
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		IProject[] projects = root.getProjects();
 		for (IProject project : projects) {
@@ -135,6 +147,7 @@ public class JavaModelLocationMapper {
 		IPackageFragment[] pkgs = javaProject.getPackageFragments();
 		for (IPackageFragment pkg : pkgs) {
 			for (ICompilationUnit cu : pkg.getCompilationUnits()) {
+				@SuppressWarnings("deprecation") // Working with java 1.6
 				ASTParser parser = ASTParser.newParser(AST.JLS3);
 				parser.setProject(javaProject);
 				parser.setResolveBindings(true);

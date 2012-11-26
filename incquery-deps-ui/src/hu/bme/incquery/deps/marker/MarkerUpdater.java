@@ -19,7 +19,7 @@ public class MarkerUpdater implements IMarkerUpdater {
 	@Override
 	public String getMarkerType() {
 	      //returns the marker type that we are interested in updating
-	      return MyMarkerFactory.MARKER;
+	      return MyMarkerFactory.MARKER_ADDED_METHOD;
 	}
 
 	@Override

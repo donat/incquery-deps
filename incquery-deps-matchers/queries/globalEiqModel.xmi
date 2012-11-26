@@ -1638,7 +1638,7 @@
         <expression xsi:type="xbase:XBinaryOperation">
           <feature xsi:type="types:JvmOperation" href="java:/Objects/org.eclipse.xtext.xbase.lib.ShortExtensions#org.eclipse.xtext.xbase.lib.ShortExtensions.operator_equals(short,int)"/>
           <leftOperand xsi:type="xbase:XFeatureCall" feature="//@patterns.23/@bodies.0/@variables.4"/>
-          <rightOperand xsi:type="xbase:XNumberLiteral" value="1"/>
+          <rightOperand xsi:type="xbase:XNumberLiteral" value="2"/>
         </expression>
       </constraints>
     </bodies>
@@ -1798,7 +1798,7 @@
         <expression xsi:type="xbase:XBinaryOperation">
           <feature xsi:type="types:JvmOperation" href="java:/Objects/org.eclipse.xtext.xbase.lib.ShortExtensions#org.eclipse.xtext.xbase.lib.ShortExtensions.operator_equals(short,int)"/>
           <leftOperand xsi:type="xbase:XFeatureCall" feature="//@patterns.25/@bodies.0/@variables.2"/>
-          <rightOperand xsi:type="xbase:XNumberLiteral" value="4"/>
+          <rightOperand xsi:type="xbase:XNumberLiteral" value="3"/>
         </expression>
       </constraints>
     </bodies>
@@ -1943,7 +1943,7 @@
         <expression xsi:type="xbase:XBinaryOperation">
           <feature xsi:type="types:JvmOperation" href="java:/Objects/org.eclipse.xtext.xbase.lib.ShortExtensions#org.eclipse.xtext.xbase.lib.ShortExtensions.operator_equals(short,int)"/>
           <leftOperand xsi:type="xbase:XFeatureCall" feature="//@patterns.26/@bodies.1/@variables.2"/>
-          <rightOperand xsi:type="xbase:XNumberLiteral" value="3"/>
+          <rightOperand xsi:type="xbase:XNumberLiteral" value="2"/>
         </expression>
       </constraints>
     </bodies>
@@ -2024,7 +2024,7 @@
         <expression xsi:type="xbase:XBinaryOperation">
           <feature xsi:type="types:JvmOperation" href="java:/Objects/org.eclipse.xtext.xbase.lib.ShortExtensions#org.eclipse.xtext.xbase.lib.ShortExtensions.operator_equals(short,int)"/>
           <leftOperand xsi:type="xbase:XFeatureCall" feature="//@patterns.27/@bodies.0/@variables.2"/>
-          <rightOperand xsi:type="xbase:XNumberLiteral" value="3"/>
+          <rightOperand xsi:type="xbase:XNumberLiteral" value="4"/>
         </expression>
       </constraints>
     </bodies>
@@ -2088,12 +2088,13 @@
         <expression xsi:type="xbase:XBinaryOperation">
           <feature xsi:type="types:JvmOperation" href="java:/Objects/org.eclipse.xtext.xbase.lib.ShortExtensions#org.eclipse.xtext.xbase.lib.ShortExtensions.operator_equals(short,int)"/>
           <leftOperand xsi:type="xbase:XFeatureCall" feature="//@patterns.27/@bodies.1/@variables.2"/>
-          <rightOperand xsi:type="xbase:XNumberLiteral" value="3"/>
+          <rightOperand xsi:type="xbase:XNumberLiteral" value="5"/>
         </expression>
       </constraints>
     </bodies>
   </patterns>
   <patterns name="cern.devtools.deps.query.cp3.outgoingMethodCallDependencyAdded" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <modifiers private="true"/>
     <parameters name="wsMethodFrom">
       <type xsi:type="eMFPatternLanguage:ClassType">
         <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WMethod"/>
@@ -2224,16 +2225,6 @@
             <value var="wsMethodFrom"/>
           </dst>
         </head>
-      </constraints>
-      <constraints xsi:type="patternLanguage:CheckConstraint">
-        <expression xsi:type="xbase:XUnaryOperation">
-          <feature xsi:type="types:JvmOperation" href="java:/Objects/org.eclipse.xtext.xbase.lib.BooleanExtensions#org.eclipse.xtext.xbase.lib.BooleanExtensions.operator_not(boolean)"/>
-          <operand xsi:type="xbase:XMemberFeatureCall" explicitOperationCall="true">
-            <feature xsi:type="types:JvmOperation" href="java:/Objects/java.lang.Object#java.lang.Object.equals(java.lang.Object)"/>
-            <memberCallTarget xsi:type="xbase:XFeatureCall" feature="//@patterns.28/@bodies.0/@variables.3"/>
-            <memberCallArguments xsi:type="xbase:XFeatureCall" feature="//@patterns.28/@bodies.0/@variables.4"/>
-          </operand>
-        </expression>
       </constraints>
       <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
         <call patternRef="//@patterns.1">

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ASCII"?>
+<wsm:WWorkspace xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:wsm="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel" elements="//@projects.0 //@projects.0/@packageFragmentRoots.0 //@projects.0/@packageFragmentRoots.0/@packageFragments.0 //@projects.0/@packageFragmentRoots.0/@packageFragments.1 //@projects.1 //@projects.1/@packageFragmentRoots.0 //@projects.1/@packageFragmentRoots.0/@packageFragments.0 //@projects.1/@packageFragmentRoots.0/@packageFragments.1 //@projects.1/@packageFragmentRoots.0/@packageFragments.1/@compilationUnits.0 //@projects.1/@packageFragmentRoots.0/@packageFragments.1/@compilationUnits.0/@types.0 //@projects.1/@packageFragmentRoots.0/@packageFragments.1/@compilationUnits.0/@types.0/@methods.0 //@projects.2 //@projects.2/@packageFragmentRoots.0 //@projects.2/@packageFragmentRoots.0/@packageFragments.0 //@projects.2/@packageFragmentRoots.0/@packageFragments.1 //@projects.2/@packageFragmentRoots.0/@packageFragments.1/@compilationUnits.0 //@projects.2/@packageFragmentRoots.0/@packageFragments.1/@compilationUnits.0/@types.0 //@projects.2/@packageFragmentRoots.0/@packageFragments.1/@compilationUnits.0/@types.0/@methods.0 //@projects.2/@packageFragmentRoots.0/@packageFragments.1/@compilationUnits.0/@types.0/@methods.1 //@projects.0/@packageFragmentRoots.0/@packageFragments.1/@compilationUnits.0 //@projects.0/@packageFragmentRoots.0/@packageFragments.1/@compilationUnits.0/@types.0 //@projects.0/@packageFragmentRoots.0/@packageFragments.1/@compilationUnits.0/@types.0/@methods.0 //@projects.0/@packageFragmentRoots.0/@packageFragments.1/@compilationUnits.0/@types.0/@methods.1">
+  <projects name="projectA" handler="=projectA">
+    <packageFragmentRoots name="src" handler="=projectA/src">
+      <packageFragments name="" handler="=projectA/src&lt;"/>
+      <packageFragments name="packagea" handler="=projectA/src&lt;packagea">
+        <compilationUnits name="A.java" handler="=projectA/src&lt;packagea{A.java">
+          <types name="A" handler="=projectA/src&lt;packagea{A.java[A">
+            <methods name="aMethod" handler="=projectA/src&lt;packagea{A.java[A~aMethod" signature="packagea.A#aMethod():void"/>
+            <methods name="b" handler="=projectA/src&lt;packagea{A.java[A~b" signature="packagea.A#b():void"/>
+          </types>
+        </compilationUnits>
+      </packageFragments>
+    </packageFragmentRoots>
+  </projects>
+  <projects name="projectB" handler="=projectB">
+    <packageFragmentRoots name="src" handler="=projectB/src">
+      <packageFragments name="" handler="=projectB/src&lt;"/>
+      <packageFragments name="packageb" handler="=projectB/src&lt;packageb">
+        <compilationUnits name="B.java" handler="=projectB/src&lt;packageb{B.java">
+          <types name="B" handler="=projectB/src&lt;packageb{B.java[B">
+            <methods name="bMethod" handler="=projectB/src&lt;packageb{B.java[B~bMethod" signature="packageb.B#bMethod():void"/>
+          </types>
+        </compilationUnits>
+      </packageFragments>
+    </packageFragmentRoots>
+  </projects>
+  <projects name="projectC" handler="=projectC">
+    <packageFragmentRoots name="src" handler="=projectC/src">
+      <packageFragments name="" handler="=projectC/src&lt;"/>
+      <packageFragments name="packagec" handler="=projectC/src&lt;packagec">
+        <compilationUnits name="C.java" handler="=projectC/src&lt;packagec{C.java">
+          <types name="C" handler="=projectC/src&lt;packagec{C.java[C">
+            <methods name="cMethod" handler="=projectC/src&lt;packagec{C.java[C~cMethod" signature="packagec.C#cMethod():void"/>
+            <methods name="newC" handler="=projectC/src&lt;packagec{C.java[C~newC" signature="packagec.C#newC():void"/>
+          </types>
+        </compilationUnits>
+      </packageFragments>
+    </packageFragmentRoots>
+  </projects>
+</wsm:WWorkspace>

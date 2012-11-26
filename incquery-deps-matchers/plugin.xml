@@ -193,29 +193,5 @@
             id="cern.devtools.deps.query.cp3.impactCausedByRemovedClasses_2_1">
       </evaluator>
    </extension>
-   <extension
-         id="cern.devtools.deps.query.cp3.outgoingMethodCallDependencyAdded"
-         point="org.eclipse.viatra2.emf.incquery.matcherfactory">
-      <matcher
-            factoryProvider="cern.devtools.deps.query.cp3.outgoingmethodcalldependencyadded.OutgoingMethodCallDependencyAddedMatcherFactory$Provider"
-            id="cern.devtools.deps.query.cp3.outgoingMethodCallDependencyAdded">
-      </matcher>
-   </extension>
-   <extension
-         id="cern.devtools.deps.query.cp3.outgoingMethodCallDependencyAdded"
-         point="org.eclipse.viatra2.emf.incquery.xexpressionevaluator">
-      <evaluator
-            evaluatorClass="cern.devtools.deps.query.cp3.outgoingmethodcalldependencyadded.OutgoingMethodCallDependencyAddedEvaluator1_1"
-            id="cern.devtools.deps.query.cp3.outgoingMethodCallDependencyAdded_1_1">
-      </evaluator>
-   </extension>
-   <extension
-         id="cern.devtools.deps.query.cp3.outgoingMethodCallDependencyAdded"
-         point="org.eclipse.viatra2.emf.incquery.xexpressionevaluator">
-      <evaluator
-            evaluatorClass="cern.devtools.deps.query.cp3.outgoingmethodcalldependencyadded.OutgoingMethodCallDependencyAddedEvaluator1_2"
-            id="cern.devtools.deps.query.cp3.outgoingMethodCallDependencyAdded_1_2">
-      </evaluator>
-   </extension>
 
 </plugin>

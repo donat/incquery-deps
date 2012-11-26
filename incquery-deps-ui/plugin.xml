@@ -110,6 +110,44 @@
    </persistent>
    </extension>
    
+   <extension
+   	   id="hu.bme.incquery.deps.markers.addedmethod"
+       name="Added method"
+       point="org.eclipse.core.resources.markers">
+     <super type="com.ibm.mymarkers.mymarker" />
+   </extension>
+
+	<extension
+   	   id="hu.bme.incquery.deps.markers.incomingmethodcall"
+       name="Incoming method call dependency"
+       point="org.eclipse.core.resources.markers">
+     <super type="com.ibm.mymarkers.mymarker" />
+   </extension>
+   <extension
+   	   id="hu.bme.incquery.deps.markers.incomingclassuage"
+       name="Incoming method call dependency"
+       point="org.eclipse.core.resources.markers">
+     <super type="com.ibm.mymarkers.mymarker" />
+   </extension>
+   <extension
+   	   id="hu.bme.incquery.deps.markers.incominginheritance"
+       name="Incoming method call dependency"
+       point="org.eclipse.core.resources.markers">
+     <super type="com.ibm.mymarkers.mymarker" />
+   </extension>
+   <extension
+   	   id="hu.bme.incquery.deps.markers.incomingmethodoverride"
+       name="Incoming method call dependency"
+       point="org.eclipse.core.resources.markers">
+     <super type="com.ibm.mymarkers.mymarker" />
+   </extension>
+   <extension
+   	   id="hu.bme.incquery.deps.markers.incomingfieldaccess"
+       name="Incoming method call dependency"
+       point="org.eclipse.core.resources.markers">
+     <super type="com.ibm.mymarkers.mymarker" />
+   </extension>
+   
    <!-- Annotation specification:- describes what the annotation will look like and its properties -->
    <extension point="org.eclipse.ui.editors.markerAnnotationSpecification"
      id="myannotationspecification"
@@ -128,7 +166,7 @@
           verticalRulerPreferenceKey="clvertical"
           verticalRulerPreferenceValue="true"
           textStylePreferenceKey="clstyle"
-          textStylePreferenceValue="BOX">
+          textStylePreferenceValue="UNDERLINE">
      </specification>
    </extension>
    

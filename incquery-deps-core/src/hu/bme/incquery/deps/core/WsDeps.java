@@ -56,9 +56,13 @@ public class WsDeps {
 		}
 	}
 
+	/**
+	 * Entry point for searching
+	 * 
+	 */
 	public void execute() {
-		executeEasySearches();
-		executeSearchEngineBasedSearches();
+//		executeEasySearches();
+//		executeSearchEngineBasedSearches();
 	}
 
 	/**

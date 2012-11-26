@@ -7,7 +7,6 @@ import java.util.List;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.jdt.core.IJavaModelMarker;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.Position;
@@ -23,7 +22,12 @@ import org.eclipse.ui.texteditor.SimpleMarkerAnnotation;
 public class MyMarkerFactory {
 	
 	//Marker ID
-	public static final String MARKER = "com.ibm.mymarkers.mymarker";
+	public static final String MARKER_ADDED_METHOD = "hu.bme.incquery.deps.markers.addedmethod";
+	public static final String MARKER_INCDEP_MCALL = "hu.bme.incquery.deps.markers.incomingmethodcall";
+	public static final String MARKER_INCDEP_CLUSAGE = "hu.bme.incquery.deps.markers.incomingclassuage";
+	public static final String MARKER_INCDEP_INH = "hu.bme.incquery.deps.markers.incominginheritance";
+	public static final String MARKER_INCDEP_MOVERR = "hu.bme.incquery.deps.markers.incomingmethodoverride";
+	public static final String MARKER_INCDEP_FACCESS = "hu.bme.incquery.deps.markers.incomingfieldaccess";
 	
 	//Annotation ID
 	public static final String ANNOTATION = "com.ibm.myannotation";
@@ -31,11 +35,11 @@ public class MyMarkerFactory {
 	/*
 	 * Creates a Marker
 	 */
-	public static IMarker createMarker(IResource res, Position position, String message)
+	public static IMarker createMarker(String type, IResource res, Position position, String message)
     throws CoreException {
             IMarker marker = null;
             //note: you use the id that is defined in your plugin.xml
-            marker = res.createMarker(MARKER);
+            marker = res.createMarker(type);
             marker.setAttribute(IMarker.MESSAGE, message);
             //compute and set char start and char end
             int start = position.getOffset();
@@ -50,7 +54,7 @@ public class MyMarkerFactory {
 	 */
 	public static List<IMarker> findMarkers(IResource resource) {
 	     try {
-	         return Arrays.asList(resource.findMarkers(MARKER, true, IResource.DEPTH_ZERO));
+	         return Arrays.asList(resource.findMarkers(MARKER_ADDED_METHOD, true, IResource.DEPTH_ZERO));
 	     } catch (CoreException e) {
 	         return new ArrayList<IMarker>();
 	    }
@@ -61,7 +65,7 @@ public class MyMarkerFactory {
 	 */
 	public static List<IMarker> findAllMarkers(IResource  resource) {
         try {
-            return Arrays.asList(resource.findMarkers(MARKER, true, IResource.DEPTH_INFINITE));
+            return Arrays.asList(resource.findMarkers(MARKER_ADDED_METHOD, true, IResource.DEPTH_INFINITE));
         } catch (CoreException e) {
             return new ArrayList<IMarker>();
         }

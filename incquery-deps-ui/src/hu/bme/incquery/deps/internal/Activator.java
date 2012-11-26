@@ -1,7 +1,7 @@
 package hu.bme.incquery.deps.internal;
 
 import hu.bme.incquery.deps.marker.IncQueryResultToMarkers;
-import hu.bme.incquery.deps.pub.IIncQueryDepsEngine;
+import hu.bme.incquery.deps.pub.IncQueryDepsRegistry;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -39,10 +39,10 @@ public class Activator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
-		serviceTracker = new ServiceTracker(context, IIncQueryDepsEngine.class.getName(), null) {
+		serviceTracker = new ServiceTracker(context, IncQueryDepsRegistry.class.getName(), null) {
 			public Object addingService(org.osgi.framework.ServiceReference reference) {
-				IIncQueryDepsEngine engine = context.getService(reference);
-				engine.registerChangeListener(incQueryResultToMarkers, AddedMethodsMatcher.class);
+				IncQueryDepsRegistry engine = context.getService(reference);
+				engine.registerChangeListener(incQueryResultToMarkers);
 				return engine;
 			};
 		};

@@ -14,7 +14,6 @@ Export-Package: cern.devtools.deps.query.cp3.addedclasses,
  cern.devtools.deps.query.cp3.incominginheritances,
  cern.devtools.deps.query.cp3.incomingmethodcalls,
  cern.devtools.deps.query.cp3.incomingmethodoverride,
- cern.devtools.deps.query.cp3.outgoingmethodcalldependencyadded,
  cern.devtools.deps.query.cp3.removedclasses,
  cern.devtools.deps.query.cp3.removedfields,
  cern.devtools.deps.query.cp3.removedmethod

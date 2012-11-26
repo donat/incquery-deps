@@ -6,6 +6,7 @@ import hu.bme.incquery.deps.util.LoggingUtil;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Set;
 
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IField;
@@ -17,6 +18,7 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.viatra2.emf.incquery.runtime.api.IPatternMatch;
 import org.eclipse.viatra2.emf.incquery.runtime.api.IncQueryMatcher;
 
 /**
@@ -208,8 +210,7 @@ public class ResultContentProvider implements ITreeContentProvider, IncQueryDeps
 	}
 
 	@Override
-	@SuppressWarnings("rawtypes")
-	public void matchesChanged(IncQueryMatcher matcher) {
+	public void matchesChanged(Set<IncQueryMatcher<IPatternMatch>> matcher) {
 
 		if (!Display.getDefault().isDisposed()) {
 			Display.getDefault().syncExec(new Runnable() {
@@ -222,4 +223,11 @@ public class ResultContentProvider implements ITreeContentProvider, IncQueryDeps
 			});
 		}
 	}
+
+	@Override
+	public void init(Set<IncQueryMatcher<IPatternMatch>> matchers) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

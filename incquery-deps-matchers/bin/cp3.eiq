@@ -238,8 +238,7 @@ pattern incomingMethodOverride(repoSource : CP3Method, wsTarget : WMethod) = {
 	// Select only the classes usage dependencies.
 	CP3Dep.type(dependency, type);
 	
-	// TODO: nem tudom a method override kódját
-	check (type == 1);
+	check (type == 2);
 }
 
 pattern incomingFieldAccesses(repoSource : CP3Method, wsTarget : WField) = {
@@ -253,7 +252,6 @@ pattern incomingFieldAccesses(repoSource : CP3Method, wsTarget : WField) = {
 	// Select only the classes usage dependencies.
 	CP3Dep.type(dependency, type);
 	
-	// TODO nem tudom a field access kódját
 	check (type == 3);
 }
 
@@ -263,8 +261,7 @@ pattern impactCausedByRemovedFields(repoFrom : CP3Method, repoTo : CP3Field, typ
 	CP3Dep.to(d, repoTo);
 	CP3Dep.type(d, type);
 	
-	// TODO nem tudom a field access kódját
-	check(type == 4);
+	check(type == 3);
 }
 
 pattern impactCausedByRemovedMethods(repoFrom : CP3Method, repoTo : CP3Method, type : EShort) = {
@@ -280,8 +277,7 @@ pattern impactCausedByRemovedMethods(repoFrom : CP3Method, repoTo : CP3Method, t
 	CP3Dep.from(d, repoFrom);
 	CP3Dep.to(d, repoTo);
 	CP3Dep.type(d, type);
-	// TODO mi a method override kódja
-	check (type == 3);
+	check (type == 2);
 }
 
 pattern impactCausedByRemovedClasses(repoFrom : CP3Class, repoTo : CP3Class, type : EShort) = {
@@ -291,7 +287,7 @@ pattern impactCausedByRemovedClasses(repoFrom : CP3Class, repoTo : CP3Class, typ
 	CP3Dep.to(d, repoTo);
 	CP3Dep.type(d, type);
 	//TODO
-	check (type == 3);
+	check (type == 4);
 } or {
 	// or inheritance
 	find removedClasses(repoTo);
@@ -299,17 +295,18 @@ pattern impactCausedByRemovedClasses(repoFrom : CP3Class, repoTo : CP3Class, typ
 	CP3Dep.to(d, repoTo);
 	CP3Dep.type(d, type);
 	//TODO
-	check (type == 3);
+	check (type == 5);
 }
 
-pattern outgoingMethodCallDependencyAdded(wsMethodFrom: WMethod, wsMethodTo: WMethod) = {	
+private pattern outgoingMethodCallDependencyAdded(wsMethodFrom: WMethod, wsMethodTo: WMethod) = {	
 	// Finds method call dependencies between projects.
 	WDependency.from(d,wsMethodFrom);
 	WDependency.to(d, wsMethodTo);
 	WDependency.type(d,::METHOD_CALL);
 	WProject.packageFragmentRoots.packageFragments.compilationUnits.types.methods(wsP1, wsMethodFrom);
 	WProject.packageFragmentRoots.packageFragments.compilationUnits.types.methods(wsP2, wsMethodFrom);
-	check (!wsP1.equals(wsP2));
+	// TODO
+	//check (!wsP1.equals(wsP2));
 	
 	// The elements exist in the repository
 	find methodsWithSameNameAndSameProject(repoMethodFrom, wsMethodFrom);
@@ -328,74 +325,3 @@ private pattern repoDependency(ceFrom: CP3AbstractItem, ceTo: CP3AbstractItem, d
 	CP3Dep.from(d, ceFrom);
 	CP3Dep.to(d, ceTo);
 }
-
-///**
-// * Matches all methods in the workspace which does not exist in the repository.
-// */
-//pattern addedMethodsToProject(wsMethod : WMethod, wsClass: WType, wsProject: WProject) = {
-//	// Find the method's project.
-//	WMethod.name(wsMethod, name);
-//	WProject.packageFragmentRoots.packageFragments.compilationUnits.types.methods(wsProject, wsMethod);
-//
-//	//Assign the type to the class.
-//	WType.methods(wsClass, wsMethod);
-//
-//	// Find the project in the repository.
-//	find projectsWithSameName(repoProject, wsProject);
-//
-//	// Ensure that the method does not exist in the selected repository project.
-//	neg find methodNamesInRepoProjects(repoProject, name);
-//}
-//
-///**
-// * Matches all fields in the workspace which does not exist in the repository.
-// */
-//pattern addedFieldsToProject(wsField : WField, wsClass: WType, wsProject: WProject) = {
-//	// Find the field's project
-//	WField.name(wsField, name);
-//	WProject.packageFragmentRoots.packageFragments.compilationUnits.types(wsProject, wsClass);
-//	WType.fields(wsClass,wsField);
-//
-//	// Find the project in the repository.
-//	find projectsWithSameName(repoProject, wsProject);
-//
-//	// Ensure that the field does not exist in the selected repository project.
-//	neg find  turesInRepoProjects(repoProject, name);
-//}
-//
-//
-///**
-// * Matches all the classes in the repository which has been deleted from the workspace.
-// */
-//pattern removedClassesFromProject(repoClass : CP3Class, repoProject : CP3Project) = {
-//	CP3Class.name(repoClass, name);
-//	CP3Project.classes(repoProject, repoClass);
-//
-//	// Find the project in the workspace.
-//	find projectsWithSameName(repoProject, wsProject);
-//
-//	// Check that the workspace does not contain a class with the same name.
-//	neg find classNamesInWorkspaceProjects(wsProject, name);
-//}
-//
-///**
-// * Matches all methods in the repository which has been deleted from the workspace.
-// */
-//pattern removedMethod(repoMethod : CP3Method) = {
-//	
-//	// Find the method's project
-//	CP3Method.name(repoMethod, name);
-//	CP3Project.classes.methods(repoProject, repoMethod);
-//
-//	// Find the project in the workspace.
-//	find projectsWithSameName(repoProject, wsProject);
-//
-//	// The workspace project is missing.
-//	neg find methodNamesInWorkspaceProjects(wsProject, name);
-//
-//	// Bugfix: remove constructor
-//
-//	// Bugfix: remove static initialiser methods.
-//	check(!name.contains("<clinit>"));
-//}
-

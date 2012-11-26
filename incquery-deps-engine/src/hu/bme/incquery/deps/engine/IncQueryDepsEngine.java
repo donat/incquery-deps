@@ -5,16 +5,13 @@ import hu.bme.incquery.deps.core.PreferenceStore;
 import hu.bme.incquery.deps.core.WsChangeEventListener;
 import hu.bme.incquery.deps.cp3model.Cp3modelPackage;
 import hu.bme.incquery.deps.modelloader.RepoModelLoadingService;
-import hu.bme.incquery.deps.pub.IIncQueryDepsEngine;
 import hu.bme.incquery.deps.pub.IncQueryDepsChangeListener;
+import hu.bme.incquery.deps.pub.IncQueryDepsRegistry;
 import hu.bme.incquery.deps.wsmodel.WWorkspace;
 import hu.bme.incquery.deps.wsmodel.WsmodelPackage;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -36,13 +33,13 @@ import org.osgi.util.tracker.ServiceTracker;
 
 import cern.devtools.deps.query.cp3.addedmethods.AddedMethodsMatcher;
 
-public class IncQueryDepsEngine implements IIncQueryDepsEngine {
+public class IncQueryDepsEngine implements IncQueryDepsRegistry {
 
 	private ResourceSet resourceSet;
 	private Resource wsModelResource;
 	private Set<IncQueryMatcher<IPatternMatch>> matchers = new HashSet<IncQueryMatcher<IPatternMatch>>();
 
-	Map<String, Collection<IncQueryDepsChangeListener>> listenerMap = new HashMap<String, Collection<IncQueryDepsChangeListener>>();
+	Collection<IncQueryDepsChangeListener> listeners = new HashSet<IncQueryDepsChangeListener>();
 
 	private volatile boolean init = false;
 
@@ -66,7 +63,6 @@ public class IncQueryDepsEngine implements IIncQueryDepsEngine {
 	 * 
 	 * @throws IncQueryException
 	 */
-	@SuppressWarnings("unchecked")
 	public Job getInitJob() throws IncQueryException {
 		Job job = new Job("EMF IncQuery initialization") {
 			@Override
@@ -88,7 +84,7 @@ public class IncQueryDepsEngine implements IIncQueryDepsEngine {
 
 	private void registerService() {
 		hu.bme.incquery.deps.engine.Activator.getDefault().getContext()
-				.registerService(IIncQueryDepsEngine.class.getName(), this, null);
+				.registerService(IncQueryDepsRegistry.class.getName(), this, null);
 	}
 
 	@SuppressWarnings("all")
@@ -178,19 +174,8 @@ public class IncQueryDepsEngine implements IIncQueryDepsEngine {
 
 	public void update() {
 		long start = System.nanoTime();
-		for (IncQueryMatcher<IPatternMatch> matcher : matchers) {
-			matcher.getAllMatches();
-			Collection<IncQueryDepsChangeListener> listeners = listenerMap.get(matcher.getClass().getName());
-
-			if (matcher.getClass().getName().contains("ProjectsWithSameNameMatcher")) {
-				System.out.println("");
-			}
-
-			if (listeners != null) {
-				for (IncQueryDepsChangeListener listener : listeners) {
-					listener.matchesChanged(matcher);
-				}
-			}
+		for (IncQueryDepsChangeListener l : listeners) {
+			l.matchesChanged(matchers);
 		}
 		long end = System.nanoTime();
 		System.err.println("IncQuery update finished in " + (end - start) / 1000l + " microseconds.");
@@ -203,14 +188,8 @@ public class IncQueryDepsEngine implements IIncQueryDepsEngine {
 	 * IncQueryDepsChangeListener, java.lang.Class)
 	 */
 	@Override
-	public void registerChangeListener(IncQueryDepsChangeListener listener, Class... matcherClasses) {
-		for (Class c : matcherClasses) {
-			Collection<IncQueryDepsChangeListener> listeners = listenerMap.get(c.getName());
-			if (listeners == null) {
-				listenerMap.put(c.getName(), listeners = new LinkedList<IncQueryDepsChangeListener>());
-			}
-
-			listeners.add(listener);
-		}
+	public void registerChangeListener(IncQueryDepsChangeListener listener) {
+		listener.init(matchers);
+		listeners.add(listener);
 	}
 }
