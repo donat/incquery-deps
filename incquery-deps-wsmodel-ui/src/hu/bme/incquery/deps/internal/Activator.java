@@ -4,7 +4,7 @@ import org.eclipse.ui.IStartup;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
-public class Activator implements BundleActivator, IStartup{
+public class Activator implements BundleActivator, IStartup {
 
 	private static BundleContext context;
 

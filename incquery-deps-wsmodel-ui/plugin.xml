@@ -27,7 +27,8 @@
    </extension>
    <extension
          point="org.eclipse.ui.startup">
-      <startup></startup>
+      <startup
+            class="hu.bme.incquery.deps.internal.EarlyStartup"></startup>
    </extension>
 
 </plugin>

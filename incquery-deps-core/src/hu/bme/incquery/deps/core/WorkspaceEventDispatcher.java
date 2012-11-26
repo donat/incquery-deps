@@ -43,7 +43,7 @@ public class WorkspaceEventDispatcher implements IElementChangedListener {
 	}
 
 	public List<IJavaProject> getTracedProjects() {
-		if (tracedProjects == null) {
+		if (tracedProjects == null || tracedProjects.size() != PreferenceStore.getStore().tracedProjectNames().size()) {
 			initTracedProjectList();
 		}
 		return tracedProjects;

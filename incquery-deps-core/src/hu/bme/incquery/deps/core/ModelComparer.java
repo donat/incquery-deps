@@ -43,9 +43,25 @@ public class ModelComparer {
 	}
 
 	private void doUpdate() {
-		wsAfterChanges = createModelOfModifiedProjects(delta);
-		buildNew = new WsBuildPrimitives(wsAfterChanges);
-		findAndApplyChanges(delta);
+		
+		boolean deletedProject = false;
+		if (delta.getRemovedChildren() != null) {
+			for (IJavaElementDelta removedDelta : delta.getRemovedChildren()) {
+				IJavaElement elem = removedDelta.getElement();
+				if (elem instanceof IJavaProject) {
+					IJavaProject removedProject = (IJavaProject) elem;
+					buildOld.removeEntireProject(removedProject);
+					PreferenceStore.getStore().removeTracedProject(removedProject.getElementName());
+					deletedProject = true;
+				}
+			}
+		}
+
+		if (!deletedProject) {
+			wsAfterChanges = createModelOfModifiedProjects(delta);
+			buildNew = new WsBuildPrimitives(wsAfterChanges);
+			findAndApplyChanges(delta);
+		}
 	}
 
 	private void findAndApplyChanges(IJavaElementDelta delta2) {
@@ -64,7 +80,8 @@ public class ModelComparer {
 			removeElement(delta2);
 			break;
 		case IJavaElementDelta.CHANGED:
-			if (delta2.getElement() instanceof ICompilationUnit && (delta2.getFlags() & IJavaElementDelta.F_PRIMARY_RESOURCE) != 0) {
+			if (delta2.getElement() instanceof ICompilationUnit
+					&& (delta2.getFlags() & IJavaElementDelta.F_PRIMARY_RESOURCE) != 0) {
 				refreshCompilationUnit((ICompilationUnit) delta2.getElement());
 			} else {
 				for (IJavaElementDelta child : delta2.getAffectedChildren()) {
@@ -164,7 +181,8 @@ public class ModelComparer {
 		}
 	}
 
-	private static void addType(WNamedElement emfCu, IType t, WsBuildPrimitives buildPrimitives) throws JavaModelException {
+	private static void addType(WNamedElement emfCu, IType t, WsBuildPrimitives buildPrimitives)
+			throws JavaModelException {
 		WNamedElement emfType = buildPrimitives.addNamedElement(emfCu, t);
 		for (IType innerType : t.getTypes()) {
 			addType(emfCu, innerType, buildPrimitives);
