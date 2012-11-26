@@ -41,7 +41,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.part.ViewPart;
 
-public class ModelViewer extends ViewPart {
+public class WorkspaceModelViewer extends ViewPart {
 
 	public static final String ID = "hu.bme.incquery.deps.viewer.modelviewer"; //$NON-NLS-1$
 	private TreeViewer viewer;
@@ -79,7 +79,7 @@ public class ModelViewer extends ViewPart {
 	};
 	private Action saveEmfModelAction;
 
-	public ModelViewer() {
+	public WorkspaceModelViewer() {
 		adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new WsmodelItemProviderAdapterFactory());

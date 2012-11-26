@@ -4,13 +4,6 @@
 
    <extension
          point="org.eclipse.ui.views">
-      <view
-            category="hu.bme.incquery.deps.viewer.category"
-            class="hu.bme.incquery.deps.ui.ModelViewer"
-            id="hu.bme.incquery.deps.viewer.modelviewer"
-            name="Workspace model"
-            restorable="true">
-      </view>
       <category
             id="hu.bme.incquery.deps.viewer.category"
             name="IncQuery Deps">
@@ -24,20 +17,6 @@
       </view>
    </extension>
    
-     <extension
-         point="org.eclipse.ui.popupMenus">
-          <objectContribution
-            adaptable="false"
-            id="cern.devtools.depanalysis.modelfinder.objectContribution2"
-            objectClass="org.eclipse.jdt.core.IJavaProject">
-         <action
-               class="hu.bme.incquery.deps.ui.EnableTracingOnProjectAction"
-               id="hu.bme.incquery.deps.ui.actions.enabletracing"
-               label="Toggle Dependency Analysis"
-               menubarPath="additions">
-         </action>
-      </objectContribution>
-         </extension>
          
          <extension
          id="generated.incquery.command.cern.devtools.deps.query.cp1.addedMethodsCommand"

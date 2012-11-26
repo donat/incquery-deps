@@ -5,7 +5,7 @@
          point="org.eclipse.ui.views">
       <view
             category="hu.bme.incquery.deps.viewer.category"
-            class="hu.bme.incquery.deps.ui.ModelViewer"
+            class="hu.bme.incquery.deps.ui.WorkspaceModelViewer"
             id="hu.bme.incquery.deps.viewer.modelviewer"
             name="Workspace model"
             restorable="true">
