@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.viatra2.emf.incquery.runtime.api.IMatcherFactory;
 import org.eclipse.viatra2.emf.incquery.runtime.api.IPatternMatch;
 import org.eclipse.viatra2.emf.incquery.runtime.api.IncQueryMatcher;
@@ -83,8 +84,17 @@ public class IncQueryDepsEngine implements IncQueryDepsRegistry {
 	}
 
 	private void registerService() {
-		hu.bme.incquery.deps.engine.Activator.getDefault().getContext()
-				.registerService(IncQueryDepsRegistry.class.getName(), this, null);
+		final IncQueryDepsRegistry registry = this;
+		
+		Display.getDefault().syncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				hu.bme.incquery.deps.engine.Activator.getDefault().getContext()
+						.registerService(IncQueryDepsRegistry.class.getName(), registry, null);
+			}
+		});
+
 	}
 
 	@SuppressWarnings("all")

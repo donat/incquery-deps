@@ -27,25 +27,15 @@ import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jface.text.Position;
 
-
 public class JavaModelLocationMapper {
 
 	private final ASTVisitor astWalker = new ASTVisitor() {
 		
 		@Override
 		public boolean visit(MethodDeclaration node) {
-			int start = node.getStartPosition();
-		
-			int bodyLength = 0;
-			if (node.getBody() != null) {
-				bodyLength = node.getBody().getLength();
-			}
-			
-			int length = node.getLength() - bodyLength;
+			int start = node.getName().getStartPosition();
+			int length = node.getName().getLength();
 			IMethodBinding binding = node.resolveBinding();
-			
-			
-			
 			String key = binding.getJavaElement().getHandleIdentifier();
 			Position value = new Position(start, length);
 			positions.put(key, value);
@@ -55,9 +45,9 @@ public class JavaModelLocationMapper {
 		
 		@Override
 		public boolean visit(TypeDeclaration node) {
-			int start = node.getStartPosition();
-			int length = node.getLength();
-			ITypeBinding binding = node.resolveBinding();
+			int start = node.getName().getStartPosition();
+			int length = node.getName().getLength();
+			ITypeBinding binding = node.resolveBinding(); 
 			
 			String key = binding.getJavaElement().getHandleIdentifier();
 			Position value = new Position(start, length);

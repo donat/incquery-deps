@@ -48,7 +48,7 @@ public enum ResultItemType {
 	
 	
 	
-	STRING,
+	STRING, ADDED_CLASSES, REMOVED_CLASSES,
 	
 	
 }

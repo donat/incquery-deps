@@ -13,6 +13,8 @@ import org.eclipse.viatra2.emf.incquery.runtime.api.IPatternMatch;
 import org.eclipse.viatra2.emf.incquery.runtime.api.IncQueryMatcher;
 import org.eclipse.viatra2.gtasm.patternmatcher.incremental.rete.misc.DeltaMonitor;
 
+import cern.devtools.deps.query.cp3.addedfields.AddedFieldsMatch;
+import cern.devtools.deps.query.cp3.addedfields.AddedFieldsMatcher;
 import cern.devtools.deps.query.cp3.addedmethods.AddedMethodsMatch;
 import cern.devtools.deps.query.cp3.addedmethods.AddedMethodsMatcher;
 import cern.devtools.deps.query.cp3.incomingclassusages.IncomingClassUsagesMatch;
@@ -30,6 +32,7 @@ public class IncQueryResultToMarkers implements IncQueryDepsChangeListener {
 	JavaModelLocationMapper mapper = new JavaModelLocationMapper(PreferenceStore.getStore().tracedProjectNames());
 	MarkerManager mm = new MarkerManager();
 	private DeltaMonitor<?> addedMethodsDelta;
+	private DeltaMonitor<?> addedFieldsDelta;;
 	private DeltaMonitor<?> incomingMethodCallsDelta;
 	private DeltaMonitor<?> incomingMethodOverrideDelta;
 	private DeltaMonitor<?> incomingClassUsageDelta;
@@ -43,6 +46,9 @@ public class IncQueryResultToMarkers implements IncQueryDepsChangeListener {
 			if (matcher instanceof AddedMethodsMatcher) {
 				addedMethodsDelta = matcher.newDeltaMonitor(true);
 				maintainAddedMethodsMarker();
+			} else if (matcher instanceof AddedFieldsMatcher) {
+				addedFieldsDelta = matcher.newDeltaMonitor(true);
+				maintainAddeFiedsMarker();
 			} else if (matcher instanceof IncomingMethodCallsMatcher) {
 				incomingMethodCallsDelta = matcher.newDeltaMonitor(true);
 				maintainIncomingMethodCallsMarker();
@@ -77,6 +83,23 @@ public class IncQueryResultToMarkers implements IncQueryDepsChangeListener {
 		addedMethodsDelta.matchFoundEvents.clear();
 		addedMethodsDelta.matchLostEvents.clear();
 		addedMethodsDelta.clear();
+	}
+	
+	private void maintainAddeFiedsMarker() {
+		// get found and lost events
+		@SuppressWarnings("unchecked")
+		Collection<AddedFieldsMatch> foundMatches = (Collection<AddedFieldsMatch>) addedFieldsDelta.matchFoundEvents;
+		@SuppressWarnings("unchecked")
+		Collection<AddedFieldsMatch> lostMatches = (Collection<AddedFieldsMatch>) addedFieldsDelta.matchLostEvents;
+
+		// maintain markers
+		removelLostAddedFieldsMarkers(lostMatches);
+		addFoundAddedFieldsMarkers(foundMatches);
+
+		// clear delta
+		addedFieldsDelta.matchFoundEvents.clear();
+		addedFieldsDelta.matchLostEvents.clear();
+		addedFieldsDelta.clear();
 	}
 
 	private void maintainIncomingMethodCallsMarker() {
@@ -172,8 +195,8 @@ public class IncQueryResultToMarkers implements IncQueryDepsChangeListener {
 		for (IncomingMethodCallsMatch match : foundMatches) {
 			IJavaElement item = JavaCore.create(match.getWsTarget().getHandler());
 			Position pos = mapper.position(item);
-			mm.addMarkerToJavaModelElement(MyMarkerFactory.MARKER_INCDEP_MCALL, item, pos, "Incoming method call: "
-					+ match.getRepoSource().getName() + "()");
+			mm.addMarkerToJavaModelElement(MyMarkerFactory.MARKER_INCDEP_MCALL, item, pos, "Method "
+					+ match.getRepoSource().getName() + "() calls this this method.");
 		}
 	}
 
@@ -192,6 +215,21 @@ public class IncQueryResultToMarkers implements IncQueryDepsChangeListener {
 			mm.addMarkerToJavaModelElement(MyMarkerFactory.MARKER_ADDED_METHOD, item, pos, "This is a new method");
 		}
 	}
+	
+	private void removelLostAddedFieldsMarkers(Collection<AddedFieldsMatch> lostMatches) {
+		for (AddedFieldsMatch match : lostMatches) {
+			IJavaElement item = JavaCore.create(match.getWsField().getHandler());
+			mm.removeMarkerFromResource(MyMarkerFactory.MARKER_ADDED_FIELD, item.getResource());
+		}
+	}
+
+	private void addFoundAddedFieldsMarkers(Collection<AddedFieldsMatch> foundMatches) {
+		for (AddedFieldsMatch match : foundMatches) {
+			IJavaElement item = JavaCore.create(match.getWsField().getHandler());
+			Position pos = mapper.position(item);
+			mm.addMarkerToJavaModelElement(MyMarkerFactory.MARKER_ADDED_FIELD, item, pos, "This is a new field");
+		}
+	}
 
 	private void removelLostIncomingMethodOverridesMarkers(Collection<IncomingMethodOverrideMatch> lostMatches) {
 		for (IncomingMethodOverrideMatch match : lostMatches) {
@@ -205,7 +243,7 @@ public class IncQueryResultToMarkers implements IncQueryDepsChangeListener {
 			IJavaElement item = JavaCore.create(match.getWsTarget().getHandler());
 			Position pos = mapper.position(item);
 			mm.addMarkerToJavaModelElement(MyMarkerFactory.MARKER_INCDEP_MOVERR, item, pos,
-					"Incoming method override: " + match.getRepoSource().getName());
+					"Method " + match.getRepoSource().getName() + "() overrides this method.");
 		}
 	}
 
@@ -220,8 +258,8 @@ public class IncQueryResultToMarkers implements IncQueryDepsChangeListener {
 		for (IncomingClassUsagesMatch match : foundMatches) {
 			IJavaElement item = JavaCore.create(match.getWsTarget().getHandler());
 			Position pos = mapper.position(item);
-			mm.addMarkerToJavaModelElement(MyMarkerFactory.MARKER_INCDEP_CLUSAGE, item, pos, "Incoming class usage: "
-					+ match.getRepoSource().getName());
+			mm.addMarkerToJavaModelElement(MyMarkerFactory.MARKER_INCDEP_CLUSAGE, item, pos,
+					"Class " + match.getRepoSource().getName() + " references this class.");
 		}
 	}
 
@@ -236,8 +274,8 @@ public class IncQueryResultToMarkers implements IncQueryDepsChangeListener {
 		for (IncomingInheritancesMatch match : foundMatches) {
 			IJavaElement item = JavaCore.create(match.getWsTarget().getHandler());
 			Position pos = mapper.position(item);
-			mm.addMarkerToJavaModelElement(MyMarkerFactory.MARKER_INCDEP_INH, item, pos, "Incoming inheritance: "
-					+ match.getRepoSource().getName());
+			mm.addMarkerToJavaModelElement(MyMarkerFactory.MARKER_INCDEP_INH, item, pos, "Class "
+					+ match.getRepoSource().getName() + " inherits from this class." );
 		}
 	}
 
@@ -252,8 +290,8 @@ public class IncQueryResultToMarkers implements IncQueryDepsChangeListener {
 		for (IncomingFieldAccessesMatch match : foundMatches) {
 			IJavaElement item = JavaCore.create(match.getWsTarget().getHandler());
 			Position pos = mapper.position(item);
-			mm.addMarkerToJavaModelElement(MyMarkerFactory.MARKER_INCDEP_FACCESS, item, pos, "Incoming field access: "
-					+ match.getRepoSource().getName() + "()");
+			mm.addMarkerToJavaModelElement(MyMarkerFactory.MARKER_INCDEP_FACCESS, item, pos, "Method "
+					+ match.getRepoSource().getName() + "() accesses this field.");
 		}
 	}
 

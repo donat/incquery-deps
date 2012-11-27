@@ -1,6 +1,8 @@
 package hu.bme.incquery.deps.ui.result;
 
+import hu.bme.incquery.deps.cp3model.CP3Project;
 import hu.bme.incquery.deps.pub.IncQueryDepsChangeListener;
+import hu.bme.incquery.deps.util.DependencyType;
 import hu.bme.incquery.deps.util.LoggingUtil;
 
 import java.util.Collection;
@@ -13,13 +15,22 @@ import org.eclipse.jdt.core.IField;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IType;
+import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.swt.internal.win32.DWM_BLURBEHIND;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.viatra2.emf.incquery.runtime.api.IPatternMatch;
 import org.eclipse.viatra2.emf.incquery.runtime.api.IncQueryMatcher;
+
+import cern.devtools.deps.query.cp3.addedclasses.AddedClassesMatch;
+import cern.devtools.deps.query.cp3.addedclasses.AddedClassesMatcher;
+import cern.devtools.deps.query.cp3.impactcausedbyremovedclasses.ImpactCausedByRemovedClassesMatch;
+import cern.devtools.deps.query.cp3.impactcausedbyremovedclasses.ImpactCausedByRemovedClassesMatcher;
+import cern.devtools.deps.query.cp3.removedclasses.RemovedClassesMatch;
+import cern.devtools.deps.query.cp3.removedclasses.RemovedClassesMatcher;
 
 /**
  * 
@@ -29,19 +40,18 @@ import org.eclipse.viatra2.emf.incquery.runtime.api.IncQueryMatcher;
 @SuppressWarnings("all")
 public class ResultContentProvider implements ITreeContentProvider, IncQueryDepsChangeListener {
 
-	private TreeViewer viewer;
+	// private TreeViewer viewer;
 	private IJavaProject selectedProject;
 	private ICompilationUnit selectedCU;
 
-	public ResultContentProvider(TreeViewer viewer) {
+	private TreeViewer viewer;
+	private Set<IncQueryMatcher<IPatternMatch>> matchers;
+
+	public ResultContentProvider() {
+	}
+
+	public void setViewer(TreeViewer viewer) {
 		this.viewer = viewer;
-		// hu.bme.incquery.deps.engine.Activator
-		// .getDefault()
-		// .getIncQueryDepsEngine()
-		// .registerChangeListener(this/*,ProjectsWithSameNameMatcher.class, AddedClassesMatcher.class,
-		// RemovedClassesMatcher.class, TypesInWsProjectMatcher.class,
-		// RemovedClassesFromProjectMatcher.class, FieldsInWsTypeMatcher.class,
-		// MethodsInWsTypeMatcher.class, IncomingClassUsagesMatcher.class, IncomingInheritancesMatcher.class*/);
 	}
 
 	@Override
@@ -50,14 +60,13 @@ public class ResultContentProvider implements ITreeContentProvider, IncQueryDeps
 
 	@Override
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-		// Do nothing
 	}
 
 	@Override
 	public Object[] getElements(Object inputElement) {
 		// If a compilation unit is selected , build it.
 		if (inputElement instanceof ICompilationUnit) {
-			return buildCompilationUnit((ICompilationUnit) inputElement);
+			// return buildCompilationUnit((ICompilationUnit) inputElement);
 		}
 		// Else display info for the entire project.
 		else if (inputElement instanceof IJavaProject) {
@@ -78,20 +87,71 @@ public class ResultContentProvider implements ITreeContentProvider, IncQueryDeps
 	}
 
 	private ResultItem buildProjectRoot(IJavaProject project) {
-		return new ResultItem(null, ResultItemType.PROJECT_ROOT, project);
+		ResultItem root = new ResultItem(null, ResultItemType.PROJECT_ROOT, project);
+		ResultItem addedClassesRoot = new ResultItem(root, ResultItemType.ADDED_CLASSES);
+		ResultItem removedClassesroot = new ResultItem(root, ResultItemType.REMOVED_CLASSES);
+
+		for (IncQueryMatcher<? extends IPatternMatch> matcher : matchers) {
+			if (matcher instanceof AddedClassesMatcher) {
+				for (IPatternMatch match : matcher.getAllMatches()) {
+					AddedClassesMatch m = (AddedClassesMatch) match;
+					if (m.getWsProject().getName().equals(project.getElementName())) {
+						new ResultItem(addedClassesRoot, ResultItemType.JDT_TYPE, JavaCore.create(m.getWsClass()
+								.getHandler()));
+					}
+				}
+			} else if (matcher instanceof RemovedClassesMatcher) {
+				RemovedClassesMatcher matcher2 = (RemovedClassesMatcher) matcher;
+				for (RemovedClassesMatch match : matcher2.getAllMatches()) {
+					RemovedClassesMatch m = (RemovedClassesMatch) match;
+					for (CP3Project p : m.getRepoClass().getProjects()) {
+						if (p.getName().equals(project.getElementName())) {
+							ResultItem removedClassNode = new ResultItem(removedClassesroot, ResultItemType.STRING, m
+									.getRepoClass().getName());
+							ResultItem removedClassImpactNode = new ResultItem(removedClassesroot,
+									ResultItemType.STRING, "Referenced by");
+
+							// add impact to this node
+							ImpactCausedByRemovedClassesMatcher impact1 = selectMatcher(ImpactCausedByRemovedClassesMatcher.class);
+							Collection<ImpactCausedByRemovedClassesMatch> classImpact = impact1.getAllMatches(null,
+									m.getRepoClass(), null);
+
+							for (ImpactCausedByRemovedClassesMatch im : classImpact) {
+								new ResultItem(removedClassImpactNode, ResultItemType.STRING, im.getRepoFrom()
+										.getName() + "(" + DependencyType.typeOf(im.getType()) + ")");
+							}
+
+						}
+					}
+				}
+			}
+		}
+
+		return root;
+	}
+
+	private <T extends IncQueryMatcher<?>> T selectMatcher(Class<T> matcherClass) {
+		if (matchers == null) {
+			return null;
+		}
+		for (Object m : matchers) {
+			if (m.getClass().equals(matcherClass)) {
+				return (T) m;
+			}
+		}
+		return null;
 	}
 
 	private Object[] buildCompilationUnit(ICompilationUnit cu) {
 		// Add internal type and method nodes.
 		ResultItem root = buildStructureNode(cu);
-		
-		// Use IncQuery info to attach dependency info to the tree.
-		appendDependencyNodes(root);
 
+		// Use IncQuery info to attach dependency info to the tree.
+
+		appendDependencyNodes(root);
 		// Return the tree root.
 		return new Object[] { root };
 	}
-
 
 	private ResultItem buildStructureNode(ICompilationUnit cu) {
 		// Save compilation unit reference and create root for the result.
@@ -100,16 +160,14 @@ public class ResultContentProvider implements ITreeContentProvider, IncQueryDeps
 
 		// Add all types to the root.
 		Collection<ResultItem> typeNodes = addTypes(root);
-		
-		// Add method children to the type nodes. 
+
+		// Add method children to the type nodes.
 		for (ResultItem typeNode : typeNodes) {
 			addMethods(typeNode);
 			addFields(typeNode);
 		}
 		return root;
 	}
-	
-	
 
 	private Collection<ResultItem> addTypes(ResultItem root) {
 		// Add separate root for the types.
@@ -118,7 +176,6 @@ public class ResultContentProvider implements ITreeContentProvider, IncQueryDeps
 		// Collect type nodes.
 		Collection<ResultItem> typeNodes = new LinkedList<ResultItem>();
 
-		
 		try {
 			// Create a type node for every type inside.
 			for (IType t : ((ICompilationUnit) root.getObj()).getAllTypes()) {
@@ -130,21 +187,21 @@ public class ResultContentProvider implements ITreeContentProvider, IncQueryDeps
 			// Just log, the children won't be displayed and that is it.
 			LoggingUtil.logWarn(e);
 		}
-	
+
 		return typeNodes;
 	}
-	
+
 	private void addMethods(ResultItem root) {
 		// Add separate root for the methods.
 		ResultItem methodRoot = new ResultItem(root, ResultItemType.METHOD_ROOT);
-		
+
 		// Acquire root type.
 		Object rootTypeObject = root.getObj();
 		if (rootTypeObject == null || !(rootTypeObject instanceof IType)) {
 			throw new RuntimeException("Method nodes should be added below type nodes");
 		}
 		IType rootType = (IType) rootTypeObject;
-		
+
 		// Instantiate the method objects
 		try {
 			for (IMethod m : rootType.getMethods()) {
@@ -154,18 +211,18 @@ public class ResultContentProvider implements ITreeContentProvider, IncQueryDeps
 			LoggingUtil.logWarn(e);
 		}
 	}
-	
+
 	private void addFields(ResultItem root) {
 		// Add separate root for the methods.
 		ResultItem methodRoot = new ResultItem(root, ResultItemType.FIELD_ROOT);
-		
+
 		// Acquire root type.
 		Object rootTypeObject = root.getObj();
 		if (rootTypeObject == null || !(rootTypeObject instanceof IType)) {
 			throw new RuntimeException("Field nodes should be added below type nodes");
 		}
 		IType rootType = (IType) rootTypeObject;
-		
+
 		// Instantiate the field objects
 		try {
 			for (IField m : rootType.getFields()) {
@@ -184,7 +241,7 @@ public class ResultContentProvider implements ITreeContentProvider, IncQueryDeps
 			new ResultItem(ri, ResultItemType.STRING, "Here comes the incoming dependency");
 		}
 	}
-	
+
 	@Override
 	public Object[] getChildren(Object parentElement) {
 		if (parentElement instanceof ResultItem) {
@@ -211,14 +268,16 @@ public class ResultContentProvider implements ITreeContentProvider, IncQueryDeps
 
 	@Override
 	public void matchesChanged(Set<IncQueryMatcher<IPatternMatch>> matcher) {
+		refreshViewer();
+	}
 
-		if (!Display.getDefault().isDisposed()) {
+	private void refreshViewer() {
+		if (viewer != null) {
 			Display.getDefault().syncExec(new Runnable() {
 
 				@Override
 				public void run() {
 					viewer.refresh();
-					viewer.expandAll();
 				}
 			});
 		}
@@ -226,8 +285,8 @@ public class ResultContentProvider implements ITreeContentProvider, IncQueryDeps
 
 	@Override
 	public void init(Set<IncQueryMatcher<IPatternMatch>> matchers) {
-		// TODO Auto-generated method stub
-		
+		this.matchers = matchers;
+		refreshViewer();
 	}
 
 }

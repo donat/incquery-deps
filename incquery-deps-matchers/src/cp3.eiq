@@ -98,7 +98,7 @@ private pattern classesWithSameFQNAndSameProject(repoClass : CP3Class, wsClass :
 
 // ----------------------------------------------------------------------------
 
-pattern addedClasses(wsClass: WType) = {
+pattern addedClasses(wsClass: WType, wsProject : WProject) = {
 	// Find the following attributes for the selected type: package name, simple name, project.
 	WType.name(wsClass, simpleName);
 	WProject.packageFragmentRoots.packageFragments.compilationUnits.types(wsProject, wsClass);

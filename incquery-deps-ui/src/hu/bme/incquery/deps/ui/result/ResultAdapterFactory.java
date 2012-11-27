@@ -9,6 +9,7 @@ package hu.bme.incquery.deps.ui.result;
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IField;
+import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -37,6 +38,8 @@ public class ResultAdapterFactory implements IAdapterFactory {
 			switch (item.getType()) {
 			case NULL:
 				return "Nothing to display";
+			case PROJECT_ROOT: 
+				return "Project " + ((IJavaProject)obj).getElementName();
 			case CU_ROOT: 
 				ICompilationUnit cu = (ICompilationUnit) obj;
 				return cu.getElementName();
@@ -52,10 +55,16 @@ public class ResultAdapterFactory implements IAdapterFactory {
 				return "class " + ((IType) obj).getElementName();
 			case JDT_METHOD: 
 				return ((IMethod)obj).getElementName() + "()";
+			case STRING:
+				return obj.toString();
+			case ADDED_CLASSES:
+				return "Added classes";
+			case REMOVED_CLASSES:
+				return "Removed classes";
 			default:
 				String result = item.getType().toString();
 				if (obj != null) {
-					result += " (" + obj.toString() + ")";
+					result += (" (" + obj.toString() + ")");
 				}
 				return result;
 			}

@@ -2,13 +2,13 @@ package hu.bme.incquery.deps.internal;
 
 import hu.bme.incquery.deps.marker.IncQueryResultToMarkers;
 import hu.bme.incquery.deps.pub.IncQueryDepsRegistry;
+import hu.bme.incquery.deps.ui.result.ResultContentProvider;
 
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 import org.osgi.util.tracker.ServiceTracker;
-
-import cern.devtools.deps.query.cp3.addedmethods.AddedMethodsMatcher;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -24,6 +24,8 @@ public class Activator extends AbstractUIPlugin {
 	
 	private IncQueryResultToMarkers incQueryResultToMarkers = new IncQueryResultToMarkers();
 	private ServiceTracker serviceTracker;
+	
+	private ResultContentProvider resultContentProvider = new ResultContentProvider();
 
 	/**
 	 * The constructor
@@ -43,6 +45,7 @@ public class Activator extends AbstractUIPlugin {
 			public Object addingService(org.osgi.framework.ServiceReference reference) {
 				IncQueryDepsRegistry engine = context.getService(reference);
 				engine.registerChangeListener(incQueryResultToMarkers);
+				engine.registerChangeListener(resultContentProvider);
 				return engine;
 			};
 		};
@@ -81,5 +84,9 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
+	}
+
+	public ResultContentProvider getContentProvider() {
+		return resultContentProvider;
 	}
 }

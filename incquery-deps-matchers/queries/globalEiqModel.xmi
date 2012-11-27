@@ -860,6 +860,11 @@
         <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
       </type>
     </parameters>
+    <parameters name="wsProject">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject"/>
+      </type>
+    </parameters>
     <bodies>
       <constraints xsi:type="patternLanguage:PathExpressionConstraint">
         <head>

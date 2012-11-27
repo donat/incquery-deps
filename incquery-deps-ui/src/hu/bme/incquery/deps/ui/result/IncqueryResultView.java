@@ -1,5 +1,7 @@
 package hu.bme.incquery.deps.ui.result;
 
+import hu.bme.incquery.deps.internal.Activator;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.core.runtime.Platform;
@@ -9,6 +11,7 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.text.TextSelection;
+import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeSelection;
@@ -28,8 +31,8 @@ public class IncqueryResultView extends ViewPart implements ISelectionListener {
 	static final String NO_SELECTION_MESSAGE = "No metrics available for the current selection.";
 
 	private IAdapterFactory adapterFactory = new ResultAdapterFactory();
-
 	private TreeViewer treeViewer;
+	
 
 	/**
 	 * Return a new instance of <code>JavaMetricsView</code>.
@@ -56,9 +59,14 @@ public class IncqueryResultView extends ViewPart implements ISelectionListener {
 		// hu.bme.incquery.deps.engine.Activator.getDefault().getIncQueryDepsEngine().registerChangeListener(this);
 		Platform.getAdapterManager().registerAdapters(adapterFactory, ResultItem.class);
 
-		treeViewer.setContentProvider(new ResultContentProvider(treeViewer));
+		
+		ResultContentProvider contentProvider = Activator.getDefault().getContentProvider();
+		contentProvider.setViewer(treeViewer);
+		
+		treeViewer.setContentProvider(contentProvider);
 		treeViewer.setLabelProvider(new WorkbenchLabelProvider());
 	}
+
 
 	/*
 	 * non-Javadoc

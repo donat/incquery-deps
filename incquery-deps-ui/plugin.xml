@@ -95,6 +95,12 @@
        point="org.eclipse.core.resources.markers">
      <super type="com.ibm.mymarkers.mymarker" />
    </extension>
+     <extension
+   	   id="hu.bme.incquery.deps.markers.addedfield"
+       name="Added field"
+       point="org.eclipse.core.resources.markers">
+     <super type="com.ibm.mymarkers.mymarker" />
+   </extension>
 
 	<extension
    	   id="hu.bme.incquery.deps.markers.incomingmethodcall"
@@ -135,7 +141,7 @@
      <specification
           annotationType="com.ibm.myannotation"
           label="MyAnnotation"
-          icon="icons/sample.gif"
+          icon="icons/icon_warning.gif"
           overviewRulerPreferenceKey="clruler"
           overviewRulerPreferenceValue="true"
           colorPreferenceKey="clcolor"

@@ -22,7 +22,10 @@ import org.eclipse.ui.texteditor.SimpleMarkerAnnotation;
 public class MyMarkerFactory {
 	
 	//Marker ID
+	public static final String MARKER_BASE = "com.ibm.mymarkers.mymarker";
+	
 	public static final String MARKER_ADDED_METHOD = "hu.bme.incquery.deps.markers.addedmethod";
+	public static final String MARKER_ADDED_FIELD = "hu.bme.incquery.deps.markers.addedfield";
 	public static final String MARKER_INCDEP_MCALL = "hu.bme.incquery.deps.markers.incomingmethodcall";
 	public static final String MARKER_INCDEP_CLUSAGE = "hu.bme.incquery.deps.markers.incomingclassuage";
 	public static final String MARKER_INCDEP_INH = "hu.bme.incquery.deps.markers.incominginheritance";
@@ -31,6 +34,7 @@ public class MyMarkerFactory {
 	
 	//Annotation ID
 	public static final String ANNOTATION = "com.ibm.myannotation";
+	
 	
 	/*
 	 * Creates a Marker
