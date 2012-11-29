@@ -1,0 +1,158 @@
+\chapter{Introduction}
+% ------------------------------------------------------------------------------
+% 2 pages. give a short overview about the environment and introduce the problem
+% what my solution solves.
+% ------------------------------------------------------------------------------
+
+\section{Motivation}
+
+In today's software development practice, large projects that involve many
+interrelated software components are a commonality. To tackle the complexity of
+such development processes, a primary aim for both project managers and
+developers is to reduce inconsistency issues that may arise due to the
+combination of (i) development by large and distributed teams and (ii) the
+complex dependency relationships within the system under development.
+
+In a Java context, a typical example of such problems is when a newer
+version of some component is binary incompatible with others that depend on
+(link to) it. Even though linking errors can be detected at compile time in
+theory, in practice this may not be always feasible as the entire source tree
+may not be available to every developer.
+
+The main challenge addressed in this work is to achieve \emph{smooth upgrades}~\cite{Ical11}.
+A smooth upgrade means that after a new version of a software component has been
+released, all the other software components which depend on it will remain
+operational.
+
+There are a variety of approaches and tools to support smooth upgrades. For
+instance, one can enforce development process policies that involve manual
+synchronization steps that all developers must follow. An alternative approach
+-- perhaps better aligned with agile principles -- is to provide automated tools that
+relieve the developers of the difficulties associated with software
+infrastructure management.
+
+In this work, we aim to develop such an automated tool based on static
+\emph{dependency analysis}. In a few words, the goal of the tool is to assist
+developers in situations such as when e.g. a bug needs to be fixed which
+requires a change in a library API.
+In this case, the tool should help the developer in checking which other
+components are using that API, more specifically which parts of the API are
+being used, which functions should remain untouched and which can be changed
+freely. Using information provided by the tool, the developer should be able to
+resolve such issues on her own, or in the worst case know exactly which other
+team members are to be notified and called in for assistance.
+ 
+\subsection{Controls Systems at CERN}
+The context of this work is the author's internship at the Controls Group of
+CERN, the European Organization for Nuclear Research. CERN runs the the world's
+biggest particle physics laboratory with the main goal to operate particle
+accelerators (such as the Large Hadron Collider) and all the necessary
+infrastructure. At CERN, numerous scientist and engineers are working on the
+design and the maintenance of the software and hardware equipment in a
+well-defined structure. One of its members is the \emph{Controls Group} which is
+responsible for the design and implementation of both software and hardware used
+in the controls systems.
+
+The controls system itself is a complex, distributed and highly modular system
+which has three tiers. On the top there are the GUI applications which are
+written in Java. The middle or business layer is also consists of Java
+applications. On the lowest or hardware level there are C/C++ applications
+running on real-time systems. Maintaining a complex system like this requires a
+set of special approaches in order to provide desired quality and to maximize
+the availability of the systems. The primary objective for the Controls Group is
+to maintain uninterrupted operation without any downtime. During the internship,
+the author was tasked with designing and implementing a developer tool that
+should aid the software developers at CERN in minimizing software component
+upgrade problems.
+
+\subsection{Requirements specific to the deployment environment}
+There are certain requirements specific to the software infrastructure at CERN
+that needed to be taken into consideration while designing the system.
+
+\begin{description}
+\item[Technological environment] The software components to be managed by the
+new tool are all plain Java programs that do not make use of any framework (such
+as e.g. OSGi) for dependency and lifecycle management, but rely on basic
+features of the Java Compiler and the Java Virtual Machine to link to each
+other.
+ 
+\item[Complexity of a large software infrastructure] In a simple case,
+dependency analysis could be supported by a development environment such as
+Eclipse based on integrated source/binary code analysis. However, CERN Controls
+Systems deals with an infrastructure that consists of several thousands
+components (JARs) and even more if versioning information is taken into
+consideration. The resources available for development environments at developer
+PCs are not enough for supporting standard IDE features over a system of this
+size.
+ 
+\item[Granularity of dependencies] Existing dedicated dependency analysis
+tools offer a rather limited feature set for defining dependency relationships.
+For example JDepend \cite{JDepend} and JBoss Tattletale \cite{Tattletale} does
+dependency analysis on the class level, but CERN's requirement is to see
+method-level and fields level dependencies as well.
+
+\item[Source code analysis alone not feasible] Due to legacy reasons at CERN,
+the (up-to-date) source code is not available for some software components. In
+other cases, the source code is very large in size because it is automatically
+generated. Therefore, tools that rely solely on source code analysis cannot be
+used.
+
+\end{description}
+
+\section{Overview of the proposed solution}
+After analysing available off-the-shelf solutions, it became clear that the
+unique requirements called for a custom solution. The result of the work, called
+\ptool{}, implements hybrid dependency analysis based on both source and binary
+software components, and relies on a client-server architecture where end-user
+features are specifically aligned with the computing resources of the host
+environment. The tool uses a state-of-the-art incremental model query evaluation
+engine called EMF-IncQuery (developed at the Department of Measurement and
+Information Systems of the Budapest University of Technology and Economics), to
+provide on-the-fly dependency analysis results integrated into the Eclipse
+development tool.
+
+\subsection{Server features}
+On the server side, the \ptool{} provides the following features:
+\begin{itemize}
+  \item \emph{Binary dependency discovery based on byte code analysis} ensures
+  that all (including legacy) software components can be taken into
+  consideration for smooth upgrades, at the desired level of granularity.
+  \item A \emph{scalable relational dependency database} backend ensures that
+  the entire, large software infrastructure can be supported.
+  \item A \emph{data access layer based on Java RMI} allows accessing dependency
+  data by Java-based clients in an efficient way.
+\end{itemize}
+
+\subsection{Client features}
+On the client side, the \ptool{} provides the following features:
+\begin{itemize}
+  \item Efficient \emph{source dependency discovery based on incremental AST
+  processing}, supported by the Eclipse Java Development Tools.
+  \item A \emph{model-based dependency representation for both local (source)
+  and remote (binary) dependencies} based on the Eclipse Modeling Framework. The
+  industry standard modeling format allows the processing of dependency data by
+  third party modeling tools.
+  \item \emph{On-the-fly dependency queries based on the joined local and remote
+  dependency model} supported by EMF-IncQuery. As the dependency queries are
+  evaluated very efficiently, the system is able to provide instantaneous
+  dependency analysis feedback (relevant to both local and server-side
+  information) as the source code is being changed by the developer.
+  \item \emph{User interface integration components for both client-side and
+  server-side queries} that allow ease of use for developers accustomed to the
+  Eclipse environment.
+\end{itemize}
+
+\section{Structure of the report}
+The rest of this report is structured as follows. Chapter 2 gives a brief
+overview of technologies that have been used in the design and implementation.
+Chapter 3 discusses the role of the tool in development workflow (Section 3.1),
+provides a high-level overview of the software system architecture (Section 3.2)
+and introduces a running example that is used in explanations later on (Section
+3.3). Chapter 4 elaborates the design and implementation details, by discussing
+components both on the server side (Section 4.1) and client side (Section 4.2).
+Chapter 5 presents experimental results on the performance evaluation of the
+system, and Chapter 6 concludes the report with discussing on future work.
+
+%\todo[inline]{change for proper refs}
+
+

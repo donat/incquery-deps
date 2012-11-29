@@ -2,10 +2,16 @@ package hu.bme.incquery.deps.marker;
 
 import hu.bme.incquery.deps.core.PreferenceStore;
 import hu.bme.incquery.deps.pub.IncQueryDepsChangeListener;
+import hu.bme.incquery.deps.wsmodel.WType;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jface.text.Position;
@@ -13,297 +19,125 @@ import org.eclipse.viatra2.emf.incquery.runtime.api.IPatternMatch;
 import org.eclipse.viatra2.emf.incquery.runtime.api.IncQueryMatcher;
 import org.eclipse.viatra2.gtasm.patternmatcher.incremental.rete.misc.DeltaMonitor;
 
-import cern.devtools.deps.query.cp3.addedfields.AddedFieldsMatch;
-import cern.devtools.deps.query.cp3.addedfields.AddedFieldsMatcher;
-import cern.devtools.deps.query.cp3.addedmethods.AddedMethodsMatch;
 import cern.devtools.deps.query.cp3.addedmethods.AddedMethodsMatcher;
-import cern.devtools.deps.query.cp3.incomingclassusages.IncomingClassUsagesMatch;
-import cern.devtools.deps.query.cp3.incomingclassusages.IncomingClassUsagesMatcher;
-import cern.devtools.deps.query.cp3.incomingfieldaccesses.IncomingFieldAccessesMatch;
-import cern.devtools.deps.query.cp3.incomingfieldaccesses.IncomingFieldAccessesMatcher;
-import cern.devtools.deps.query.cp3.incominginheritances.IncomingInheritancesMatch;
 import cern.devtools.deps.query.cp3.incominginheritances.IncomingInheritancesMatcher;
-import cern.devtools.deps.query.cp3.incomingmethodcalls.IncomingMethodCallsMatch;
-import cern.devtools.deps.query.cp3.incomingmethodcalls.IncomingMethodCallsMatcher;
-import cern.devtools.deps.query.cp3.incomingmethodoverride.IncomingMethodOverrideMatch;
-import cern.devtools.deps.query.cp3.incomingmethodoverride.IncomingMethodOverrideMatcher;
+import cern.devtools.deps.query.cp3.incompatiblesuperclasseschanges.IncompatibleSuperClassesChangesMatch;
+import cern.devtools.deps.query.cp3.incompatiblesuperclasseschanges.IncompatibleSuperClassesChangesMatcher;
 
 public class IncQueryResultToMarkers implements IncQueryDepsChangeListener {
 	JavaModelLocationMapper mapper = new JavaModelLocationMapper(PreferenceStore.getStore().tracedProjectNames());
 	MarkerManager mm = new MarkerManager();
-	private DeltaMonitor<?> addedMethodsDelta;
-	private DeltaMonitor<?> addedFieldsDelta;;
-	private DeltaMonitor<?> incomingMethodCallsDelta;
-	private DeltaMonitor<?> incomingMethodOverrideDelta;
-	private DeltaMonitor<?> incomingClassUsageDelta;
-	private DeltaMonitor<?> incomingInheritanceDelta;
-	private DeltaMonitor<?> incomingFieldAccessDelta;
+	
+	Map<IResource, Set<Long>> resourceMarkerIds = new HashMap<IResource, Set<Long>>();
+
+	final Class<?>[] requiredMatchers = new Class<?>[] { IncompatibleSuperClassesChangesMatcher.class };
+	Map<Class<?>, IncQueryMatcher<? extends IPatternMatch>> matcherMap = new HashMap<Class<?>, IncQueryMatcher<? extends IPatternMatch>>();
+	private DeltaMonitor<IncompatibleSuperClassesChangesMatch> incompatClassMonitor;
 
 	@Override
 	public void init(Set<IncQueryMatcher<IPatternMatch>> matchers) {
-		for (IncQueryMatcher<?> matcher : matchers) {
-			// Added methods
-			if (matcher instanceof AddedMethodsMatcher) {
-				addedMethodsDelta = matcher.newDeltaMonitor(true);
-				maintainAddedMethodsMarker();
-			} else if (matcher instanceof AddedFieldsMatcher) {
-				addedFieldsDelta = matcher.newDeltaMonitor(true);
-				maintainAddeFiedsMarker();
-			} else if (matcher instanceof IncomingMethodCallsMatcher) {
-				incomingMethodCallsDelta = matcher.newDeltaMonitor(true);
-				maintainIncomingMethodCallsMarker();
-			} else if (matcher instanceof IncomingMethodOverrideMatcher) {
-				incomingMethodOverrideDelta = matcher.newDeltaMonitor(true);
-				maintainIncomingMethodOverridesMarkers();
-			} else if (matcher instanceof IncomingClassUsagesMatcher) {
-				incomingClassUsageDelta = matcher.newDeltaMonitor(true);
-				maintainIncomingClassUsageMarkers();
-			} else if (matcher instanceof IncomingInheritancesMatcher) {
-				incomingInheritanceDelta = matcher.newDeltaMonitor(true);
-				maintainIncominginherInheritanceMarkers();
-			} else if (matcher instanceof IncomingFieldAccessesMatcher) {
-				incomingFieldAccessDelta = matcher.newDeltaMonitor(true);
-				maintainIncomingFieldAccessMarkers();
+		fillMatcherMap(matchers);
+		registerDeltas();
+		updateIncompatClassMarkers();
+	}
+
+	private void registerDeltas() {
+		incompatClassMonitor = getMatcher(IncompatibleSuperClassesChangesMatcher.class).newDeltaMonitor(true);
+	}
+
+	private void updateIncompatClassMarkers() {
+		Collection<IncompatibleSuperClassesChangesMatch> foundEvents = incompatClassMonitor.matchFoundEvents;
+		Collection<IncompatibleSuperClassesChangesMatch> lostEvents = incompatClassMonitor.matchLostEvents;
+		for (IncompatibleSuperClassesChangesMatch found : foundEvents) {
+			addIncomatClassMarker(found.getWsClass());
+		}
+		for (IncompatibleSuperClassesChangesMatch lost : lostEvents) {
+			removeIncompatClassMarker(lost.getWsClass());
+		}
+
+		incompatClassMonitor.matchFoundEvents.clear();
+		incompatClassMonitor.matchLostEvents.clear();
+		incompatClassMonitor.clear();
+	}
+
+	private void removeIncompatClassMarker(WType wsClass) {
+		IJavaElement item = JavaCore.create(wsClass.getHandler());
+		IResource resource = item.getResource();
+		if (resource == null) {
+			return;
+		}
+		else if (!resource.exists()) {
+			resourceMarkerIds.remove(resource);
+		}
+		else {
+			Set<Long> idSet = resourceMarkerIds.get(resource);
+			for (Long id : idSet) {
+				try {
+					resource.getMarker(id).delete();
+				} catch (CoreException e) {
+					e.printStackTrace();
+				}
+			}
+			idSet.clear();
+		}
+	}
+
+	private void addIncomatClassMarker(WType wsClass) {
+		IJavaElement item = JavaCore.create(wsClass.getHandler());
+		Position pos = mapper.position(item);
+		
+		
+
+		long markerid = constructMarker(item, pos, wsClass);
+		// TODO add added and removed class information to this eleemnt.
+		
+		Set<Long> markerIdSet = resourceMarkerIds.get(item.getResource());
+		if (markerIdSet == null) {
+			markerIdSet = new HashSet<Long>();
+			resourceMarkerIds.put(item.getResource(), markerIdSet);
+		} 
+		markerIdSet.add(markerid);
+	}
+
+	private long constructMarker(IJavaElement item, Position pos, WType wsClass) {
+		String msg = "This type is inherited by %s classes and have %s added and %s removed classes.";
+		
+		IncomingInheritancesMatcher inhMatcher = getMatcher(IncomingInheritancesMatcher.class);
+		int incomingSize = inhMatcher.getAllMatches().size();
+		AddedMethodsMatcher addedMethodsMatcher = getMatcher(AddedMethodsMatcher.class);
+		int addedethodsSize = addedMethodsMatcher.getAllMatches(null, wsClass).size();
+		int removedMethodsSize = 0;
+		
+		
+		msg = String.format(msg, incomingSize, addedethodsSize, removedMethodsSize);
+		
+		long markerid = mm.addMarkerToJavaModelElement(MyMarkerFactory.MARKER_INCOMPAT_SUPERTYPE, item, pos,
+				msg);
+		return markerid;
+	}
+
+	private void fillMatcherMap(Set<IncQueryMatcher<IPatternMatch>> matchers) {
+		for (IncQueryMatcher<? extends IPatternMatch> matcher : matchers) {
+			matcherMap.put(matcher.getClass(), matcher);
+		}
+		validateMap();
+	}
+
+	private void validateMap() {
+		for (Class<?> reqMatcherClass : requiredMatchers) {
+			if (!matcherMap.containsKey(reqMatcherClass)) {
+				throw new RuntimeException("Required matcher did not load:" + reqMatcherClass.getName());
 			}
 		}
 	}
 
-	private void maintainAddedMethodsMarker() {
-		// get found and lost events
-		@SuppressWarnings("unchecked")
-		Collection<AddedMethodsMatch> foundMatches = (Collection<AddedMethodsMatch>) addedMethodsDelta.matchFoundEvents;
-		@SuppressWarnings("unchecked")
-		Collection<AddedMethodsMatch> lostMatches = (Collection<AddedMethodsMatch>) addedMethodsDelta.matchLostEvents;
-
-		// maintain markers
-		removelLostAddedMethodsMarkers(lostMatches);
-		addFoundAddedMethodsMarkers(foundMatches);
-
-		// clear delta
-		addedMethodsDelta.matchFoundEvents.clear();
-		addedMethodsDelta.matchLostEvents.clear();
-		addedMethodsDelta.clear();
-	}
-	
-	private void maintainAddeFiedsMarker() {
-		// get found and lost events
-		@SuppressWarnings("unchecked")
-		Collection<AddedFieldsMatch> foundMatches = (Collection<AddedFieldsMatch>) addedFieldsDelta.matchFoundEvents;
-		@SuppressWarnings("unchecked")
-		Collection<AddedFieldsMatch> lostMatches = (Collection<AddedFieldsMatch>) addedFieldsDelta.matchLostEvents;
-
-		// maintain markers
-		removelLostAddedFieldsMarkers(lostMatches);
-		addFoundAddedFieldsMarkers(foundMatches);
-
-		// clear delta
-		addedFieldsDelta.matchFoundEvents.clear();
-		addedFieldsDelta.matchLostEvents.clear();
-		addedFieldsDelta.clear();
-	}
-
-	private void maintainIncomingMethodCallsMarker() {
-		// get found and lost events
-		@SuppressWarnings("unchecked")
-		Collection<IncomingMethodCallsMatch> foundMatches = (Collection<IncomingMethodCallsMatch>) incomingMethodCallsDelta.matchFoundEvents;
-		@SuppressWarnings("unchecked")
-		Collection<IncomingMethodCallsMatch> lostMatches = (Collection<IncomingMethodCallsMatch>) incomingMethodCallsDelta.matchLostEvents;
-
-		removelLostIncomingMethodCallsMarkers(lostMatches);
-		addFoundIncomingMethodCallsMarkers(foundMatches);
-
-		// clear delta
-		incomingMethodCallsDelta.matchFoundEvents.clear();
-		incomingMethodCallsDelta.matchLostEvents.clear();
-		incomingMethodCallsDelta.clear();
-	}
-
-	private void maintainIncomingMethodOverridesMarkers() {
-		// get found and lost events
-		@SuppressWarnings("unchecked")
-		Collection<IncomingMethodOverrideMatch> foundMatches = (Collection<IncomingMethodOverrideMatch>) incomingMethodOverrideDelta.matchFoundEvents;
-		@SuppressWarnings("unchecked")
-		Collection<IncomingMethodOverrideMatch> lostMatches = (Collection<IncomingMethodOverrideMatch>) incomingMethodOverrideDelta.matchLostEvents;
-
-		removelLostIncomingMethodOverridesMarkers(lostMatches);
-		addFoundIncomingMethodOverrideMarkers(foundMatches);
-
-		// clear delta
-		incomingMethodOverrideDelta.matchFoundEvents.clear();
-		incomingMethodOverrideDelta.matchLostEvents.clear();
-		incomingMethodOverrideDelta.clear();
-	}
-
-	private void maintainIncomingClassUsageMarkers() {
-		// get found and lost events
-		@SuppressWarnings("unchecked")
-		Collection<IncomingClassUsagesMatch> foundMatches = (Collection<IncomingClassUsagesMatch>) incomingClassUsageDelta.matchFoundEvents;
-		@SuppressWarnings("unchecked")
-		Collection<IncomingClassUsagesMatch> lostMatches = (Collection<IncomingClassUsagesMatch>) incomingClassUsageDelta.matchLostEvents;
-
-		removelLostIncomingClassUsageMarkers(lostMatches);
-		addFoundIncomingClassUsageMarkers(foundMatches);
-
-		// clear delta
-		incomingClassUsageDelta.matchFoundEvents.clear();
-		incomingClassUsageDelta.matchLostEvents.clear();
-		incomingClassUsageDelta.clear();
-
-	}
-
-	private void maintainIncominginherInheritanceMarkers() {
-		// get found and lost events
-		@SuppressWarnings("unchecked")
-		Collection<IncomingInheritancesMatch> foundMatches = (Collection<IncomingInheritancesMatch>) incomingInheritanceDelta.matchFoundEvents;
-		@SuppressWarnings("unchecked")
-		Collection<IncomingInheritancesMatch> lostMatches = (Collection<IncomingInheritancesMatch>) incomingInheritanceDelta.matchLostEvents;
-
-		removelLostIncomingInheritanceMarkers(lostMatches);
-		addFoundIncomingInheritanceMarkers(foundMatches);
-
-		// clear delta
-		incomingInheritanceDelta.matchFoundEvents.clear();
-		incomingInheritanceDelta.matchLostEvents.clear();
-		incomingInheritanceDelta.clear();
-	}
-
-	private void maintainIncomingFieldAccessMarkers() {
-		// get found and lost events
-		@SuppressWarnings("unchecked")
-		Collection<IncomingFieldAccessesMatch> foundMatches = (Collection<IncomingFieldAccessesMatch>) incomingFieldAccessDelta.matchFoundEvents;
-		@SuppressWarnings("unchecked")
-		Collection<IncomingFieldAccessesMatch> lostMatches = (Collection<IncomingFieldAccessesMatch>) incomingFieldAccessDelta.matchLostEvents;
-
-		removelLostIncomingFieldAccessMarkers(lostMatches);
-		addFoundIncomingFieldAccessMarkers(foundMatches);
-
-		// clear delta
-		incomingFieldAccessDelta.matchFoundEvents.clear();
-		incomingFieldAccessDelta.matchLostEvents.clear();
-		incomingFieldAccessDelta.clear();
-	}
-
-	private void removelLostIncomingMethodCallsMarkers(Collection<IncomingMethodCallsMatch> lostMatches) {
-		for (IncomingMethodCallsMatch match : lostMatches) {
-			IJavaElement item = JavaCore.create(match.getWsTarget().getHandler());
-			mm.removeMarkerFromResource(MyMarkerFactory.MARKER_INCDEP_MCALL, item.getResource());
-		}
-
-	}
-
-	private void addFoundIncomingMethodCallsMarkers(Collection<IncomingMethodCallsMatch> foundMatches) {
-		for (IncomingMethodCallsMatch match : foundMatches) {
-			IJavaElement item = JavaCore.create(match.getWsTarget().getHandler());
-			Position pos = mapper.position(item);
-			mm.addMarkerToJavaModelElement(MyMarkerFactory.MARKER_INCDEP_MCALL, item, pos, "Method "
-					+ match.getRepoSource().getName() + "() calls this this method.");
-		}
-	}
-
-	private void removelLostAddedMethodsMarkers(Collection<AddedMethodsMatch> lostMatchs) {
-		for (AddedMethodsMatch match : lostMatchs) {
-			IJavaElement item = JavaCore.create(match.getWsMethod().getHandler());
-			mm.removeMarkerFromResource(MyMarkerFactory.MARKER_ADDED_METHOD, item.getResource());
-		}
-
-	}
-
-	private void addFoundAddedMethodsMarkers(Collection<AddedMethodsMatch> foundMatches) {
-		for (AddedMethodsMatch match : foundMatches) {
-			IJavaElement item = JavaCore.create(match.getWsMethod().getHandler());
-			Position pos = mapper.position(item);
-			mm.addMarkerToJavaModelElement(MyMarkerFactory.MARKER_ADDED_METHOD, item, pos, "This is a new method");
-		}
-	}
-	
-	private void removelLostAddedFieldsMarkers(Collection<AddedFieldsMatch> lostMatches) {
-		for (AddedFieldsMatch match : lostMatches) {
-			IJavaElement item = JavaCore.create(match.getWsField().getHandler());
-			mm.removeMarkerFromResource(MyMarkerFactory.MARKER_ADDED_FIELD, item.getResource());
-		}
-	}
-
-	private void addFoundAddedFieldsMarkers(Collection<AddedFieldsMatch> foundMatches) {
-		for (AddedFieldsMatch match : foundMatches) {
-			IJavaElement item = JavaCore.create(match.getWsField().getHandler());
-			Position pos = mapper.position(item);
-			mm.addMarkerToJavaModelElement(MyMarkerFactory.MARKER_ADDED_FIELD, item, pos, "This is a new field");
-		}
-	}
-
-	private void removelLostIncomingMethodOverridesMarkers(Collection<IncomingMethodOverrideMatch> lostMatches) {
-		for (IncomingMethodOverrideMatch match : lostMatches) {
-			IJavaElement item = JavaCore.create(match.getWsTarget().getHandler());
-			mm.removeMarkerFromResource(MyMarkerFactory.MARKER_INCDEP_MOVERR, item.getResource());
-		}
-	}
-
-	private void addFoundIncomingMethodOverrideMarkers(Collection<IncomingMethodOverrideMatch> foundMatches) {
-		for (IncomingMethodOverrideMatch match : foundMatches) {
-			IJavaElement item = JavaCore.create(match.getWsTarget().getHandler());
-			Position pos = mapper.position(item);
-			mm.addMarkerToJavaModelElement(MyMarkerFactory.MARKER_INCDEP_MOVERR, item, pos,
-					"Method " + match.getRepoSource().getName() + "() overrides this method.");
-		}
-	}
-
-	private void removelLostIncomingClassUsageMarkers(Collection<IncomingClassUsagesMatch> lostMatches) {
-		for (IncomingClassUsagesMatch match : lostMatches) {
-			IJavaElement item = JavaCore.create(match.getWsTarget().getHandler());
-			mm.removeMarkerFromResource(MyMarkerFactory.MARKER_INCDEP_CLUSAGE, item.getResource());
-		}
-	}
-
-	private void addFoundIncomingClassUsageMarkers(Collection<IncomingClassUsagesMatch> foundMatches) {
-		for (IncomingClassUsagesMatch match : foundMatches) {
-			IJavaElement item = JavaCore.create(match.getWsTarget().getHandler());
-			Position pos = mapper.position(item);
-			mm.addMarkerToJavaModelElement(MyMarkerFactory.MARKER_INCDEP_CLUSAGE, item, pos,
-					"Class " + match.getRepoSource().getName() + " references this class.");
-		}
-	}
-
-	private void removelLostIncomingInheritanceMarkers(Collection<IncomingInheritancesMatch> lostMatches) {
-		for (IncomingInheritancesMatch match : lostMatches) {
-			IJavaElement item = JavaCore.create(match.getWsTarget().getHandler());
-			mm.removeMarkerFromResource(MyMarkerFactory.MARKER_INCDEP_INH, item.getResource());
-		}
-	}
-
-	private void addFoundIncomingInheritanceMarkers(Collection<IncomingInheritancesMatch> foundMatches) {
-		for (IncomingInheritancesMatch match : foundMatches) {
-			IJavaElement item = JavaCore.create(match.getWsTarget().getHandler());
-			Position pos = mapper.position(item);
-			mm.addMarkerToJavaModelElement(MyMarkerFactory.MARKER_INCDEP_INH, item, pos, "Class "
-					+ match.getRepoSource().getName() + " inherits from this class." );
-		}
-	}
-
-	private void removelLostIncomingFieldAccessMarkers(Collection<IncomingFieldAccessesMatch> lostMatches) {
-		for (IncomingFieldAccessesMatch match : lostMatches) {
-			IJavaElement item = JavaCore.create(match.getWsTarget().getHandler());
-			mm.removeMarkerFromResource(MyMarkerFactory.MARKER_INCDEP_FACCESS, item.getResource());
-		}
-	}
-
-	private void addFoundIncomingFieldAccessMarkers(Collection<IncomingFieldAccessesMatch> foundMatches) {
-		for (IncomingFieldAccessesMatch match : foundMatches) {
-			IJavaElement item = JavaCore.create(match.getWsTarget().getHandler());
-			Position pos = mapper.position(item);
-			mm.addMarkerToJavaModelElement(MyMarkerFactory.MARKER_INCDEP_FACCESS, item, pos, "Method "
-					+ match.getRepoSource().getName() + "() accesses this field.");
-		}
+	@SuppressWarnings("unchecked")
+	private <T> T getMatcher(Class<T> mClass) {
+		return (T) matcherMap.get(mClass);
 	}
 
 	@Override
 	public void matchesChanged(Set<IncQueryMatcher<IPatternMatch>> matcher) {
-		maintainAddedMethodsMarker();
-
-		// incoming dependencies
-		maintainIncomingMethodCallsMarker();
-		maintainIncomingMethodOverridesMarkers();
-		maintainIncomingClassUsageMarkers();
-		maintainIncominginherInheritanceMarkers();
-		maintainIncomingFieldAccessMarkers();
+		updateIncompatClassMarkers();
 	}
 }

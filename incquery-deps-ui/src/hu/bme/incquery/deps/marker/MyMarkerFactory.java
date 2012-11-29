@@ -24,13 +24,7 @@ public class MyMarkerFactory {
 	//Marker ID
 	public static final String MARKER_BASE = "com.ibm.mymarkers.mymarker";
 	
-	public static final String MARKER_ADDED_METHOD = "hu.bme.incquery.deps.markers.addedmethod";
-	public static final String MARKER_ADDED_FIELD = "hu.bme.incquery.deps.markers.addedfield";
-	public static final String MARKER_INCDEP_MCALL = "hu.bme.incquery.deps.markers.incomingmethodcall";
-	public static final String MARKER_INCDEP_CLUSAGE = "hu.bme.incquery.deps.markers.incomingclassuage";
-	public static final String MARKER_INCDEP_INH = "hu.bme.incquery.deps.markers.incominginheritance";
-	public static final String MARKER_INCDEP_MOVERR = "hu.bme.incquery.deps.markers.incomingmethodoverride";
-	public static final String MARKER_INCDEP_FACCESS = "hu.bme.incquery.deps.markers.incomingfieldaccess";
+	public static final String MARKER_INCOMPAT_SUPERTYPE = "hu.bme.incquery.deps.markers.incompatsupertype";
 	
 	//Annotation ID
 	public static final String ANNOTATION = "com.ibm.myannotation";
@@ -56,9 +50,9 @@ public class MyMarkerFactory {
 	/*
 	 * returns a list of a resources markers
 	 */
-	public static List<IMarker> findMarkers(IResource resource) {
+	public static List<IMarker> findMarkers(IResource resource, String markerType) {
 	     try {
-	         return Arrays.asList(resource.findMarkers(MARKER_ADDED_METHOD, true, IResource.DEPTH_ZERO));
+	         return Arrays.asList(resource.findMarkers(markerType, true, IResource.DEPTH_ZERO));
 	     } catch (CoreException e) {
 	         return new ArrayList<IMarker>();
 	    }
@@ -67,9 +61,9 @@ public class MyMarkerFactory {
 	/*
 	 * Returns a list of markers that are linked to the resource or any sub resource of the resource
 	 */
-	public static List<IMarker> findAllMarkers(IResource  resource) {
+	public static List<IMarker> findAllMarkers(IResource  resource, String markerType) {
         try {
-            return Arrays.asList(resource.findMarkers(MARKER_ADDED_METHOD, true, IResource.DEPTH_INFINITE));
+            return Arrays.asList(resource.findMarkers(markerType, true, IResource.DEPTH_INFINITE));
         } catch (CoreException e) {
             return new ArrayList<IMarker>();
         }

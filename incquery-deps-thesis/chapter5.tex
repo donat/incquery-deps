@@ -1,0 +1,144 @@
+\chapter{Performance evaluation}
+%------------------------------------------------------------------------------
+%3-4 pages. Performance evaluation. 
+%------------------------------------------------------------------------------
+
+After the functionality was presented, let's check the overall performance of
+the system. We have to check the individual components that they fulfill their
+requirement as the input or usage scales up to a level of the production
+applications. First we have to verify whether the dependency analysis is fast
+enough and can process large number of Java binaries. The next task is to see if
+the explicit queries are reasonably fast. The last yet the most important is to
+test to performance of the EMF-IncQuery engine by checking how big instance
+models can be loaded.
+
+The JAR files used as the sample data come from real-life applications; they are
+operational software components from the CERN controls systems. By using them we
+can eliminate the problems of having badly generated, homogeneous and
+unrealistic sample data.
+
+\section{Dependency processing}
+\label{sect:depproc}
+The first task to measure is how the server process performs.
+A measurement has to check how efficiency the bytecode analysis and the
+dependency processing together works. A minimal preliminary requirement is that
+it should be much faster than the pace at which the source code in the
+repository changes, because otherwise the dependency database will contain
+constantly outdated information.
+
+As a test we took all of the import binaries, started the server process as a
+standalone Java application, initiated the dependency discovery on the subset of
+the binaries and measured the statistics of the database and the speed of the
+discovery. After the test has finished, we erased the database and repeated the
+test with a bigger and bigger subset of the JAR files until the entire set was
+analyzed. For the test we used a desktop computer with the following
+specifications:
+\begin{itemize}
+  \item CPU: Intel Core i3-2120, 3.3 GHz,
+  \item RAM: 8GB DDR3,
+  \item OS: Windows 7 Enterprise, 64 bit, Service Pack 1,
+  \item JVM: Oracle JDK 1.6.0\_27-b07.
+\end{itemize}
+The tests showed that on average one project contains 80 classes, 513 methods, 304 fields and 778 dependencies. 
+The result of the test are shown on \autoref{fig:resanal.pdf}
+\picr{resanal.pdf}{Result of dependency processing measurement}
+The left chart shows how big the generated EMF instance model becomes, depending
+on the input JAR size. It is clearly visible that the size linearly increases as
+the input grows. Also the execution time (right chart) shows steady growth as
+the input size increases. Looking at the analysis
+ of all (1300) jars, the average processing takes roughly $0.43$ seconds.
+Knowing that even in large software repositories usually a few, maybe a few
+dozen releases happen, then having a system which analyses the differences
+within a second is more than enough.
+
+\section{Explicit queries}
+\label{sect:explqueries}
+Next question is how fast are the explicit queries. We want to see that the
+results of a dependency query returns the data and visualizes the information
+within reasonable time even when the result set is bigger than usual. 
+
+We set up the server process on the same computer that we used for testing the
+dependency processing. We filled the database with with all the dependency
+information. For measuring the speed of the queries, we used an typical
+developer virtual machine from the CERN ecosystem:
+\begin{itemize}
+  \item CPU: Intel Xeon E5645, 2.4 GHz,
+  \item RAM: 4GB,
+  \item OS: Windows 7 Enterprise, 32 bit, Service Pack 1,
+  \item JVM: Oracle JDK 1.6.0\_35-b10.
+\end{itemize}
+Because this machine runs on a virtualized infrastructure it can't be considered
+as a steady platform; performance could change as the usage changes, but it is
+resourceful enough for comfortable Java development.
+
+For the tests we chose a specific project which happens to be a widely-used
+library by the other JARs. During the measurement a query is initiated for 
+the incoming dependencies for every single element of this project. 
+We dropped the result where there were no dependencies and accumulated the
+results to show how the size of the result set affects on the response time.
+The results are shown on \autoref{fig:expqmeasure.pdf}.
+ \picfifty{expqmeasure.pdf}{Explicit queries measurement result}
+As it turned out, the response time does not depend on the size of the
+result, as the result was returned in about 200ms on every sample.
+
+It is important to note that the measurement does not include the network delay.
+Also the returned returned results contain dependency information \emph{for one
+single element}. Overall, however, this is considered an acceptable response
+time for retrieving (individual) dependency information.
+
+
+\section{Model queries}
+Using EMF-IncQuery the question is always about the memory usage. If the model
+and the query caches fit into RAM, then the update mechanism requires minimal
+resources to keep query results consistent with the (changing) model.
+
+So, to test model queries we reused the models from the previous tests (see
+\autoref{sect:depproc}), and generated the corresponding compacted models from
+them.
+The description of the compacted model is at \autoref{sect:depdbsynch}. Normally
+this model would load automatically from the server side, but now we want to see
+how large models could be loaded at once to judge the practical feasibility of
+our approach.
+
+The test environment is the same virtual PC introduced in
+\autoref{sect:explqueries}. Because this is a typical developer machine, it is
+also considered as a reference for the usability. In the measurement we opened
+an Eclipse instance, loaded the patterns and made some modifications in the
+workspace. We checked how fast the EMF-IncQuery initializes (including loading
+the model), how much memory the entire Eclipse instance consumes and afterwards
+how fast can it react to the workspace modifications.
+\picr{modelqueries.pdf}{Model queries measurement result}
+
+The result of the measurement is shown on \autoref{fig:modelqueries.pdf}.
+The query engine initialized relatively fast, even the model which holds 400
+projects could load within a minute. Considering that it has to be done once
+per working session it is acceptable. Also with the memory allocation was linear
+with the model size, it didn't explode, grew linearly with the input size.
+No models bigger than 400 elements could fit into the memory because of the 32
+bit platform limitation (64 bit systems could, naturally, extend this range).
+The response times for query updates after model modifications were always
+instantaneous (regardless of query or model size), which is consistent with
+literature results reported in~\cite{MODELS10}.
+
+\section{Performance evaluation conclusions}
+In summary, the performance evaluation of the system has concluded with the following findings:
+\begin{description}
+\item[On the server side] the system provides fast analysis, persistence and
+queries for the global (binary) network of dependencies with full granularity.
+\item[On the client side] the system is able to support on-the-fly dependency
+analysis, with full granularity on the local (source) scope and limited
+granularity on the union of the local and global scopes (which is an acceptable
+tradeoff for performance and resource utilization).
+\end{description}
+
+It is also important to note that the 400 project workload is an
+over-approximation of what is actually needed in practice. The reason for this
+is that in each session, a developer actually only needs a small subset of the
+400 projects to work with as the high-level dependency network between CERN
+projects is relatively sparse (this assumption presumably holds for other
+typical organizations as well). Overall, all requirements could be fulfilled
+deeming the approach suitable for deployment.
+
+% In conclusion we saw that all components have the desired effectiveness factor.
+% The system itself is usable, scalable with the input and a feasible solution for
+% achieving smooth upgrades. 

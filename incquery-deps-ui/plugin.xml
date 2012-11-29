@@ -89,46 +89,9 @@
    </persistent>
    </extension>
    
-   <extension
-   	   id="hu.bme.incquery.deps.markers.addedmethod"
-       name="Added method"
-       point="org.eclipse.core.resources.markers">
-     <super type="com.ibm.mymarkers.mymarker" />
-   </extension>
-     <extension
-   	   id="hu.bme.incquery.deps.markers.addedfield"
-       name="Added field"
-       point="org.eclipse.core.resources.markers">
-     <super type="com.ibm.mymarkers.mymarker" />
-   </extension>
-
-	<extension
-   	   id="hu.bme.incquery.deps.markers.incomingmethodcall"
-       name="Incoming method call dependency"
-       point="org.eclipse.core.resources.markers">
-     <super type="com.ibm.mymarkers.mymarker" />
-   </extension>
-   <extension
-   	   id="hu.bme.incquery.deps.markers.incomingclassuage"
-       name="Incoming method call dependency"
-       point="org.eclipse.core.resources.markers">
-     <super type="com.ibm.mymarkers.mymarker" />
-   </extension>
-   <extension
-   	   id="hu.bme.incquery.deps.markers.incominginheritance"
-       name="Incoming method call dependency"
-       point="org.eclipse.core.resources.markers">
-     <super type="com.ibm.mymarkers.mymarker" />
-   </extension>
-   <extension
-   	   id="hu.bme.incquery.deps.markers.incomingmethodoverride"
-       name="Incoming method call dependency"
-       point="org.eclipse.core.resources.markers">
-     <super type="com.ibm.mymarkers.mymarker" />
-   </extension>
-   <extension
-   	   id="hu.bme.incquery.deps.markers.incomingfieldaccess"
-       name="Incoming method call dependency"
+      <extension
+   	   id="hu.bme.incquery.deps.markers.incompatsupertype"
+       name="Incompatible supertype"
        point="org.eclipse.core.resources.markers">
      <super type="com.ibm.mymarkers.mymarker" />
    </extension>
@@ -141,7 +104,7 @@
      <specification
           annotationType="com.ibm.myannotation"
           label="MyAnnotation"
-          icon="icons/icon_warning.gif"
+          icon="icons/icon_error.gif"
           overviewRulerPreferenceKey="clruler"
           overviewRulerPreferenceValue="true"
           colorPreferenceKey="clcolor"

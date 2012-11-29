@@ -25,23 +25,13 @@ public class MarkerManager {
 		}
 	}
 
-	
-	public long addIncomingMethodCallMarkerToElement(IJavaElement elem, Position pos, String message) {
+	public long addMarkerToJavaModelElement(String type, IJavaElement elem,Position pos,  String message) {
 		try {
-			IMarker marker = MyMarkerFactory.createMarker(MyMarkerFactory.MARKER_ADDED_METHOD, elem.getResource(), pos, message);
-			return marker.getId();
+			IMarker createMarker = MyMarkerFactory.createMarker(type, elem.getResource(), pos, message);
+			return createMarker.getId();
 		} catch (CoreException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return -1;
-	}
-
-	public void addMarkerToJavaModelElement(String type, IJavaElement elem,Position pos,  String message) {
-		try {
-			MyMarkerFactory.createMarker(type, elem.getResource(), pos, message);
-		} catch (CoreException e) {
-			e.printStackTrace();
-		}
 	}
 }

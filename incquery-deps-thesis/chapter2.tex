@@ -1,0 +1,343 @@
+\chapter{Related technologies}
+%------------------------------------------------------------------------------
+%10 pages. For motivation: Design pattern figure. (Service registration pattern).
+%------------------------------------------------------------------------------
+
+The current chapter introduces the different technologies used to build the
+\ptool{}. In \autoref{sect:javabasics} we give a short overview about the the
+Java platform and the internals of the Java binaries. In
+\autoref{sect:serverside} we go through the frameworks which were used to build
+and implement the server side of the tool. Last, but not least
+\autoref{sect:clientside} summarizes the technologies used on the client side.
+At some places, the followings rely on official tool documentation as marked by citations in
+section titles.
+
+\section{Java basics}\label{sect:javabasics}
+
+\subsection{Java byte code specification~\cite{JavaSpec}}
+% Java platform
+The Java programming language is a general-purpose, concurrent,
+object-oriented language. Its syntax is similar to C and C++, but it omits many
+of the features that make C and C++ complex, confusing, and unsafe. The Java
+platform was initially developed to address the problems of building software
+for networked consumer devices. It was designed to support multiple host
+architectures and to allow secure delivery of software components. To meet these
+requirements, compiled code had to survive transport across networks, operate on
+any client, and assure the client that it was safe to run.
+
+% Java Virtual machine
+The Java virtual machine is an abstract computing machine. Like a real computing
+machine, it has an instruction set and manipulates various memory areas at
+runtime. It is reasonably common to implement a programming language using a
+virtual machine. The Java virtual machine knows nothing of the Java programming
+language, only of a particular binary format, the  \code{class} file format. A
+\code{class} file contains Java virtual machine instructions (or 
+\emph{bytecodes}) and a symbol table, as well as other ancillary information.
+
+% What is a class file
+The class file format is a hardware- and operating system-independent binary
+format which is executed by the virtual machine. Typically (but not necessarily)
+stored in a file. The class file format precisely defines the representation of a
+class or interface, including details such as byte ordering that might be taken
+for granted in a platform-specific object file format.
+
+% Compile source code
+\picr{compilation.pdf}{Compilation and execution of Java classes}
+\autoref{fig:compilation.pdf} illustrates the procedure of compiling and
+executing a Java class: The source file is compiled into a Java class file,
+loaded by the byte code interpreter and executed. In order to implement
+additional features, researchers may want to transform class files (drawn with
+bold lines) before they get actually executed.
+
+\subsection{Internals of a Java class file~\cite{BCEL}}
+% Internals of the class file
+\pic{classfile.pdf}{Simplified structure of a class file}
+\autoref{fig:classfile.pdf} shows a simplified example of the contents of a
+Java class file: It starts with a header containing a "magic number"
+(0xCAFEBABE) and the version number, followed by the constant pool, which can be
+roughly thought of as the text segment of an executable, the access rights of
+the class encoded by a bit mask, a list of interfaces implemented by the class,
+lists containing the fields and methods of the class, and finally the class
+attributes, e.g., the SourceFile attribute telling the name of the source file.
+Attributes are a way of putting additional, user-defined information into class
+file data structures. For example, a custom class loader may evaluate such
+attribute data in order to perform its transformations. The JVM specification
+declares that unknown, i.e., user-defined attributes must be ignored by any
+Virtual Machine implementation.
+
+Because all of the information needed to dynamically resolve the symbolic
+references to classes, fields and methods at run-time is coded with string
+constants, the constant pool contains in fact the largest portion of an average
+class file, approximately 60\%. In fact, this makes the constant pool an easy
+target for code manipulation issues. The byte code instructions themselves just
+make up 12\%. 
+
+The right upper box shows a "zoomed" excerpt of the constant pool, while the
+the box on the lower right depicts some instructions that are contained within a method
+of the example class. These instructions represent the straightforward
+translation of the well-known \code{System.out.println("Hello, world");} statement.
+
+The first instruction loads the contents of the field out of class
+\code{java.lang.System} onto the operand stack. This is an instance of the class
+\code{java.io.PrintStream}. The \code{ldc} ("Load constant") pushes a reference
+to the string "Hello world" on the stack. The next instruction invokes the
+instance method \code{println} which takes both values as parameters (Instance
+methods always implicitly take an instance reference as their first argument).
+
+Instructions, other data structures within the class file and constants
+themselves may refer to constants in the constant pool. Such references are
+implemented via fixed indexes encoded directly into the instructions. This is
+illustrated for some items of the figure emphasized with a surrounding box.
+
+For example, the \code{invokevirtual} instruction refers to a MethodRef constant that
+contains information about the name of the called method, the signature (i.e.,
+the encoded argument and return types), and to which class the method belongs.
+In fact, as emphasized by the boxed value, the \code{MethodRef} constant itself just
+refers to other entries holding the real data, e.g., it refers to a
+\code{ConstantClass} entry containing a symbolic reference to the class
+\code{java.io.PrintStream}. To keep the class file compact, such constants are
+typically shared by different instructions and other constant pool entries.
+Similarly, a field is represented by a \code{Fieldref} constant that includes
+information about the name, the type and the containing class of the field.
+
+The constant pool basically holds the following types of constants: References
+to methods, fields and classes, strings, integers, floats, longs, and doubles.
+
+
+\section{Server side}\label{sect:serverside}
+
+\subsection{Application platform}
+
+\subsubsection{Spring Framework~\cite{SpringWeb}}
+%
+The Spring Framework is an open source application framework and Inversion of
+Control container for the Java platform. The core features of the Spring
+Framework can be used by any Java application, but there are extensions for
+building web applications on top of the Java EE platform. Although the Spring
+Framework does not impose any specific programming model, it has become popular
+in the Java community as an alternative to, replacement for, or even addition to
+the Enterprise JavaBean (EJB) model.
+
+%
+The main advantage of using Spring framework is a configurability through
+dependency injection. Using its features it is a solid platform for creating
+clear, well-tested and maintainable applications.
+
+
+\subsubsection{Oracle database~\cite{Oracle11g}}
+The Oracle Database (also known as Oracle DB, Oracle RDBMS or just Oracle) is a
+relational database management system (RDBMS) from the Oracle Corporation.
+Originally developed in 1977 by Lawrence Ellison and other developers, Oracle DB
+is one of the most trusted and widely-used relational database engines.
+
+The system is built around a relational database framework in which data objects
+may be directly accessed by users (or an application front end) through
+structured query language (SQL). Oracle is a fully scalable relational database
+architecture and is often used by global enterprises, which manage and process
+data across wide and local area networks. The Oracle database has its own
+network component to allow communications across networks.
+
+
+\subsection{Build system}
+
+\subsubsection{Maven~\cite{ApacheMaven}}
+In three words Apache Maven is a project management framework. The main goal is 
+similar to Ant but Maven offers an integrated approach to make Java development
+manageable. 
+
+Maven standardizes the entire development process by defining explicit lifecycle
+steps for dependency management, building, packaging, deploying and so on.
+Although the lifecycle elements are set, they can be configurable through the 
+key element of Maven: the Project Object Model (POM). POM is an XML document in 
+the project's folder describing every necessary information about it to make 
+maven be able to do its job. 
+
+Through the POM file almost everything related to the project is configurable,
+yet the most important feature is the dependency management. One can define
+certain dependencies in this file, which will be download automatically from 
+the Maven repositories.
+
+Also POM is the place to define almost every relevant information about the project:
+source and binary folders, package format, deployment location, etc. These settings
+get applied during the build process.
+
+Maven is also extendable through plugin mechanism. One can develop extensions for it
+to achieve various non-standard goals such as integration testing or building 
+non-standalone Java applications.
+
+\subsubsection{Tycho~\cite{TychoWeb}}
+Tycho is a set of Maven plugins and extensions for building Eclipse plugins and
+OSGi bundles with Maven. It exists because Eclipse plugins have their own way of
+describing metadata such as version numbers and dependencies, which normally
+would be placed in the Maven POM. Tycho reuses this native metadata 
+and uses the POM to configure and drive the build. Tycho also knows
+how to run JUnit test plugins using OSGi runtime and there is also support for
+sharing build results using Maven artifact repositories. Tycho introduces
+new packaging types and the corresponding lifecycle bindings that allow Maven to
+use OSGi and Eclipse metadata during a Maven build.
+
+Although Tycho is useful for building Eclipse plugins in a headless way but it
+still has not reached the production quality (the current version number is
+0.16) and it is still under heavy development. The current modifications and
+enchantments can be found on the project's website.
+
+\subsubsection{Apache Commons Byte Code Engineering Library~\cite{BCEL}} 
+% what is apache bcel
+The Byte Code Engineering Library (BCEL) is intended to give users a
+convenient way to analyze, create, and manipulate (binary) Java files. Classes
+are represented by objects which contain all the symbolic information of the
+given class: methods, fields and byte code instructions, in particular.
+
+% static part of the api
+The BCEL API abstracts from the concrete circumstances of the Java Virtual
+Machine and how to read and write binary Java class files. The package 
+responsible for reading the class files is called the ''static'' part.
+It contains a set of classes reflecting the class file format not intended for
+byte code modifications. The classes may be used to read and write class files
+from or to a file. This is useful especially for analyzing Java classes without
+having the source files at hand. The main data structure is called
+\code{JavaClass} which contains methods, fields, etc..
+
+% what are the benefits of using this
+By using the BCEL library we can extract all static information from the Java binaries without
+ending up doing parsing binary data by hand. With this library it fairly easy to
+(i) gather any structural information such as class name, superclass, signature
+of the defined methods, etc. and (ii) process all external references defined in the 
+bytecode.
+
+
+\section{Client side}\label{sect:clientside}
+
+\subsection{Eclipse Integrated Development Environment~\cite{Eclipseproject}}
+The Eclipse Project is an open source software development
+project dedicated to providing a robust, full-featured, commercial-quality,
+industry platform for the development of highly integrated tools. It was
+developed by IBM from 1999, and a few months after the first version was
+shipped, IBM donated the source code to the Eclipse Foundation.
+
+The Eclipse project consists of many subprojects, the most important being the
+Eclipse Platform, that defines the set of frameworks and common services that
+collectively make up ,,integ\-ration-ware'' required to support a comprehensive
+tool integration platform. These services and frameworks represent the common
+facilities required by most tool builders, including a standard workbench user
+interface and project model for managing resources, portable native widget and
+user interface libraries, automatic resource delta management for incremental
+compilers and builders, language-independent debug infrastructure, and
+infrastructure for distributed multi-user versioned resource management.
+
+The Eclipse Platform has an easily-extendable modular architecture, where all
+functionality is achieved by plugins, running over a low-level core called
+Platform Runtime. This runtime core is only responsible for loading and
+connecting the available plugins, every other functionality, such as the
+editors, views, project management, is handled by plugins. The plugins bundled
+with Eclipse Platform include general user interface components, a common help
+system for all Eclipse components, project management and team work support.
+
+\subsection{Eclipse Java Development Tools~\cite{JDT}}
+The Eclipse Java Development Tools (JDT) project contributes a set of
+plugins that add the capabilities of a full-featured Java IDE to the Eclipse
+platform. The JDT plugins provide APIs so that they can themselves be further
+extended by other tool builders. The JDT plugins are categorized into five main
+projects: Annotation Processing (APT), Core, Debug, Text, and User Interface
+(UI).
+
+The most important part -- in the context of this paper -- is the Core project
+which implements all the necessary non-UI infrastructure for Java application
+development on the Eclipse platform. It contains an incremental Java builder,
+support for code assist, a searching facility and a \emph{Java Model}, which
+provides API for navigating the Java element tree. This lets the contributors
+access the structure and the changes of the Java applications loaded into the
+workspace.
+
+\subsection{Eclipse Modeling Framework~\cite{EMF}}
+The Eclipse Modeling Framework (EMF) is a Java framework and code
+generation facility for building tools and other applications based on a
+structured model. EMF is also maintained by the Eclipse Foundation within the
+scope of Eclipse Tools Project. EMF started out as an implementation of the OMG
+Meta Object Facility (MOF) specification, and evolved into a highly efficient
+product for model-based software design.
+
+EMF provides automated code generation and tooling (e.g.~notification,
+persistence, editor) for Java representation of models. EMF models consist of an
+(acyclic) containment hierarchy of model elements (\emph{EObjects}) with
+crossreferences -- some of which may only be traversed by programs in one
+direction (unidirectional references). Additionally, each object has a number of
+attributes (primitive data values). Models are stored in \emph{EResources} (e.g.
+files), and interrelated resources are grouped into \emph{EResourceSets}.
+
+EMF provides the foundation for interoperability with other EMF-based tools and
+applications. EMF has a built-in serialization facility, which enables the developer to save
+(and load) in-stances of the model into industry-standard XMI format. EMF also
+provides a notational and persistence mechanism, on top of which
+model-manipulating tools can easily be constructed.
+
+\subsubsection{Ecore Metamodeling~\cite{MODELS10}}
+EMF uses \emph{Ecore} metamodels to describe the abstract syntax of a modeling
+language. The main elements of Ecore are the following: \emph{EClass}
+(represented graphically by a rectangle on \autoref{fig:cp3model.pdf}),
+\emph{EAttribute} (entries in the rectangle) and \emph{EReference} (depicted as
+edges). EClasses define the types of EObjects, enumerating EAttributes to
+specify attribute types of class instances and EReferences to define association
+types to other EObjects. Some EReferences additionally imply containment
+(graphically represented by a diamond).
+Unidirectional references are represented by arrows. Both ends of an association
+may have a multiplicity constraint attached to them, which declares the number
+of objects that, at run-time, may participate in an association. The most
+typical multiplicity constraints are i) the at-most-one (0..1), and (ii) the
+arbitrary (denoted by *). Inheritance may be defined between classes (depicted
+by a hollow arrow), which means that the inherited class has all the properties
+its parent has, and its instances are also instances of the ancestor class, but
+it may further define some extra features.
+
+
+\subsubsection{EMF-IncQuery~\cite{icmt2011}} 
+
+% Problem to solve.
+When working with models, it is quite common task to query the model for
+validating certain properties or searching for interesting parts. EMF-IncQuery
+\cite{EMFIncQuery} provides a solution for this problem: It is a framework to
+execute fast model queries over EMF models. It is actively developed at Budapest
+University of Technology and Economics. The current stable version  (0.6.8) 
+proved its usability through industrial use-cases
+and university researches.
+
+% Core.
+The core of the framework is a query evaluator engine built on top of graph
+pattern matching engine using RETE \cite{RETE} algorithm adapted from expert
+systems to facilitate the efficient storage and retrieval of partial views of
+graph-like models. In a nutshell, RETE maintains a hierarchical query data
+structure on top of the model which stores the result of sub-queries. On model
+change, the event propagates through this data structure leaving the unmodified
+part of the model untouched. This results in fast, near zero response time and
+size-independence on small model changes. In return, the model and the query
+structure has to be loaded into the memory, which can be a significant resource
+expense.
+
+% API.
+To access the capabilities of the core, an easy-to-use, type safe API is
+defined. Using the API, EMF resources and object hierarchies can be loaded and
+queried incrementally. In addition certain extensions -- such as the validation
+framework -- can be attached.
+
+% Query lanuage.
+Along the API, a complete query language is defined. It provides a declarative
+way to express the queries over the EMF model in the form of graph patterns.
+With the language the user can express combined queries, negative patterns,
+checking property conditions, simple calculations, calculate disjunctions and
+transitive closures, etc.~on top of the models.
+
+% Tooling.
+The framework contains UI tooling which helps the users to effectively develop
+test and integrate queries into their solution. The first element of the tooling
+is the rich XText~\cite{XtextWeb} based editor for the query language which aids writing well
+formed queries providing content assist, error markings and such. The next part
+of the tooling is the ability to load EMF models and execute the queries on them
+as the user writes them giving visual feedback about the result.
+The last important part is the code generation. The tooling dynamically
+generates the source code which contains the programmatic equivalent of the
+model queries. The users can integrate this code out of the box in Eclipse
+plugins as well as headless applications to execute queries and get back the
+results from the source code level.
+
+
+

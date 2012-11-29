@@ -1,0 +1,283 @@
+% ------------------------------------------------------------------------------
+% 3 pages. Super figure which describes the entire solution. Choosing proper
+% abstraction level for the %figure is essential. Every item on this figure will
+% be an additional chapter in this paper.
+% TODO:find a proper name for this chapter.
+% ------------------------------------------------------------------------------
+\chapter{Overview of the approach}
+
+% My implementation.
+One of the most effective  way of doing
+smooth upgrades is to discover incoming dependencies. To achieve this, we
+designed and implemented the \ptool{}. The the first part of the current chapter
+introduces the environment where the tool is deployed and used. The second part
+gives an overview on the \ptool{} approach by describing the objectives of the
+contained components. In the last part a running example is introduced to make
+the solution more understandable.
+
+
+\section{CERN software infrastructure and processes}\label{sect:cerninf}
+
+\subsection{Software infrastructure}
+
+% Eclipse
+The CERN Controls group has a definite set of tools used for development. Because
+C/C++ and Java applications are developed, the used Integrated Development
+Environment is an internally maintained Eclipse distribution with correct
+plugins installed.
+
+% SVN, JIRA, Bamboo
+To maintain concurrent versions of the source code an SVN server is used. Also
+there are a variety of tools used for typical developments tasks: issue
+etc. 
+
+% Common Build
+The central element for the development is a tool called \tool{Common Build}
+\cite{CommonBuild}. It is a build and release tool for Java softwares. Common
+Build is an Apache Ant based software similar to Maven. It provides
+functionality to describe and resolve dependencies, build, generate
+documentation and release the softwares. This tool was developed before the
+first version of complex build systems such as Apache Maven was published so,
+as a result 
+Common Build remained as an in-house build tool. 
+
+% Common build integration with source and binary repositories
+Common build is tightly coupled both to the SVN server and to the binary release
+repository as it automates the not only the building but the release of the
+Java products too.
+
+\subsection{Development workflow}
+\picseventy{commonbuild.pdf}{Build workflow using Common Build}
+\autoref{fig:commonbuild.pdf} highlights this relationship by showing a typical
+workflow of the development process. The developer first checks out the source
+code from the SVN repository and starts working on it. Along source code
+modification there is an XML descriptor containing the information required by
+Common Build (such as name and version of the product and the required
+dependencies). Traditionally Common Build is capable to setup build paths and the related
+options for Eclipse development. 
+
+\subsubsection{Build process}
+When the source code is ready, the developer executes the Common Build client to
+build it. The client itself is a customized Ant distribution and works in the
+same way. It resolves the dependencies from the dedicated binary repository,
+which contains all previously released products and all used third party
+libraries. The content is also defined in a XML file.
+
+\subsubsection{Release process}
+If all source code is ready the developer can hit release. This first initiates
+the same build process, but it is extended by two things. First the source code
+is tagged in the SVN repository using the version numbers as tag names, then, the
+compiled jar file is put into the binary repository. 
+
+\subsubsection{Smooth upgrades and the development workflow}
+In \autoref{fig:commonbuild.pdf}, smooth upgrades should be supported during working
+with the Eclipse IDE (``2. modification''), in the pre-release phase when the
+developer is making local changes with the aim to ensure that these changes will
+not break existing software components already released.
+
+
+% The developers at the controls group work on a variety of Java softwares, which
+% have complex relationships. Mostly these softwares has to stay operational 24/7.
+% In addition an upgrade or a bugfix is inevitable, sometimes instantly. But if a
+% software changes and it breaks the API, a dependant deployed software may stop
+% working and in worst case the controls systems stop. Because of this, the
+% developers have to perform their upgrade carefully without causing damage to the
+% dependant systems.
+% 
+% The initial solution for a developer was to search the source repository for specific
+% texts, which is ineffective and can miss certain use-cases. This is why my project
+% was started.
+% 
+% Right now the tool is distributed with an internal eclipse packaging, so it is available 
+% for every developer who needs it. Usually library developers take advantage of it 
+% especially during technical stops, where the scheduled upgrades take place. 
+
+
+%kifejteni, hogy hogyan kapcsolodik pontosan a smooth upgrade a fejlesztesi folyamatba}
+ 
+%ki, mikor, mire, hogyan hasznalja az altalad elkeszitett toolt?}
+
+  
+
+\section{System architecture}
+
+\autoref{fig:superfigure.pdf} shows the architecture of the \ptool{}.
+\picr{superfigure.pdf}{Overview of the implemented system}
+The system applies the standard server-client
+architecture. The server side discovers the Java binaries, processes and stores
+their structure and stores them in a database. The client side is an Eclipse
+plugin, which gives the ability to the users to obtain and analyse the
+dependency information about the softwares loaded into the workspace. 
+
+
+\subsection{System boundaries}
+The system allows the users to examine the inter-project dependencies from the
+development environment. It exposes two access points to access this
+information. First the developer can initiate queries explicitly by selection
+the target element from  he source code editor. The other option to check result
+of the model queries (described later). This information is updated
+automatically, every change in the development environment is reflected to the
+result set. Both versions give visual representation of the result which the
+developer can analyse and he can use it to make decisions what to and what not
+to change in the source code.
+
+
+\subsection{Repository management}
+% Central repository management.
+This component consists of the ''Source repository'' and the 'Binary component
+repository'. They contain the source code and the built binary version of
+the internally developed softwares. These elements are centrally managed and
+have a well-defined structure. The developers work on the source code and if
+they finish one milestone they publish their improvements by putting the
+compiled version into the binary repository through an automated process.
+The binary repository is the input for the dependency analysis approach.
+
+\subsection{The server side}
+The server side is a standalone Java application which runs on a Linux server.
+It has two functionality: 1) it discovers and stores the structure of the
+products and 2) provides an interface for serving dependency queries. It has three
+elements, the bytecode analyser, the dependency processor, and the storage engine.
+The components of the server side are explained in detail in \autoref{sect:elabserver}.
+
+\subsubsection{Bytecode analyser}
+When a new binary jar file is discovered the bytecode analyzer  discovers the
+internal structure and the dependency references. The result of the bytecode
+analyser is an instance model representing the Java binary structure.
+
+\subsubsection{Dependency processing}
+The dependency processor takes the output of the bytecode analyzer, stores the 
+structure of the Java binaries and tries to resolve the external references.
+For both storing the structure and resolving the dependencies, this component
+executes several queries on the dependency database. As a result, all structural
+information are stored in this database, which serves the client queries too.
+
+
+\subsection{The client side}
+% Plugin
+The client side of the solution is a set of  Eclipse plugins, which give the
+developer a convenient way to access to the dependency information. 
+
+\subsubsection{Model load and direct queries}\label{sect:directqueries}
+The base component of the client side is the repository model loader. It
+provides a simple API for accessing and querying the dependency information from
+the server. The simple use-case for this, when the user directly asks the
+dependency information from the Java source editor through UI contribution
+(marked as direct queries on the figure).
+
+\subsubsection{Workspace model creator}\label{sect:wsmodelcreator}
+The workspace model creator generate an EMF instance model describing the
+state of the workspace. The generated model contains the loaded projects, the
+declared packages, classes, methods, etc. This instance model also contains the
+dependency structure between the elements (e.g. method calls, field accesses and
+such). The information is gathered through the Eclipse Java Development Tools'
+API. After the model is created it is incrementally maintained even through 
+restarts.
+
+\subsubsection{On-the-fly queries}
+The pattern matcher module executes complex model queries on top of the acquired
+instance models to provide dependency information. First, it loads an EMF
+instance model from the server describing the structure of all projects in the
+central repository. Afterwards the workspace instance model is loaded from the
+module (see \autoref{sect:wsmodelcreator}). Both of the models are loaded to the
+EMF-IncQuery engine. Through complex queries the two models are joined and
+queried for the dependency information. The result of the queries are maintained
+live and automatically as the workspace instance model changes. Because the
+state of the workspace is followed, more information can be queried than just
+comparing the source code with the state of the repositories
+(\autoref{sect:directqueries}): The source code changes and their effects
+are also queried.
+
+\subsubsection{User Interface}
+Both direct- and on-the-fly queries return their result in Eclipse views. After
+the result is displayed, it is the user's responsibility to evaluate their
+results and act accordingly. The user interface consist of the following.
+\begin{itemize}
+  \item Menu contributions: The Java source code editor gets a new elements for 
+initiating dependency discovery.
+  \item Result viewers: The result is displayed in Eclipse views.
+\end{itemize}
+The details of the user interface are in \autoref{sect:elabexplicit}.
+
+\subsubsection{Implementation-specific requirements}
+Using direct queries brings no limitations. The queries are simple remote method
+calls and the result set is a relatively small data set which easy to store and
+present on the Eclipse UI. On the other hand, the graph-pattern matching
+solution is somewhat limited, because in order to make EMF-IncQuery work,
+the entire repository has to be loaded. By default the repository instance model
+is a few hundred megabytes sized in a serialized form. This implies that the
+implementation has to optimize this model without dropping useful information.
+
+\section{Running example: Service Provider Framework}\label{sect:spf}
+
+To make the following chapters easier to understand, we are going to introduce a
+simple use-case example. It is a design pattern called Service Provider
+Framework. It is a practical application of the original Adapter pattern and it
+was described in the book \emph{Effective Java} \cite{Bloch08}. This pattern
+is the simplified version how the Java Database Connectivity (JDBC) works.
+
+
+\subsection{Description}\label{sect:spfdesc}
+
+
+\picr{exampleclasses.pdf}{Structure of Service Provider Framework design pattern}
+
+\autoref{fig:exampleclasses.pdf} shows the structure of the design pattern. As of
+the packages it contains 3 major parts.
+The \code{service} package contains the core pattern classes. The \code{client}
+and the \code{impl} packages are external users of the pattern and therefore
+they are considered depending client libraries.
+
+The main goal for the design pattern is to provide a registry of implementations
+for a desired service. This service is described in the \code{Service}
+interface. The \code{Provider} interface serves as a factory instance; it has
+a single function to instantiate a new Service object. The \code{Services} class
+has the role of the registry.
+The service implementers register their implementation using the static
+\code{registerProvider()} and \code{registerDefaultProvider()} methods. The
+parameters are an identifier string for the registered service and a \code{Provider}
+object which will instantiate the \code{Service} instances. The clients will
+instantiate the \code{Service} instance with the \code{newInstance()} function.
+Depending on the passed identifier string, the method will look up whether a Provider
+was registered with the same name, and if the answer is yes, then it calls the
+\code{Provider.newInstance()} and return its result.
+
+The \code{DEFAULT\_PROVIDER\_NAME} is a static public field which can be used to
+obtain the default Service implementation. The \code{AbstractService} is a
+utility class which implements one of the function of the \code{Service} interface.
+
+The \code{impl} package contains one possible implementation to use the
+described pattern. The \code{BasicService} contains the implementation while the
+\code{BasicProvider} is responsible for properly initializing and returning a
+new instance of this version. The \code{BasicImplUtil} -- as its name implies --
+holds utility classes which register the implementation in the Services class.
+
+The \code{client} package holds one single \code{Main} class, which contains a
+simple evaluation. It invokes the \code{Services.newInstance()} function passing
+the default provider's name as an argument and invokes the \code{serviceA()} and
+\code{serviceB()} function.
+
+Although, the example is simple, the related source code can be found in
+\autoref{examplesource}.
+
+\subsection{Smooth upgrade challenges}
+As our main goal we would like give the developers the ability to check who is
+using certain parts of the API. To highlight this, imagine that the three
+packages described in \autoref{sect:spfdesc} are distributed into three
+different software which have their individual developers. If the developer
+responsible for the \code{service} package wants to change some parts of the
+code without precisely knowing who is using which part of the code, he won't
+know how many dependant projects will be broken afterwards. 
+
+By using \ptool{} the developer is able to execute queries on any part of the
+API. as a result three outcome can happen.
+\begin{description}
+  \item[No incoming dependencies] If there is no incoming dependency than any modifications can be done without
+causing compatibility issues. The developer can do whatever he wants.
+  \item[A few incoming dependencies] In this case the developer has to negotiate
+with the clients how to proceed: either he has to provide backward compatibility or the
+clients has to adapt their code to the modifications.
+  \item[A lot of incoming dependencies] In this case the queried code
+element is used by a lot of external clients and any modifications would cause a build
+error, therefore backward compatibility has to be maintained.
+\end{description}
+The elaboration of this example is in \autoref{sect:elabex1} and in \autoref{sect:elabex2}.

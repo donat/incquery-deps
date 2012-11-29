@@ -151,6 +151,21 @@ pattern removedMethod(repoMethod : CP3Method) = {
 	//check(! name.contains("<clinit>"));
 }
 
+pattern removedMethod2(repoMethod : CP3Method) = {
+	// Find the method's project
+	CP3Method.name(repoMethod, name);
+	CP3Project.classes.methods(repoProject, repoMethod);
+
+	// Find the project in the workspace.
+	find projectsWithSameName(repoProject, wsProject);
+
+	// The workspace project is missing.
+	neg find methodNamesInWorkspaceProjects(wsProject, name);
+
+	// Bugfix: remove static initialiser methods.
+	//check(! name.contains("<clinit>"));
+}
+
 pattern addedFields(wsField: WField, wsClass: WType) = {
 	// Find the method's project.
 	WField.name(wsField, name);
@@ -324,4 +339,27 @@ private pattern outgoingMethodCallDependencyAdded(wsMethodFrom: WMethod, wsMetho
 private pattern repoDependency(ceFrom: CP3AbstractItem, ceTo: CP3AbstractItem, d : CP3Dep) = {
 	CP3Dep.from(d, ceFrom);
 	CP3Dep.to(d, ceTo);
+}
+
+/**
+ * Incompatible classes and interfaces where there is a deleted or added method compared to the workspace AND 
+ * other classes/interfaces inherit from them.
+ * 
+ * TODO: not just removed, added classes too.
+ */
+pattern incompatibleSuperClassesChanges(wsClass: WType) = {
+	find incomingInheritances(_repoDep, wsClass);
+	find classesWithSameFQNAndSameProject(repoClass, wsClass);
+	find removedMethod(removedMethod);
+	CP3Class.methods(repoClass, removedMethod);
+	
+	// eliminate constructor
+	CP3Method.name(removedMethod, removedMethodName);
+	CP3Class.name(repoClass, className);
+	check(removedMethodName != className);
+} 
+or {
+	find incomingInheritances(_repoDep, wsClass);
+	find classesWithSameFQNAndSameProject(_repoClass, wsClass);
+	find addedMethods(_wsMethod, wsClass);
 }

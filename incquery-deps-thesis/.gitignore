@@ -1,0 +1,7 @@
+/tmp
+/pdf/*
+*.log
+*.out
+*.aux
+*.thm
+*.toc

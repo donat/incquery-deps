@@ -1,0 +1,75 @@
+package cern.devtools.deps.query.marker
+
+import "http://inf.mit.bme.hu/donat/incquery-deps/wsmodel"
+import "http://inf.mit.bme.hu/donat/incquery-deps/cp3model"
+import "http://www.eclipse.org/emf/2002/Ecore"
+
+
+private pattern projectsWithSameName(repoProject : CP3Project, wsProject : WProject) = {
+	CP3Project.name(repoProject, commonName);
+	WProject.name(wsProject, commonName);
+}
+
+private pattern methodNamesInWorkspaceProjects(wsProject, name) = {
+	WProject(wsProject);
+	WProject.packageFragmentRoots.packageFragments.compilationUnits.types.methods.name(wsProject, name);
+}
+
+pattern removedMethod(repoMethod : CP3Method) = {
+	// Find the method's project
+	CP3Method.name(repoMethod, name);
+	CP3Project.classes.methods(repoProject, repoMethod);
+
+	// Find the project in the workspace.
+	find projectsWithSameName(repoProject, wsProject);
+
+	// The workspace project is missing.
+	neg find methodNamesInWorkspaceProjects(wsProject, name);
+
+	// Bugfix: remove static initialiser methods.
+	//check(! name.contains("<clinit>"));
+}
+
+private pattern classesWithSameFQNAndSameProject(repoClass : CP3Class, wsClass : WType) = {
+	// Pattern applies only classes within a project with the same name.
+	CP3Project.classes(repoProject, repoClass);
+	WProject.packageFragmentRoots.packageFragments.compilationUnits.types(wsProject, wsClass);
+	find projectsWithSameName(repoProject, wsProject);
+
+	// Classes must have the same name...
+	CP3Class.name(repoClass, commonSimpleName);
+	WType.name(wsClass, commonSimpleName);
+}
+
+
+pattern incomingInheritances(repoSource : CP3Class, wsTarget : WType) = {
+	// Find equal classes in the two models. 
+	find classesWithSameFQNAndSameProject(repoTarget, wsTarget);
+
+	// Join on dependencies.
+	CP3Dep.from(dependency, repoSource);
+	CP3Dep.to(dependency, repoTarget);
+
+	// Select only the inheritance dependencies.
+	//CP3Dep.type(dependency, 4);
+	CP3Dep.type(dependency, type);
+	
+	// Dependency type: inheritance.
+	check (type == 5);
+}
+
+/**
+ * Incompatible classes and interfaces where there is a deleted method compared to the workspace AND 
+ * other classes/interfaces inherit from them.
+ */
+pattern incompatibleSuperClassesChanges(wsClass: WType, repoClass: CP3Class, removedMethod: CP3Method) = {
+	find incomingInheritances(_repoDep, wsClass);
+	find classesWithSameFQNAndSameProject(repoClass, wsClass);
+	find removedMethod(removedMethod);
+	CP3Class.methods(repoClass, removedMethod);
+	
+	// eliminate constructor
+	CP3Method.name(removedMethod, removedMethodName);
+	CP3Class.name(repoClass, className);
+	check(removedMethodName != className);
+} 
