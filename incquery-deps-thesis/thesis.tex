@@ -8,10 +8,10 @@
 %--------------------------------------------------------------------------------------
 % Page format
 %--------------------------------------------------------------------------------------
-\documentclass[12pt,a4paper,oneside]{report}           
+\documentclass[12pt,a4paper,twoside]{report}           
 %\documentclass[10pt,a4paper,twoside,openright]{report}  
 
-  
+ 
 %--------------------------------------------------------------------------------------
 % Package incudes
 %--------------------------------------------------------------------------------------
@@ -28,7 +28,7 @@
 \usepackage{lastpage}
 \usepackage{anysize}
 \usepackage{longtable}
-\usepackage[english]{babel}
+\usepackage[english,magyar]{babel}
 \usepackage{sectsty}
 \usepackage{setspace}
 \usepackage[hang]{caption}
@@ -119,7 +119,7 @@
 \newcommand{\psvisor}{Dr. Istv\'an R\'ath, \'Akos Horv\'ath}
 \newcommand{\ptitle}{Incremental dependency analysis of\\a large software infrastructure}
 \newcommand{\pdep}{Department of Measurement and Information Systems}
-\newcommand{\ptype}{Scientific Students' Associations Report}
+\newcommand{\ptype}{Master's Thesis}
 \newcommand{\ptool}{Dependency Analysis Tool}
 
 %\newcommand{\todo}[1]{\textbf{TODO: }{#1}}
@@ -136,11 +136,7 @@
  
 \author{\pauthor}
 \title{\ptitle}
-\includeonly{
-	title,%
-	chapter1, chapter2, chapter3, chapter4, chapter5, chapter6,%
-	appendix,
-}
+
 
 %--------------------------------------------------------------------------------------
 % Page layout setup
@@ -256,11 +252,15 @@ aboveskip=10pt}
 \pagenumbering{arabic}
 \onehalfspacing
 
-\include{title}
+\include{title}   % title
 
-\tableofcontents
+\selectlanguage{english}
 
-\include{chapter1}
+\tableofcontents  % toc
+\include{declaration} % declaration: work without help  
+\include{abstract} 
+
+\include{chapter1} 
 \include{chapter2}
 \include{chapter3}
 \include{chapter4}

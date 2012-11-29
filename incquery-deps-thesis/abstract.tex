@@ -1,0 +1,62 @@
+\selectlanguage{magyar}
+%----------------------------------------------------------------------------
+% Abstract in hungarian
+%----------------------------------------------------------------------------
+\chapter*{Kivonat}\addcontentsline{toc}{chapter}{Abstract in hungarian}
+
+A svájci CERN kutatólaboratóriumban a részecskegyorsítók működtetéséhez óriási
+informatikai infrastruktúrát szükséges, melyet fizikusok és mérnökök százai
+fejlesztenek és üzemeltetnek. Az irányítási rendszerekben található
+alkalmazások száma egyedül meghaladja az ezres nagyságrendet, melyek
+karbantartatása önmagában is nagy kihívás. Mivel a teljes rendszer zavartalan
+működtetése kiemelt fontosságú, ezért a leállás nélküli frissítések (smooth
+upgrades) megvalósítása alapvető elvárás.
+
+A rendszereket elsősorban – a hardver közeli komponenseken kívül – tisztán Java
+nyelven fejlesztik. A szoftverek API-kat definiálnak (adatgyűjtés, megbízható
+üzenetküldés, könyvtárszolgáltatás, stb.), melyet más szoftverek
+felhasználhatnak. Az fejlesztéskor a legfontosabb azonosított feladat, hogy a
+ráépülő elemek binárisan kompatibilisek legyenek az egyes szoftverek újabb és
+újabb verzióval.
+
+Elsődleges feladatom, hogy megvizsgáljam milyen módszerek és eszközök
+segítségével lehet a rendszerek közötti függőségeket analizálni. Megvizsgálom,
+hogy milyen típusú függőségek jelennek meg az alkalmazások között, ezeknek
+milyen tulajdonságai vannak és hogyan lehet ezeket hatékonyan lekérdezni.
+Megtervezek és implementálok egy olyan szoftvert, mely a fejlesztőkörnyezetbe
+integrált módon képes a függőségeken lekérdezéseket végrehajtani, valamint
+képes az eredmények grafikus megjelenítésére. Emellett megvizsgálom, milyen
+egyéb módszerek állnak rendelkezésre, hogy az egyes programok közötti
+függőségek definiálására és felderítésére, mely később a fejlesztők munkáját
+segítheti.
+\vfill
+
+\selectlanguage{english}
+%----------------------------------------------------------------------------
+% Abstract in english
+%----------------------------------------------------------------------------
+\chapter*{Abstract}\addcontentsline{toc}{chapter}{Abstract in english}
+Maintaining the particle accelerators is CERN research laboratory requires a
+huge informatics infrastructure developed and maintained by hundreds of
+physicists and engineers. The number of the controls systems itself exceeds the
+thousand, which needs a big effort to operate. Since the uninterrupted
+operation of the whole system is a priority task, the developers' primary task
+is to ensure the smooth upgrades.
+
+The softwares – apart from the hardware-related components – are primarily
+developed in pure Java language. The softwares define an API (for e.g. data
+acquisition, reliable messaging, directory service, etc.), which could be used
+by other applications. At development time the most important identified task 
+to maintain binary backward compatibility between de dependent component and 
+the upgraded software through the newer versions.
+
+My primary goal is to examine, which techniques and tools are available to analyse 
+the dependency relationships between the softwares. I will investigate what type 
+of dependencies are present in the systems, what properties do they have and how 
+can one query them easily. I will design and implement a tool, which is capable
+ of querying and visualizing the dependencies integrated into the development 
+ environment. In addition I will examine what other methods are available for 
+ defining and discovering the dependencies, which could be useful for the 
+
+\vfill
+
