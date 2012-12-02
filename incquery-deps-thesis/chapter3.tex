@@ -207,57 +207,73 @@ the entire repository has to be loaded. By default the repository instance model
 is a few hundred megabytes sized in a serialized form. This implies that the
 implementation has to optimize this model without dropping useful information.
 
-\section{Running example: Service Provider Framework}\label{sect:spf}
-
+\section{Running example: Java API for Parameter Control}\label{sect:spf}
 To make the following chapters easier to understand, we are going to introduce a
-simple use-case example. It is a design pattern called Service Provider
-Framework. It is a practical application of the original Adapter pattern and it
-was described in the book \emph{Effective Java} \cite{Bloch08}. This pattern
-is the simplified version how the Java Database Connectivity (JDBC) works.
+a simplified but real-life example from the CERN controls systems called
+\emph{Java API for parameter Control (JAPC)}\cite{Japc05}.  JAPC is a
+framework to build Java applications that control accelerator devices by
+providing a unified API for it. 
+
+\subsection{Details}\label{sect:spfdesc}
+
+\subsubsection{Motivation}
+The main idea being JAPC is that there are a different requirements for the 
+softwares amongst the application, and the resource (hardware) tier. 
+
+On the hardware level there control systems, data acquisitions 
+running on specialized hardware which comes with language, resource-type
+constraints. On the application site, the main requirement is the
+maintainability: softwares should not depend on technology
+specific-implementation, it should be easily modifiable and upgradeable.
+
+\subsubsection{Architecture}
+\picfifty{japcarchitecture.pdf}{The architecture of JAPC}
+
+\autoref{fig:japcarchitecture.pdf} shows the architecture of JAPC. The concept
+of the framework is fairly simple: provide a unified API for accessing and
+modifying data on certain resources around the controls systems. 
+
+The implementation of the client applications have to use only the API defined
+in the core JAPC project. The details are contained in a separate extension
+libraries. They hold the  technology-specific details for accessing and
+modifying the parameters. 
+
+To use JAPC, the developer has to include the core API and the extension
+library during the build, the connection is driven externally (through runtime
+configuration and registration).
 
 
-\subsection{Description}\label{sect:spfdesc}
+ \subsubsection{Class hierarchy}
+JAPC's API is rather complex, because it has to fulfill a wide range of
+requirements. For the sake of brevity we are going to show the subpart of it,
+because it is enough to demonstrate, how the dependency analysis work.
 
 
-\picr{exampleclasses.pdf}{Structure of Service Provider Framework design pattern}
+\picseventy{japcclasses.pdf}{Simplified version of JAPC's application
+programming interface}
 
-\autoref{fig:exampleclasses.pdf} shows the structure of the design pattern. As of
-the packages it contains 3 major parts.
-The \code{service} package contains the core pattern classes. The \code{client}
-and the \code{impl} packages are external users of the pattern and therefore
-they are considered depending client libraries.
+Figure \autoref{fig:japcclasses.pdf} shows the class hierarchy.
+The central element of the APi is the \code{Parameter} interface.
+It  represents a an abstract value of a device.
+Client programs can access JAPC parameters with set and get interactions, and
+they can wait to be notified of value changes using subscription.
 
-The main goal for the design pattern is to provide a registry of implementations
-for a desired service. This service is described in the \code{Service}
-interface. The \code{Provider} interface serves as a factory instance; it has
-a single function to instantiate a new Service object. The \code{Services} class
-has the role of the registry.
-The service implementers register their implementation using the static
-\code{registerProvider()} and \code{registerDefaultProvider()} methods. The
-parameters are an identifier string for the registered service and a \code{Provider}
-object which will instantiate the \code{Service} instances. The clients will
-instantiate the \code{Service} instance with the \code{newInstance()} function.
-Depending on the passed identifier string, the method will look up whether a Provider
-was registered with the same name, and if the answer is yes, then it calls the
-\code{Provider.newInstance()} and return its result.
+Instantiating a \code{Parameter} instance is done via the
+\code{ParameterFactory} interface's newParameter() method. Again the
+implementation of these elements are defined externally.
 
-The \code{DEFAULT\_PROVIDER\_NAME} is a static public field which can be used to
-obtain the default Service implementation. The \code{AbstractService} is a
-utility class which implements one of the function of the \code{Service} interface.
+\subsubsection{Examined projects in the example}
+In the elaboration of the example (\autoref{sect:elabex1} and
+\autoref{sect:elabex2}) are going to use three simplified projects to
+demonstrate how the dependency discovery works and how can the users benefit
+from using the presented tool.
 
-The \code{impl} package contains one possible implementation to use the
-described pattern. The \code{BasicService} contains the implementation while the
-\code{BasicProvider} is responsible for properly initializing and returning a
-new instance of this version. The \code{BasicImplUtil} -- as its name implies --
-holds utility classes which register the implementation in the Services class.
+The first project is the JAPC core API (shown on \autoref{fig:japcclasses.pdf}).
+The second one is an extension of JAPC representing the implementation based on 
+an in-house middleware technology (Controls Middleware Project\cite{Cmw}). The
+third one is a client application which has a JAPC-based implementation and has several
+deployments around the CERN Controls Systems.
 
-The \code{client} package holds one single \code{Main} class, which contains a
-simple evaluation. It invokes the \code{Services.newInstance()} function passing
-the default provider's name as an argument and invokes the \code{serviceA()} and
-\code{serviceB()} function.
-
-Although, the example is simple, the related source code can be found in
-\autoref{examplesource}.
 
 \subsection{Smooth upgrade challenges}
 As our main goal we would like give the developers the ability to check who is
