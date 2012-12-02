@@ -266,53 +266,55 @@ The third is a GUI application which uses JAPC to implement a frot-end for an
 alarm system. These elements will be the input for the bytecode processing.
 
 \paragraph{Bytecode processing}
-As 
-the binary projects appear in the repository, they get discovered by the 
-server process. 
+As the binary projects appear in the repository, they get discovered by the
+server process.
 The first step in the process is the bytecode analysis. In this phase the
 structure and the reference of the dependencies are discovered from the
-binaries. As of the structure the analyzer finds 3 projects and all the
-internal classes and methods which were defined inside. 
+binaries. As of the structure the analyzer finds 3 projects and all the internal
+classes and methods which were defined inside.
 
 \paragraph{Dependency extraction}
 The discovered dependencies are formatted and filtered in order not to have
 internal or platform defined elements (dependencies pointing inside the
-\code{java.*} package). For example, let's see the \code{BasicImplUtil} class'
-\code{registerImplementation()} method.
+\code{java.*} package). For example, let's see the extracted references
+ from the \code{Command\-Panel\-.handle\-Reset()} method defined in the
+ \code{japc-ext-cmw} project.
+
+
 \begin{tabl}
-{External references of the BasicImplUtil.registerImplementation() method}
-{extrefs}{|p{.37\linewidth}|p{.37\linewidth}|p{.2\linewidth}|}
+{External references of the CommandPanel.handleReset() method}
+{extrefs}{|p{.37\linewidth}|p{.37\linewidth}|p{.15 \linewidth}|}
 \hline
 	\textbf{Binary format}						&  
 	\textbf{Source format} 						& 
 	\textbf{Type} 								\\
 \hline
-	impl/BasicProvider  						&
-	impl.BasicProvider 							&
+	cern/japc/ParameterFactory                  &
+	cern.japc.ParameterFactory					&
 	ConstClass 									\\
 \hline
-	service/Services/registerProvider 
-	\mbox{(Ljava/lang/String;}
-	\mbox{Lservice/Provider;)V} 				& 
-	\mbox{service.Services.registerProvider}
-	\mbox{(java.lang.String,}
-	\mbox{service.Provider):void} 				&
+	\mbox{cern/japc/Parameter/setValue}
+	\mbox{(Lcern/japc/ParameterValue;)V}        &
+	\mbox{cern.japc.Parameter\#setvalue}
+	\mbox{(cern.japc.ParameterValue):void}      &
 	\mbox{Constant} \mbox{MethodRef} 			\\
 \hline
 \end{tabl}
-The first one is a 
-\code{ConstantMethodRef} type reference. During the analysis they are first converted into source format.
-The first one is a class reference the second one is a method reference.
-The references are formatted to source format as it is shown in the second column.
-Now the first references is eliminated from the list, because it points inside the 
-\code{impl} project. However the second one does not, so it remains at its place.  
+The first one is a \code{ConstantMethodRef} type reference. During the analysis
+they are first converted into source format. The first one is a class reference
+the second one is a method reference. The references are formatted to source
+format as it is shown in the second column. None of the references is
+eliminated from the list, because both of them points outside of the project. 
+If it pointed to an class defined in the same project, it would be eliminated
+from the reference list during the extraction process.
 
 The dependency processor takes the remaining dependencies from the elements and 
 searches the database if there is one. In case of our method reference, the processor
-finds that there is a \code{registerProvider()} method defined with the same exact 
-signature signature in the database. Because the reference was stored on the called 
+finds that there is a \code{setValue()} method defined with the same exact 
+signature in the database. Because the reference was stored on the called 
 method list, the processor creates a new method call dependency starting from 
-\code{impl.BasicImplUtil} targeting \code{Services.registerProvider()}.
+\code{CommandPanel.handleReset()} method pointing to the
+\code{Parameter.setValue()} method.
 
 \paragraph{Persistence}
 At this point, the storage engine stores all the structure and the dependencies 
