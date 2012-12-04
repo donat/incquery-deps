@@ -469,7 +469,7 @@ The containment hierarchy starts form the lower right corner of the figure with
 the \code{WProject} class which represents a Java project loaded into the
 workspace. It contains \code{WPackageFragmentRoot} elements which represent the
 source folders and the jar files on the classpath and has some Java packages as
-children(as \code{WPackageFragment} instances). Under the Java packages there
+children (as \code{WPackage Fragment} instances). Under the Java packages there
 are the \code{WCompilationUnit}s which are represent the java files and which
 define some java types (\code{WType}). On the lowest level in the containment
 hierarchy lie the methods and fields (\code{WMethod} and \code{WField}
@@ -739,8 +739,9 @@ The complete source code for all the queries is available in \autoref{exampleque
 
 
 \subsection{Elaboration of the example - continued}\label{sect:elabex2}
+\subsubsection{The workspace model}
 To continue our example, we will examine the view of the developer who knows
-only about his own \code{service} project. If the \ptool{} is  installed in his
+only about his own \code{japc} project. If the \ptool{} is  installed in his
 Eclipse, the EMF model -- shown on \autoref{fig:wsmodel.png}
 \picr{wsmodel.png}{Workspace model containing Service package from the example}
 -- is built and synchronized automatically. On the figure we can see, that the
@@ -748,11 +749,11 @@ structure of the project (left) corresponds to the content of the EMF model
 (right). In the model view, you can also see that the in-project dependency
 relationships are also registered.
 
-Because the \code{client} and the \code{impl} projects have references to the
-\code{service} project, both of them are loaded to the repository model. It has all the
-element but with the compacted version, so no fully qualified names. But because
-there is no overlapping names between the classes and method than the compacted
-model does not introduce false-positive results.
+Because the \code{japc-ext-cmw} and the \code{accsoft-gui-alarms} projects have
+references to the \code{japc} project, both of them are loaded to the repository
+model. It has all the element but with the compacted version, so no fully
+qualified names. But because there is no overlapping names between the classes
+and method than the compacted model does not introduce false-positive results.
 
 
 \subsubsection{The compacted model}
@@ -760,52 +761,86 @@ The compacted version of the repository instance model (produced by the
 dependency database synchronizer) contains all the three projects from the
 repository. Part of the model is shown on
 \autoref{fig:cp3modelinstance.pdf}.\picr{cp3modelinstance.pdf}{Elements of the
-compacted instance model} 
+compacted instance model}
 
 The structure contains the same projects and the same
 classes as the original model, however the following information is eliminated.
 \begin{itemize}
   \item The class objects has only their simple name left, the fully qualified name is left out.
 There is no overlapping classes but they would have merged together if
-there was any. Here the \code{client.Service} instance has only the name \code{Service}.
+there was any. Here the \code{cern.japc.Parameter} instance has only the name
+\code{Parameter}.
   \item The method signature was trimmed down int their names. All methods have only their 
 name section of the signature, the parameter list, and the return value are dumped.    
-The object representing the \code{service.Service.serviceB()} method contains only the \code{serviceB}
-formation and has the reference on its container. 
-  \item The only visible dependency on the figure points to the same elements as before.
-  It defines a method call dependency which starts from the object representing the \code{client.Main.main()} method.
+The object representing the \code{cern.japc.ParameterFactory\#newParameter()}
+method contains only the \code{newParameter} formation and has the reference on
+its container.
+  \item The dependencies on the figure points to the same elements a it was
+  before. For example the method call dependency starts from the object
+  representing the \code{setDevice\-Name()}  method
+  and shows, that it calls the \code{newParameter()} method from japc's
+  \code{ParameterFactory} class.
 \end{itemize}
 
 
-\picr{patternresults.pdf}{Pattern matching on the example}
-
 \subsubsection{On-the-fly model query results}
-After the compacted  model and the workspace model is loaded the model and the
-EMF-IncQuery is initialized, the results of the pattern queries can retrieved
-any time. The pattern matching strategy for the query described in \autoref{patternex} is
-shown on \autoref{fig:patternresults.pdf}.
+\paragraph{Query evaluation steps}
+After the compacted  model and the workspace model is loaded, the model and the
+EMF-IncQuery is initialized, the results of the pattern queries any retrieved
+any time. This example focuses on the evaluation of the pattern matching
+strategy for the query described in \autoref{patternex}. The evaluation steps 
+are described on \autoref{fig:patternresults.pdf}.
+\picr{patternresults.pdf}{Pattern matching on the example}
+The pattern finds, that the \code{newParameter()} method object from the
+workspace has a counterpart in the repository: they have the same name, same
+container class and they are defined in a project with also a same name.
+Then the query finds, that there is a dependency representing a method call
+pointing to the \code{newParameter} object in the repository instance model as
+it a target of a method call. Because such a dependency has found, the query
+return the source part of the dependency object (the dependency's \code{from}
+reference) in pair with the source object from the workspace model repository.
+The result pair is indicated with red squares on the figure.
 
-The pattern finds, that the \code{serviceB} method object from the workspace has
-a counterpart in the repository: They have the same name and their container
-project have also the same name (the project object are not shown). Then the
-query finds, that there is a dependency which point on the \code{serviceB}
-object at the repository as the target of a method call dependency. Because
-these requirements are satisfied, The source of the dependency (the \code{main}
-method) from the repository model and the \code{serviceB} method object from the
-workspace are returned (elements with the red border).
+\paragraph{Development-time results}
+During the development the EMF-IncQuery tooling is capable of evaluating the
+queries on top of example instance models. One can use the \emph{Query
+Explorer} to visualize the results in Eclipse. 
+ \autoref{fig:modelqueryresult.png} shows the results for the evaluation, when
+ the compacted instance model and the workspace instance describing only the
+\code{japc} project are loaded.
+
+
+
+\paragraph{UI integration}
+TBD: click on an element: instantly gives back all incoming d
+
+
+\subsubsection{Model validation with on-the-fly queries}
+here comes the kraken. the validation part.
+
+
+
+
+
+
+
+
+
+
+
  
-The query was evaluated with the sample data in EMF-IncQuery's UI tooling. The
-results are on \autoref{fig:modelqueryresult.png}.
-\picr{modelqueryresult.png}{Result of the incoming method call dependency query}
-This figure shows that the evaluation gave back the same exact results as it was
-described on \autoref{fig:patternresults.pdf}.
-
-In this example a dependency was found. In this case the developer 
-has to decide whether he will maintain backward compatibility or he notifies the
-maintainer of the \code{client} project that the API will break soon. If he tried
-to modify the \code{serviceA()} method, we would have seen that there are no incoming
-dependencies. It means that the developer can break the signature of the method as
-he wishes. 
+% The query was evaluated with the sample data in EMF-IncQuery's UI tooling. The
+% results are on \autoref{}.
+% \picr{modelqueryresult.png}{Result of the incoming method call dependency query}
+% This figure shows that the evaluation gave back the same exact results as it was
+% described on \autoref{fig:patternresults.pdf}.
+% 
+% In this example a dependency was found. In this case the developer 
+% has to decide whether he will maintain backward compatibility or he notifies the
+% maintainer of the \code{client} project that the API will break soon. If he tried
+% to modify the \code{serviceA()} method, we would have seen that there are no incoming
+% dependencies. It means that the developer can break the signature of the method as
+% he wishes. 
 
 
 

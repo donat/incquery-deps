@@ -31,7 +31,7 @@
   </types>
   <filters />
   <items>
-    <item id="ddip951059571958613475_976398625635586392" cid="C004" type="class" name="MwParameterFactory" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creator="P868617df1d9541939263152df6e7a36c" creation-date="11/30/2012 02:06:12">
+    <item id="ddip951059571958613475_976398625635586392" cid="C004" type="class" name="CmwParameterFactory" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creator="P868617df1d9541939263152df6e7a36c" creation-date="11/30/2012 02:06:12">
       <stereotypes />
       <tagged-values />
       <associated-diagrams />
@@ -43,28 +43,29 @@
         <source-codes />
       </template-parameters>
     </item>
-    <item id="ddip951059571958613475_349765570255280509" cid="GNR001" type="generalization" name="" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creator="P868617df1d9541939263152df6e7a36c" creation-date="11/30/2012 02:06:39">
-      <stereotypes />
-      <tagged-values />
-      <associated-diagrams />
-      <owned-items />
-      <style class="default" />
-    </item>
-    <item id="ddip951059571958613475_237555298608101164" cid="C004" type="class" name="RemoteParameterFactory" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creator="P868617df1d9541939263152df6e7a36c" creation-date="11/30/2012 02:06:12">
-      <stereotypes />
+    <item id="ddip951059571958613475_618302334921058046" cid="C002" type="class" name="ParameterValue" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="12/03/2012 19:46:25">
+      <stereotypes>
+        <stereotype name="interface" />
+      </stereotypes>
       <tagged-values />
       <associated-diagrams />
       <owned-items />
       <style class="default" />
       <attributes />
-      <operations />
+      <operations>
+        <operation id="o87918bd624d645e0a4f9995b65f2702e352" name="getString" type="" type-id="" visibility="public" abstract="false" virtual="false" static="false">
+          <parameters />
+          <stereotypes />
+          <source-codes />
+        </operation>
+      </operations>
       <template-parameters>
         <source-codes />
       </template-parameters>
     </item>
   </items>
   <models>
-    <model id="p947181968577420621" name="Model 1" type="" namespace="" order-index="1">
+    <model id="p947181968577420621" name="classdiag" type="model" namespace="" order-index="1">
       <meta>
         <authors>
           <author> </author>
@@ -90,13 +91,13 @@
           </authors>
           <description />
           <creation-date>11/30/2012 01:56:13</creation-date>
-          <change-date>11/30/2012 16:03:36</change-date>
+          <change-date>12/03/2012 19:47:23</change-date>
           <revision-count>0</revision-count>
           <version />
         </meta>
         <tagged-values />
         <abstract-items>
-          <item id="ddip951059571958613475_487493432889484213" cid="C002" type="class" name="Parameter" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creator="P868617df1d9541939263152df6e7a36c" creation-date="11/30/2012 01:56:55">
+          <item id="ddip951059571958613475_487493432889484213" cid="C002" type="class" name="Parameter" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creator="P868617df1d9541939263152df6e7a36c" creation-date="11/30/2012 01:56:55">
             <stereotypes>
               <stereotype name="interface" />
             </stereotypes>
@@ -121,7 +122,7 @@
               <source-codes />
             </template-parameters>
           </item>
-          <item id="ddip951059571958613475_401067144105296261" cid="C003" type="class" name="ParameterFactory" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creator="P868617df1d9541939263152df6e7a36c" creation-date="11/30/2012 01:58:04">
+          <item id="ddip951059571958613475_401067144105296261" cid="C003" type="class" name="ParameterFactory" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creator="P868617df1d9541939263152df6e7a36c" creation-date="11/30/2012 01:58:04">
             <stereotypes />
             <tagged-values />
             <documentation>
@@ -154,16 +155,7 @@
                 <stereotypes />
                 <documentation>
                   <text>
-                    <content>
-                      <p index="0">
-                        <t />
-                        <style font-name="Arial" font-size="12" font-bold="false" font-italic="false" font-underline="false" font-strikeout="false">
-                          <text>
-                            <solid-brush color="#FF000000" />
-                          </text>
-                        </style>
-                      </p>
-                    </content>
+                    <content />
                   </text>
                 </documentation>
                 <source-codes>
@@ -177,35 +169,24 @@
               </operation>
             </operations>
             <template-parameters>
-              <source-codes>
-                <source-code language="ActionScript" />
-              </source-codes>
+              <source-codes />
             </template-parameters>
           </item>
-          <item id="ddip951059571958613475_529590553960104309" cid="DEP001" type="dependency" name="creates" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creator="P868617df1d9541939263152df6e7a36c" creation-date="11/30/2012 02:00:36">
+          <item id="ddip951059571958613475_529590553960104309" cid="DEP001" type="dependency" name="creates" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creator="P868617df1d9541939263152df6e7a36c" creation-date="11/30/2012 02:00:36">
             <stereotypes />
             <tagged-values />
             <associated-diagrams />
             <owned-items />
             <style class="default" />
           </item>
-          <item id="ddip951059571958613475_137407394476399810" cid="DEP004" type="dependency" name="" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creator="P868617df1d9541939263152df6e7a36c" creation-date="11/30/2012 02:01:06">
+          <item id="ddip951059571958613475_137407394476399810" cid="DEP004" type="dependency" name="" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creator="P868617df1d9541939263152df6e7a36c" creation-date="11/30/2012 02:01:06">
             <stereotypes>
               <stereotype name="create" />
             </stereotypes>
             <tagged-values />
             <documentation>
               <text>
-                <content>
-                  <p index="0">
-                    <t />
-                    <style font-name="Arial" font-size="12" font-bold="false" font-italic="false" font-underline="false" font-strikeout="false">
-                      <text>
-                        <solid-brush color="#FF000000" />
-                      </text>
-                    </style>
-                  </p>
-                </content>
+                <content />
               </text>
             </documentation>
             <cooperation>
@@ -216,8 +197,36 @@
             <owned-items />
             <style class="default" />
           </item>
-          <item id="ddip951059571958613475_418782402578756061" cid="GNR003" type="generalization" name="" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creator="P868617df1d9541939263152df6e7a36c" creation-date="11/30/2012 13:15:40">
+          <item id="ddip951059571958613475_429170046750486087" cid="REA002" type="realization" name="" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="12/03/2012 19:45:33">
             <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+          </item>
+          <item id="ddip951059571958613475_213905098912401353" cid="C001" type="class" name="CmwParameter" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="12/03/2012 19:45:08">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <attributes />
+            <operations />
+            <template-parameters>
+              <source-codes />
+            </template-parameters>
+          </item>
+          <item id="ddip951059571958613475_722538500522789749" cid="REA001" type="realization" name="" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="12/03/2012 19:45:26">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+          </item>
+          <item id="ddip951059571958613475_471495710259568860" cid="DEP001" type="dependency" name="" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="12/03/2012 19:46:58">
+            <stereotypes>
+              <stereotype name="use" />
+            </stereotypes>
             <tagged-values />
             <associated-diagrams />
             <owned-items />
@@ -243,29 +252,42 @@
             <relation from="ddip951059571958613475_401067144105296261" from-iid="beb259c3aeca428cb23b6694c340b18c" to="ddip951059571958613475_487493432889484213" to-iid="2b31e6c0cf2f4e80b4aabd165e1658c3" />
           </item>
           <item id="ddip951059571958613475_976398625635586392" iid="f0357e4590b74d92bdf958d4a8020077" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="11/30/2012 02:06:12" order-index="3" type="entity">
-            <layout ax="351" ay="199" awidth="203" aheight="54" x="351" y="199" width="203" height="54" angle="0" />
+            <layout ax="484" ay="168" awidth="162" aheight="51" x="484" y="168" width="162" height="51" angle="0" />
             <class />
           </item>
-          <item id="ddip951059571958613475_418782402578756061" iid="365572772330424392f6d8966691a88e" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="11/30/2012 13:15:40" order-index="5" type="relation">
-            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="469" y1="199" x2="541" y2="85" start-border-pos="0.145375218884698" end-border-pos="0.578146815299988">
+          <item id="ddip951059571958613475_213905098912401353" iid="00773c02d6f4469ebf2b08b53c4d9440" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="12/03/2012 19:45:08" order-index="6" type="entity">
+            <layout ax="317" ay="169" awidth="104" aheight="45" x="317" y="169" width="104" height="45" angle="0" />
+            <class />
+          </item>
+          <item id="ddip951059571958613475_722538500522789749" iid="1ea92f6d8e5348f38c5425e17b04db0f" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="12/03/2012 19:45:26" order-index="7" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="true" name-position="10,-10" x1="368" y1="169" x2="367" y2="90" start-border-pos="0.12310658968412" end-border-pos="0.631720430107527">
               <points>
-                <point x="469" y="199" />
-                <point x="541" y="85" />
+                <point x="368" y="169" />
+                <point x="367" y="90" />
+              </points>
+            </layout>
+            <relation from="ddip951059571958613475_213905098912401353" from-iid="00773c02d6f4469ebf2b08b53c4d9440" to="ddip951059571958613475_487493432889484213" to-iid="2b31e6c0cf2f4e80b4aabd165e1658c3" />
+          </item>
+          <item id="ddip951059571958613475_429170046750486087" iid="358adc56f20e421191d14a1de2e46416" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="12/03/2012 19:45:33" order-index="8" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="true" name-position="10,-10" x1="565" y1="168" x2="564" y2="85" start-border-pos="0.125" end-border-pos="0.623046875">
+              <points>
+                <point x="565" y="168" />
+                <point x="564" y="85" />
               </points>
             </layout>
             <relation from="ddip951059571958613475_976398625635586392" from-iid="f0357e4590b74d92bdf958d4a8020077" to="ddip951059571958613475_401067144105296261" to-iid="beb259c3aeca428cb23b6694c340b18c" />
           </item>
-          <item id="ddip951059571958613475_349765570255280509" iid="a02c6e28598e4fb395fbc8f8c818d86a" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="11/30/2012 02:06:39" order-index="4" type="relation">
-            <layout line-style="oblique" lock-start-point="true" lock-end-point="false" name-position="10,-10" x1="670" y1="196" x2="588" y2="85" start-border-pos="0.118485717773438" end-border-pos="0.670448541641235">
+          <item id="ddip951059571958613475_471495710259568860" iid="914ad319ed3f4bf4b53a699548675401" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="12/03/2012 19:46:58" order-index="10" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="-4,-13" x1="318" y1="46" x2="250" y2="46" start-border-pos="0.873563218390805" end-border-pos="0.375">
               <points>
-                <point x="670" y="196" />
-                <point x="588" y="85" />
+                <point x="318" y="46" />
+                <point x="250" y="46" />
               </points>
             </layout>
-            <relation from="ddip951059571958613475_237555298608101164" from-iid="661bb1e8f0c8410e9ce7cfb16f0d12a1" to="ddip951059571958613475_401067144105296261" to-iid="beb259c3aeca428cb23b6694c340b18c" />
+            <relation from="ddip951059571958613475_487493432889484213" from-iid="2b31e6c0cf2f4e80b4aabd165e1658c3" to="ddip951059571958613475_618302334921058046" to-iid="d8789c8cc7d34574a11b1e36b25babea" />
           </item>
-          <item id="ddip951059571958613475_237555298608101164" iid="661bb1e8f0c8410e9ce7cfb16f0d12a1" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="11/30/2012 02:06:12" order-index="3" type="entity">
-            <layout ax="587" ay="196" awidth="175" aheight="58" x="587" y="196" width="175" height="58" angle="0" />
+          <item id="ddip951059571958613475_618302334921058046" iid="d8789c8cc7d34574a11b1e36b25babea" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="12/03/2012 19:46:25" order-index="9" type="entity">
+            <layout ax="113" ay="2" awidth="137" aheight="88" x="113" y="2" width="137" height="88" angle="0" />
             <class />
           </item>
         </layer>
