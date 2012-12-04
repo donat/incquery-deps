@@ -1,71 +1,56 @@
 \appendix
-\chapter{Service Provider Framework source}
+\chapter{JAPC example source code}
 \label{examplesource}
 
-\begin{lstlisting}[caption=Classes of the \code{service} package]
-public interface Service {
-	void serviceA();
-	void serviceB();
-}
+\begin{lstlisting}[caption=JAPC classes (package name: cern.japc)]
 
-public abstract class AbstractService implements Service {
-	public void serviceB() {System.out.println("Default serviceB()."); }
+public interface Parameter {
+    public ParameterValue getValue();
+    public void setValue(ParameterValue value);
 }
-
-public interface Provider {
-	Service newService();
+public class ParameterFactory {
+    public static ParameterFactory newInstance() {
+        return null;
+    }
+    public Parameter newParameter(String parameterName) {
+        return null;
+    }
 }
-
-public class Services {
-	private static final Map<String, Provider> providers = 
-		new ConcurrentHashMap<String, Provider>();
-	public static final String DEFAULT_PROVIDER_NAME = "<default_provider>";
-	
-	private Services() {
-	}
-	public static void registerDefaultProvider(Provider p) { 
-		providers.put(DEFAULT_PROVIDER_NAME, p); 
-	}
-	public static void registerProvider(String name, Provider p) { 
-		providers.put(name, p); 
-	}
-	public static Service newInstance(String name) {
-		Provider p = providers.get(name);
-		if (p == null) 
-			throw new IllegalArgumentException("Provider does not exist.");
-		return p.newService();
-	}
+public interface ParameterValue {	
+    public void getString();
 }
 \end{lstlisting}
 
-\begin{lstlisting}[caption=Classes of the \code{impl} package]
-public class BasicService extends AbstractService {
-	public void serviceA() { System.out.println("Executed basic service"); }
-	public void serviceB() { System.out.println("Overriden basic service"); }
-} 
-
-public class BasicProvider implements Provider {
-	public Service newService() { return new BasicService(); }
+\begin{lstlisting}[caption=JAPC extension classes (package name:
+cern.japc.ext.cmw)]
+public class CmwParameter implements Parameter {
+    public @Override ParameterValue getValue() {
+        return null;
+    }
+    public @Override void setValue(ParameterValue value) {
+    }
 }
-
-public class BasicImplUtil {
-	public static void registerImplementation() { 
-		Services.registerProvider("basic", new BasicProvider()); 
-	}
-	public static void registerImplementationAsDefault() { 
-		Services.registerProvider(Services.DEFAULT_PROVIDER_NAME, 
-			new BasicProvider()); 
-	}
+public class CmwParameterFactory extends ParameterFactory {
+    public CmwParameterFactory() {
+        super();
+    }
+    public @Override Parameter newParameter(String parameterName) {    
+        return null;
+    }
 }
 \end{lstlisting}
 
-\begin{lstlisting}[caption=Classes of the \code{client} package]
-public class Main {
-	public static void main(String[] args) {
-		BasicImplUtil.registerImplementationAsDefault();
-		Service service = Services.newInstance(Services.DEFAULT_PROVIDER_NAME);
-		service.serviceB();
-	}
+\begin{lstlisting}[caption=User project classes (package name:
+cern.accsoft.gui.alarms)]
+public class CommandPanel {
+     public void setDeviceName(final String deviceName) {
+         Parameter parameter = ParameterFactory.newInstance().newParameter("paramname");
+         parameter.setValue(null);
+     }
+     void handleReset(String deviceName) {
+         Parameter parameter = ParameterFactory.newInstance().newParameter("paramname");
+         parameter.getValue();
+     }
 }
 \end{lstlisting}
 
