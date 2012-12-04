@@ -257,12 +257,12 @@ We will check how the individual components evaluate the example as an input and
 how the users can utilize the provided information. 
 
 \paragraph{Repositories}
-In our example the source and the binary repository contains three pro\-jects:
+In the example the source and the binary repository contains three pro\-jects:
 \code{japc}, \code{japc-ext-cmw} and \code{accsoft-gui-alarms} located in jar
 files \code{japc.jar}, \code{japc-ext\-cmw.jar} and
 \code{accsoft-gui-alarms.jar} respectively. The first one contains the JAPC core
 API. The second holds the extension for accessing the middleware functionality.
-The third is a GUI application which uses JAPC to implement a frot-end for an
+The third is a GUI application which uses JAPC to implement a front-end for an
 alarm system. These elements will be the input for the bytecode processing.
 
 \paragraph{Bytecode processing}
@@ -747,18 +747,13 @@ Eclipse, the EMF model -- shown on \autoref{fig:wsmodel.png}
 \picr{wsmodel.png}{Workspace model containing Service package from the example}
 -- is built and synchronized automatically. On the figure we can see, that the
 structure of the project (left) corresponds to the content of the EMF model
-(right). In the model view, you can also see that the in-project dependency
+(right). In the model view you can also see that the in-project dependency
 relationships are also registered.
-
-Because the \code{japc-ext-cmw} and the \code{accsoft-gui-alarms} projects have
-references to the \code{japc} project, both of them are loaded to the repository
-model. It has all the element but with the compacted version, so no fully
-qualified names. But because there is no overlapping names between the classes
-and method than the compacted model does not introduce false-positive results.
 
 
 \subsubsection{The compacted model}
-The compacted version of the repository instance model (produced by the
+Because the \code{japc-ext-cmw} and the \code{accsoft-gui-alarms} projects have
+references to the \code{japc} project, the compacted version of the repository instance model (produced by the
 dependency database synchronizer) contains all the three projects from the
 repository. Part of the model is shown on
 \autoref{fig:cp3modelinstance.pdf}.\picr{cp3modelinstance.pdf}{Elements of the
@@ -767,19 +762,19 @@ compacted instance model}
 The structure contains the same projects and the same
 classes as the original model, however the following information is eliminated.
 \begin{itemize}
-  \item The class objects has only their simple name left, the fully qualified name is left out.
+  \item The class objects have only their simple name left, so the fully qualified name is left out.
 There is no overlapping classes but they would have merged together if
-there was any. Here the \code{cern.japc.Parameter} instance has only the name
+there was any. Here the object representing the \code{cern.japc.Parameter} class has only the name
 \code{Parameter}.
-  \item The method signature was trimmed down int their names. All methods have only their 
-name section of the signature, the parameter list, and the return value are dumped.    
+  \item The method signatures were trimmed down int their names. All methods have only their 
+name section of the signature; the parameter list, and the return value are dumped.    
 The object representing the \code{cern.japc.ParameterFactory\#newParameter()}
-method contains only the \code{newParameter} formation and has the reference on
+method contains only the \code{newParameter} part and has the reference on
 its container.
-  \item The dependencies on the figure points to the same elements a it was
+  \item The dependencies on the figure point to the same elements as it was
   before. For example the method call dependency starts from the object
   representing the \code{setDevice\-Name()}  method
-  and shows, that it calls the \code{newParameter()} method from japc's
+  and and targets the \code{newParameter()} method from japc's
   \code{ParameterFactory} class.
 \end{itemize}
 
@@ -792,12 +787,12 @@ any time. This example focuses on the evaluation of the pattern matching
 strategy for the query described in \autoref{patternex}. The evaluation steps 
 are described on \autoref{fig:patternresults.pdf}.
 \picr{patternresults.pdf}{Pattern matching on the example}
-The pattern finds, that the \code{newParameter()} method object from the
-workspace has a counterpart in the repository: they have the same name, same
-container class and they are defined in a project with also a same name.
-Then the query finds, that there is a dependency representing a method call
+The pattern finds that the \code{newParameter()} method object from the
+workspace has a counterpart in the repository: they have a same name, same
+container class and they are defined in a project with a common name as well.
+Then the query finds that there is a dependency representing a method call
 pointing to the \code{newParameter} object in the repository instance model as
-it a target of a method call. Because such a dependency has found, the query
+it is a target of a method call. Because such a dependency has found, the query
 return the source part of the dependency object (the dependency's \code{from}
 reference) in pair with the source object from the workspace model repository.
 The result elements are indicated with red squares on the figure.
@@ -806,14 +801,14 @@ The result elements are indicated with red squares on the figure.
 During the development the EMF-IncQuery tooling is capable of evaluating the
 queries on top of example instance models. One can use the \emph{Query Explorer}
 to visualize the results in Eclipse.
-\autoref{fig:modelqueryresult.png} shows the results for the evaluation, when
-the compacted instance model and the workspace instance describing only the
+\autoref{fig:modelqueryresult.png} shows the results for the evaluation when
+ 1) the compacted instance model and  2) the workspace instance describing only the
 \code{japc} project are loaded.
 \picr{modelqueryresult.png}{Development-time evaluation of the pattern}
 The result view shows all the method call based incoming dependencies. The
 selected result on the picture is the one which was presented on
 \autoref{fig:patternresults.pdf}. The results are organized into pairs as every
-one of them represents a method from a workspace and their dependent counterpart
+entry represents a method from a workspace and their dependant counterpart
 from the repository model.
 
 \paragraph{UI integration}
@@ -822,21 +817,22 @@ view, which displays the results of the queries depending of the selected
 element (shown on \autoref{fig:modelqueryui.png}). 
 \picr{modelqueryui.png}{Results of the incoming methods query on the
 UI}
-The displayed query results depend on the selected element on the user
-interface. If the selection changes or the workspace model gets modified,
-it will automatically trigger an update on the ui components. Through this
-the components provides context-dependant and instant feedback.
+The displayed query results depend on the selected element in the development
+environment. If the selection changes or the workspace model gets modified,
+it will automatically trigger an update on the UI components. Through this,
+the components provide context-dependant and instant feedback.
 
 The second element provides validation over the models. Suppose that somebody
 wants to add a new \code{prettyPrint()} method to the japc's \code{Parameter}
 interface. Is it is done in the source code level and gets saved the editor will
-instantly show a marker indicating, that the original interface has several
+instantly show a marker indicating that the original interface has several
 implementation and this modification may result in compilation error in the
 client projects (shown on \autoref{fig:queryvalidation.png}).
 \picr{queryvalidation.png}{Model query results in error markers on the source
 code} The validation marker is a result of a \emph{Commit impact} type
 validation presented in \autoref{sect:patternqueries} and defined in
-\autoref{examplequeries} The validation message is added to every java class,
+\autoref{examplequeries}. The validation message is added to every java class,
 where a method is added or missing (compared to the repository model) and
-external classes inherit from it.  
-
+external classes inherit from it.
+ 
+ 
