@@ -209,22 +209,22 @@ implementation has to optimize this model without dropping useful information.
 
 \section{Running example: Java API for Parameter Control}\label{sect:spf}
 To make the following chapters easier to understand, we are going to introduce a
-a simplified but real-life example from the CERN controls systems called
+a simplified version of a real-life example from the CERN controls systems called
 \emph{Java API for parameter Control (JAPC)}\cite{Japc05}.  JAPC is a
-framework to build Java applications that control accelerator devices by
+framework to build Java applications that controls accelerator devices by
 providing a unified API for it. 
 
 \subsection{Details}\label{sect:spfdesc}
 
 \subsubsection{Motivation}
-The main idea being JAPC is that there are a different requirements for the 
-softwares amongst the application, and the resource (hardware) tier. 
+The main idea behind JAPC is that there are a different requirements for the 
+softwares living in the application and the resource (hardware) level. 
 
-On the hardware level there control systems, data acquisitions 
-running on specialized hardware which comes with language, resource-type
+On the hardware level there are control systems, data acquisitions 
+running on specialized hardware which comes with language and resource 
 constraints. On the application site, the main requirement is the
 maintainability: softwares should not depend on technology
-specific-implementation, it should be easily modifiable and upgradeable.
+specific-implementation: it has to be easily modifiable and upgradeable.
 
 \subsubsection{Architecture}
 \picfifty{japcarchitecture.pdf}{The architecture of JAPC}
@@ -233,33 +233,33 @@ specific-implementation, it should be easily modifiable and upgradeable.
 of the framework is fairly simple: provide a unified API for accessing and
 modifying data on certain resources around the controls systems. 
 
-The implementation of the client applications have to use only the API defined
+The implementation of the client applications has to use only the API defined
 in the core JAPC project. The details are contained in a separate extension
 libraries. They hold the  technology-specific details for accessing and
 modifying the parameters. 
 
 To use JAPC, the developer has to include the core API and the extension
-library during the build, the connection is driven externally (through runtime
+library during the build. The connection is driven externally (through runtime
 configuration and registration).
 
 
  \subsubsection{Class hierarchy}
-JAPC's API is rather complex, because it has to fulfill a wide range of
-requirements. For the sake of brevity we are going to show the subpart of it,
-because it is enough to demonstrate, how the dependency analysis work.
+JAPC's API is rather complex because it has to fulfill a wide range of
+requirements. For sake of brevity we are going to show the subpart of it
+as it is enough to demonstrate how the dependency analysis work.
 
 
 \picseventy{japcclasses.pdf}{Simplified version of JAPC's application
 programming interface}
 
-Figure \autoref{fig:japcclasses.pdf} shows the class hierarchy.
-The central element of the APi is the \code{Parameter} interface.
+\autoref{fig:japcclasses.pdf} shows the class hierarchy.
+The central element of the API is the \code{Parameter} interface.
 It  represents a an abstract value of a device.
 Client programs can access JAPC parameters with set and get interactions, and
 they can wait to be notified of value changes using subscription.
-
-Instantiating a \code{Parameter} instance is done via the
-\code{ParameterFactory} interface's newParameter() method. Again the
+The \code{Parameter} gets and sets its value through a \code{ParameterValue} instance.
+Instantiation of a \code{Parameter} instance is done via the
+\code{ParameterFactory} interface's \code{newParameter()} method. Again the
 implementation of these elements are defined externally.
 
 \subsubsection{Examined projects in the example}
