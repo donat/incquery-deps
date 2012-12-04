@@ -61,8 +61,8 @@ public class WsDeps {
 	 * 
 	 */
 	public void execute() {
-//		executeEasySearches();
-//		executeSearchEngineBasedSearches();
+		executeEasySearches();
+		executeSearchEngineBasedSearches();
 	}
 
 	/**

@@ -83,13 +83,13 @@ public class IncqueryResultView extends ViewPart implements ISelectionListener {
 	 * @see ISelectionService#addSelectionListener(ISelectionListener)
 	 */
 	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
-		//System.out.println(selection);
+		System.out.println(selection.getClass());
 		
 		if (selection instanceof TreeSelection) {
 			TreeSelection te = (TreeSelection) selection;
 			Object element = te.getFirstElement();
 			refresh(element);
-			return;
+			return; 
 		}
 		if (selection instanceof IJavaProject) {
 			treeViewer.setInput(selection);

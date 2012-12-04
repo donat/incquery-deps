@@ -19,7 +19,9 @@ import org.eclipse.viatra2.emf.incquery.runtime.api.IPatternMatch;
 import org.eclipse.viatra2.emf.incquery.runtime.api.IncQueryMatcher;
 import org.eclipse.viatra2.gtasm.patternmatcher.incremental.rete.misc.DeltaMonitor;
 
+import cern.devtools.deps.query.cp3.addedmethods.AddedMethodsMatch;
 import cern.devtools.deps.query.cp3.addedmethods.AddedMethodsMatcher;
+import cern.devtools.deps.query.cp3.incominginheritances.IncomingInheritancesMatch;
 import cern.devtools.deps.query.cp3.incominginheritances.IncomingInheritancesMatcher;
 import cern.devtools.deps.query.cp3.incompatiblesuperclasseschanges.IncompatibleSuperClassesChangesMatch;
 import cern.devtools.deps.query.cp3.incompatiblesuperclasseschanges.IncompatibleSuperClassesChangesMatcher;
@@ -27,7 +29,7 @@ import cern.devtools.deps.query.cp3.incompatiblesuperclasseschanges.Incompatible
 public class IncQueryResultToMarkers implements IncQueryDepsChangeListener {
 	JavaModelLocationMapper mapper = new JavaModelLocationMapper(PreferenceStore.getStore().tracedProjectNames());
 	MarkerManager mm = new MarkerManager();
-	
+
 	Map<IResource, Set<Long>> resourceMarkerIds = new HashMap<IResource, Set<Long>>();
 
 	final Class<?>[] requiredMatchers = new Class<?>[] { IncompatibleSuperClassesChangesMatcher.class };
@@ -65,11 +67,9 @@ public class IncQueryResultToMarkers implements IncQueryDepsChangeListener {
 		IResource resource = item.getResource();
 		if (resource == null) {
 			return;
-		}
-		else if (!resource.exists()) {
+		} else if (!resource.exists()) {
 			resourceMarkerIds.remove(resource);
-		}
-		else {
+		} else {
 			Set<Long> idSet = resourceMarkerIds.get(resource);
 			for (Long id : idSet) {
 				try {
@@ -85,34 +85,35 @@ public class IncQueryResultToMarkers implements IncQueryDepsChangeListener {
 	private void addIncomatClassMarker(WType wsClass) {
 		IJavaElement item = JavaCore.create(wsClass.getHandler());
 		Position pos = mapper.position(item);
-		
-		
 
 		long markerid = constructMarker(item, pos, wsClass);
 		// TODO add added and removed class information to this eleemnt.
-		
+
 		Set<Long> markerIdSet = resourceMarkerIds.get(item.getResource());
 		if (markerIdSet == null) {
 			markerIdSet = new HashSet<Long>();
 			resourceMarkerIds.put(item.getResource(), markerIdSet);
-		} 
+		}
 		markerIdSet.add(markerid);
 	}
 
 	private long constructMarker(IJavaElement item, Position pos, WType wsClass) {
-		String msg = "This type is inherited by %s classes and have %s added and %s removed classes.";
-		
+		String msg = "This type has %s subclass(es) outside and contains freshly defined method(s) (%s)";
+
+		String addedMethods = "";
+		String sep = "";
+
 		IncomingInheritancesMatcher inhMatcher = getMatcher(IncomingInheritancesMatcher.class);
-		int incomingSize = inhMatcher.getAllMatches().size();
+
 		AddedMethodsMatcher addedMethodsMatcher = getMatcher(AddedMethodsMatcher.class);
-		int addedethodsSize = addedMethodsMatcher.getAllMatches(null, wsClass).size();
-		int removedMethodsSize = 0;
-		
-		
-		msg = String.format(msg, incomingSize, addedethodsSize, removedMethodsSize);
-		
-		long markerid = mm.addMarkerToJavaModelElement(MyMarkerFactory.MARKER_INCOMPAT_SUPERTYPE, item, pos,
-				msg);
+		for (AddedMethodsMatch match : addedMethodsMatcher.getAllMatches()) {
+			addedMethods += sep + match.getWsMethod().getSignature();
+			sep = ", ";
+		}
+
+		msg = String.format(msg, 1, addedMethods);
+
+		long markerid = mm.addMarkerToJavaModelElement(MyMarkerFactory.MARKER_INCOMPAT_SUPERTYPE, item, pos, msg);
 		return markerid;
 	}
 

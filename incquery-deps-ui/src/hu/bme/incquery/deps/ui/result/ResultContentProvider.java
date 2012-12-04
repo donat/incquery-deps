@@ -1,13 +1,18 @@
 package hu.bme.incquery.deps.ui.result;
 
+import hu.bme.incquery.deps.cp3model.CP3Class;
+import hu.bme.incquery.deps.cp3model.CP3Method;
 import hu.bme.incquery.deps.cp3model.CP3Project;
 import hu.bme.incquery.deps.pub.IncQueryDepsChangeListener;
 import hu.bme.incquery.deps.util.DependencyType;
 import hu.bme.incquery.deps.util.LoggingUtil;
+import hu.bme.incquery.deps.wsmodel.WMethod;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.jdt.core.ICompilationUnit;
@@ -29,6 +34,8 @@ import cern.devtools.deps.query.cp3.addedclasses.AddedClassesMatch;
 import cern.devtools.deps.query.cp3.addedclasses.AddedClassesMatcher;
 import cern.devtools.deps.query.cp3.impactcausedbyremovedclasses.ImpactCausedByRemovedClassesMatch;
 import cern.devtools.deps.query.cp3.impactcausedbyremovedclasses.ImpactCausedByRemovedClassesMatcher;
+import cern.devtools.deps.query.cp3.incomingmethodcalls.IncomingMethodCallsMatch;
+import cern.devtools.deps.query.cp3.incomingmethodcalls.IncomingMethodCallsMatcher;
 import cern.devtools.deps.query.cp3.removedclasses.RemovedClassesMatch;
 import cern.devtools.deps.query.cp3.removedclasses.RemovedClassesMatcher;
 
@@ -66,11 +73,13 @@ public class ResultContentProvider implements ITreeContentProvider, IncQueryDeps
 	public Object[] getElements(Object inputElement) {
 		// If a compilation unit is selected , build it.
 		if (inputElement instanceof ICompilationUnit) {
-			// return buildCompilationUnit((ICompilationUnit) inputElement);
+			return buildCompilationUnit((ICompilationUnit) inputElement);
 		}
 		// Else display info for the entire project.
 		else if (inputElement instanceof IJavaProject) {
 			return buildJavaProject((IJavaProject) inputElement);
+		} else if (inputElement instanceof IMethod) {
+			return buildJavaMethod((IMethod) inputElement);
 		}
 		// Or the third option: does not display anything.
 		return new Object[] { new ResultItem(null, ResultItemType.NULL, null) };
@@ -83,6 +92,29 @@ public class ResultContentProvider implements ITreeContentProvider, IncQueryDeps
 		// Add joined project information.
 		ResultItem root = buildProjectRoot(selectedProject);
 
+		return new Object[] { root };
+	}
+
+	private Object[] buildJavaMethod(IMethod inputElement) {
+		//ResultItem root = new ResultItem(null, ResultItemType.JDT_METHOD, inputElement);
+		ResultItem root = new ResultItem(null, ResultItemType.STRING, "Incoming method calls");
+		IncomingMethodCallsMatcher matcher = getMatcher(IncomingMethodCallsMatcher.class);		
+		
+		String hi = inputElement.getHandleIdentifier();
+		for (IncomingMethodCallsMatch match : matcher.getAllMatches()) {
+			WMethod wMethod = match.getWsTarget();
+			if (wMethod.getHandler().equals(hi)) {
+				
+				CP3Method sourceMethod = match.getRepoSource();
+				CP3Class sourceClass = sourceMethod.getClasses().get(0);
+				CP3Project sourceProject = sourceClass.getProjects().get(0);
+				
+				String result = sourceClass.getName() + "#" + sourceMethod.getName() + "() in project " + sourceProject.getName();
+				
+				new ResultItem(root, ResultItemType.STRING, result);
+			}
+		}
+		
 		return new Object[] { root };
 	}
 
@@ -286,7 +318,21 @@ public class ResultContentProvider implements ITreeContentProvider, IncQueryDeps
 	@Override
 	public void init(Set<IncQueryMatcher<IPatternMatch>> matchers) {
 		this.matchers = matchers;
+		fillMatcherMap(matchers);
 		refreshViewer();
+	}
+
+	Map<Class<?>, IncQueryMatcher<? extends IPatternMatch>> matcherMap = new HashMap<Class<?>, IncQueryMatcher<? extends IPatternMatch>>();
+
+	private void fillMatcherMap(Set<IncQueryMatcher<IPatternMatch>> matchers) {
+		for (IncQueryMatcher<? extends IPatternMatch> matcher : matchers) {
+			matcherMap.put(matcher.getClass(), matcher);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private <T> T getMatcher(Class<T> mClass) {
+		return (T) matcherMap.get(mClass);
 	}
 
 }
