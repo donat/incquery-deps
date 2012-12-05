@@ -609,8 +609,8 @@ express certain patterns over EMF models. You can think about it as a regular
 expression over an object-model.
 To highlight this, let's see an example of a pattern expressed with this
 language which matches on all Java files and all defined types in it from the
-workspace model (see \autoref{fig:wsmodel.pdf}).
-\begin{lstlisting}
+workspace model (see \autoref{fig:wsmodel.pdf} and \autoref{lst:pex}).
+\begin{lstlisting}[caption=EMF-IncQuery pattern example, label=lst:pex]
 package example
 
 import "http://inf.mit.bme.hu/donat/incquery-deps/wsmodel"
@@ -755,8 +755,8 @@ Because the \code{japc-ext-cmw} and the \code{accsoft-gui-alarms} projects have
 references to the \code{japc} project, the compacted version of the repository instance model (produced by the
 dependency database synchronizer) contains all the three projects from the
 repository. Part of the model is shown on
-\autoref{fig:cp3modelinstance.pdf}.\picr{cp3modelinstance.pdf}{Elements of the
-compacted instance model}
+\autoref{fig:cp3modelinstance.pdf}.\picr{cp3modelinstance.pdf}{Instances of the
+compacted repository model}
 
 The structure contains the same projects and the same
 classes as the original model, however the following information is eliminated.
