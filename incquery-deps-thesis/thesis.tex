@@ -252,13 +252,12 @@ aboveskip=10pt}
 \pagenumbering{arabic}
 \onehalfspacing
 
-\include{title}   % title
+\include{title}       % title		+ blank
+\include{declaration} % thanks		+ declaration 
+\include{abstract}    % abstract hu + abstract en
+\tableofcontents      % toc
+  
 
-\selectlanguage{english}
-
-\tableofcontents  % toc
-\include{declaration} % declaration: work without help  
-\include{abstract} 
 
 \include{chapter1} 
 \include{chapter2}

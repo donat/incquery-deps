@@ -44,7 +44,7 @@ team members are to be notified and called in for assistance.
  
 \subsection{Controls Systems at CERN}
 The context of this work is the author's internship at the Controls Group of
-CERN, the European Organization for Nuclear Research. CERN runs the the world's
+CERN, the European Organization for Nuclear Research. CERN runs the world's
 biggest particle physics laboratory with the main goal to operate particle
 accelerators (such as the Large Hadron Collider) and all the necessary
 infrastructure. At CERN, numerous scientist and engineers are working on the
@@ -53,8 +53,8 @@ well-defined structure. One of its members is the \emph{Controls Group} which is
 responsible for the design and implementation of both software and hardware used
 in the controls systems.
 
-The controls system itself is a complex, distributed and highly modular system
-which has three tiers. On the top there are the GUI applications which are
+The controls systems themselves are complex, distributed and highly modular systems
+with three main tiers. On the top there are the GUI applications which are
 written in Java. The middle or business layer is also consists of Java
 applications. On the lowest or hardware level there are C/C++ applications
 running on real-time systems. Maintaining a complex system like this requires a
@@ -72,7 +72,7 @@ that needed to be taken into consideration while designing the system.
 \begin{description}
 \item[Technological environment] The software components to be managed by the
 new tool are all plain Java programs that do not make use of any framework (such
-as e.g. OSGi) for dependency and lifecycle management, but rely on basic
+as OSGi) for dependency and lifecycle management, but rely on basic
 features of the Java Compiler and the Java Virtual Machine to link to each
 other.
  
@@ -80,13 +80,13 @@ other.
 dependency analysis could be supported by a development environment such as
 Eclipse based on integrated source/binary code analysis. However, CERN Controls
 Systems deals with an infrastructure that consists of several thousands
-components (JARs) and even more if versioning information is taken into
+components (JARs) and even more if version information is taken into
 consideration. The resources available for development environments at developer
 PCs are not enough for supporting standard IDE features over a system of this
 size.
  
 \item[Granularity of dependencies] Existing dedicated dependency analysis
-tools offer a rather limited feature set for defining dependency relationships.
+tools offer a rat\-her limited feature set for defining dependency relationships.
 For example JDepend \cite{JDepend} and JBoss Tattletale \cite{Tattletale} does
 dependency analysis on the class level, but CERN's requirement is to see
 method-level and fields level dependencies as well.
@@ -100,10 +100,10 @@ used.
 \end{description}
 
 \section{Overview of the proposed solution}
-After analysing available off-the-shelf solutions, it became clear that the
-unique requirements called for a custom solution. The result of the work, called
-\ptool{}, implements hybrid dependency analysis based on both source and binary
-software components, and relies on a client-server architecture where end-user
+After analyzing available off-the-shelf solutions, it became clear that the
+unique requirements called for a custom solution. The result of the work called
+\ptool{} implements hybrid dependency analysis based on both source and binary
+software components and relies on a client-server architecture where end-user
 features are specifically aligned with the computing resources of the host
 environment. The tool uses a state-of-the-art incremental model query evaluation
 engine called EMF-IncQuery (developed at the Department of Measurement and
@@ -117,7 +117,7 @@ On the server side, the \ptool{} provides the following features:
   \item \emph{Binary dependency discovery based on byte code analysis} ensures
   that all (including legacy) software components can be taken into
   consideration for smooth upgrades, at the desired level of granularity.
-  \item A \emph{scalable relational dependency database} backend ensures that
+  \item A \emph{scalable relational dependency database} back-end ensures that
   the entire, large software infrastructure can be supported.
   \item A \emph{data access layer based on Java RMI} allows accessing dependency
   data by Java-based clients in an efficient way.
