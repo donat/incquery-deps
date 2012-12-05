@@ -6,7 +6,7 @@
 % ------------------------------------------------------------------------------
 \chapter{Overview of the approach}
 
-% My implementation.
+% My implementation. 
 One of the most effective  way of doing
 smooth upgrades is to discover incoming dependencies. To achieve this, we
 designed and implemented the \ptool{}. The the first part of the current chapter
@@ -157,7 +157,7 @@ information are stored in this database, which serves the client queries too.
 The client side of the solution is a set of Eclipse plugins which give the
 developer a convenient way to access to the dependency information. 
 
-\subsubsection{Model load and direct queries}\label{sect:directqueries}
+\subsubsection{Model load and explicit queries}\label{sect:directqueries}
 The base component of the client side is the repository model loader. It
 provides a simple API for accessing and querying the dependency information from
 the server. The simple use-case for this, when the user directly asks the
@@ -201,7 +201,7 @@ initiating dependency discovery.
 The details of the user interface implementation are in \autoref{sect:elabexplicit}.
 
 \subsubsection{Implementation-specific requirements}
-Using direct queries brings some limitations. The queries are simple remote method
+Using explicit queries brings some limitations. The queries are simple remote method
 calls and the result set is a relatively small data set which easy to store and
 present on the Eclipse UI. On the other hand, the graph-pattern matching
 solution is somewhat limited, because in order to make EMF-IncQuery work,

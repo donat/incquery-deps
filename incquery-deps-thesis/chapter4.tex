@@ -85,32 +85,31 @@ necessary because both the structure and the external references are presented
 in a format which not readable nor could be easily queried by the users of the
 data. For example the commonly used \code{println(String)} function has the
 following binary format: \code{println(Ljava/lang/String;)V}. The implementation
-transforms it into \\ 
-\code{println(java.lang.String):void}.
+transforms it into \code{println(java.la} \code{ng.String):void}.
 
 % Somewhere it should be described that we don't deal with reflection, just
 % static dependencies.
 \paragraph{Filtering}
 The final step is to filter  the gathered information. At this step we have to
-consider that if we mapped all information then the gathered data would have a
+consider that if we mapped all information then the gathered data, the we would have a
 comparable size with the binary repositories which is unacceptable when we have
 to deal with thousands of jars. To resolve this, the implementation does
 multiple cleanup steps. First it drops the private methods and fields, because
 it is not explicitly accessible and by this no dependency would point them. The
-other trick is to drop a subset of the external references. The
+other applied trick is to drop a subset of the external references. The
 platform-provided elements are dropped (references pointing inside the
 \code{java.*} package) and the ones which point inside the jar files. This is
 reasonable because any IDE gives access this information through code traversal
-capabilities. Of course this cleanup needs do be done after all class files are 
+capabilities. Of course this cleanup needs to be done after all class files are 
 parsed in a jar file. 
 
 
 \subsubsection{Extracted domain model}
 The output of the analyzer is a Java domain metamodel shown on
-\autoref{fig:domainmodelsimp.pdf}\picr{domainmodelsimp.pdf}{Classes of the
-domain model used by the bytecode analyzer}. Because this model is used for the
-dependency processing too the model has additional elements holding the
-dependency references.
+\autoref{fig:domainmodelsimp.pdf}.
+\picr{domainmodelsimp.pdf}{Classes of the domain model used by the bytecode analyzer}
+Because this model is used for the dependency processing too the model has 
+additional elements holding the dependency references.
 
 All element inherits from abstract \code{CodeElement} class which is a top-level
 interface for handing the items of the model. The processed jar files are named
@@ -277,7 +276,7 @@ classes and methods which were defined inside.
 The discovered dependencies are formatted and filtered in order not to have
 internal or platform defined elements (dependencies pointing inside the
 \code{java.*} package). For example, let's see the extracted references
- from the \code{Command\-Panel\-.handle\-Reset()} method defined in the
+ from the \code{CommandPanel .handleReset()} method defined in the
  \code{japc-ext-cmw} project.
 
 
@@ -301,7 +300,7 @@ internal or platform defined elements (dependencies pointing inside the
 \hline
 \end{tabl}
 The first one is a \code{ConstantMethodRef} type reference. During the analysis
-they are first converted into source format. The first one is a class reference
+they are converted into source format first. The first one is a class reference
 the second one is a method reference. The references are formatted to source
 format as it is shown in the second column. None of the references is
 eliminated from the list, because both of them points outside of the project. 
@@ -341,7 +340,7 @@ The database synchronizer has two modes of operation: either it can load a compa
 representation of the entire dependency model or it can query the incoming
 dependencies for just one single code element.
 The single element query is the use-case where the user of the \ptool{} executes
-direct queries by asking the incoming dependencies of one element in the
+explicit queries by asking the incoming dependencies of one element in the
 workspace. In this case, a simple RMI interface method is called where the
 argument is the queried object (as an instance of an \code{ApiClass}, a \code{Method} or a
 \code{Field} types from \autoref{fig:domainmodelsimp.pdf}. This argument is passed to
@@ -378,7 +377,7 @@ false-positive results), but in return lets the model queries component to do
 fast model queries which are automatically updated every time the source code
 has changed.
 
-\picseventy{cp3model.pdf}{Compacted repository model}
+\picseventy{cp3model.pdf}{The compacted repository model}
 
 \paragraph{Metamodel for compacted repository models}
 The structure of the compacted EMF metamodel is shown on
@@ -572,8 +571,8 @@ folding, selection service, etc.
 
 \paragraph{UI integration for explicit query results} 
 The first part is the UI extension for explicit queries. The Java source code
-editor gets an new element in the context menu with the label ''Show Incoming
-Dependencies''. The developer selects any code element in the source code (he
+editor gets a new element in the context menu with the label ''Show Incoming
+Dependencies''. The developer selects any part of the source code (he
 can point to a class, a field or a method) right clicks on it and chooses this
 menu element. The initiated action first resolves the selected element and tries
 to get a fully qualified name of it. If it is successful the query is sent to
@@ -636,13 +635,13 @@ two different tables at once without joining them. The third statements is the
 connects the result items together. It can be translated as ''match only the on
 the objects  where the \code{cu} variable refers the \code{t} as a contained
 type''. Expression power of the pattern language is much bigger; for complete
-reference check the documentation site \cite{EMFIncQuery}.
+reference is defined on the documentation site \cite{EMFIncQuery}.
 
 \paragraph{Developing model queries}
 The usage of the queries takes multiple steps as shown in \autoref{fig:incquerydev.pdf}.
 \picr{incquerydev.pdf}{Development of EMF-IncQuery queries} 
 First, the queries are defined with the query language. The tooling takes the queries 
-and automatically generates source code from the queries. With this there is no need 
+and automatically generates source code from them. With this functionality there is no need 
 for manually using the pattern definition part of the EMF-IncQuery engine. The generated
 source code along with the engine exposes a simple interface for registering the
 queries and getting back the results when needed. The only manual coding takes place
@@ -657,7 +656,7 @@ method. The result is represented by \code{Match} instances which hold the resul
 and all the necessary information to make it usable.
 
 \subsubsection{Query definitions}
-The following list enumerates all the  queries developed for the dependency
+The following list enumerates all the  query categories developed for the dependency
 analysis.
 \begin{description}	
 \item[Join queries]
@@ -688,8 +687,8 @@ the classes where a method is added.
 
 
 \paragraph{Detailed elaboration}
-One of the implemented queries is the one which retrieves the incoming method call 
-dependencies from the model. The entire definition of this query is the following. 
+One of the implemented queries is which retrieves the incoming method call 
+dependencies from the model. The entire query definition is shown on \autoref{patternex}.
 \begin{lstlisting}[caption=Elements of the incoming method call dependency query,label=patternex]
 private pattern joinProjects(repoProject : CP3Project, wsProject : WProject) = {
 	CP3Project.name(repoProject, commonName);
@@ -715,11 +714,11 @@ pattern incomingMethodCalls(wsTarget : WMethod, repoSource : CP3Method) = {
 
 The first \code{joinProjects} query takes the projects from the workspace
 instance model and connects them to the equivalent element in the compacted
-repository instance model This join operation is based on the common \code{name}
+repository instance model. This join operation is based on the common \code{name}
 property.
 
 The \code{joinMethods} query does a similar thing, but in this case the methods
-are joined together. The first two instructions gathers the container projects'
+are joined together. The first two instructions gather the container projects'
 reference. The third instruction calls the \code{joinProjects} query, so the 
 results are filtered to only to the elements which exist both in the workspace
 and in the repository instance model. The methods itself also joined by 
@@ -744,8 +743,8 @@ The complete source code for all the queries is available in \autoref{exampleque
 To continue our example, we will examine the view of the developer who knows
 only about his own \code{japc} project. If the \ptool{} is  installed in his
 Eclipse, the EMF model -- shown on \autoref{fig:wsmodel.png}
-\picr{wsmodel.png}{Workspace model containing Service package from the example}
--- is built and synchronized automatically. On the figure we can see, that the
+\picr{wsmodel.png}{Workspace model containing the japc project}
+-- is built and synchronized automatically. On this figure we can see, that the
 structure of the project (left) corresponds to the content of the EMF model
 (right). In the model view you can also see that the in-project dependency
 relationships are also registered.
@@ -773,9 +772,9 @@ method contains only the \code{newParameter} part and has the reference on
 its container.
   \item The dependencies on the figure point to the same elements as it was
   before. For example the method call dependency starts from the object
-  representing the \code{setDevice\-Name()}  method
-  and and targets the \code{newParameter()} method from japc's
-  \code{ParameterFactory} class.
+  representing the \code{setDevice} \code{Name()} method
+  and and targets the \code{newParameter()} method from \code{japc}'s
+  \code{Parameter} \code{Factory} class.
 \end{itemize}
 
 
@@ -802,13 +801,13 @@ During the development the EMF-IncQuery tooling is capable of evaluating the
 queries on top of example instance models. One can use the \emph{Query Explorer}
 to visualize the results in Eclipse.
 \autoref{fig:modelqueryresult.png} shows the results for the evaluation when
- 1) the compacted instance model and  2) the workspace instance describing only the
+ (i) the compacted instance model and  (ii) the workspace instance describing only the
 \code{japc} project are loaded.
 \picr{modelqueryresult.png}{Development-time evaluation of the pattern}
 The result view shows all the method call based incoming dependencies. The
 selected result on the picture is the one which was presented on
 \autoref{fig:patternresults.pdf}. The results are organized into pairs as every
-entry represents a method from a workspace and their dependant counterpart
+entry represents a method from a workspace and their dependent counterpart
 from the repository model.
 
 \paragraph{UI integration}
@@ -820,7 +819,7 @@ UI}
 The displayed query results depend on the selected element in the development
 environment. If the selection changes or the workspace model gets modified,
 it will automatically trigger an update on the UI components. Through this,
-the components provide context-dependant and instant feedback.
+the components provide context-dependent and instant feedback.
 
 The second element provides validation over the models. Suppose that somebody
 wants to add a new \code{prettyPrint()} method to the japc's \code{Parameter}
