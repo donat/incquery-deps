@@ -4,7 +4,7 @@
 %------------------------------------------------------------------------------
 
 The current chapter introduces the different technologies used to build the
-\ptool{}. In \autoref{sect:javabasics} we give a short overview about the the
+\ptool{}. In \autoref{sect:javabasics} we give a short overview about the
 Java platform and the internals of the Java binaries. In
 \autoref{sect:serverside} we go through the frameworks which were used to build
 and implement the server side of the tool. Last, but not least
@@ -72,7 +72,7 @@ class file, approximately 60\%. In fact, this makes the constant pool an easy
 target for code manipulation issues. The byte code instructions themselves just
 make up 12\%. 
 
-The right upper box shows a "zoomed" excerpt of the constant pool, while the
+The lower left box shows a "zoomed" excerpt of the constant pool, while the
 the box on the lower right depicts some instructions that are contained within a method
 of the example class. These instructions represent the straightforward
 translation of the well-known \code{System.out.println("Hello, world");} statement.
@@ -89,7 +89,7 @@ themselves may refer to constants in the constant pool. Such references are
 implemented via fixed indexes encoded directly into the instructions. This is
 illustrated for some items of the figure emphasized with a surrounding box.
 
-For example, the \code{invokevirtual} instruction refers to a MethodRef constant that
+For example, the \code{invokevirtual} instruction refers to a \code{MethodRef} constant that
 contains information about the name of the called method, the signature (i.e.,
 the encoded argument and return types), and to which class the method belongs.
 In fact, as emphasized by the boxed value, the \code{MethodRef} constant itself just
@@ -245,7 +245,7 @@ The most important part -- in the context of this paper -- is the Core project
 which implements all the necessary non-UI infrastructure for Java application
 development on the Eclipse platform. It contains an incremental Java builder,
 support for code assist, a searching facility and a \emph{Java Model}, which
-provides API for navigating the Java element tree. This lets the contributors
+exposes an API for navigating the Java element tree. This lets the contributors
 access the structure and the changes of the Java applications loaded into the
 workspace.
 
@@ -260,7 +260,7 @@ product for model-based software design.
 EMF provides automated code generation and tooling (e.g.~notification,
 persistence, editor) for Java representation of models. EMF models consist of an
 (acyclic) containment hierarchy of model elements (\emph{EObjects}) with
-crossreferences -- some of which may only be traversed by programs in one
+cross-references -- some of which may only be traversed by programs in one
 direction (unidirectional references). Additionally, each object has a number of
 attributes (primitive data values). Models are stored in \emph{EResources} (e.g.
 files), and interrelated resources are grouped into \emph{EResourceSets}.
