@@ -13,13 +13,14 @@ developers is to reduce inconsistency issues that may arise due to the
 combination of (i) development by large and distributed teams and (ii) the
 complex dependency relationships within the system under development.
 
-In a Java context, a typical example of such problems is when a newer
-version of some component is binary incompatible with others that depend on
-(link to) it. Even though linking errors can be detected at compile time in
-theory, in practice this may not be always feasible as the entire source tree
-may not be available to every developer.
+In a Java context, a typical example of such problems is when a newer version of
+some component is binary incompatible with others that depend on (link to) it.
+Even though linking errors can be detected at compile time in theory, in
+practice this may not be always feasible as the entire source tree may not be
+available to every developer.
 
-The main challenge addressed in this work is to achieve \emph{smooth upgrades}~\cite{Ical11}.
+The main challenge addressed in this work is to achieve \emph{smooth
+upgrades}~\cite{Ical11}.
 A smooth upgrade means that after a new version of a software component has been
 released, all the other software components which depend on it will remain
 operational.
@@ -27,8 +28,8 @@ operational.
 There are a variety of approaches and tools to support smooth upgrades. For
 instance, one can enforce development process policies that involve manual
 synchronization steps that all developers must follow. An alternative approach
--- perhaps better aligned with agile principles -- is to provide automated tools that
-relieve the developers of the difficulties associated with software
+-- perhaps better aligned with agile principles -- is to provide automated tools
+that relieve the developers of the difficulties associated with software
 infrastructure management.
 
 In this work, we aim to develop such an automated tool based on static
@@ -53,9 +54,9 @@ well-defined structure. One of its members is the \emph{Controls Group} which is
 responsible for the design and implementation of both software and hardware used
 in the controls systems.
 
-The controls systems themselves are complex, distributed and highly modular systems
-with three main tiers. On the top there are the GUI applications which are
-written in Java. The middle or business layer is also consists of Java
+The controls systems themselves are complex, distributed and highly modular
+systems with three main tiers. On the top there are the GUI applications which
+are written in Java. The middle or business layer is also consists of Java
 applications. On the lowest or hardware level there are C/C++ applications
 running on real-time systems. Maintaining a complex system like this requires a
 set of special approaches in order to provide desired quality and to maximize
@@ -85,8 +86,8 @@ consideration. The resources available for development environments at developer
 PCs are not enough for supporting standard IDE features over a system of this
 size.
  
-\item[Granularity of dependencies] Existing dedicated dependency analysis
-tools offer a rat\-her limited feature set for defining dependency relationships.
+\item[Granularity of dependencies] Existing dedicated dependency analysis tools
+offer a rat\-her limited feature set for defining dependency relationships.
 For example JDepend \cite{JDepend} and JBoss Tattletale \cite{Tattletale} does
 dependency analysis on the class level, but CERN's requirement is to see
 method-level and fields level dependencies as well.
@@ -96,6 +97,17 @@ the (up-to-date) source code is not available for some software components. In
 other cases, the source code is very large in size because it is automatically
 generated. Therefore, tools that rely solely on source code analysis cannot be
 used.
+
+\item[Lack of centralized requirements management system] CERN has some unique
+organizational characteristics. The ultimate goal is to provide reliable
+operation for the accelerators. This comes with a conservative approach of
+applying new technologies. Also the organization structure is distributed and
+changes dynamically. Instead of having huge meetings and formalities, the
+employees communicate between each other mainly ''through their dependencies''.
+The work is coordinated by small but high-level management groups who determine
+the global objectives. These characteristics imply that applying a complex,
+centralized requirements management system would cause more troubles as
+documentation overhead would overwhelm the gained benefits.
 
 \end{description}
 
