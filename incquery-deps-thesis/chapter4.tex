@@ -16,7 +16,7 @@
 Before the system performs dependency analysis, it needs to extract the
 necessary information from the source code.
 % What
-The bytecode analyzer module takes the input java binaries (in the form of jar
+The bytecode analyzer module takes the input Java binaries (in the form of jar
 files) parses the contained class files with the help of Apache BCEL and maps it
 into an object graph which can be effectively used during the dependency
 processing.
@@ -445,7 +445,7 @@ Java-specific elements.
 \autoref{fig:javamodel} (which comes from JDT's documentation) shows these
 relationships as the main elements of the Java model. Visible: literally every aspect 
 is accessible from the defined projects down to the method level. As the Java Model 
-is hierarchical the implementation simply traverses it to build the java model. 
+is hierarchical the implementation simply traverses it to build its own internal representation. 
 
 The elements explained above is enough to create a model about the structure of
 the Java projects. To add dependency information to this model, the JDT's search
@@ -469,7 +469,7 @@ the \code{WProject} class which represents a Java project loaded into the
 workspace. It contains \code{WPackageFragmentRoot} elements which represent the
 source folders and the jar files on the classpath and has some Java packages as
 children (as \code{WPackage Fragment} instances). Under the Java packages there
-are the \code{WCompilationUnit}s which are represent the java files and which
+are the \code{WCompilationUnit}s which are represent the Java files and which
 define some java types (\code{WType}). On the lowest level in the containment
 hierarchy lie the methods and fields (\code{WMethod} and \code{WField}
 instances).
@@ -499,7 +499,7 @@ with the proper model element.
 When the initial model build is finished the next task is to subscribe for the
 workspace changes. This can be done by registering a simple listener object with
 the  \code{JavaCore.addElementChangedListener(IElementChangedListener)} static
-method. With this every event related to the java editing is available. The
+method. With this every event related to the Java editing is available. The
 component only handles the events where the source files are changed; dealing
 with working copy events would be too frequent and would contain some incoherent
 data about the workspace. 
@@ -830,7 +830,7 @@ client projects (shown on \autoref{fig:queryvalidation.png}).
 \picr{queryvalidation.png}{Model query results in error markers on the source
 code} The validation marker is a result of a \emph{Commit impact} type
 validation presented in \autoref{sect:patternqueries} and defined in
-\autoref{examplequeries}. The validation message is added to every java class,
+\autoref{examplequeries}. The validation message is added to every Java class,
 where a method is added or missing (compared to the repository model) and
 external classes inherit from it.
  
