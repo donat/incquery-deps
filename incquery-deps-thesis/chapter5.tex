@@ -4,7 +4,7 @@
 %------------------------------------------------------------------------------
 
 After the functionality was presented, let's check the overall performance of
-the system. We have to check the individual components that they fulfill their
+the system. We have to examine the individual components that whether fulfill their
 requirement as the input or usage scales up to a level of the production
 applications. First we have to verify whether the dependency analysis is fast
 enough and can process large number of Java binaries. The next task is to see if
@@ -40,7 +40,7 @@ specifications:
   \item JVM: Oracle JDK 1.6.0\_27-b07.
 \end{itemize}
 The tests showed that on average one project contains 80 classes, 513 methods, 304 fields and 778 dependencies. 
-The result of the test are shown on \autoref{fig:resanal.pdf}
+The results of the tests are shown on \autoref{fig:resanal.pdf}
 \picr{resanal.pdf}{Result of dependency processing measurement}
 The left chart shows how big the generated EMF instance model becomes, depending
 on the input JAR size. It is clearly visible that the size linearly increases as
@@ -48,7 +48,7 @@ the input grows. Also the execution time (right chart) shows steady growth as
 the input size increases. Looking at the analysis
  of all (1300) jars, the average processing takes roughly $0.43$ seconds.
 Knowing that even in large software repositories usually a few, maybe a few
-dozen releases happen, then having a system which analyses the differences
+dozen releases happen, then having a system which analyzes the differences
 within a second is more than enough.
 
 \section{Explicit queries}
@@ -121,7 +121,7 @@ instantaneous (regardless of query or model size), which is consistent with
 literature results reported in~\cite{MODELS10}.
 
 \section{Performance evaluation conclusions}
-In summary, the performance evaluation of the system has concluded with the following findings:
+In summary, the performance evaluation of the system has concluded with the following.
 \begin{description}
 \item[On the server side] the system provides fast analysis, persistence and
 queries for the global (binary) network of dependencies with full granularity.
