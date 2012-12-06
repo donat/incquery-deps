@@ -29,6 +29,8 @@ capturing local and remote dependencies.
 source dependencies in the local workspace.
 \item I implemented an \emph{on-the-fly dependency query engine} using
 EMF-IncQuery for instantaneous dependency analysis feedback.
+\item I integrated the result provided by the query engine into the user
+interface of the Eclipse IDE.
 \item Finally, I evaluated the approach on the \emph{complete Java software
 infrastructure at CERN} consisting of more than 1300 separate JARs.
 \end{itemize}
@@ -54,23 +56,23 @@ considered to be included in the upcoming release of the \ptool.
 As of the future plans, there are plenty of directions to extend the
 capabilities of the approach:
 \begin{itemize}
-\item In order to provide a better user notification on the client side we plan
-to create a dedicated UI for highlighting the result of the local dependency
-analysis. As Eclipse already provides a facility for searching for cross
-compilation unit references, it is a straightforward task to integrate the model
-queries there. Additionally, due to the instantaneous evaluation performance,
-dependency analysis results could be displayed to the user as warnings or even
-errors (supported by inline markers in Eclipse's source code editors) that
-appear on-the-fly as the user is making a change that potentially violates
-smooth upgrade policies.
+% \item In order to provide a better user notification on the client side we plan
+% to create a dedicated UI for highlighting the result of the local dependency
+% analysis. As Eclipse already provides a facility for searching for cross
+% compilation unit references, it is a straightforward task to integrate the model
+% queries there. Additionally, due to the instantaneous evaluation performance,
+% dependency analysis results could be displayed to the user as warnings or even
+% errors (supported by inline markers in Eclipse's source code editors) that
+% appear on-the-fly as the user is making a change that potentially violates
+% smooth upgrade policies.
 
 %\item on-the-fly evaluated validation rules for instantaneous ``smooth upgrade" policy violation feedback
 
-\item The second plan can be an extension for source-analyzing not just Java,
-but C++ programs too. We could make use of the capabilities of the Eclipse CDT
-to provide AST support.
+\item As a future work we plan to do dependency analysis not just on 
+Java, but on C++ programs too. For this, we can make use of the capabilities
+of the Eclipse CDT to provide AST support.
 
-\item As a future improvement, we plan to support the definition of query-based
+\item As a next step, we plan to support the definition of query-based
 software metrics and use our on-the-fly query evaluation engine to enforce these
 policies directly on the AST models.
 
