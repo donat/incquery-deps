@@ -821,17 +821,40 @@ environment. If the selection changes or the workspace model gets modified,
 it will automatically trigger an update on the UI components. Through this,
 the components provide context-dependent and instant feedback.
 
-The second element provides validation over the models. Suppose that somebody
-wants to add a new \code{prettyPrint()} method to the japc's \code{Parameter}
-interface. Is it is done in the source code level and gets saved the editor will
-instantly show a marker indicating that the original interface has several
-implementation and this modification may result in compilation error in the
-client projects (shown on \autoref{fig:queryvalidation.png}).
-\picr{queryvalidation.png}{Model query results in error markers on the source
-code} The validation marker is a result of a \emph{Commit impact} type
-validation presented in \autoref{sect:patternqueries} and defined in
-\autoref{examplequeries}. The validation message is added to every Java class,
-where a method is added or missing (compared to the repository model) and
-external classes inherit from it.
- 
+
+\paragraph{Validation queries}	
+Previously we went through the main user integration for displaying the results
+of queries. Now, let’s discuss the validation queries which are a bit different
+from the others. They are searching if the loaded models comply with certain
+validation requirements. These queries have a slightly different output. Every
+result entry is a violation of the validation rule.
+
+The result of the validation queries are presented as warnings and error
+markers in the user interface. Just like Eclipse JDT flags the compilation and
+other errors and warnings. The validations are checked in the same on-the-fly
+manner as the normal queries and the UI marker notification is also instantly
+updated.
+
+Let's examine the validation queries through the following example: Say that
+somebody wants to add a new \code{prettyPrint()} method to the \code{japc}'s
+\code{Parameter} interface. 
+\picr{queryvalidation.png}{Validation query results in error markers on the
+source code}
+
+A validation query called \code{incompatibeSourceClassChanges} is defined to
+find all classes which have added or removed methods and there are
+external classes in the repository model which implement from the changed
+class. The definition of the query is in \autoref {examplequeries}.
+
+The modified \code{Parameter} interfaces matches to this query because of the
+\code{prettyPrint()} method. This means if this change was deployed it would
+compilation error in all implementation. 
+
+With the validation rule and the attached error markers (shown on
+\autoref{fig:queryvalidation.png}) this information is available just at
+the right place: the developers are notified automatically and instantly
+about the possible failure they would accidentally cause.
+
+
+
  
