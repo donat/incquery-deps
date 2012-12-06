@@ -111,14 +111,14 @@ how fast can it react to the workspace modifications.
 
 The result of the measurement is shown on \autoref{fig:modelqueries.pdf}.
 The query engine initialized relatively fast, even the model which holds 400
-projects could load within a minute. Considering that it has to be done once
-per working session it is acceptable. Also with the memory allocation was linear
+projects could load within a minute. Considering that it has to be done once per
+working session it is acceptable. Also with the memory allocation was linear
 with the model size, it didn't explode, grew linearly with the input size.
-No models bigger than 400 elements could fit into the memory because of the 32
-bit platform limitation (64 bit systems could, naturally, extend this range).
-The response times for query updates after model modifications were always
-instantaneous (regardless of query or model size), which is consistent with
-literature results reported in~\cite{MODELS10}.
+No models describing more than 400 projects could fit into the memory because of
+the 32 bit platform limitation (64 bit systems could, naturally, extend this
+range). The response times were measured constantly below a millisecond
+regardless the size of the loaded model. This ''immediate response'' is
+consistent with literature results reported in~\cite{MODELS10}.
 
 \section{Performance evaluation conclusions}
 In summary, the performance evaluation of the system has concluded with the following.
