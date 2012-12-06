@@ -731,11 +731,24 @@ is executed. Then it filters to all the elements which are pointed by a
 dependency instance. Note that \code{repoSource} argument is bound to the
 repository dependency object.
 
-On start-up these queries are registered and accessible outside via a simple API.
-The UI components use this API to access the dependency information and show the
-current state in different views.
-
 The complete source code for all the queries is available in \autoref{examplequeries}.
+
+
+\subsubsection{UI integration}
+Most of the queries are explicitly attached to views to display the results.
+This happens in a context-sensitive way: the displayed data depends on the
+current selection in the development environment. 
+
+The model queries has a subset called  \emph{validation queries} which are a bit
+different from the others. They are searching if the loaded models comply with certain
+validation requirements. These queries have a slightly different output. Every
+result entry is a violation of the validation rule.
+
+The result of the validation queries are presented as warnings and error
+markers in the user interface. Just like Eclipse JDT flags the compilation and
+other errors and warnings. The validations are checked in the same on-the-fly
+manner as the normal queries and the UI marker notification is also instantly
+updated.
 
 
 \subsection{Elaboration of the example - continued}\label{sect:elabex2}
@@ -823,17 +836,6 @@ the components provide context-dependent and instant feedback.
 
 
 \paragraph{Validation queries}	
-Previously we went through the main user integration for displaying the results
-of queries. Now, let’s discuss the validation queries which are a bit different
-from the others. They are searching if the loaded models comply with certain
-validation requirements. These queries have a slightly different output. Every
-result entry is a violation of the validation rule.
-
-The result of the validation queries are presented as warnings and error
-markers in the user interface. Just like Eclipse JDT flags the compilation and
-other errors and warnings. The validations are checked in the same on-the-fly
-manner as the normal queries and the UI marker notification is also instantly
-updated.
 
 Let's examine the validation queries through the following example: Say that
 somebody wants to add a new \code{prettyPrint()} method to the \code{japc}'s
