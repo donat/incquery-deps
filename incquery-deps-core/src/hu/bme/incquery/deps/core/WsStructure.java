@@ -54,20 +54,21 @@ public class WsStructure {
 			e.printStackTrace();
 		}
 
-		WsBuildPrimitives prim = new WsBuildPrimitives(workspace);
-		try {
-			WsDeps deps = new WsDeps(prim);
-			for (IJavaElement elem : JdtModelWalker.allElements(projects)) {
-				if (elem instanceof IType || elem instanceof IMethod) {
-					deps.addElementToSearch(elem);
-				}
-			}
-			
-			deps.execute();
-
-		} catch (CoreException e) {
-			e.printStackTrace();
-		}
+		// TODO: optimize dependency resolution!
+//		WsBuildPrimitives prim = new WsBuildPrimitives(workspace);
+//		try {
+//			WsDeps deps = new WsDeps(prim);
+//			for (IJavaElement elem : JdtModelWalker.allElements(projects)) {
+//				if (elem instanceof IType || elem instanceof IMethod) {
+//					deps.addElementToSearch(elem);
+//				}
+//			}
+//			
+//			deps.execute();
+//
+//		} catch (CoreException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	public static void removeEntireProject(WWorkspace workspace, List<IJavaProject> projects) {
