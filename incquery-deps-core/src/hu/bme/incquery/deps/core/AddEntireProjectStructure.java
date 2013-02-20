@@ -33,17 +33,17 @@ public class AddEntireProjectStructure implements ModelBuilder {
 		try {
 
 			for (IJavaProject project : projects) {
-				WNamedElement emfProject = buildPrimitives.addNamedElement(null, project);
+				WNamedElement emfProject = buildPrimitives.addNamedElementToModel(null, project);
 
 				// Add all package fragment roots which are actual folders and not jar archives
 				for (IPackageFragmentRoot pfr : project.getPackageFragmentRoots()) {
 					if (!pfr.isArchive()) {
-						WNamedElement emfPfr = buildPrimitives.addNamedElement(emfProject, pfr);
+						WNamedElement emfPfr = buildPrimitives.addNamedElementToModel(emfProject, pfr);
 						for (IJavaElement pkgObject : pfr.getChildren()) {
 							IPackageFragment pkg = (IPackageFragment) pkgObject;
-							WNamedElement emfpf = buildPrimitives.addNamedElement(emfPfr, pkg);
+							WNamedElement emfpf = buildPrimitives.addNamedElementToModel(emfPfr, pkg);
 							for (ICompilationUnit cu : pkg.getCompilationUnits()) {
-								WNamedElement emfCu  = buildPrimitives.addNamedElement(emfpf, cu); 
+								WNamedElement emfCu  = buildPrimitives.addNamedElementToModel(emfpf, cu); 
 								for (IType t :cu.getTypes()) {
 									addType(emfCu, t);
 								}
@@ -58,17 +58,17 @@ public class AddEntireProjectStructure implements ModelBuilder {
 	}
 
 	private void addType(WNamedElement emfCu, IType t) throws JavaModelException {
-		WNamedElement emfType = buildPrimitives.addNamedElement(emfCu, t);
+		WNamedElement emfType = buildPrimitives.addNamedElementToModel(emfCu, t);
 		for (IType innerType : t.getTypes()) {
 			addType(emfCu, innerType);
 		}
 		
 		for(IMethod m : t.getMethods()) {
-			buildPrimitives.addNamedElement(emfType, m);
+			buildPrimitives.addNamedElementToModel(emfType, m);
 		}
 		
 		for(IField f : t.getFields()) {
-			buildPrimitives.addNamedElement(emfType, f);
+			buildPrimitives.addNamedElementToModel(emfType, f);
 		}
 	}
 

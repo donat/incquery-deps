@@ -5,7 +5,7 @@ import "http://inf.mit.bme.hu/donat/incquery-deps/cp3model"
 import "http://www.eclipse.org/emf/2002/Ecore"
 
 //-----------------------------------------------------------------------------
-// Helper patterns for composition
+// Helper patterns for composition 
 //-----------------------------------------------------------------------------
 
 private pattern projectsWithSameName(repoProject : CP3Project, wsProject : WProject) = {

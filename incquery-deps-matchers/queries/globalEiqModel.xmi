@@ -1,0 +1,2993 @@
+<?xml version="1.0" encoding="ASCII"?>
+<eMFPatternLanguage:PatternModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:eMFPatternLanguage="http://www.eclipse.org/viatra2/patternlanguage/EMFPatternLanguage" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:patternLanguage="http://www.eclipse.org/viatra2/patternlanguage/core/PatternLanguage" xmlns:types="http://www.eclipse.org/xtext/common/JavaVMTypes" xmlns:xbase="http://www.eclipse.org/xtext/xbase/Xbase">
+  <patterns name="cern.devtools.deps.query.cp3.projectsWithSameName" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <modifiers private="true"/>
+    <parameters name="repoProject">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project"/>
+      </type>
+    </parameters>
+    <parameters name="wsProject">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3AbstractItem/name"/>
+            </type>
+          </tail>
+          <src var="repoProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="commonName"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WNamedElement/name"/>
+            </type>
+          </tail>
+          <src var="wsProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="commonName"/>
+          </dst>
+        </head>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp3.methodsWithSameNameAndSameProject" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <modifiers private="true"/>
+    <parameters name="repoMethod">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Method"/>
+      </type>
+    </parameters>
+    <parameters name="wsMethod">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WMethod"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project/classes"/>
+            </type>
+            <tail>
+              <type xsi:type="eMFPatternLanguage:ReferenceType">
+                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Class/methods"/>
+              </type>
+            </tail>
+          </tail>
+          <src var="repoProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoMethod"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject/packageFragmentRoots"/>
+            </type>
+            <tail>
+              <type xsi:type="eMFPatternLanguage:ReferenceType">
+                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragmentRoot/packageFragments"/>
+              </type>
+              <tail>
+                <type xsi:type="eMFPatternLanguage:ReferenceType">
+                  <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragment/compilationUnits"/>
+                </type>
+                <tail>
+                  <type xsi:type="eMFPatternLanguage:ReferenceType">
+                    <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WCompilationUnit/types"/>
+                  </type>
+                  <tail>
+                    <type xsi:type="eMFPatternLanguage:ReferenceType">
+                      <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType/methods"/>
+                    </type>
+                  </tail>
+                </tail>
+              </tail>
+            </tail>
+          </tail>
+          <src var="wsProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="wsMethod"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.0">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoProject"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsProject"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Method"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3AbstractItem/name"/>
+            </type>
+          </tail>
+          <src var="repoMethod"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="name"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WMethod"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WNamedElement/name"/>
+            </type>
+          </tail>
+          <src var="wsMethod"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="name"/>
+          </dst>
+        </head>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp3.typesInWsProject" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <modifiers private="true"/>
+    <parameters name="wsType">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
+      </type>
+    </parameters>
+    <parameters name="wsProject">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject/packageFragmentRoots"/>
+            </type>
+            <tail>
+              <type xsi:type="eMFPatternLanguage:ReferenceType">
+                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragmentRoot/packageFragments"/>
+              </type>
+              <tail>
+                <type xsi:type="eMFPatternLanguage:ReferenceType">
+                  <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragment/compilationUnits"/>
+                </type>
+                <tail>
+                  <type xsi:type="eMFPatternLanguage:ReferenceType">
+                    <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WCompilationUnit/types"/>
+                  </type>
+                </tail>
+              </tail>
+            </tail>
+          </tail>
+          <src var="wsProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="wsType"/>
+          </dst>
+        </head>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp3.methodsInWsType" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <modifiers private="true"/>
+    <parameters name="wsMethod">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WMethod"/>
+      </type>
+    </parameters>
+    <parameters name="wsType">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType/methods"/>
+            </type>
+          </tail>
+          <src var="wsType"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="wsMethod"/>
+          </dst>
+        </head>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp3.fieldsInWsType" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <modifiers private="true"/>
+    <parameters name="wsField">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WField"/>
+      </type>
+    </parameters>
+    <parameters name="wsType">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType/fields"/>
+            </type>
+          </tail>
+          <src var="wsType"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="wsField"/>
+          </dst>
+        </head>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp3.classNamesInRepoProjects" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <modifiers private="true"/>
+    <parameters name="repoProject"/>
+    <parameters name="repoClassName"/>
+    <bodies>
+      <constraints xsi:type="eMFPatternLanguage:EClassifierConstraint">
+        <type xsi:type="eMFPatternLanguage:ClassType">
+          <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project"/>
+        </type>
+        <var var="repoProject"/>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project/classes"/>
+            </type>
+            <tail>
+              <type xsi:type="eMFPatternLanguage:ReferenceType">
+                <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3AbstractItem/name"/>
+              </type>
+            </tail>
+          </tail>
+          <src var="repoProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoClassName"/>
+          </dst>
+        </head>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp3.classNamesInWorkspaceProjects" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <modifiers private="true"/>
+    <parameters name="wsProject"/>
+    <parameters name="simpleName"/>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject/packageFragmentRoots"/>
+            </type>
+            <tail>
+              <type xsi:type="eMFPatternLanguage:ReferenceType">
+                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragmentRoot/packageFragments"/>
+              </type>
+              <tail>
+                <type xsi:type="eMFPatternLanguage:ReferenceType">
+                  <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragment/compilationUnits"/>
+                </type>
+                <tail>
+                  <type xsi:type="eMFPatternLanguage:ReferenceType">
+                    <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WCompilationUnit/types"/>
+                  </type>
+                  <tail>
+                    <type xsi:type="eMFPatternLanguage:ReferenceType">
+                      <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WNamedElement/name"/>
+                    </type>
+                  </tail>
+                </tail>
+              </tail>
+            </tail>
+          </tail>
+          <src var="wsProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="simpleName"/>
+          </dst>
+        </head>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp3.methodNamesInRepoProjects" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <modifiers private="true"/>
+    <parameters name="repoProject"/>
+    <parameters name="name"/>
+    <bodies>
+      <constraints xsi:type="eMFPatternLanguage:EClassifierConstraint">
+        <type xsi:type="eMFPatternLanguage:ClassType">
+          <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project"/>
+        </type>
+        <var var="repoProject"/>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project/classes"/>
+            </type>
+            <tail>
+              <type xsi:type="eMFPatternLanguage:ReferenceType">
+                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Class/methods"/>
+              </type>
+              <tail>
+                <type xsi:type="eMFPatternLanguage:ReferenceType">
+                  <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3AbstractItem/name"/>
+                </type>
+              </tail>
+            </tail>
+          </tail>
+          <src var="repoProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="name"/>
+          </dst>
+        </head>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp3.methodNamesInWorkspaceProjects" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <modifiers private="true"/>
+    <parameters name="wsProject"/>
+    <parameters name="name"/>
+    <bodies>
+      <constraints xsi:type="eMFPatternLanguage:EClassifierConstraint">
+        <type xsi:type="eMFPatternLanguage:ClassType">
+          <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject"/>
+        </type>
+        <var var="wsProject"/>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject/packageFragmentRoots"/>
+            </type>
+            <tail>
+              <type xsi:type="eMFPatternLanguage:ReferenceType">
+                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragmentRoot/packageFragments"/>
+              </type>
+              <tail>
+                <type xsi:type="eMFPatternLanguage:ReferenceType">
+                  <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragment/compilationUnits"/>
+                </type>
+                <tail>
+                  <type xsi:type="eMFPatternLanguage:ReferenceType">
+                    <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WCompilationUnit/types"/>
+                  </type>
+                  <tail>
+                    <type xsi:type="eMFPatternLanguage:ReferenceType">
+                      <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType/methods"/>
+                    </type>
+                    <tail>
+                      <type xsi:type="eMFPatternLanguage:ReferenceType">
+                        <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WNamedElement/name"/>
+                      </type>
+                    </tail>
+                  </tail>
+                </tail>
+              </tail>
+            </tail>
+          </tail>
+          <src var="wsProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="name"/>
+          </dst>
+        </head>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp3.fieldNamesInWorkspaceProjects" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <modifiers private="true"/>
+    <parameters name="wsProject"/>
+    <parameters name="name"/>
+    <bodies>
+      <constraints xsi:type="eMFPatternLanguage:EClassifierConstraint">
+        <type xsi:type="eMFPatternLanguage:ClassType">
+          <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject"/>
+        </type>
+        <var var="wsProject"/>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject/packageFragmentRoots"/>
+            </type>
+            <tail>
+              <type xsi:type="eMFPatternLanguage:ReferenceType">
+                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragmentRoot/packageFragments"/>
+              </type>
+              <tail>
+                <type xsi:type="eMFPatternLanguage:ReferenceType">
+                  <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragment/compilationUnits"/>
+                </type>
+                <tail>
+                  <type xsi:type="eMFPatternLanguage:ReferenceType">
+                    <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WCompilationUnit/types"/>
+                  </type>
+                  <tail>
+                    <type xsi:type="eMFPatternLanguage:ReferenceType">
+                      <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType/fields"/>
+                    </type>
+                    <tail>
+                      <type xsi:type="eMFPatternLanguage:ReferenceType">
+                        <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WNamedElement/name"/>
+                      </type>
+                    </tail>
+                  </tail>
+                </tail>
+              </tail>
+            </tail>
+          </tail>
+          <src var="wsProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="name"/>
+          </dst>
+        </head>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp3.fieldNamesInRepoProjects" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <modifiers private="true"/>
+    <parameters name="repoProject"/>
+    <parameters name="name"/>
+    <bodies>
+      <constraints xsi:type="eMFPatternLanguage:EClassifierConstraint">
+        <type xsi:type="eMFPatternLanguage:ClassType">
+          <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project"/>
+        </type>
+        <var var="repoProject"/>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project/classes"/>
+            </type>
+            <tail>
+              <type xsi:type="eMFPatternLanguage:ReferenceType">
+                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Class/fields"/>
+              </type>
+              <tail>
+                <type xsi:type="eMFPatternLanguage:ReferenceType">
+                  <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3AbstractItem/name"/>
+                </type>
+              </tail>
+            </tail>
+          </tail>
+          <src var="repoProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="name"/>
+          </dst>
+        </head>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp3.classesWithSameNameAndSameProject" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <modifiers private="true"/>
+    <parameters name="repoClass">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Class"/>
+      </type>
+    </parameters>
+    <parameters name="wsClass">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project/classes"/>
+            </type>
+          </tail>
+          <src var="repoProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoClass"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject/packageFragmentRoots"/>
+            </type>
+            <tail>
+              <type xsi:type="eMFPatternLanguage:ReferenceType">
+                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragmentRoot/packageFragments"/>
+              </type>
+              <tail>
+                <type xsi:type="eMFPatternLanguage:ReferenceType">
+                  <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragment/compilationUnits"/>
+                </type>
+                <tail>
+                  <type xsi:type="eMFPatternLanguage:ReferenceType">
+                    <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WCompilationUnit/types"/>
+                  </type>
+                </tail>
+              </tail>
+            </tail>
+          </tail>
+          <src var="wsProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="wsClass"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.0">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoProject"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsProject"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Class"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3AbstractItem/name"/>
+            </type>
+          </tail>
+          <src var="repoClass"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="name"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WNamedElement/name"/>
+            </type>
+          </tail>
+          <src var="wsClass"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="name"/>
+          </dst>
+        </head>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp3.fieldsWithSameNameAndSameProject" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <modifiers private="true"/>
+    <parameters name="repoField">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Field"/>
+      </type>
+    </parameters>
+    <parameters name="wsField">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WField"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project/classes"/>
+            </type>
+            <tail>
+              <type xsi:type="eMFPatternLanguage:ReferenceType">
+                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Class/fields"/>
+              </type>
+            </tail>
+          </tail>
+          <src var="repoProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoField"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject/packageFragmentRoots"/>
+            </type>
+            <tail>
+              <type xsi:type="eMFPatternLanguage:ReferenceType">
+                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragmentRoot/packageFragments"/>
+              </type>
+              <tail>
+                <type xsi:type="eMFPatternLanguage:ReferenceType">
+                  <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragment/compilationUnits"/>
+                </type>
+                <tail>
+                  <type xsi:type="eMFPatternLanguage:ReferenceType">
+                    <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WCompilationUnit/types"/>
+                  </type>
+                  <tail>
+                    <type xsi:type="eMFPatternLanguage:ReferenceType">
+                      <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType/fields"/>
+                    </type>
+                  </tail>
+                </tail>
+              </tail>
+            </tail>
+          </tail>
+          <src var="wsProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="wsField"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.0">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoProject"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsProject"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Field"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3AbstractItem/name"/>
+            </type>
+          </tail>
+          <src var="repoField"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="name"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WField"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WNamedElement/name"/>
+            </type>
+          </tail>
+          <src var="wsField"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="name"/>
+          </dst>
+        </head>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp3.classesWithSameFQNAndSameProject" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <modifiers private="true"/>
+    <parameters name="repoClass">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Class"/>
+      </type>
+    </parameters>
+    <parameters name="wsClass">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project/classes"/>
+            </type>
+          </tail>
+          <src var="repoProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoClass"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject/packageFragmentRoots"/>
+            </type>
+            <tail>
+              <type xsi:type="eMFPatternLanguage:ReferenceType">
+                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragmentRoot/packageFragments"/>
+              </type>
+              <tail>
+                <type xsi:type="eMFPatternLanguage:ReferenceType">
+                  <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragment/compilationUnits"/>
+                </type>
+                <tail>
+                  <type xsi:type="eMFPatternLanguage:ReferenceType">
+                    <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WCompilationUnit/types"/>
+                  </type>
+                </tail>
+              </tail>
+            </tail>
+          </tail>
+          <src var="wsProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="wsClass"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.0">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoProject"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsProject"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Class"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3AbstractItem/name"/>
+            </type>
+          </tail>
+          <src var="repoClass"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="commonSimpleName"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WNamedElement/name"/>
+            </type>
+          </tail>
+          <src var="wsClass"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="commonSimpleName"/>
+          </dst>
+        </head>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp3.addedClasses" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <parameters name="wsClass">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
+      </type>
+    </parameters>
+    <parameters name="wsProject">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WNamedElement/name"/>
+            </type>
+          </tail>
+          <src var="wsClass"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="simpleName"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject/packageFragmentRoots"/>
+            </type>
+            <tail>
+              <type xsi:type="eMFPatternLanguage:ReferenceType">
+                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragmentRoot/packageFragments"/>
+              </type>
+              <tail>
+                <type xsi:type="eMFPatternLanguage:ReferenceType">
+                  <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragment/compilationUnits"/>
+                </type>
+                <tail>
+                  <type xsi:type="eMFPatternLanguage:ReferenceType">
+                    <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WCompilationUnit/types"/>
+                  </type>
+                </tail>
+              </tail>
+            </tail>
+          </tail>
+          <src var="wsProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="wsClass"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.0">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoProject"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsProject"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint" negative="true">
+        <call patternRef="//@patterns.5">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoProject"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="simpleName"/>
+          </parameters>
+        </call>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp3.removedClasses" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <parameters name="repoClass">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Class"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project/classes"/>
+            </type>
+          </tail>
+          <src var="repoProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoClass"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Class"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3AbstractItem/name"/>
+            </type>
+          </tail>
+          <src var="repoClass"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="name"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.0">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoProject"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsProject"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint" negative="true">
+        <call patternRef="//@patterns.6">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsProject"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="name"/>
+          </parameters>
+        </call>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp3.addedMethods" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <parameters name="wsMethod">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WMethod"/>
+      </type>
+    </parameters>
+    <parameters name="wsClass">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WMethod"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WNamedElement/name"/>
+            </type>
+          </tail>
+          <src var="wsMethod"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="name"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject/packageFragmentRoots"/>
+            </type>
+            <tail>
+              <type xsi:type="eMFPatternLanguage:ReferenceType">
+                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragmentRoot/packageFragments"/>
+              </type>
+              <tail>
+                <type xsi:type="eMFPatternLanguage:ReferenceType">
+                  <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragment/compilationUnits"/>
+                </type>
+                <tail>
+                  <type xsi:type="eMFPatternLanguage:ReferenceType">
+                    <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WCompilationUnit/types"/>
+                  </type>
+                  <tail>
+                    <type xsi:type="eMFPatternLanguage:ReferenceType">
+                      <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType/methods"/>
+                    </type>
+                  </tail>
+                </tail>
+              </tail>
+            </tail>
+          </tail>
+          <src var="wsProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="wsMethod"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType/methods"/>
+            </type>
+          </tail>
+          <src var="wsClass"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="wsMethod"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.0">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoProject"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsProject"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint" negative="true">
+        <call patternRef="//@patterns.7">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoProject"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="name"/>
+          </parameters>
+        </call>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp3.removedMethod" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <parameters name="repoMethod">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Method"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Method"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3AbstractItem/name"/>
+            </type>
+          </tail>
+          <src var="repoMethod"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="name"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project/classes"/>
+            </type>
+            <tail>
+              <type xsi:type="eMFPatternLanguage:ReferenceType">
+                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Class/methods"/>
+              </type>
+            </tail>
+          </tail>
+          <src var="repoProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoMethod"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.0">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoProject"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsProject"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint" negative="true">
+        <call patternRef="//@patterns.8">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsProject"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="name"/>
+          </parameters>
+        </call>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp3.removedMethod2" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <parameters name="repoMethod">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Method"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Method"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3AbstractItem/name"/>
+            </type>
+          </tail>
+          <src var="repoMethod"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="name"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project/classes"/>
+            </type>
+            <tail>
+              <type xsi:type="eMFPatternLanguage:ReferenceType">
+                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Class/methods"/>
+              </type>
+            </tail>
+          </tail>
+          <src var="repoProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoMethod"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.0">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoProject"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsProject"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint" negative="true">
+        <call patternRef="//@patterns.8">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsProject"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="name"/>
+          </parameters>
+        </call>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp3.addedFields" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <parameters name="wsField">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WField"/>
+      </type>
+    </parameters>
+    <parameters name="wsClass">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WField"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WNamedElement/name"/>
+            </type>
+          </tail>
+          <src var="wsField"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="name"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject/packageFragmentRoots"/>
+            </type>
+            <tail>
+              <type xsi:type="eMFPatternLanguage:ReferenceType">
+                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragmentRoot/packageFragments"/>
+              </type>
+              <tail>
+                <type xsi:type="eMFPatternLanguage:ReferenceType">
+                  <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragment/compilationUnits"/>
+                </type>
+                <tail>
+                  <type xsi:type="eMFPatternLanguage:ReferenceType">
+                    <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WCompilationUnit/types"/>
+                  </type>
+                  <tail>
+                    <type xsi:type="eMFPatternLanguage:ReferenceType">
+                      <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType/fields"/>
+                    </type>
+                  </tail>
+                </tail>
+              </tail>
+            </tail>
+          </tail>
+          <src var="wsProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="wsField"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType/fields"/>
+            </type>
+          </tail>
+          <src var="wsClass"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="wsField"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.0">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoProject"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsProject"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint" negative="true">
+        <call patternRef="//@patterns.10">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoProject"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="name"/>
+          </parameters>
+        </call>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp3.removedFields" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <parameters name="repoField">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Field"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Field"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3AbstractItem/name"/>
+            </type>
+          </tail>
+          <src var="repoField"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="name"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project/classes"/>
+            </type>
+            <tail>
+              <type xsi:type="eMFPatternLanguage:ReferenceType">
+                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Class/fields"/>
+              </type>
+            </tail>
+          </tail>
+          <src var="repoProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoField"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.0">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoProject"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsProject"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint" negative="true">
+        <call patternRef="//@patterns.9">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsProject"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="name"/>
+          </parameters>
+        </call>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp3.incomingInheritances" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <parameters name="repoSource">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Class"/>
+      </type>
+    </parameters>
+    <parameters name="wsTarget">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.13">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoTarget"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsTarget"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/from"/>
+            </type>
+          </tail>
+          <src var="dependency"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoSource"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/to"/>
+            </type>
+          </tail>
+          <src var="dependency"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoTarget"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/type"/>
+            </type>
+          </tail>
+          <src var="dependency"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="type"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:CheckConstraint">
+        <expression xsi:type="xbase:XBinaryOperation">
+          <feature xsi:type="types:JvmOperation" href="java:/Objects/org.eclipse.xtext.xbase.lib.ShortExtensions#org.eclipse.xtext.xbase.lib.ShortExtensions.operator_equals(short,int)"/>
+          <leftOperand xsi:type="xbase:XFeatureCall" feature="//@patterns.21/@bodies.0/@variables.4"/>
+          <rightOperand xsi:type="xbase:XNumberLiteral" value="5"/>
+        </expression>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp3.incomingClassUsages" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <parameters name="repoSource">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Class"/>
+      </type>
+    </parameters>
+    <parameters name="wsTarget">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.13">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoTarget"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsTarget"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/from"/>
+            </type>
+          </tail>
+          <src var="dependency"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoSource"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/to"/>
+            </type>
+          </tail>
+          <src var="dependency"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoTarget"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/type"/>
+            </type>
+          </tail>
+          <src var="dependency"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="type"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:CheckConstraint">
+        <expression xsi:type="xbase:XBinaryOperation">
+          <feature xsi:type="types:JvmOperation" href="java:/Objects/org.eclipse.xtext.xbase.lib.ShortExtensions#org.eclipse.xtext.xbase.lib.ShortExtensions.operator_equals(short,int)"/>
+          <leftOperand xsi:type="xbase:XFeatureCall" feature="//@patterns.22/@bodies.0/@variables.4"/>
+          <rightOperand xsi:type="xbase:XNumberLiteral" value="4"/>
+        </expression>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp3.incomingMethodCalls" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <parameters name="repoSource">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Method"/>
+      </type>
+    </parameters>
+    <parameters name="wsTarget">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WMethod"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.1">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoTarget"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsTarget"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/from"/>
+            </type>
+          </tail>
+          <src var="dependency"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoSource"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/to"/>
+            </type>
+          </tail>
+          <src var="dependency"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoTarget"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/type"/>
+            </type>
+          </tail>
+          <src var="dependency"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="type"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:CheckConstraint">
+        <expression xsi:type="xbase:XBinaryOperation">
+          <feature xsi:type="types:JvmOperation" href="java:/Objects/org.eclipse.xtext.xbase.lib.ShortExtensions#org.eclipse.xtext.xbase.lib.ShortExtensions.operator_equals(short,int)"/>
+          <leftOperand xsi:type="xbase:XFeatureCall" feature="//@patterns.23/@bodies.0/@variables.4"/>
+          <rightOperand xsi:type="xbase:XNumberLiteral" value="1"/>
+        </expression>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp3.incomingMethodOverride" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <parameters name="repoSource">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Method"/>
+      </type>
+    </parameters>
+    <parameters name="wsTarget">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WMethod"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.1">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoTarget"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsTarget"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/from"/>
+            </type>
+          </tail>
+          <src var="dependency"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoSource"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/to"/>
+            </type>
+          </tail>
+          <src var="dependency"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoTarget"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/type"/>
+            </type>
+          </tail>
+          <src var="dependency"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="type"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:CheckConstraint">
+        <expression xsi:type="xbase:XBinaryOperation">
+          <feature xsi:type="types:JvmOperation" href="java:/Objects/org.eclipse.xtext.xbase.lib.ShortExtensions#org.eclipse.xtext.xbase.lib.ShortExtensions.operator_equals(short,int)"/>
+          <leftOperand xsi:type="xbase:XFeatureCall" feature="//@patterns.24/@bodies.0/@variables.4"/>
+          <rightOperand xsi:type="xbase:XNumberLiteral" value="2"/>
+        </expression>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp3.incomingFieldAccesses" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <parameters name="repoSource">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Method"/>
+      </type>
+    </parameters>
+    <parameters name="wsTarget">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WField"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.12">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoTarget"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsTarget"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/from"/>
+            </type>
+          </tail>
+          <src var="dependency"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoSource"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/to"/>
+            </type>
+          </tail>
+          <src var="dependency"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoTarget"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/type"/>
+            </type>
+          </tail>
+          <src var="dependency"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="type"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:CheckConstraint">
+        <expression xsi:type="xbase:XBinaryOperation">
+          <feature xsi:type="types:JvmOperation" href="java:/Objects/org.eclipse.xtext.xbase.lib.ShortExtensions#org.eclipse.xtext.xbase.lib.ShortExtensions.operator_equals(short,int)"/>
+          <leftOperand xsi:type="xbase:XFeatureCall" feature="//@patterns.25/@bodies.0/@variables.4"/>
+          <rightOperand xsi:type="xbase:XNumberLiteral" value="3"/>
+        </expression>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp3.impactCausedByRemovedFields" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <parameters name="repoFrom">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Method"/>
+      </type>
+    </parameters>
+    <parameters name="repoTo">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Field"/>
+      </type>
+    </parameters>
+    <parameters name="type">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EShort"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.20">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoTo"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/from"/>
+            </type>
+          </tail>
+          <src var="d"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoFrom"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/to"/>
+            </type>
+          </tail>
+          <src var="d"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoTo"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/type"/>
+            </type>
+          </tail>
+          <src var="d"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="type"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:CheckConstraint">
+        <expression xsi:type="xbase:XBinaryOperation">
+          <feature xsi:type="types:JvmOperation" href="java:/Objects/org.eclipse.xtext.xbase.lib.ShortExtensions#org.eclipse.xtext.xbase.lib.ShortExtensions.operator_equals(short,int)"/>
+          <leftOperand xsi:type="xbase:XFeatureCall" feature="//@patterns.26/@bodies.0/@variables.2"/>
+          <rightOperand xsi:type="xbase:XNumberLiteral" value="3"/>
+        </expression>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp3.impactCausedByRemovedMethods" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <parameters name="repoFrom">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Method"/>
+      </type>
+    </parameters>
+    <parameters name="repoTo">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Method"/>
+      </type>
+    </parameters>
+    <parameters name="type">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EShort"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.17">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoTo"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/from"/>
+            </type>
+          </tail>
+          <src var="d"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoFrom"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/to"/>
+            </type>
+          </tail>
+          <src var="d"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoTo"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/type"/>
+            </type>
+          </tail>
+          <src var="d"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="type"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:CheckConstraint">
+        <expression xsi:type="xbase:XBinaryOperation">
+          <feature xsi:type="types:JvmOperation" href="java:/Objects/org.eclipse.xtext.xbase.lib.ShortExtensions#org.eclipse.xtext.xbase.lib.ShortExtensions.operator_equals(short,int)"/>
+          <leftOperand xsi:type="xbase:XFeatureCall" feature="//@patterns.27/@bodies.0/@variables.2"/>
+          <rightOperand xsi:type="xbase:XNumberLiteral" value="1"/>
+        </expression>
+      </constraints>
+    </bodies>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.17">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoTo"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/from"/>
+            </type>
+          </tail>
+          <src var="d"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoFrom"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/to"/>
+            </type>
+          </tail>
+          <src var="d"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoTo"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/type"/>
+            </type>
+          </tail>
+          <src var="d"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="type"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:CheckConstraint">
+        <expression xsi:type="xbase:XBinaryOperation">
+          <feature xsi:type="types:JvmOperation" href="java:/Objects/org.eclipse.xtext.xbase.lib.ShortExtensions#org.eclipse.xtext.xbase.lib.ShortExtensions.operator_equals(short,int)"/>
+          <leftOperand xsi:type="xbase:XFeatureCall" feature="//@patterns.27/@bodies.1/@variables.2"/>
+          <rightOperand xsi:type="xbase:XNumberLiteral" value="2"/>
+        </expression>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp3.impactCausedByRemovedClasses" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <parameters name="repoFrom">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Class"/>
+      </type>
+    </parameters>
+    <parameters name="repoTo">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Class"/>
+      </type>
+    </parameters>
+    <parameters name="type">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EShort"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.15">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoTo"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/from"/>
+            </type>
+          </tail>
+          <src var="d"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoFrom"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/to"/>
+            </type>
+          </tail>
+          <src var="d"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoTo"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/type"/>
+            </type>
+          </tail>
+          <src var="d"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="type"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:CheckConstraint">
+        <expression xsi:type="xbase:XBinaryOperation">
+          <feature xsi:type="types:JvmOperation" href="java:/Objects/org.eclipse.xtext.xbase.lib.ShortExtensions#org.eclipse.xtext.xbase.lib.ShortExtensions.operator_equals(short,int)"/>
+          <leftOperand xsi:type="xbase:XFeatureCall" feature="//@patterns.28/@bodies.0/@variables.2"/>
+          <rightOperand xsi:type="xbase:XNumberLiteral" value="4"/>
+        </expression>
+      </constraints>
+    </bodies>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.15">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoTo"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/from"/>
+            </type>
+          </tail>
+          <src var="d"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoFrom"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/to"/>
+            </type>
+          </tail>
+          <src var="d"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoTo"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/type"/>
+            </type>
+          </tail>
+          <src var="d"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="type"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:CheckConstraint">
+        <expression xsi:type="xbase:XBinaryOperation">
+          <feature xsi:type="types:JvmOperation" href="java:/Objects/org.eclipse.xtext.xbase.lib.ShortExtensions#org.eclipse.xtext.xbase.lib.ShortExtensions.operator_equals(short,int)"/>
+          <leftOperand xsi:type="xbase:XFeatureCall" feature="//@patterns.28/@bodies.1/@variables.2"/>
+          <rightOperand xsi:type="xbase:XNumberLiteral" value="5"/>
+        </expression>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp3.outgoingMethodCallDependencyAdded" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <modifiers private="true"/>
+    <parameters name="wsMethodFrom">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WMethod"/>
+      </type>
+    </parameters>
+    <parameters name="wsMethodTo">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WMethod"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WDependency"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WDependency/from"/>
+            </type>
+          </tail>
+          <src var="d"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="wsMethodFrom"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WDependency"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WDependency/to"/>
+            </type>
+          </tail>
+          <src var="d"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="wsMethodTo"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WDependency"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WDependency/type"/>
+            </type>
+          </tail>
+          <src var="d"/>
+          <dst xsi:type="eMFPatternLanguage:EnumValue">
+            <literal href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WDependencyType/METHOD_CALL"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject/packageFragmentRoots"/>
+            </type>
+            <tail>
+              <type xsi:type="eMFPatternLanguage:ReferenceType">
+                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragmentRoot/packageFragments"/>
+              </type>
+              <tail>
+                <type xsi:type="eMFPatternLanguage:ReferenceType">
+                  <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragment/compilationUnits"/>
+                </type>
+                <tail>
+                  <type xsi:type="eMFPatternLanguage:ReferenceType">
+                    <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WCompilationUnit/types"/>
+                  </type>
+                  <tail>
+                    <type xsi:type="eMFPatternLanguage:ReferenceType">
+                      <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType/methods"/>
+                    </type>
+                  </tail>
+                </tail>
+              </tail>
+            </tail>
+          </tail>
+          <src var="wsP1"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="wsMethodFrom"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject/packageFragmentRoots"/>
+            </type>
+            <tail>
+              <type xsi:type="eMFPatternLanguage:ReferenceType">
+                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragmentRoot/packageFragments"/>
+              </type>
+              <tail>
+                <type xsi:type="eMFPatternLanguage:ReferenceType">
+                  <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragment/compilationUnits"/>
+                </type>
+                <tail>
+                  <type xsi:type="eMFPatternLanguage:ReferenceType">
+                    <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WCompilationUnit/types"/>
+                  </type>
+                  <tail>
+                    <type xsi:type="eMFPatternLanguage:ReferenceType">
+                      <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType/methods"/>
+                    </type>
+                  </tail>
+                </tail>
+              </tail>
+            </tail>
+          </tail>
+          <src var="wsP2"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="wsMethodFrom"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.1">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoMethodFrom"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsMethodFrom"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.1">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoMethodTo"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsMethodTo"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/type"/>
+            </type>
+          </tail>
+          <src var="repoD"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="type"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:CheckConstraint">
+        <expression xsi:type="xbase:XBinaryOperation">
+          <feature xsi:type="types:JvmOperation" href="java:/Objects/org.eclipse.xtext.xbase.lib.ShortExtensions#org.eclipse.xtext.xbase.lib.ShortExtensions.operator_equals(short,int)"/>
+          <leftOperand xsi:type="xbase:XFeatureCall" feature="//@patterns.29/@bodies.0/@variables.8"/>
+          <rightOperand xsi:type="xbase:XNumberLiteral" value="3"/>
+        </expression>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint" negative="true">
+        <call patternRef="//@patterns.30">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoMethodFrom"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoMethodTo"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoD"/>
+          </parameters>
+        </call>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp3.repoDependency" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <modifiers private="true"/>
+    <parameters name="ceFrom">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3AbstractItem"/>
+      </type>
+    </parameters>
+    <parameters name="ceTo">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3AbstractItem"/>
+      </type>
+    </parameters>
+    <parameters name="d">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/from"/>
+            </type>
+          </tail>
+          <src var="d"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="ceFrom"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/to"/>
+            </type>
+          </tail>
+          <src var="d"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="ceTo"/>
+          </dst>
+        </head>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.cp3.incompatibleSuperClassesChanges" fileName="platform:/resource/incquery-deps-matchers/src/cp3.eiq">
+    <parameters name="wsClass">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.21">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="_repoDep"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsClass"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.13">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoClass"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsClass"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.17">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="removedMethod"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Class"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Class/methods"/>
+            </type>
+          </tail>
+          <src var="repoClass"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="removedMethod"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Method"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3AbstractItem/name"/>
+            </type>
+          </tail>
+          <src var="removedMethod"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="removedMethodName"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Class"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3AbstractItem/name"/>
+            </type>
+          </tail>
+          <src var="repoClass"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="className"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:CheckConstraint">
+        <expression xsi:type="xbase:XBinaryOperation">
+          <feature xsi:type="types:JvmOperation" href="java:/Objects/org.eclipse.xtext.xbase.lib.ObjectExtensions#org.eclipse.xtext.xbase.lib.ObjectExtensions.operator_notEquals(java.lang.Object,java.lang.Object)"/>
+          <leftOperand xsi:type="xbase:XFeatureCall" feature="//@patterns.31/@bodies.0/@variables.4"/>
+          <rightOperand xsi:type="xbase:XFeatureCall" feature="//@patterns.31/@bodies.0/@variables.5"/>
+        </expression>
+      </constraints>
+    </bodies>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.21">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="_repoDep"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsClass"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.13">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="_repoClass"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsClass"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.16">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="_wsMethod"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsClass"/>
+          </parameters>
+        </call>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.marker.projectsWithSameName" fileName="platform:/resource/incquery-deps-matchers/src/marker.eiq">
+    <modifiers private="true"/>
+    <parameters name="repoProject">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project"/>
+      </type>
+    </parameters>
+    <parameters name="wsProject">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3AbstractItem/name"/>
+            </type>
+          </tail>
+          <src var="repoProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="commonName"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WNamedElement/name"/>
+            </type>
+          </tail>
+          <src var="wsProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="commonName"/>
+          </dst>
+        </head>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.marker.methodNamesInWorkspaceProjects" fileName="platform:/resource/incquery-deps-matchers/src/marker.eiq">
+    <modifiers private="true"/>
+    <parameters name="wsProject"/>
+    <parameters name="name"/>
+    <bodies>
+      <constraints xsi:type="eMFPatternLanguage:EClassifierConstraint">
+        <type xsi:type="eMFPatternLanguage:ClassType">
+          <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject"/>
+        </type>
+        <var var="wsProject"/>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject/packageFragmentRoots"/>
+            </type>
+            <tail>
+              <type xsi:type="eMFPatternLanguage:ReferenceType">
+                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragmentRoot/packageFragments"/>
+              </type>
+              <tail>
+                <type xsi:type="eMFPatternLanguage:ReferenceType">
+                  <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragment/compilationUnits"/>
+                </type>
+                <tail>
+                  <type xsi:type="eMFPatternLanguage:ReferenceType">
+                    <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WCompilationUnit/types"/>
+                  </type>
+                  <tail>
+                    <type xsi:type="eMFPatternLanguage:ReferenceType">
+                      <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType/methods"/>
+                    </type>
+                    <tail>
+                      <type xsi:type="eMFPatternLanguage:ReferenceType">
+                        <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WNamedElement/name"/>
+                      </type>
+                    </tail>
+                  </tail>
+                </tail>
+              </tail>
+            </tail>
+          </tail>
+          <src var="wsProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="name"/>
+          </dst>
+        </head>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.marker.removedMethod" fileName="platform:/resource/incquery-deps-matchers/src/marker.eiq">
+    <parameters name="repoMethod">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Method"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Method"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3AbstractItem/name"/>
+            </type>
+          </tail>
+          <src var="repoMethod"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="name"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project/classes"/>
+            </type>
+            <tail>
+              <type xsi:type="eMFPatternLanguage:ReferenceType">
+                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Class/methods"/>
+              </type>
+            </tail>
+          </tail>
+          <src var="repoProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoMethod"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.32">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoProject"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsProject"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint" negative="true">
+        <call patternRef="//@patterns.33">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsProject"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="name"/>
+          </parameters>
+        </call>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.marker.classesWithSameFQNAndSameProject" fileName="platform:/resource/incquery-deps-matchers/src/marker.eiq">
+    <modifiers private="true"/>
+    <parameters name="repoClass">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Class"/>
+      </type>
+    </parameters>
+    <parameters name="wsClass">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Project/classes"/>
+            </type>
+          </tail>
+          <src var="repoProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoClass"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WProject/packageFragmentRoots"/>
+            </type>
+            <tail>
+              <type xsi:type="eMFPatternLanguage:ReferenceType">
+                <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragmentRoot/packageFragments"/>
+              </type>
+              <tail>
+                <type xsi:type="eMFPatternLanguage:ReferenceType">
+                  <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WPackageFragment/compilationUnits"/>
+                </type>
+                <tail>
+                  <type xsi:type="eMFPatternLanguage:ReferenceType">
+                    <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WCompilationUnit/types"/>
+                  </type>
+                </tail>
+              </tail>
+            </tail>
+          </tail>
+          <src var="wsProject"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="wsClass"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.32">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoProject"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsProject"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Class"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3AbstractItem/name"/>
+            </type>
+          </tail>
+          <src var="repoClass"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="commonSimpleName"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WNamedElement/name"/>
+            </type>
+          </tail>
+          <src var="wsClass"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="commonSimpleName"/>
+          </dst>
+        </head>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.marker.incomingInheritances" fileName="platform:/resource/incquery-deps-matchers/src/marker.eiq">
+    <parameters name="repoSource">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Class"/>
+      </type>
+    </parameters>
+    <parameters name="wsTarget">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.35">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoTarget"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsTarget"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/from"/>
+            </type>
+          </tail>
+          <src var="dependency"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoSource"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/to"/>
+            </type>
+          </tail>
+          <src var="dependency"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="repoTarget"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Dep/type"/>
+            </type>
+          </tail>
+          <src var="dependency"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="type"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:CheckConstraint">
+        <expression xsi:type="xbase:XBinaryOperation">
+          <feature xsi:type="types:JvmOperation" href="java:/Objects/org.eclipse.xtext.xbase.lib.ShortExtensions#org.eclipse.xtext.xbase.lib.ShortExtensions.operator_equals(short,int)"/>
+          <leftOperand xsi:type="xbase:XFeatureCall" feature="//@patterns.36/@bodies.0/@variables.4"/>
+          <rightOperand xsi:type="xbase:XNumberLiteral" value="5"/>
+        </expression>
+      </constraints>
+    </bodies>
+  </patterns>
+  <patterns name="cern.devtools.deps.query.marker.incompatibleSuperClassesChanges" fileName="platform:/resource/incquery-deps-matchers/src/marker.eiq">
+    <parameters name="wsClass">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#//WType"/>
+      </type>
+    </parameters>
+    <parameters name="repoClass">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Class"/>
+      </type>
+    </parameters>
+    <parameters name="removedMethod">
+      <type xsi:type="eMFPatternLanguage:ClassType">
+        <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Method"/>
+      </type>
+    </parameters>
+    <bodies>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.36">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="_repoDep"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsClass"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.35">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="repoClass"/>
+          </parameters>
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="wsClass"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PatternCompositionConstraint">
+        <call patternRef="//@patterns.34">
+          <parameters xsi:type="patternLanguage:VariableValue">
+            <value var="removedMethod"/>
+          </parameters>
+        </call>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Class"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EReference" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Class/methods"/>
+            </type>
+          </tail>
+          <src var="repoClass"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="removedMethod"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Method"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3AbstractItem/name"/>
+            </type>
+          </tail>
+          <src var="removedMethod"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="removedMethodName"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:PathExpressionConstraint">
+        <head>
+          <type xsi:type="eMFPatternLanguage:ClassType">
+            <classname xsi:type="ecore:EClass" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3Class"/>
+          </type>
+          <tail>
+            <type xsi:type="eMFPatternLanguage:ReferenceType">
+              <refname xsi:type="ecore:EAttribute" href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#//CP3AbstractItem/name"/>
+            </type>
+          </tail>
+          <src var="repoClass"/>
+          <dst xsi:type="patternLanguage:VariableValue">
+            <value var="className"/>
+          </dst>
+        </head>
+      </constraints>
+      <constraints xsi:type="patternLanguage:CheckConstraint">
+        <expression xsi:type="xbase:XBinaryOperation">
+          <feature xsi:type="types:JvmOperation" href="java:/Objects/org.eclipse.xtext.xbase.lib.ObjectExtensions#org.eclipse.xtext.xbase.lib.ObjectExtensions.operator_notEquals(java.lang.Object,java.lang.Object)"/>
+          <leftOperand xsi:type="xbase:XFeatureCall" feature="//@patterns.37/@bodies.0/@variables.4"/>
+          <rightOperand xsi:type="xbase:XFeatureCall" feature="//@patterns.37/@bodies.0/@variables.5"/>
+        </expression>
+      </constraints>
+    </bodies>
+  </patterns>
+  <importPackages>
+    <ePackage href="http://inf.mit.bme.hu/donat/incquery-deps/wsmodel#/"/>
+  </importPackages>
+  <importPackages>
+    <ePackage href="http://www.eclipse.org/emf/2002/Ecore#/"/>
+  </importPackages>
+  <importPackages>
+    <ePackage href="http://inf.mit.bme.hu/donat/incquery-deps/cp3model#/"/>
+  </importPackages>
+</eMFPatternLanguage:PatternModel>

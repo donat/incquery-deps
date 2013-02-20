@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: incquery-deps-util
-Bundle-SymbolicName: incquery-deps-util;singleton:=true
+Bundle-Name: hu.bme.incquery.deps.util
+Bundle-SymbolicName: hu.bme.incquery.deps.util;singleton:=true
 Bundle-Version: 1.0.0.dev
 Bundle-Activator: hu.bme.incquery.deps.internal.Activator
 Require-Bundle: org.eclipse.ui,

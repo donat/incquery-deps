@@ -266,7 +266,7 @@ public class WCompilationUnitImpl extends WNamedElementImpl implements WCompilat
 	 */
 	@Override
 	public void setParent(WNamedElement parent) {
-		if (parent instanceof WPackageFragment) {
+		if (parent == null || parent instanceof WPackageFragment) {
 			this.setPackageFragment((WPackageFragment) parent);
 		}
 		else {

@@ -1,11 +1,11 @@
 package hu.bme.incquery.deps.core;
 
+import hu.bme.incquery.deps.wsmodel.WCompilationUnit;
 import hu.bme.incquery.deps.wsmodel.WNamedElement;
 import hu.bme.incquery.deps.wsmodel.WWorkspace;
 
 import java.util.List;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IField;
 import org.eclipse.jdt.core.IJavaElement;
@@ -24,25 +24,25 @@ public class WsStructure {
 			WsBuildPrimitives buildPrimitives = new WsBuildPrimitives(workspace);
 
 			for (IJavaProject project : projects) {
-				WNamedElement emfProject = buildPrimitives.addNamedElement(null, project);
+				WNamedElement emfProject = buildPrimitives.addNamedElementToModel(null, project);
 
 				// Add all package fragment roots which are actual folders and not jar archives
 				for (IPackageFragmentRoot pfr : project.getPackageFragmentRoots()) {
 					if (!pfr.isArchive()) {
-						WNamedElement emfPfr = buildPrimitives.addNamedElement(emfProject, pfr);
+						WNamedElement emfPfr = buildPrimitives.addNamedElementToModel(emfProject, pfr);
 						for (IJavaElement pkgObject : pfr.getChildren()) {
 							IPackageFragment pkg = (IPackageFragment) pkgObject;
-							WNamedElement emfpf = buildPrimitives.addNamedElement(emfPfr, pkg);
+							WNamedElement emfpf = buildPrimitives.addNamedElementToModel(emfPfr, pkg);
 							for (ICompilationUnit cu : pkg.getCompilationUnits()) {
-								WNamedElement emfCu = buildPrimitives.addNamedElement(emfpf, cu);
+								WNamedElement emfCu = buildPrimitives.addNamedElementToModel(emfpf, cu);
 								for (IType t : cu.getAllTypes()) {
-									WNamedElement emfType = buildPrimitives.addNamedElement(emfCu, t);
+									WNamedElement emfType = buildPrimitives.addNamedElementToModel(emfCu, t);
 									for (IMethod m : t.getMethods()) {
-										buildPrimitives.addNamedElement(emfType, m);
+										buildPrimitives.addNamedElementToModel(emfType, m);
 									}
 
 									for (IField f : t.getFields()) {
-										buildPrimitives.addNamedElement(emfType, f);
+										buildPrimitives.addNamedElementToModel(emfType, f);
 									}
 								}
 							}
@@ -53,6 +53,8 @@ public class WsStructure {
 		} catch (JavaModelException e) {
 			e.printStackTrace();
 		}
+		
+		
 
 		// TODO: optimize dependency resolution!
 //		WsBuildPrimitives prim = new WsBuildPrimitives(workspace);
@@ -70,6 +72,21 @@ public class WsStructure {
 //			e.printStackTrace();
 //		}
 	}
+	
+	public static WCompilationUnit createCompilationUnitModel(ICompilationUnit cu) throws JavaModelException {
+        WCompilationUnit emfCu = (WCompilationUnit) WsBuildPrimitives.addNamedElement(null, cu);
+        for (IType t : cu.getAllTypes()) {
+            WNamedElement emfType = WsBuildPrimitives.addNamedElement(emfCu, t);
+            for (IMethod m : t.getMethods()) {
+                WsBuildPrimitives.addNamedElement(emfType, m);
+            }
+
+            for (IField f : t.getFields()) {
+                WsBuildPrimitives.addNamedElement(emfType, f);
+            }
+        }
+        return emfCu;
+    }
 
 	public static void removeEntireProject(WWorkspace workspace, List<IJavaProject> projects) {
 		WsBuildPrimitives buildPrimitives = new WsBuildPrimitives(workspace);

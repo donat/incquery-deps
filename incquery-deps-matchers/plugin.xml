@@ -5,16 +5,16 @@
          id="cern.devtools.deps.query.marker.removedMethod"
          point="org.eclipse.viatra2.emf.incquery.matcherfactory">
       <matcher
-            factoryProvider="cern.devtools.deps.query.marker.removedmethod.RemovedMethodMatcherFactory$Provider"
-            id="cern.devtools.deps.query.marker.removedMethod">
+            id="cern.devtools.deps.query.marker.removedMethod"
+            factoryProvider="cern.devtools.deps.query.marker.removedmethod.RemovedMethodMatcherFactory$Provider">
       </matcher>
    </extension>
    <extension
          id="cern.devtools.deps.query.marker.incomingInheritances"
          point="org.eclipse.viatra2.emf.incquery.matcherfactory">
       <matcher
-            factoryProvider="cern.devtools.deps.query.marker.incominginheritances.IncomingInheritancesMatcherFactory$Provider"
-            id="cern.devtools.deps.query.marker.incomingInheritances">
+            id="cern.devtools.deps.query.marker.incomingInheritances"
+            factoryProvider="cern.devtools.deps.query.marker.incominginheritances.IncomingInheritancesMatcherFactory$Provider">
       </matcher>
    </extension>
    <extension
@@ -29,8 +29,8 @@
          id="cern.devtools.deps.query.marker.incompatibleSuperClassesChanges"
          point="org.eclipse.viatra2.emf.incquery.matcherfactory">
       <matcher
-            factoryProvider="cern.devtools.deps.query.marker.incompatiblesuperclasseschanges.IncompatibleSuperClassesChangesMatcherFactory$Provider"
-            id="cern.devtools.deps.query.marker.incompatibleSuperClassesChanges">
+            id="cern.devtools.deps.query.marker.incompatibleSuperClassesChanges"
+            factoryProvider="cern.devtools.deps.query.marker.incompatiblesuperclasseschanges.IncompatibleSuperClassesChangesMatcherFactory$Provider">
       </matcher>
    </extension>
    <extension

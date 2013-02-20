@@ -6,10 +6,10 @@ Bundle-Version: 1.0.0.dev
 Bundle-Activator: hu.bme.incquery.deps.internal.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.eclipse.emf.edit.ui;bundle-version="2.8.0",
- org.eclipse.ui.ide;bundle-version="3.8.0",
- org.eclipse.emf.ecore.xmi;bundle-version="2.8.0",
- org.eclipse.jdt.core;bundle-version="3.8.1",
+ org.eclipse.emf.edit.ui,
+ org.eclipse.ui.ide,
+ org.eclipse.emf.ecore.xmi,
+ org.eclipse.jdt.core,
  hu.bme.incquery.deps.wsmodel.edit;bundle-version="1.0.0",
  hu.bme.incquery.deps.wsmodel.editor;bundle-version="1.0.0",
  hu.bme.incquery.deps.repomodel;bundle-version="1.0.0",
@@ -24,11 +24,11 @@ Require-Bundle: org.eclipse.ui,
  hu.bme.incquery.deps.core;bundle-version="1.0.0",
  hu.bme.incquery.deps.engine;bundle-version="1.0.0",
  incquery-deps-matchers;bundle-version="0.0.1",
- org.eclipse.jdt.ui;bundle-version="3.8.0",
- org.eclipse.jface.text;bundle-version="3.8.0",
- incquery-deps-util;bundle-version="1.0.0",
- org.eclipse.ui.workbench.texteditor;bundle-version="3.8.0",
- org.eclipse.ui.editors;bundle-version="3.8.0"
+ org.eclipse.jdt.ui,
+ org.eclipse.jface.text,
+ org.eclipse.ui.workbench.texteditor,
+ org.eclipse.ui.editors,
+ hu.bme.incquery.deps.util
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: icons/,

@@ -54,11 +54,32 @@ public class WsBuildPrimitives {
 
 		return p;
 	}
+	
+	public WNamedElement addNamedElementToModel(WNamedElement container, IJavaElement jdtItem) {
+	    WNamedElement elem = addNamedElement(container, jdtItem);
 
-	public WNamedElement addNamedElement(WNamedElement container, IJavaElement jdtItem) {
-		WNamedElement elem = null;
 
-		if (jdtItem instanceof IJavaProject) {
+		workspace.getElements().add(elem);
+		if (container != null) {
+			container.addChild(elem);
+		}
+		// Only happens if the container is the Workspace itself.
+		else {
+			workspace.getProjects().add((WProject) elem);
+		}
+
+		return elem;
+	}
+
+    /**
+     * @param container
+     * @param jdtItem
+     * @param elem
+     * @return
+     */
+    public static WNamedElement addNamedElement(WNamedElement container, IJavaElement jdtItem) {
+        WNamedElement elem = null;
+        if (jdtItem instanceof IJavaProject) {
 			elem = WsmodelFactory.eINSTANCE.createWProject();
 		} else if (jdtItem instanceof IPackageFragmentRoot) {
 			elem = WsmodelFactory.eINSTANCE.createWPackageFragmentRoot();
@@ -85,19 +106,8 @@ public class WsBuildPrimitives {
 		elem.setName(jdtItem.getElementName());
 		elem.setHandler(jdtItem.getHandleIdentifier());
 		elem.setParent(container);
-
-
-		workspace.getElements().add(elem);
-		if (container != null) {
-			container.addChild(elem);
-		}
-		// Only happens if the container is the Workspace itself.
-		else {
-			workspace.getProjects().add((WProject) elem);
-		}
-
-		return elem;
-	}
+        return elem;
+    }
 
 	public WDependency createDependency(WDependencyType type, IJavaElement from, IJavaElement to) {
 		WNamedElement emfFrom = findJdtElementInEmfModel(from);
@@ -148,6 +158,15 @@ public class WsBuildPrimitives {
 			System.out.println("Could not delete: " + elemToDelete);
 		}
 	}
+	
+	public void removeNamedElement(String handler) {
+        WNamedElement emfToDel = findJdtElementInEmfModel(handler);
+        if (emfToDel != null)
+            removeNamedElement(emfToDel);
+        else {
+            System.out.println("Could not delete: " + handler);
+        }
+    }
 
 	private void removeNamedElement(WNamedElement ne) {
 		// Delete children.
@@ -233,6 +252,10 @@ public class WsBuildPrimitives {
 
 	public WNamedElement findJdtElementInEmfModel(IJavaElement jdtElem) {
 		return workspace.findElementByHandle(jdtElem.getHandleIdentifier());
+	}
+	
+	public WNamedElement findJdtElementInEmfModel(String handler) {
+	    return workspace.findElementByHandle(handler);
 	}
 
 }

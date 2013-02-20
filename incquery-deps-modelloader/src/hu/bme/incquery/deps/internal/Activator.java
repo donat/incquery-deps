@@ -1,17 +1,17 @@
 package hu.bme.incquery.deps.internal;
 
+import hu.bme.incquery.deps.modelloader.RepoModelLoadingService;
+
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.Remote;
-
-import hu.bme.incquery.deps.modelloader.RepoModelLoadingService;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 
-import cern.devtools.depanalysis.bean.DependencyService;
-import cern.devtools.eclipse.dependency.prefs.PreferenceStore;
+import cern.devtools.deps.bean.DependencyService;
+import cern.devtools.deps.eclipse.prefs.PreferenceStore;
 
 /**
  * The activator class controls the plug-in life cycle
