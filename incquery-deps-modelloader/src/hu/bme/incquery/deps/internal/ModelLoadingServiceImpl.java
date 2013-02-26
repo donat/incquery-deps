@@ -35,7 +35,7 @@ public class ModelLoadingServiceImpl implements RepoModelLoadingService {
 		try {
 			String file; 
 			file = obtainFile(targetProjects);
-			result = resourceSet.createResource(URI.createFileURI(file));
+			result = resourceSet.createResource(URI.createURI(file));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
